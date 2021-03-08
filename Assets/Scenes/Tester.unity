@@ -661,9 +661,11 @@ MonoBehaviour:
   defaultZoom: 2
   minZoomDist: 0
   maxZoomDist: 2
-  camCollisionRadius: 1
+  camCollisionRadius: 0.1
   WhiskerFieldAngle: 75
   WhiskerAmount: 10
+  WhiskerLength: 5
+  CameraAcceleration: 1
   UnlockCameraKeyBind: 1
 --- !u!1 &763313633
 GameObject:
