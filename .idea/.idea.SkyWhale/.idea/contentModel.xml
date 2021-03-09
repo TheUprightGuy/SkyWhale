@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="D:\Users\mds00001nb\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="D:\Users\mds00001nb\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_SkyWhale.1258164377.00" t="ExcludeRecursive" />
+    <e p="H:\Production\Alpha\SkyWhale" t="IncludeRecursive">
+      <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Editor" t="Include">
+          <e p="ConditionalHidePropertyDrawer.cs" t="Include" />
+          <e p="ObjDistributionEditor.cs" t="Include" />
+          <e p="TexturePainterControllerEditor.cs" t="Include" />
+        </e>
+        <e p="EndScreen.cs" t="Include" />
+        <e p="ForceInDir.cs" t="Include" />
+        <e p="LeanTween" t="Include">
+          <e p="Editor" t="Include">
+            <e p="LeanTweenDocumentationEditor.cs" t="Include" />
+          </e>
+          <e p="Framework" t="Include">
+            <e p="LeanAudio.cs" t="Include" />
+            <e p="LeanSmooth.cs" t="Include" />
+            <e p="LeanTest.cs" t="Include" />
+            <e p="LeanTween.cs" t="Include" />
+            <e p="LeanTweenExt.cs" t="Include" />
+            <e p="LTDescr.cs" t="Include" />
+            <e p="LTDescrOptional.cs" t="Include" />
+            <e p="LTSeq.cs" t="Include" />
+          </e>
+          <e p="License.txt" t="Include" />
+          <e p="ReadMe.txt" t="Include" />
+        </e>
+        <e p="Materials" t="Include">
+          <e p="Island" t="Include">
+            <e p="TexturePainterController.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Scripts" t="Include">
+          <e p="Animation" t="Include">
+            <e p="MCAnimationCallbacks.cs" t="Include" />
+          </e>
+          <e p="Audio" t="Include">
+            <e p="AmbientLayer.cs" t="Include" />
+            <e p="AudioManager.cs" t="Include" />
+            <e p="FadeMixerGroup.cs" t="Include" />
+            <e p="InactiveAudiosource.cs" t="Include" />
+            <e p="SoundInfo.cs" t="Include" />
+          </e>
+          <e p="Camera" t="Include">
+            <e p="CameraBrainScript.cs" t="Include" />
+            <e p="FollowCamera.cs" t="Include" />
+            <e p="MouseOverHighlight.cs" t="Include" />
+            <e p="PlayerCamera.cs" t="Include" />
+            <e p="TestCam.cs" t="Include" />
+            <e p="ThirdPersonCamera.cs" t="Include" />
+          </e>
+          <e p="CameraJacob" t="Include">
+            <e p="CinematicController.cs" t="Include" />
+          </e>
+          <e p="CollectableIsland" t="Include">
+            <e p="IslandTrailing.cs" t="Include" />
+          </e>
+          <e p="Compass" t="Include">
+            <e p="CompassRotation.cs" t="Include" />
+            <e p="Objective.cs" t="Include" />
+          </e>
+          <e p="IslandGen" t="Include">
+            <e p="GradMasks.cs" t="Include" />
+            <e p="NewIslandGen" t="Include">
+              <e p="Chunk.cs" t="Include" />
+              <e p="ColourGenerator.cs" t="Include" />
+              <e p="Compute" t="Include">
+                <e p="Includes" t="Include">
+                  <e p="Density.compute" t="Include" />
+                  <e p="MarchTables.compute" t="Include" />
+                  <e p="Noise.compute" t="Include" />
+                </e>
+                <e p="MarchingCubes.compute" t="Include" />
+                <e p="NoiseDensity.compute" t="Include" />
+                <e p="SphereDensity.compute" t="Include" />
+              </e>
+              <e p="Density" t="Include">
+                <e p="DensityGenerator.cs" t="Include" />
+                <e p="NoiseDensity.cs" t="Include" />
+                <e p="SphereDensity.cs" t="Include" />
+              </e>
+              <e p="Grass" t="Include">
+                <e p="GrassDisperser.cs" t="Include" />
+                <e p="UltimateGrassShader.shader" t="Include" />
+              </e>
+              <e p="Helper" t="Include">
+                <e p="ConditionalHideAttribute.cs" t="Include" />
+              </e>
+              <e p="MeshGenerator.cs" t="Include" />
+              <e p="Shaders" t="Include">
+                <e p="Terrain.shader" t="Include" />
+              </e>
+            </e>
+            <e p="NewNewIslandGen" t="Include">
+              <e p="Editor" t="Include">
+                <e p="IslandGenEditor.cs" t="Include" />
+              </e>
+              <e p="IslandGen.cs" t="Include" />
+              <e p="MarchingCubes" t="Include">
+                <e p="Example.cs" t="Include" />
+                <e p="Marching" t="Include">
+                  <e p="IMarching.cs" t="Include" />
+                  <e p="Marching.cs" t="Include" />
+                  <e p="MarchingCubes.cs" t="Include" />
+                  <e p="MarchingTertahedron.cs" t="Include" />
+                </e>
+              </e>
+              <e p="ProceduralNoise" t="Include">
+                <e p="Example.cs" t="Include" />
+                <e p="Noise" t="Include">
+                  <e p="FractalNoise.cs" t="Include" />
+                  <e p="INoise.cs" t="Include" />
+                  <e p="Noise.cs" t="Include" />
+                  <e p="PerlinNoise.cs" t="Include" />
+                  <e p="PermutationTable.cs" t="Include" />
+                  <e p="SimplexNoise.cs" t="Include" />
+                  <e p="ValueNoise.cs" t="Include" />
+                  <e p="VoronoiNoise.cs" t="Include" />
+                  <e p="WorleyNoise.cs" t="Include" />
+                </e>
+              </e>
+            </e>
+            <e p="ObjDistribuition.cs" t="Include" />
+            <e p="OldIslandGen" t="Include">
+              <e p="IslandGen" t="Include">
+                <e p="Editor" t="Include">
+                  <e p="IslandProcGenEditor.cs" t="Include" />
+                </e>
+                <e p="IslandProcGen.cs" t="Include" />
+                <e p="ObjectiveSpawner.cs" t="Include" />
+                <e p="SimplexNoiseGenerator.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Management &amp; GameLoop" t="Include">
+            <e p="CallbackHandler.cs" t="Include" />
+            <e p="EventHandler.cs" t="Include" />
+            <e p="InputHandler.cs" t="Include" />
+            <e p="LampManager.cs" t="Include" />
+            <e p="LightRotator.cs" t="Include" />
+            <e p="StageEndTrigger.cs" t="Include" />
+            <e p="UIManager.cs" t="Include" />
+            <e p="WhaleHandler.cs" t="Include" />
+            <e p="WorldStuff" t="Include">
+              <e p="BackgroundWhaleMovement.cs" t="Include" />
+              <e p="IslandBobbing.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Movement" t="Include">
+            <e p="FishingLineScript.cs" t="Include" />
+            <e p="MCMovement" t="Include">
+              <e p="PlayerMovement.cs" t="Include" />
+              <e p="PlayerMovementTutorial.cs" t="Include" />
+              <e p="TestMovement.cs" t="Include" />
+              <e p="VirtualInputs.cs" t="Include" />
+            </e>
+            <e p="OrbitScript.cs" t="Include" />
+            <e p="WhaleMovement" t="Include">
+              <e p="HomingScript.cs" t="Include" />
+              <e p="IslandSlowDown.cs" t="Include" />
+              <e p="Lure" t="Include">
+                <e p="LineSetup.cs" t="Include" />
+                <e p="LureScript.cs" t="Include" />
+              </e>
+              <e p="Movement.cs" t="Include" />
+              <e p="Rider" t="Include">
+                <e p="CharacterControllerScript.cs" t="Include" />
+              </e>
+              <e p="Transition" t="Include">
+                <e p="Fader.cs" t="Include" />
+                <e p="InputOnMouseDown.cs" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Particles" t="Include">
+            <e p="ParticleSpeedScript.cs" t="Include" />
+            <e p="RingPFX.cs" t="Include" />
+          </e>
+          <e p="Puzzle" t="Include">
+            <e p="CirclePuzzle.cs" t="Include" />
+            <e p="CirclePuzzleMaster.cs" t="Include" />
+            <e p="CircleSymbol.cs" t="Include" />
+            <e p="Collectable.cs" t="Include" />
+            <e p="CollectableMan.cs" t="Include" />
+            <e p="DoorPFX.cs" t="Include" />
+            <e p="DoorRotationScript.cs" t="Include" />
+            <e p="ObeliskRise.cs" t="Include" />
+            <e p="PuzzleGenerator.cs" t="Include" />
+            <e p="PuzzleSwitch.cs" t="Include" />
+            <e p="PuzzleTile.cs" t="Include" />
+            <e p="PuzzleTileSO.cs" t="Include" />
+            <e p="SlidingDoorScript.cs" t="Include" />
+            <e p="SwitchPuzzleMaster.cs" t="Include" />
+          </e>
+          <e p="Resources" t="Include">
+            <e p="CollectableResource.cs" t="Include" />
+            <e p="FeedbackSetup.cs" t="Include" />
+            <e p="ResourceDisplayScript.cs" t="Include" />
+            <e p="ResourceFeedBack.cs" t="Include" />
+          </e>
+          <e p="Shop" t="Include">
+            <e p="MCShopUI.cs" t="Include" />
+            <e p="ShopItem.cs" t="Include" />
+            <e p="ShopOwner.cs" t="Include" />
+            <e p="ShopRadius.cs" t="Include" />
+          </e>
+          <e p="Skybox" t="Include">
+            <e p="SkyboxBlender.cs" t="Include" />
+          </e>
+          <e p="SO's" t="Include">
+            <e p="GameState.cs" t="Include" />
+            <e p="WhaleInfo.cs" t="Include" />
+          </e>
+          <e p="Tutorial" t="Include">
+            <e p="CaveTrigger.cs" t="Include" />
+            <e p="ObjectiveMovePoint.cs" t="Include" />
+            <e p="TutorialScript.cs" t="Include" />
+          </e>
+          <e p="UI" t="Include">
+            <e p="DialogueScript.cs" t="Include" />
+            <e p="MapHandler.cs" t="Include" />
+            <e p="MenuManager.cs" t="Include" />
+            <e p="PopUpHandler.cs" t="Include" />
+            <e p="StartMenuHighlight.cs" t="Include" />
+            <e p="ThoughtsScript.cs" t="Include" />
+            <e p="UIScalePingPong.cs" t="Include" />
+          </e>
+        </e>
+        <e p="Shaders" t="Include">
+          <e p="Clouds" t="Include">
+            <e p="Clouds.shader" t="Include" />
+          </e>
+          <e p="Skybox" t="Include">
+            <e p="SkyboxBlend.shader" t="Include" />
+          </e>
+          <e p="UnlitTransparent.shader" t="Include" />
+        </e>
+        <e p="TextMesh Pro" t="Include">
+          <e p="Fonts" t="Include">
+            <e p="LiberationSans - OFL.txt" t="Include" />
+          </e>
+          <e p="Resources" t="Include">
+            <e p="LineBreaking Following Characters.txt" t="Include" />
+            <e p="LineBreaking Leading Characters.txt" t="Include" />
+            <e p="Shaders" t="Include">
+              <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
+              <e p="TMP_Bitmap-Mobile.shader" t="Include" />
+              <e p="TMP_Bitmap.shader" t="Include" />
+              <e p="TMP_SDF Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
+              <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
+              <e p="TMP_SDF-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
+              <e p="TMP_SDF-Surface.shader" t="Include" />
+              <e p="TMP_SDF.shader" t="Include" />
+              <e p="TMP_Sprite.shader" t="Include" />
+              <e p="TMPro.cginc" t="Include" />
+              <e p="TMPro_Properties.cginc" t="Include" />
+              <e p="TMPro_Surface.cginc" t="Include" />
+            </e>
+          </e>
+          <e p="Sprites" t="Include">
+            <e p="EmojiOne Attribution.txt" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="SkyWhale.sln" t="IncludeFlat" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
