@@ -573,9 +573,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
-  field of view: 60
+  near clip plane: 0.1
+  far clip plane: 5000
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -601,9 +601,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742923022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.43, z: -2}
+  m_LocalPosition: {x: 0, y: 4.56, z: -9.91}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1201835852}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -656,14 +657,19 @@ MonoBehaviour:
   invertY: 1
   rotateSpeed: 100
   zoomSpeed: 200
-  minYAngle: 0
+  CameraSnapAcceleration: 500
+  minYAngle: -10
   maxYAngle: 90
   defaultZoom: 2
-  minZoomDist: 0
-  maxZoomDist: 2
-  camCollisionRadius: 1
-  WhiskerFieldAngle: 75
-  WhiskerAmount: 10
+  minZoomDist: 0.5
+  maxZoomDist: 10
+  CollisionLayers:
+    serializedVersion: 2
+    m_Bits: 16183
+  camCollisionRadius: 0.1
+  RayLength: 5
+  CastWidth: 0.25
+  CameraAcceleration: 10
   UnlockCameraKeyBind: 1
 --- !u!1 &763313633
 GameObject:
@@ -1025,6 +1031,49 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1201835851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1201835852}
+  - component: {fileID: 1201835853}
+  m_Layer: 0
+  m_Name: cm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1201835852
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201835851}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -4.43, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 742923025}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1201835853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201835851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1896776505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,7 +1083,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1896776506}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: CamTarget
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1049,7 +1098,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1896776505}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5853718423908297843}
@@ -1173,7 +1222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3814639026971501336}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightElbowEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1189,7 +1238,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7647743623547616315}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_HipsEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1205,7 +1254,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2236524728880802782}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_RightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1221,7 +1270,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2025518008268586019}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1237,7 +1286,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2479152836821659204}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1253,7 +1302,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8174796752560156820}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1269,7 +1318,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6524938050901952524}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_RightUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1299,7 +1348,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4278253647358834132}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1315,7 +1364,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7760417615900341395}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftHipEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1331,7 +1380,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1420978534363999338}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_RightForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1390,7 +1439,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1754562515076257922}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1406,7 +1455,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2953112153660282715}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Spine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1484,7 +1533,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8587793196052133357}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftFootEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1500,7 +1549,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8941454161575943723}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1516,7 +1565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2744094899097128259}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_RightToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1547,7 +1596,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3635605519136153016}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftKneeEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1617,7 +1666,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7817355673322747888}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1633,7 +1682,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8441041660456320230}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_LeftToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1649,7 +1698,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4643160366177238026}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1688,7 +1737,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7376494313542174066}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1704,7 +1753,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8487660778569327510}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Hips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1720,7 +1769,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1408200552230266437}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_Reference
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1780,7 +1829,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 46828136693447377}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_ChestOriginEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1825,7 +1874,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2996050391685468949}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_LeftForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1888,7 +1937,7 @@ GameObject:
   - component: {fileID: 8198913208493231344}
   - component: {fileID: 6062316571381131587}
   - component: {fileID: 8276219911147159562}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Lantern
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1904,7 +1953,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3386683347866871105}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Reference
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1920,7 +1969,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2737506967985154212}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftElbowEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2005,7 +2054,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3242484306644342212}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2036,7 +2085,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3150387462874152188}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2170,7 +2219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2260380295660270728}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2186,7 +2235,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8863548702687013810}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_LeftShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2232,7 +2281,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1018915442471957097}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightAnkleEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2248,7 +2297,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3954898898835583484}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2279,7 +2328,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4563112324425717706}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2311,7 +2360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2470211826869799557}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2327,7 +2376,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6684046904040813063}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_Spine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2360,7 +2409,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7665650031174013423}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2516,7 +2565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8687172522756151705}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_RightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2532,7 +2581,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9147365919345120300}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2548,7 +2597,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8281319140312528171}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2564,7 +2613,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4862893822108812298}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_RightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2648,7 +2697,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5893573581664231258}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_ChestEndEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2664,7 +2713,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6981525514203336016}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2694,7 +2743,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3560714985674616545}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_LeftUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2710,7 +2759,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2572012599808738756}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightWristEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2771,7 +2820,7 @@ GameObject:
   - component: {fileID: 5853718423908297800}
   - component: {fileID: 5853718423908297804}
   - component: {fileID: 5853718423908297803}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: PlayerMovement Variant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2964,7 +3013,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5559171421491152534}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2980,7 +3029,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7521031542637574808}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightHipEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2996,7 +3045,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1430971774181860297}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightShoulderEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3109,7 +3158,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3396760475195351813}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3170,7 +3219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1636198807329145465}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_LeftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3187,7 +3236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7559769323808933126}
   - component: {fileID: 5160327508992692846}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3218,7 +3267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8615943217252059849}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3251,7 +3300,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7313575257388041802}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_LeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3268,7 +3317,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6248230569510185175}
   - component: {fileID: 24207181781529261}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: FINAL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3284,7 +3333,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4753419729849323810}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftShoulderEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3300,7 +3349,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6265792946793088319}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftWristEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3331,7 +3380,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 860626671628006428}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftAnkleEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3377,7 +3426,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6249374649231586904}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightKneeEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3421,7 +3470,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1125084047617196784}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_HeadEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3451,7 +3500,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9109206459633979217}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3482,7 +3531,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8130373129835649606}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Spine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3541,7 +3590,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2344807412697004356}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3622,7 +3671,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1230291153052220330}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_RightShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3729,7 +3778,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4009831605540067025}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3775,7 +3824,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5723893543099208384}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_RightFootEffector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3791,7 +3840,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5836281163209185965}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_Ctrl_LeftShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3807,7 +3856,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7695065769065755241}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: QuickRigCharacter_LeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -16,6 +16,7 @@ public class ThirdPersonCamera : MonoBehaviour
     public float rotateSpeed = 5;
     public float zoomSpeed = 5;
 
+    public float CameraSnapAcceleration = 1.0f;
 
     public float minYAngle = 0.0f;
     public float maxYAngle = 45.0f;
@@ -23,20 +24,22 @@ public class ThirdPersonCamera : MonoBehaviour
     public float defaultZoom = 15.0f;
     public float minZoomDist = 10.0f;
     public float maxZoomDist = 50.0f;
-    
-    [Header("Collisions")]
-    public float camCollisionRadius = 1.0f;
-    public float WhiskerFieldAngle = 45.0f;
-    public uint WhiskerAmount = 5;
 
+    [Header("Collisions")]
+    public LayerMask CollisionLayers;
+    public float camCollisionRadius = 1.0f;
+    public float RayLength = 5.0f;
+    public float CastWidth = 0.25f;
+    public float CameraAcceleration = 0.5f;
     [Header("Debug")]
     [Tooltip("Press ` to enable/disable cursor locking.")]
     public bool UnlockCameraKeyBind = true;
 
+    Vector3 lastCalculatedPos = Vector3.zero;
     Vector3 offset;
     Vector3 storedPos = Vector3.zero;
-
-    Ray[] Whiskers;
+    bool waitingToReturn = false;
+    
     void Start()
     {
         offset = target.position - transform.position;
@@ -46,14 +49,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
 
-        Whiskers = new Ray[WhiskerAmount];
-
-        //for (int i = 0; i < Whiskers.Length; i++)
-        //{
-        //    float angle = (WhiskerFieldAngle / WhiskerAmount) * (i + 1); //dividing by 0 = bad
-        //    Vector3 dir = new Vector3(Mathf.Cos(angle), 0.0f, Mathf.Sin(angle));
-        //    Whiskers[i].direction = dir;
-        //}
+        lastCalculatedPos = transform.position;
 
     }
 
@@ -94,62 +90,71 @@ public class ThirdPersonCamera : MonoBehaviour
 
             storedPos.x += horizontal;
 
-            if (!Input.GetKey(KeyCode.Mouse1)) //Not holding rightclick, allow player rotation
+           
+            if (!Input.GetKey(KeyCode.Mouse1) && !waitingToReturn) //Not holding rightclick, allow player rotation
             {
                 PlayerObj.Rotate(0, horizontal, 0);//Rotate player along with the  camera
             }
             if (Input.GetKeyUp(KeyCode.Mouse1))//If rightclick released, snap back to position
             {
-                storedPos.x = target.eulerAngles.y;
+                waitingToReturn = true;
+                //storedPos.x = target.eulerAngles.y;
             }
-
+            if (waitingToReturn)
+            {
+                if (storedPos.x != target.eulerAngles.y)
+                {
+                    storedPos.x = Mathf.MoveTowardsAngle(storedPos.x, target.eulerAngles.y, CameraSnapAcceleration * Time.deltaTime);
+                }
+                else
+                {
+                    waitingToReturn = false;
+                }
+            }
             Quaternion rotation = Quaternion.Euler(storedPos.y, storedPos.x, 0);
 
 
-            //Get a new position based on target rotation, offset, and stored y rotation
-            Vector3 newPos = target.position - ((rotation * offset).normalized);
+            //Get a new direction to orbit too
+            Vector3 newDir = (rotation * offset).normalized;
 
             //ZOOM
             /************************/
 
-            Vector3 nextPos = transform.position;
-
-            Vector3 camToTarget = Vector3.Normalize(newPos - target.position); //Create length of one
-
-                                                          //-1 to account for normalised length
-            storedPos.z = Mathf.Clamp(storedPos.z - zoom, minZoomDist - 1, maxZoomDist);
+            float newDist = 0.0f;
+            //Vector3 camToTarget = Vector3.Normalize(newPos - target.position); //Create length of one
 
 
-            newPos = newPos + (camToTarget * (storedPos.z));
+            //-1 to account for normalised length
+            newDist = storedPos.z = Mathf.Clamp(storedPos.z - zoom, minZoomDist, maxZoomDist);
+
             //RAYCASTING
             /************************/
 
-            //Setup Raycast from target to camera
-            float rayDist = Vector3.Distance(newPos, target.position);
-            RaycastHit hit;
+            RaycastHit fronthit;
 
-            /*If there is an object between the target and the camera, 
-	         set the position to the closest point with nothing between the two*/
+            float currentDist = Vector3.Distance(target.position, transform.position);
 
-            
-            if (Physics.Raycast(target.position, camToTarget, out hit, rayDist))
+            //If something ahead of you
+            if (Physics.SphereCast(target.position, CastWidth, -newDir, out fronthit, Mathf.Min(newDist, RayLength), CollisionLayers.value))
             {
-                //collidePoint = hit.point;
-
-
+                
+                newDist = Mathf.MoveTowards(currentDist , fronthit.distance + camCollisionRadius , CameraAcceleration * Time.deltaTime);
             }
-            //else //If nothing, just set the point to the newPos
-            //{
-            //    overrideZoom = false;
-            //    nextPos = newPos;
-            //}
+            else
+            {
+                newDist = Mathf.MoveTowards(currentDist, newDist, CameraAcceleration * Time.deltaTime);
+            }
+            Vector3 newPos = target.position - (newDir * newDist);
+            
+            transform.position = newPos; //Set positions
 
-            transform.position = newPos;// Vector3.SmoothDamp(transform.position, newPos, ref CamMoveVel, CamSmoothing);
-
-            transform.LookAt(target);
+            transform.LookAt(target); //Set rotations
         }
     }
 
+    Vector3 speed;
+    float previousDist;
+    
     //private void SlerpRot()
     //{
     //    var target_rot = Quaternion.LookRotation(target.transform.position - transform.position);
@@ -162,6 +167,14 @@ public class ThirdPersonCamera : MonoBehaviour
     //    }
     //}
 
+    private void SetCamVector()
+    {
+
+    }
+    private void SetCamDistance()
+    {
+
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -174,18 +187,11 @@ public class ThirdPersonCamera : MonoBehaviour
 
         if (Application.isPlaying)
         {
-            float angle = -(WhiskerFieldAngle / 2); //start here;
-            float divided = (WhiskerFieldAngle / WhiskerAmount);
-            for (int i = 0; i <= WhiskerAmount; i++)
-            {
-                Vector3 dir = Vector3.RotateTowards(transform.forward, transform.right, (angle) * Mathf.Deg2Rad, 0.0f).normalized;
-                float playerToCam = Vector3.Distance(transform.position, target.position);
-                float dist = playerToCam / Mathf.Cos(Vector3.Angle(transform.forward, dir) * Mathf.Deg2Rad);
 
-                Gizmos.DrawLine(transform.position, transform.position + (dir * dist));
-                
-                angle += divided;
-            }
+            Quaternion rotation = Quaternion.Euler(storedPos.y, storedPos.x, 0);
+            Vector3 newDir = (rotation * offset).normalized;
+
+            Gizmos.DrawLine(target.position, target.position - (newDir * storedPos.z));
         }
         else
         {
