@@ -11,7 +11,8 @@ public class NewOrbitScript : MonoBehaviour
     [HideInInspector] public GameObject orbit;
     float orbitDistance;
     public float rotSpeed;
-
+    public bool atOrbit;
+    public float dist;
     [HideInInspector] public float currentDistance;
 
     // Update is called once per frame
@@ -35,7 +36,9 @@ public class NewOrbitScript : MonoBehaviour
             vecToDesired = Vector3.Normalize(vecToDesired);
 
             float distanceToDesired = Vector3.Distance(transform.position, desiredPos);
-            float dist = distanceToDesired / orbitDistance;
+            dist = distanceToDesired / orbitDistance;
+
+            
 
             vecToDesired *= dist;
 
