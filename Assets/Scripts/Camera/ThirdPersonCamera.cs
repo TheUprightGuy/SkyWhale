@@ -52,7 +52,7 @@ public class ThirdPersonCamera : MonoBehaviour
         lastCalculatedPos = transform.position;
 
     }
-
+    
     private void Update()
     {
         if (Input.GetKeyDown("`"))
@@ -91,11 +91,11 @@ public class ThirdPersonCamera : MonoBehaviour
             storedPos.x += horizontal;
 
            
-            if (!Input.GetKey(KeyCode.Mouse1) && !waitingToReturn) //Not holding rightclick, allow player rotation
+            if (!Input.GetKey(KeyCode.LeftAlt) && !waitingToReturn) //Not holding rightclick, allow player rotation
             {
                 PlayerObj.Rotate(0, horizontal, 0);//Rotate player along with the  camera
             }
-            if (Input.GetKeyUp(KeyCode.Mouse1))//If rightclick released, snap back to position
+            if (Input.GetKeyUp(KeyCode.LeftAlt))//If rightclick released, snap back to position
             {
                 waitingToReturn = true;
                 //storedPos.x = target.eulerAngles.y;
@@ -155,35 +155,11 @@ public class ThirdPersonCamera : MonoBehaviour
     Vector3 speed;
     float previousDist;
     
-    //private void SlerpRot()
-    //{
-    //    var target_rot = Quaternion.LookRotation(target.transform.position - transform.position);
-    //    var delta = Quaternion.Angle(transform.rotation, target_rot);
-    //    if (delta > 0.0f)
-    //    {
-    //        var t = Mathf.SmoothDampAngle(delta, 0.0f, ref AngularVelocity, RotateSmoothTime);
-    //        t = 1.0f - t / delta;
-    //        transform.rotation = Quaternion.Slerp(transform.rotation, target_rot, t);
-    //    }
-    //}
 
-    private void SetCamVector()
-    {
 
-    }
-    private void SetCamDistance()
-    {
-
-    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-
-        //float halfAngle = (WhiskerFieldAngle / 2);
-        //Vector3 origin = Vector3.left;
-        //Vector3 dir = Vector3.RotateTowards(transform.forward, transform.right, WhiskerFieldAngle * Mathf.Deg2Rad, 0.0f);
-        //Gizmos.DrawLine(transform.position, transform.position + (dir));
-
 
         if (Application.isPlaying)
         {
@@ -195,17 +171,10 @@ public class ThirdPersonCamera : MonoBehaviour
         }
         else
         {
+        }
+    }
 
-        }
-    }
-    public Vector3 DirFromAngle(float angleInDegrees, bool angleIsGlobal = false)
-    {
-        if (!angleIsGlobal)
-        {
-            angleInDegrees += transform.eulerAngles.y;
-        }
-        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
-    }
+  
     private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.Locked;

@@ -170,6 +170,11 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PlayerStates.JUMPING:
             case PlayerStates.FALLING:
+                if (ParentToGround)
+                {
+                    transform.parent = null;
+                    
+                }
                 MoveOnXZ(inAirSpeed, maxAirAcceleration);
                 break;
             default:
@@ -202,7 +207,7 @@ public class PlayerMovement : MonoBehaviour
 
         RB.velocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ);
 
-        if (!IsGrounded())
+        if (!IsGrounded() && PlayerState == PlayerStates.MOVING)
         {
             //RB.velocity -= groundContactNormal.normalized * stickForce;
         }
@@ -253,6 +258,7 @@ public class PlayerMovement : MonoBehaviour
             anims.SetTrigger("Jump");
 
         }
+
         inputAxis.y = 1;
     }
     void Run(InputState type)
@@ -307,6 +313,11 @@ public class PlayerMovement : MonoBehaviour
         if (normal.y >= minGroundDotProduct)
         {
             groundContactNormal = normal;
+            if (ParentToGround)
+            {
+                transform.parent = collision.transform;
+            }
+            
         }
     }
     #region Utility
