@@ -50,7 +50,6 @@ public class NewOrbitScript : MonoBehaviour
             Debug.DrawRay(transform.position, path * 1000.0f, Color.green);
 
             path = new Vector3(path.x * orbitDirection, path.y, path.z * orbitDirection);
-            //transform.rotation = Quaternion.LookRotation(path);// Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path), Time.deltaTime * 5);
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path), Time.deltaTime * rotSpeed);
         }
     }
