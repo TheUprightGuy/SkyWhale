@@ -16,6 +16,7 @@ public class ThirdPersonCamera : MonoBehaviour
     public float rotateSpeed = 5;
     public float zoomSpeed = 5;
 
+    public float CameraSnapAcceleration = 1.0f;
 
     public float minYAngle = 0.0f;
     public float maxYAngle = 45.0f;
@@ -23,13 +24,12 @@ public class ThirdPersonCamera : MonoBehaviour
     public float defaultZoom = 15.0f;
     public float minZoomDist = 10.0f;
     public float maxZoomDist = 50.0f;
-    
-    [Header("Collisions")]
-    public float camCollisionRadius = 1.0f;
-    public float WhiskerFieldAngle = 45.0f;
-    public uint WhiskerAmount = 5;
-    public float WhiskerLength = 5.0f;
 
+    [Header("Collisions")]
+    public LayerMask CollisionLayers;
+    public float camCollisionRadius = 1.0f;
+    public float RayLength = 5.0f;
+    public float CastWidth = 0.25f;
     public float CameraAcceleration = 0.5f;
     [Header("Debug")]
     [Tooltip("Press ` to enable/disable cursor locking.")]
@@ -38,7 +38,7 @@ public class ThirdPersonCamera : MonoBehaviour
     Vector3 lastCalculatedPos = Vector3.zero;
     Vector3 offset;
     Vector3 storedPos = Vector3.zero;
-    bool zoomOveride = false;
+    bool waitingToReturn = false;
     
     void Start()
     {
@@ -90,96 +90,71 @@ public class ThirdPersonCamera : MonoBehaviour
 
             storedPos.x += horizontal;
 
-            if (!Input.GetKey(KeyCode.Mouse1)) //Not holding rightclick, allow player rotation
+           
+            if (!Input.GetKey(KeyCode.Mouse1) && !waitingToReturn) //Not holding rightclick, allow player rotation
             {
                 PlayerObj.Rotate(0, horizontal, 0);//Rotate player along with the  camera
             }
             if (Input.GetKeyUp(KeyCode.Mouse1))//If rightclick released, snap back to position
             {
-                storedPos.x = target.eulerAngles.y;
+                waitingToReturn = true;
+                //storedPos.x = target.eulerAngles.y;
             }
-
+            if (waitingToReturn)
+            {
+                if (storedPos.x != target.eulerAngles.y)
+                {
+                    storedPos.x = Mathf.MoveTowardsAngle(storedPos.x, target.eulerAngles.y, CameraSnapAcceleration * Time.deltaTime);
+                }
+                else
+                {
+                    waitingToReturn = false;
+                }
+            }
             Quaternion rotation = Quaternion.Euler(storedPos.y, storedPos.x, 0);
 
 
-            //Get a new position based on target rotation, offset, and stored y rotation
-            Vector3 newPos = target.position - ((rotation * offset).normalized);
+            //Get a new direction to orbit too
+            Vector3 newDir = (rotation * offset).normalized;
 
             //ZOOM
             /************************/
 
-            Vector3 nextPos = transform.position;
-
-            Vector3 camToTarget = Vector3.Normalize(newPos - target.position); //Create length of one
+            float newDist = 0.0f;
+            //Vector3 camToTarget = Vector3.Normalize(newPos - target.position); //Create length of one
 
 
             //-1 to account for normalised length
-            storedPos.z = Mathf.Clamp(storedPos.z - zoom, (zoomOveride) ? (0) : (minZoomDist - 1), maxZoomDist);
-
-            newPos = newPos + (camToTarget * (storedPos.z));
-
-            transform.position = newPos; //Set positions
-
-            transform.LookAt(target); //Set rotations
-
+            newDist = storedPos.z = Mathf.Clamp(storedPos.z - zoom, minZoomDist, maxZoomDist);
 
             //RAYCASTING
             /************************/
 
-            float angle = -(WhiskerFieldAngle / 2); //start here;
-            float divided = (WhiskerFieldAngle / WhiskerAmount); //difference in angle for each whisker
-            float playerToCam = Vector3.Distance(transform.position, target.position); 
+            RaycastHit fronthit;
 
-            Vector3 hitPoint = Vector3.positiveInfinity;
-            float closestDist = Mathf.Infinity;
-            for (int i = 0; i <= WhiskerAmount; i++)
+            float currentDist = Vector3.Distance(target.position, transform.position);
+
+            //If something ahead of you
+            if (Physics.SphereCast(target.position, CastWidth, -newDir, out fronthit, Mathf.Min(newDist, RayLength), CollisionLayers.value))
             {
-                float dist = Mathf.Min(playerToCam, WhiskerLength);
-                Vector3 dir = -(Vector3.RotateTowards(transform.forward, transform.right, (angle) * Mathf.Deg2Rad, 0.0f).normalized);
-                Vector3 pos = transform.position - (dir * dist); //Use these as ray origin to get FAR side of collision to zoom too
-
-
-                RaycastHit hit = new RaycastHit();
-                //Player to cam
-                if (Physics.Raycast(pos, dir, out hit, dist)) //Min so no hits detected in front of player
-                {
-                    if (hit.collider.transform != target && hit.collider.transform != PlayerObj)
-                    {
-                        float pointToPlayer = Vector3.Distance(hit.point, target.position);
-
-                        //If this hit is closer to the player than anything else, priortise OR if not yet set
-                        if (pointToPlayer < closestDist) { closestDist = pointToPlayer; }
-                    }
-                }
-                angle += divided;
-            }
-
-            float lastToCam = Vector3.Distance(lastCalculatedPos, target.position);
-            if (closestDist < Mathf.Infinity)
-            {
-                float goToDist = Mathf.MoveTowards(lastToCam, closestDist, CameraAcceleration);
-                Vector3 pos = target.position +
-                    ((transform.position - target.position).normalized * //Cam to target
-                    (goToDist - camCollisionRadius)); //Closest collision available + camera collision radius
-
-                transform.position = pos;
-
-                if (!zoomOveride) //store old zoom to lerp back to
-                {
-                    zoomOveride = true;
-                    oldZoom = lastToCam;
-                }
+                
+                newDist = Mathf.MoveTowards(currentDist , fronthit.distance + camCollisionRadius , CameraAcceleration * Time.deltaTime);
             }
             else
             {
-                zoomOveride = false;
+                newDist = Mathf.MoveTowards(currentDist, newDist, CameraAcceleration * Time.deltaTime);
             }
+            Vector3 newPos = target.position - (newDir * newDist);
+            
+            transform.position = newPos; //Set positions
 
-            lastCalculatedPos = transform.position;
+            transform.LookAt(target); //Set rotations
         }
     }
 
-    float oldZoom = 0.0f;
+    Vector3 speed;
+    float previousDist;
+    
     //private void SlerpRot()
     //{
     //    var target_rot = Quaternion.LookRotation(target.transform.position - transform.position);
@@ -212,47 +187,11 @@ public class ThirdPersonCamera : MonoBehaviour
 
         if (Application.isPlaying)
         {
-            float angle = -(WhiskerFieldAngle / 2); //start here;
-            float divided = (WhiskerFieldAngle / WhiskerAmount);
-            float playerToCam = Vector3.Distance(transform.position, target.position);
 
-            float closestDist = Mathf.Infinity;
-            Vector3 closestPoint = Vector3.zero;
-            for (int i = 0; i <= WhiskerAmount; i++)
-            {
-                float dist = Mathf.Min(playerToCam, WhiskerLength);
-                Vector3 dir = -(Vector3.RotateTowards(transform.forward, transform.right, (angle) * Mathf.Deg2Rad, 0.0f).normalized);
-                Vector3 pos = transform.position - (dir * dist);
+            Quaternion rotation = Quaternion.Euler(storedPos.y, storedPos.x, 0);
+            Vector3 newDir = (rotation * offset).normalized;
 
-                //float dist = playerToCam / Mathf.Cos(Vector3.Angle(transform.forward, dir) * Mathf.Deg2Rad);
-
-
-                Gizmos.DrawLine(pos, pos + (dir * dist));
-
-                RaycastHit hit = new RaycastHit();
-
-                if (Physics.Raycast(pos, dir, out hit, dist)) //Min so no hits detected in front of player
-                {
-                    float pointToPlayer = Vector3.Distance(hit.point, target.position);
-
-                    if (closestDist > pointToPlayer)
-                    {
-                        closestDist = pointToPlayer;
-                        closestPoint = hit.point;
-                    }
-                    
-                }
-                angle += divided;
-            }
-
-            if (closestDist < Mathf.Infinity)
-            {
-                Gizmos.color = Color.red;
-                Gizmos.DrawSphere(closestPoint, 0.1f);
-                Gizmos.color = Color.green;
-                Gizmos.DrawSphere(target.position + (( transform.position - target.position).normalized * (closestDist - camCollisionRadius)) , 0.1f);
-            }
-
+            Gizmos.DrawLine(target.position, target.position - (newDir * storedPos.z));
         }
         else
         {
