@@ -34,10 +34,11 @@ public class NewWhaleCamera : MonoBehaviour
         timer -= Time.deltaTime;
         lerpTimer -= Time.deltaTime;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !(EventSystem.current.IsPointerOverGameObject()))
         {
             rotating = true;
-        }// (EventSystem.current.IsPointerOverGameObject()) ? false : true;}
+        }
+        //(EventSystem.current.IsPointerOverGameObject()) ? false : true;}
 
         if (Input.GetMouseButtonUp(0))
         {
