@@ -171,6 +171,8 @@ public class NewWhaleMovement : MonoBehaviour
 
         NewIslandScript temp = (hit.GetComponent<NewIslandScript>()) ? hit.GetComponent<NewIslandScript>() : hit.GetComponentInParent<NewIslandScript>();
         orbit.SetupOrbit(temp.heightRef);
+
+        EventManager.TriggerEvent("Crash");
     }
 
     private void FixedUpdate()
