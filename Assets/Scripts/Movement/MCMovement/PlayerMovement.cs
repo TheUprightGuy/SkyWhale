@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 GroundCheckStartOffset = Vector3.zero;
 
     [Header("Misc")]
-    public bool ParentToGround = true;
+    public bool LocalToGround = true;
 
 
 
@@ -88,6 +88,11 @@ public class PlayerMovement : MonoBehaviour
     {
         SetCurrentPlayerState();
         HandleMovement();
+
+        if (collidedObj != null) //If attached to something
+        {
+            collidedprevPos = collidedObj.position;
+        }
     }
 
     float minGroundDotProduct;
@@ -170,9 +175,9 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PlayerStates.JUMPING:
             case PlayerStates.FALLING:
-                if (ParentToGround)
+                if (LocalToGround)
                 {
-                    transform.parent = null;
+                    collidedObj = null;
                     
                 }
                 MoveOnXZ(inAirSpeed, maxAirAcceleration);
@@ -205,13 +210,14 @@ public class PlayerMovement : MonoBehaviour
         float newZ =
             Mathf.MoveTowards(currentZ, desiredVel.z, maxSpeedChange);
 
+
         RB.velocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ);
 
-        if (!IsGrounded() && PlayerState == PlayerStates.MOVING)
+        if (collidedObj != null)
         {
-            //RB.velocity -= groundContactNormal.normalized * stickForce;
+            Vector3 offset = GetCollidedFrameOffset();
+            RB.MovePosition(transform.position + offset);
         }
-
     }
     void Jump()
     {
@@ -297,29 +303,50 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        
         EvalCollision(collision);
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        EvalCollision(collision);
+        EvalCollision(collision, 1);
     }
 
     bool onGround;
     Vector3 groundContactNormal;
-    private void EvalCollision(Collision collision)
+
+    /// <summary>
+    /// Evaluates when this collider hits some other collider
+    /// </summary>
+    /// <param name="collision">The Collision struct from the OnCollide Funcs</param>
+    /// <param name="collisionEvent">0 = Enter, 1 = Stay, 2 = Exit</param>
+    private void EvalCollision(Collision collision, int collisionEvent = 0)
     {
         Vector3 normal = collision.GetContact(0).normal;
         if (normal.y >= minGroundDotProduct)
         {
             groundContactNormal = normal;
-            if (ParentToGround)
+            if (LocalToGround)
             {
-                transform.parent = collision.transform;
+                collidedObj = collision.transform;
+                if (collisionEvent == 0) //OnEnter
+                {
+                    collidedprevPos = collision.transform.position;
+                }
             }
             
         }
     }
+
+    Vector3 collidedPoint = Vector3.zero;
+    Vector3 collidedprevPos = Vector3.zero;
+    Transform collidedObj;
+    Vector3 GetCollidedFrameOffset() //The movement vector since the last frame;
+    {
+        return (collidedObj == null) ? (Vector3.zero) :
+            (collidedObj.position - collidedprevPos);
+    }
+
     #region Utility
 
     private void OnDrawGizmos()

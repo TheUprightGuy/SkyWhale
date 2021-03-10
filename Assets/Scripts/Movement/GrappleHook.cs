@@ -98,6 +98,11 @@ public class GrappleHook : MonoBehaviour
         StartCoroutine(cor);
     }
 
+    private void OnDisable()
+    {
+        Hook.SetActive(false);
+    }
+    
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
