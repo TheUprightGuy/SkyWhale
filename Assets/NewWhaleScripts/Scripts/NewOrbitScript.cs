@@ -15,6 +15,17 @@ public class NewOrbitScript : MonoBehaviour
     public float dist;
     [HideInInspector] public float currentDistance;
 
+    #region Callbacks
+    private void Start()
+    {
+        NewCallbackHandler.instance.setOrbit += SetOrbit;
+    }
+    private void OnDestroy()
+    {
+        NewCallbackHandler.instance.setOrbit -= SetOrbit;
+    }
+    #endregion Callbacks
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -57,12 +68,13 @@ public class NewOrbitScript : MonoBehaviour
         }
     }
 
-    public void SetupOrbit(GameObject _orbit)
+    public void SetOrbit(GameObject _orbit)
     {
         if (!enabled)
         {
             orbit = _orbit;
             orbitDistance = orbit.GetComponent<SphereCollider>().radius;
+            enabled = true;
         }
     }
 }

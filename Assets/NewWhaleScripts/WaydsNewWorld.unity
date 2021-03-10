@@ -121,6 +121,26 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &200763832 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7148766289519180693, guid: 340fb9a3858c41b459c8e205b31d2457,
+    type: 3}
+  m_PrefabInstance: {fileID: 7388909086492081303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &200763836
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200763832}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2460844434722522516, guid: 8ac971f13e07c644db4c324a561af280, type: 3}
 --- !u!21 &410272774
 Material:
   serializedVersion: 6
@@ -174,6 +194,24 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7388909086492081303}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &519762838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2884179543958615842, guid: 0dfc6884d44db054dbd647f1fe012f7e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2884179544748136420}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &519762839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519762838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb5c80a51e277f846bd12e86ce5f7f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2884179544748136420
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -572,7 +610,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: IslandParent
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3348526675584418412, guid: 340fb9a3858c41b459c8e205b31d2457, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 340fb9a3858c41b459c8e205b31d2457, type: 3}
 --- !u!1001 &8801218018607525335
 PrefabInstance:
@@ -586,6 +625,11 @@ PrefabInstance:
       propertyPath: pickUpTarget
       value: 
       objectReference: {fileID: 511852361}
+    - target: {fileID: 4324336006693572112, guid: 8985c3abf164c794c8011de2ca923015,
+        type: 3}
+      propertyPath: approachDistance
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 8801218018970183716, guid: 8985c3abf164c794c8011de2ca923015,
         type: 3}
       propertyPath: m_LocalPosition.x

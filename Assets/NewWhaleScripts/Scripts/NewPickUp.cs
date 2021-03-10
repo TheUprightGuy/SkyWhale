@@ -4,59 +4,81 @@ using UnityEngine;
 
 public class NewPickUp : MonoBehaviour
 {
-    public GameObject orbit;
-    public GameObject pickUpTarget;
-    new public bool enabled;
-    public bool homing;
-    public Vector3 target;
+    [Header("Required Setup Fields")]
+    public float approachDistance;
+
+    // Local References
+    NewOrbitScript orbit;
+    NewWhaleMovement whale;
+    GameObject heightRef;
+    bool homing;
+    Vector3 target;
+    [HideInInspector] new public bool enabled;
+
+    private void Awake()
+    {
+        orbit = GetComponent<NewOrbitScript>();
+        whale = GetComponent<NewWhaleMovement>();
+    }
+
+    #region Callbacks
+    private void Start()
+    {
+        NewCallbackHandler.instance.setDestination += SetDestination;
+    }
+    private void OnDestroy()
+    {
+        NewCallbackHandler.instance.setDestination -= SetDestination;
+    }
+    #endregion Callbacks
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            SetDestination();
-        }
-
         if (enabled)
         {
             // get direction to height reference
             Vector3 dir = target - transform.position;
 
-            if (GetComponent<NewOrbitScript>().dist < 0.1f)
+            if (orbit.dist < 0.1f)
             {
+
+                Debug.DrawRay(transform.position, dir, Color.black);
                 // Check if hit anything between here and pickup position
                 RaycastHit hit;
-                if (Physics.SphereCast(transform.position, GetComponent<CapsuleCollider>().radius, dir, out hit, Mathf.Infinity))
+                if (Physics.SphereCast(transform.position, GetComponent<CapsuleCollider>().radius * 2.0f, dir, out hit, Vector3.Distance(transform.position, target) + 3.0f))
                 {
-                    homing = false;
-                    return;
-                }
-                else
-                {
-                    homing = true;
-                    GetComponent<NewOrbitScript>().enabled = false;
+                    if (hit.transform.gameObject != orbit.orbit)
+                    {
+                        homing = false;
+                        return;
+                    }
+                    else
+                    {
+                        homing = true;
+                        orbit.enabled = false;
+                    }
                 }
             }
 
             if (homing)
             {
-                GetComponent<NewWhaleMovement>().moveSpeed = 5.0f;
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * GetComponent<NewOrbitScript>().rotSpeed);
-            }
+                float dist = Vector3.Distance(transform.position, target);
+                whale.moveSpeed = 5.0f * Mathf.Clamp01(dist/approachDistance);
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * orbit.rotSpeed);
 
-            if (Vector3.Distance(transform.position, target) < 2.0f)
-            {
-                enabled = false;
-                homing = false;
-                GetComponent<NewWhaleMovement>().moveSpeed = 0.0f;
+                if (dist < 2.0f)
+                {
+                    enabled = false;
+                    homing = false;
+                }
             }
         }
     }
 
-    public void SetDestination()
+    public void SetDestination(GameObject _target)
     {
-        orbit = GetComponent<NewOrbitScript>().orbit;
-        target = new Vector3(pickUpTarget.transform.position.x, orbit.transform.position.y + 20.0f, pickUpTarget.transform.position.z);
+        heightRef = orbit.orbit;
+        target = new Vector3(_target.transform.position.x, heightRef.transform.position.y + 20.0f, _target.transform.position.z);
         enabled = true;
     }
 }

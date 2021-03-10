@@ -34,6 +34,8 @@ public class NewWhaleMovement : MonoBehaviour
     NewOrbitScript orbit;
     NewCharacter cc;
 
+    GameObject cachedHeightRef;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -170,7 +172,7 @@ public class NewWhaleMovement : MonoBehaviour
         buckTimer = 2.0f;
 
         NewIslandScript temp = (hit.GetComponent<NewIslandScript>()) ? hit.GetComponent<NewIslandScript>() : hit.GetComponentInParent<NewIslandScript>();
-        orbit.SetupOrbit(temp.heightRef);
+        cachedHeightRef = temp.heightRef;
 
         EventManager.TriggerEvent("Crash");
     }
@@ -193,7 +195,7 @@ public class NewWhaleMovement : MonoBehaviour
             if (buckTimer <= 0)
             {
                 tooClose = false;
-                orbit.enabled = true;
+                orbit.SetOrbit(cachedHeightRef);
             }
         }
         else
