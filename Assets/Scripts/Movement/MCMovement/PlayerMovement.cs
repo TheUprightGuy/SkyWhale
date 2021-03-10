@@ -180,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PlayerStates.GRAPPLE:
                 {
-
+                    gHook.ApplyForces();
                 }
                 break;
             case PlayerStates.CLIMBING:
@@ -350,7 +350,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    Vector3 collidedPoint = Vector3.zero;
     Vector3 collidedprevPos = Vector3.zero;
     Transform collidedObj;
     Vector3 GetCollidedFrameOffset() //The movement vector since the last frame;
