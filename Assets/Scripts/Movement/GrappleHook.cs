@@ -4,14 +4,25 @@ using UnityEngine;
 
 public class GrappleHook : MonoBehaviour
 {
-    float storedSpringVal;
-    Rigidbody storedRB;
-
+    [Header("Dependencies")]
     public GameObject Hook;
     public Transform CamTarget;
-    public Vector3 AimOffset;
+    public Camera CamToShootFrom;
 
+    [Header("Grapple")]
+    public LayerMask GrappleableLayers;
+    public float MaxGrappleDist = 10.0f;
+
+    [Header("Camera")]
+    public Vector3 AimOffset;
     public float CamTransitionTime = 0.5f;
+
+    [HideInInspector]
+    public bool GrappleActive = false;
+    float storedSpringVal;
+    Rigidbody storedRB;
+    SpringJoint storedSJ;
+
     Vector3 cachedTargetPos;
     Vector3 targetStartOffset;
     Vector3 calcGotoPos;
@@ -21,41 +32,64 @@ public class GrappleHook : MonoBehaviour
         targetStartOffset = ( CamTarget.position - transform.position);
         cachedTargetPos = CamTarget.position;
         calcGotoPos = transform.position + AimOffset;
+        storedSJ = Hook.GetComponent<SpringJoint>();
         SpringJointActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (!GrappleActive)
         {
-            ToggleAimPos(true);
-        }
-
-        if (Input.GetMouseButton(1) && LerpDone)
-        {
-            Debug.Log("Yep");
-        }
-        if (Input.GetMouseButtonUp(1))
-        {
-           ToggleAimPos(false);
-        }
-    }
-
-    void SpringJointActive(bool _active)
-    {
-        if (_active)
-        {
-            Hook.SetActive(true);
+            if (Input.GetMouseButtonDown(1))
+            {
+                ToggleAimPos(true);
+            }
+            if (Input.GetMouseButtonDown(0) && Input.GetMouseButton(1) && LerpDone)
+            {
+                FireHook();
+            }
+            if (Input.GetMouseButtonUp(1))
+            {
+                ToggleAimPos(false);
+            }
         }
         else
         {
-            Hook.SetActive(false);
+            if (Input.GetMouseButtonDown(0))
+            {
+                RetractHook();
+                GrappleActive = false;
+            }
+        }
+
+    }
+
+    void FireHook()
+    {
+        Ray screenRay = CamToShootFrom.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
+
+        RaycastHit hit;
+        if (Physics.Raycast(screenRay, out hit, MaxGrappleDist, GrappleableLayers.value))
+        {
+            SpringJointActive(true);
+            Hook.transform.position = hit.point;
+            storedSJ.maxDistance = hit.distance;
         }
     }
+
+    void RetractHook()
+    {
+        SpringJointActive(false);
+    }
+    void SpringJointActive(bool _active)
+    {
+        Hook.SetActive(_active);
+    }
+
+
     bool LerpDone = true;
     bool MovingToAim = true;
-
     //No one look in here
     //It works okay?
     IEnumerator MoveTargetToPos()
@@ -106,5 +140,13 @@ public class GrappleHook : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
+        Ray screenRay = CamToShootFrom.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
+
+
+        RaycastHit hit;
+        if (Physics.Raycast(screenRay, out hit, MaxGrappleDist, GrappleableLayers.value))
+        {
+            Gizmos.DrawSphere(hit.point, 0.1f);
+        }
     }
 }

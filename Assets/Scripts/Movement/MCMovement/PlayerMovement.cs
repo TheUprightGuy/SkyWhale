@@ -8,15 +8,17 @@ public class PlayerMovement : MonoBehaviour
     {
         IDLE,
         MOVING,
-        CLIMBING,
         JUMPING,
-        FALLING
+        FALLING,
+        CLIMBING,
+        GRAPPLE
     }
 
 
-    VirtualInputs VInputs;
+    VirtualInputs vInputs;
     Rigidbody RB;
     Animator anims;
+    GrappleHook gHook;
 
     [Tooltip("This can't be set, and sets to IDLE on Start call, so no touchy")]
     public PlayerStates PlayerState;
@@ -64,14 +66,14 @@ public class PlayerMovement : MonoBehaviour
 
         RB = GetComponent<Rigidbody>();
         anims = GetComponentInChildren<Animator>();
-
-        VInputs = GetComponent<VirtualInputs>();
-        VInputs.GetInputListener("Forward").MethodToCall.AddListener(Forward);
-        VInputs.GetInputListener("Back").MethodToCall.AddListener(Back);
-        VInputs.GetInputListener("Left").MethodToCall.AddListener(Left);
-        VInputs.GetInputListener("Right").MethodToCall.AddListener(Right);
-        VInputs.GetInputListener("Run").MethodToCall.AddListener(Run);
-        VInputs.GetInputListener("Jump").MethodToCall.AddListener(Jump);
+        gHook = GetComponent<GrappleHook>();
+        vInputs = GetComponent<VirtualInputs>();
+        vInputs.GetInputListener("Forward").MethodToCall.AddListener(Forward);
+        vInputs.GetInputListener("Back").MethodToCall.AddListener(Back);
+        vInputs.GetInputListener("Left").MethodToCall.AddListener(Left);
+        vInputs.GetInputListener("Right").MethodToCall.AddListener(Right);
+        vInputs.GetInputListener("Run").MethodToCall.AddListener(Run);
+        vInputs.GetInputListener("Jump").MethodToCall.AddListener(Jump);
 
         OnValidate();
     }
@@ -82,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
         SetAnimations();
     }
 
-    int stepsSinceGrounded = 0;
     Vector3 inputAxis = Vector3.zero;
     void FixedUpdate()
     {
@@ -112,7 +113,6 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerState = PlayerStates.MOVING;
         }
-
         if (FALLINGCheck())
         {
             PlayerState = PlayerStates.FALLING;
@@ -122,8 +122,10 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerState = PlayerStates.JUMPING;
         }
-
-        
+        if (GRAPPLECheck())
+        {
+            PlayerState = PlayerStates.GRAPPLE;
+        }
         if (CLIMBINGCheck()) //Currently disabled
         {
             PlayerState = PlayerStates.CLIMBING;
@@ -141,7 +143,12 @@ public class PlayerMovement : MonoBehaviour
     {
         return RB.velocity.magnitude > 0;
     }
-
+     
+    bool GRAPPLECheck()
+    {
+        //Only check if available, currently hooked, and on the ground to allow grapple movement
+        return (gHook != null && gHook.enabled && gHook.GrappleActive && !IsGrounded());
+    }
     bool CLIMBINGCheck()//ToDo Later when implementing climbing
     {
         return false;
@@ -169,6 +176,11 @@ public class PlayerMovement : MonoBehaviour
                 if (inputAxis.y > 0)
                 {
                     Jump();
+                }
+                break;
+            case PlayerStates.GRAPPLE:
+                {
+
                 }
                 break;
             case PlayerStates.CLIMBING:
