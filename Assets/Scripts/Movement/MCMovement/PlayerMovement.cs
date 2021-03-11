@@ -8,15 +8,17 @@ public class PlayerMovement : MonoBehaviour
     {
         IDLE,
         MOVING,
-        CLIMBING,
         JUMPING,
-        FALLING
+        FALLING,
+        CLIMBING,
+        GRAPPLE
     }
 
 
-    VirtualInputs VInputs;
+    VirtualInputs vInputs;
     Rigidbody RB;
     Animator anims;
+    GrappleHook gHook;
 
     [Tooltip("This can't be set, and sets to IDLE on Start call, so no touchy")]
     public PlayerStates PlayerState;
@@ -51,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 GroundCheckStartOffset = Vector3.zero;
 
     [Header("Misc")]
-    public bool ParentToGround = true;
+    public bool LocalToGround = true;
 
 
 
@@ -64,14 +66,14 @@ public class PlayerMovement : MonoBehaviour
 
         RB = GetComponent<Rigidbody>();
         anims = GetComponentInChildren<Animator>();
-
-        VInputs = GetComponent<VirtualInputs>();
-        VInputs.GetInputListener("Forward").MethodToCall.AddListener(Forward);
-        VInputs.GetInputListener("Back").MethodToCall.AddListener(Back);
-        VInputs.GetInputListener("Left").MethodToCall.AddListener(Left);
-        VInputs.GetInputListener("Right").MethodToCall.AddListener(Right);
-        VInputs.GetInputListener("Run").MethodToCall.AddListener(Run);
-        VInputs.GetInputListener("Jump").MethodToCall.AddListener(Jump);
+        gHook = GetComponent<GrappleHook>();
+        vInputs = GetComponent<VirtualInputs>();
+        vInputs.GetInputListener("Forward").MethodToCall.AddListener(Forward);
+        vInputs.GetInputListener("Back").MethodToCall.AddListener(Back);
+        vInputs.GetInputListener("Left").MethodToCall.AddListener(Left);
+        vInputs.GetInputListener("Right").MethodToCall.AddListener(Right);
+        vInputs.GetInputListener("Run").MethodToCall.AddListener(Run);
+        vInputs.GetInputListener("Jump").MethodToCall.AddListener(Jump);
 
         OnValidate();
     }
@@ -82,12 +84,16 @@ public class PlayerMovement : MonoBehaviour
         SetAnimations();
     }
 
-    int stepsSinceGrounded = 0;
     Vector3 inputAxis = Vector3.zero;
     void FixedUpdate()
     {
         SetCurrentPlayerState();
         HandleMovement();
+
+        if (collidedObj != null) //If attached to something
+        {
+            collidedprevPos = collidedObj.position;
+        }
     }
 
     float minGroundDotProduct;
@@ -107,7 +113,6 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerState = PlayerStates.MOVING;
         }
-
         if (FALLINGCheck())
         {
             PlayerState = PlayerStates.FALLING;
@@ -117,8 +122,10 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerState = PlayerStates.JUMPING;
         }
-
-        
+        if (GRAPPLECheck())
+        {
+            PlayerState = PlayerStates.GRAPPLE;
+        }
         if (CLIMBINGCheck()) //Currently disabled
         {
             PlayerState = PlayerStates.CLIMBING;
@@ -136,7 +143,12 @@ public class PlayerMovement : MonoBehaviour
     {
         return RB.velocity.magnitude > 0;
     }
-
+     
+    bool GRAPPLECheck()
+    {
+        //Only check if available, currently hooked, and on the ground to allow grapple movement
+        return (gHook != null && gHook.enabled && gHook.GrappleActive && !IsGrounded());
+    }
     bool CLIMBINGCheck()//ToDo Later when implementing climbing
     {
         return false;
@@ -166,13 +178,18 @@ public class PlayerMovement : MonoBehaviour
                     Jump();
                 }
                 break;
+            case PlayerStates.GRAPPLE:
+                {
+                    gHook.ApplyForces();
+                }
+                break;
             case PlayerStates.CLIMBING:
                 break;
             case PlayerStates.JUMPING:
             case PlayerStates.FALLING:
-                if (ParentToGround)
+                if (LocalToGround)
                 {
-                    transform.parent = null;
+                    collidedObj = null;
                     
                 }
                 MoveOnXZ(inAirSpeed, maxAirAcceleration);
@@ -205,13 +222,14 @@ public class PlayerMovement : MonoBehaviour
         float newZ =
             Mathf.MoveTowards(currentZ, desiredVel.z, maxSpeedChange);
 
+
         RB.velocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ);
 
-        if (!IsGrounded() && PlayerState == PlayerStates.MOVING)
+        if (collidedObj != null)
         {
-            //RB.velocity -= groundContactNormal.normalized * stickForce;
+            Vector3 offset = GetCollidedFrameOffset();
+            RB.MovePosition(transform.position + offset);
         }
-
     }
     void Jump()
     {
@@ -297,29 +315,49 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        
         EvalCollision(collision);
     }
 
     private void OnCollisionStay(Collision collision)
     {
-        EvalCollision(collision);
+        EvalCollision(collision, 1);
     }
 
     bool onGround;
     Vector3 groundContactNormal;
-    private void EvalCollision(Collision collision)
+
+    /// <summary>
+    /// Evaluates when this collider hits some other collider
+    /// </summary>
+    /// <param name="collision">The Collision struct from the OnCollide Funcs</param>
+    /// <param name="collisionEvent">0 = Enter, 1 = Stay, 2 = Exit</param>
+    private void EvalCollision(Collision collision, int collisionEvent = 0)
     {
         Vector3 normal = collision.GetContact(0).normal;
         if (normal.y >= minGroundDotProduct)
         {
             groundContactNormal = normal;
-            if (ParentToGround)
+            if (LocalToGround)
             {
-                transform.parent = collision.transform;
+                collidedObj = collision.transform;
+                if (collisionEvent == 0) //OnEnter
+                {
+                    collidedprevPos = collision.transform.position;
+                }
             }
             
         }
     }
+
+    Vector3 collidedprevPos = Vector3.zero;
+    Transform collidedObj;
+    Vector3 GetCollidedFrameOffset() //The movement vector since the last frame;
+    {
+        return (collidedObj == null) ? (Vector3.zero) :
+            (collidedObj.position - collidedprevPos);
+    }
+
     #region Utility
 
     private void OnDrawGizmos()
