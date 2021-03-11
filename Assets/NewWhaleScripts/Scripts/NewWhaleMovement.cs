@@ -48,72 +48,83 @@ public class NewWhaleMovement : MonoBehaviour
     {
         orbit.enabled = false;
         desiredVec = body.transform.eulerAngles;
+
+        VirtualInputs.GetInputListener(InputType.WHALE, "YawLeft").MethodToCall.AddListener(YawLeft);
+        VirtualInputs.GetInputListener(InputType.WHALE, "YawRight").MethodToCall.AddListener(YawRight);
+        VirtualInputs.GetInputListener(InputType.WHALE, "PitchDown").MethodToCall.AddListener(PitchDown);
+        VirtualInputs.GetInputListener(InputType.WHALE, "PitchUp").MethodToCall.AddListener(PitchUp);
+        VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").MethodToCall.AddListener(Thrust);
     }
 
-    public void TurningControl()
+    bool yawChange = false;
+    void YawRight(InputState type)
     {
-        // Yaw
-        if (Input.GetKey(KeyCode.D))
+        if (myTurn + Time.deltaTime * turnSpeed < 40)
         {
-
-            if (myTurn + Time.deltaTime * turnSpeed < 40)
-            {
-                myTurn += Time.deltaTime * turnSpeed;
-            }
-
-            if (myRoll - Time.deltaTime * rollSpeed > -10)
-            {
-                myRoll -= Time.deltaTime * rollSpeed;
-            }
+            myTurn += Time.deltaTime * turnSpeed;
         }
-        else if (Input.GetKey(KeyCode.A))
+
+        if (myRoll - Time.deltaTime * rollSpeed > -10)
         {
-            if (myTurn - Time.deltaTime * turnSpeed > -40)
-            {
-                myTurn -= Time.deltaTime * turnSpeed;
-            }
-
-            if (myRoll + Time.deltaTime * rollSpeed < 10)
-            {
-                myRoll += Time.deltaTime * rollSpeed;
-            }
+            myRoll -= Time.deltaTime * rollSpeed;
         }
-        else
+        yawChange = true;
+    }
+    void YawLeft(InputState type)
+    {
+        if (myTurn - Time.deltaTime * turnSpeed > -40)
+        {
+            myTurn -= Time.deltaTime * turnSpeed;
+        }
+
+        if (myRoll + Time.deltaTime * rollSpeed < 10)
+        {
+            myRoll += Time.deltaTime * rollSpeed;
+        }
+        yawChange = true;
+    }
+
+    bool pitchChange = false;
+    void PitchDown(InputState type)
+    {
+        if (myPitch + Time.deltaTime * liftSpeed < 30)
+        {
+            myPitch += Time.deltaTime * liftSpeed;
+        }
+        pitchChange = true;
+    }
+    void PitchUp(InputState type)
+    {
+        if (myPitch - Time.deltaTime * liftSpeed > -30)
+        {
+            myPitch -= Time.deltaTime * liftSpeed;
+        }
+        pitchChange = true;
+    }
+
+    bool thrustChange = false;
+    private void Thrust(InputState type)
+    {
+        if (moveSpeed < maxSpeed)
+        {
+            moveSpeed += accelSpeed * Time.deltaTime;
+        }
+
+        thrustChange = true;
+    }
+
+    public void MovementCorrections()
+    {
+        if (!yawChange)
         {
             myTurn = Mathf.Lerp(myTurn, 0, Time.deltaTime * turnSpeed);
             myRoll = Mathf.Lerp(myRoll, 0, Time.deltaTime * rollSpeed * 5);
         }
-        // Pitch
-        if (Input.GetKey(KeyCode.W))
-        {
-            if (myPitch + Time.deltaTime * liftSpeed < 30)
-            {
-                myPitch += Time.deltaTime * liftSpeed;
-            }
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            if (myPitch - Time.deltaTime * liftSpeed > -30)
-            {
-                myPitch -= Time.deltaTime * liftSpeed;
-            }
-        }
-        else
+        if (!pitchChange)
         {
             myPitch = Mathf.Lerp(myPitch, 0.0f, Time.deltaTime);
         }
-    }
-    public void SpeedControl()
-    {
-        // Move
-        if (Input.GetKey(InputHandler.instance.move))
-        {
-            if (moveSpeed < maxSpeed)
-            {
-                moveSpeed += accelSpeed * Time.deltaTime;
-            }
-        }
-        else
+        if (!thrustChange)
         {
             if (moveSpeed > maxSpeed / 2)
             {
@@ -128,6 +139,10 @@ public class NewWhaleMovement : MonoBehaviour
                 moveSpeed -= accelSpeed * Time.deltaTime * 0.1f;
             }
         }
+
+        yawChange = false;
+        pitchChange = false;
+        thrustChange = false;
     }
 
     // Update is called once per frame
@@ -142,8 +157,7 @@ public class NewWhaleMovement : MonoBehaviour
 
         if (control)
         {
-            TurningControl();
-            SpeedControl();
+            MovementCorrections();
         }
         GetDistance();
     }

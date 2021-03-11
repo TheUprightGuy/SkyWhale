@@ -13770,11 +13770,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ea7ab3b4cacfcd4e921320a38757eeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbit: {fileID: 0}
-  pickUpTarget: {fileID: 0}
+  approachDistance: 0
   enabled: 0
-  homing: 0
-  target: {x: 0, y: 0, z: 0}
 --- !u!1 &8801218018975107171
 GameObject:
   m_ObjectHideFlags: 0
@@ -21438,6 +21435,7 @@ GameObject:
   - component: {fileID: 8801218019726215510}
   - component: {fileID: 8801218019726215511}
   - component: {fileID: 8801218019726215509}
+  - component: {fileID: 8279394046851503917}
   m_Layer: 0
   m_Name: WhaleCamera
   m_TagString: Untagged
@@ -21546,6 +21544,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basePosition: {fileID: 8801218019192160226}
+--- !u!81 &8279394046851503917
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8801218019726215593}
+  m_Enabled: 1
 --- !u!1 &8801218019730885830
 GameObject:
   m_ObjectHideFlags: 0

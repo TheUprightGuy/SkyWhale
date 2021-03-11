@@ -1413,6 +1413,75 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1001 &510899170560910373
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 510899170216353593, guid: a7e9c6f323528d5449b8552701b119d3,
+        type: 3}
+      propertyPath: m_Name
+      value: InputHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 510899170216353595, guid: a7e9c6f323528d5449b8552701b119d3,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -5.527582
+      objectReference: {fileID: 0}
+    - target: {fileID: 510899170216353595, guid: a7e9c6f323528d5449b8552701b119d3,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.200678
+      objectReference: {fileID: 0}
+    - target: {fileID: 510899170216353595, guid: a7e9c6f323528d5449b8552701b119d3,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.75568
+      objectReference: {fileID: 0}
+    - target: {fileID: 510899170216353595, guid: a7e9c6f323528d5449b8552701b119d3,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 510899170216353595, guid: a7e9c6f323528d5449b8552701b119d3,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 510899170216353595, guid: a7e9c6f323528d5449b8552701b119d3,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 510899170216353595, guid: a7e9c6f323528d5449b8552701b119d3,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 510899170216353595, guid: a7e9c6f323528d5449b8552701b119d3,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 510899170216353595, guid: a7e9c6f323528d5449b8552701b119d3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 510899170216353595, guid: a7e9c6f323528d5449b8552701b119d3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 510899170216353595, guid: a7e9c6f323528d5449b8552701b119d3,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a7e9c6f323528d5449b8552701b119d3, type: 3}
 --- !u!1 &519366423414159101
 GameObject:
   m_ObjectHideFlags: 0
@@ -2944,7 +3013,6 @@ GameObject:
   - component: {fileID: 5853718423908297843}
   - component: {fileID: 5853718423908297846}
   - component: {fileID: 5853718423908297847}
-  - component: {fileID: 5853718423908297802}
   - component: {fileID: 5853718423908297803}
   - component: {fileID: 5853718423908297805}
   m_Layer: 14
@@ -2954,67 +3022,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &5853718423908297802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5853718423908297801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ae37bc9c3a335c418d82a6c591e8ca5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerInputs:
-  - NameForInput: Forward
-    KeyToListen: 119
-    CallOnKeyDown: 0
-    CallOnKeyHeld: 1
-    CallOnKeyUp: 0
-    MethodToCall:
-      m_PersistentCalls:
-        m_Calls: []
-  - NameForInput: Back
-    KeyToListen: 115
-    CallOnKeyDown: 0
-    CallOnKeyHeld: 1
-    CallOnKeyUp: 0
-    MethodToCall:
-      m_PersistentCalls:
-        m_Calls: []
-  - NameForInput: Left
-    KeyToListen: 97
-    CallOnKeyDown: 0
-    CallOnKeyHeld: 1
-    CallOnKeyUp: 0
-    MethodToCall:
-      m_PersistentCalls:
-        m_Calls: []
-  - NameForInput: Right
-    KeyToListen: 100
-    CallOnKeyDown: 0
-    CallOnKeyHeld: 1
-    CallOnKeyUp: 0
-    MethodToCall:
-      m_PersistentCalls:
-        m_Calls: []
-  - NameForInput: Run
-    KeyToListen: 304
-    CallOnKeyDown: 1
-    CallOnKeyHeld: 0
-    CallOnKeyUp: 1
-    MethodToCall:
-      m_PersistentCalls:
-        m_Calls: []
-  - NameForInput: Jump
-    KeyToListen: 32
-    CallOnKeyDown: 1
-    CallOnKeyHeld: 0
-    CallOnKeyUp: 0
-    MethodToCall:
-      m_PersistentCalls:
-        m_Calls: []
 --- !u!114 &5853718423908297803
 MonoBehaviour:
   m_ObjectHideFlags: 0

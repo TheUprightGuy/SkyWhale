@@ -14,8 +14,6 @@ public class PlayerMovement : MonoBehaviour
         GRAPPLE
     }
 
-
-    VirtualInputs vInputs;
     Rigidbody RB;
     Animator anims;
     GrappleHook gHook;
@@ -67,13 +65,12 @@ public class PlayerMovement : MonoBehaviour
         RB = GetComponent<Rigidbody>();
         anims = GetComponentInChildren<Animator>();
         gHook = GetComponent<GrappleHook>();
-        vInputs = GetComponent<VirtualInputs>();
-        vInputs.GetInputListener("Forward").MethodToCall.AddListener(Forward);
-        vInputs.GetInputListener("Back").MethodToCall.AddListener(Back);
-        vInputs.GetInputListener("Left").MethodToCall.AddListener(Left);
-        vInputs.GetInputListener("Right").MethodToCall.AddListener(Right);
-        vInputs.GetInputListener("Run").MethodToCall.AddListener(Run);
-        vInputs.GetInputListener("Jump").MethodToCall.AddListener(Jump);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Forward").MethodToCall.AddListener(Forward);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Back").MethodToCall.AddListener(Back);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Left").MethodToCall.AddListener(Left);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Right").MethodToCall.AddListener(Right);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Run").MethodToCall.AddListener(Run);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(Jump);
 
         OnValidate();
     }
@@ -258,12 +255,10 @@ public class PlayerMovement : MonoBehaviour
     void Back(InputState type)
     {
         inputAxis.x = -1;
-
     }
     void Left(InputState type)
     {
         inputAxis.z = 1;
-
     }
     void Right(InputState type)
     {
@@ -274,7 +269,6 @@ public class PlayerMovement : MonoBehaviour
         if (PlayerState == PlayerStates.MOVING)
         {
             anims.SetTrigger("Jump");
-
         }
 
         inputAxis.y = 1;
