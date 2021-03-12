@@ -180,7 +180,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PlayerStates.GRAPPLE:
                 {
-                    gHook.ApplyForces();
+                    gHook.ApplyForces(inputAxis);
                 }
                 break;
             case PlayerStates.CLIMBING:
@@ -242,10 +242,28 @@ public class PlayerMovement : MonoBehaviour
 
     void SetAnimations()
     {
-        Vector3 flatRBV = RB.velocity;
-        flatRBV.y = 0.0f;
-        flatRBV = Vector3.ClampMagnitude(flatRBV, setSpeed);
-        anims.SetFloat("MovementSpeed", flatRBV.magnitude / runSpeed);
+        switch (PlayerState)
+        {
+            case PlayerStates.IDLE:
+                break;
+            case PlayerStates.MOVING:
+
+                Vector3 flatRBV = RB.velocity;
+                flatRBV.y = 0.0f;
+                flatRBV = Vector3.ClampMagnitude(flatRBV, setSpeed);
+                anims.SetFloat("MovementSpeed", flatRBV.magnitude / runSpeed);
+                break;
+            case PlayerStates.JUMPING:
+                break;
+            case PlayerStates.FALLING:
+                break;
+            case PlayerStates.CLIMBING:
+                break;
+            case PlayerStates.GRAPPLE:
+                break;
+            default:
+                break;
+        }
 
     }
 

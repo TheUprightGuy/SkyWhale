@@ -8,9 +8,13 @@ public class GrappleHook : MonoBehaviour
     public GameObject Hook;
     public Transform CamTarget;
     public Camera CamToShootFrom;
-
+    public GameObject GrappleReticule;
+    
     [Header("Grapple")]
     public LayerMask GrappleableLayers;
+    public float SwingForce = 8.0f;
+    public float RetractExtendSpeed = 5.0f;
+    public float MinGrappleDist = 0.5f;
     public float MaxGrappleDist = 10.0f;
 
     [Header("Camera")]
@@ -20,45 +24,68 @@ public class GrappleHook : MonoBehaviour
     [HideInInspector]
     public bool GrappleActive = false;
     float storedSpringVal;
-    Rigidbody storedRB;
-    SpringJoint storedSJ;
+    Rigidbody cachedRB;
+    SpringJoint hookSJ;
+    LineRenderer hookLR;
 
     Vector3 cachedTargetPos;
     Vector3 targetStartOffset;
     Vector3 calcGotoPos;
+
+    Vector3 collidedprevPos = Vector3.zero;
+    Transform collidedObj = null; //latched onto obj
+    //The movement vector since the last frame;
+    Vector3 CollidedFrameOffset => (collidedObj == null) ? (Vector3.zero) : (collidedObj.position - collidedprevPos);
+
+
     // Start is called before the first frame update
     void Start()
     {
         targetStartOffset = ( CamTarget.position - transform.position);
         cachedTargetPos = CamTarget.position;
         calcGotoPos = transform.position + AimOffset;
-        storedSJ = Hook.GetComponent<SpringJoint>();
+        hookSJ = Hook.GetComponent<SpringJoint>();
+        cachedRB = GetComponent<Rigidbody>();
+        hookLR = Hook.GetComponent<LineRenderer>();
         SpringJointActive(false);
+        
+        VirtualInputs vInputs = GetComponent<VirtualInputs>();
+        vInputs.GetInputListener("GrappleRetract").MethodToCall.AddListener(GrappleRetract);
+        vInputs.GetInputListener("GrappleExtend").MethodToCall.AddListener(GrappleExtend);
     }
 
+    private void Update()
+    {
+        if (hookLR != null)//Got a line renderer
+        {
+            UpdateLine();
+        }
+
+        if (Input.GetMouseButtonDown(1))//Aiming with right click
+        {
+            ToggleAimPos(true);
+        }
+
+        if (Input.GetMouseButtonUp(1))//Stopping aiming
+        {
+            ToggleAimPos(false);
+        }
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
         if (!GrappleActive)//If no grapple is there
         {
-            if (Input.GetMouseButtonDown(1))//Aiming with right click
-            {
-                ToggleAimPos(true);
-            }
             if (Input.GetMouseButtonDown(0) && Input.GetMouseButton(1) && LerpDone) //Aim done, rightclick held, and left click pressed
             {
                 FireHook();
-            }
-            if (Input.GetMouseButtonUp(1))//Stopping aiming
-            {
-                ToggleAimPos(false);
             }
         }
         else//If grapple is already there
         {
             if (collidedObj != null)
             {
-                Vector3 offset = GetCollidedFrameOffset();
+                Vector3 offset = CollidedFrameOffset;
                 Hook.GetComponent<Rigidbody>().MovePosition(Hook.transform.position + offset); //apply movement with any moving objects latched too
             }
 
@@ -68,6 +95,7 @@ public class GrappleHook : MonoBehaviour
                 
             }
         }
+
 
         if (collidedObj != null) //If attached to something
         {
@@ -84,7 +112,7 @@ public class GrappleHook : MonoBehaviour
         {
             SpringJointActive(true);
             Hook.transform.position = hit.point;
-            storedSJ.maxDistance = Vector3.Distance(transform.position, Hook.transform.position);//Distance for the hook to go from player to hook
+            hookSJ.maxDistance = Vector3.Distance(transform.position, Hook.transform.position);//Distance for the hook to go from player to hook
             GrappleActive = true;
             collidedObj = hit.transform;
             collidedprevPos = collidedObj.position;
@@ -97,23 +125,33 @@ public class GrappleHook : MonoBehaviour
         GrappleActive = false;
     }
 
-    public void ApplyForces()
+    public void ApplyForces(Vector3 inputAxis)
     {
+        Vector3 playerToHook = (Hook.transform.position - transform.position).normalized;
+        //Place all forces on the place of the rope
 
+        Vector3 xAxis = transform.forward;//Vector3.ProjectOnPlane(transform.forward, playerToHook).normalized;
+        xAxis *= inputAxis.x;
+
+        Vector3 zAxis = -transform.right; //Vector3.ProjectOnPlane(-transform.right, playerToHook).normalized;
+        zAxis *= inputAxis.z;
+
+        Vector3 inputDir = (xAxis + zAxis).normalized;
+        //Ensure this can never have a force greater than gravity.
+        inputDir = Vector3.ClampMagnitude(inputDir * SwingForce, Physics.gravity.magnitude);
+        cachedRB.AddForce(inputDir);
     }
 
-    Vector3 collidedprevPos = Vector3.zero;
-    Transform collidedObj = null; //latched onto obj
-    Vector3 GetCollidedFrameOffset() //The movement vector since the last frame;
-    {
-        return (collidedObj == null) ? (Vector3.zero) :
-            (collidedObj.position - collidedprevPos);
-    }
     void SpringJointActive(bool _active)
     {
         Hook.SetActive(_active);
     }
 
+    void UpdateLine()
+    {
+        hookLR.SetPosition(0, Hook.transform.position);
+        hookLR.SetPosition(1, transform.position);
+    }
 
     bool LerpDone = true;
     bool MovingToAim = true;
@@ -159,21 +197,29 @@ public class GrappleHook : MonoBehaviour
         StartCoroutine(cor);
     }
 
-    //private void OnDisable()
-    //{
-    //    Hook.SetActive(false);
-    //}
-    
+
+    void GrappleRetract(InputState _event)
+    {
+        hookSJ.maxDistance = Mathf.Max(hookSJ.maxDistance - (RetractExtendSpeed * Time.deltaTime), MinGrappleDist);
+    }
+
+    void GrappleExtend(InputState _event)
+    {
+        hookSJ.maxDistance = Mathf.Min(hookSJ.maxDistance + (RetractExtendSpeed * Time.deltaTime), MaxGrappleDist);
+    }
+    private void OnDisable()
+    {
+        Hook.SetActive(false);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
-        Ray screenRay = CamToShootFrom.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
-
-
-        RaycastHit hit;
-        if (Physics.Raycast(CamToShootFrom.transform.position,CamToShootFrom.transform.forward, out hit, MaxGrappleDist, GrappleableLayers.value))
-        {
-            Gizmos.DrawSphere(hit.point, 0.1f);
-        }
+        //Ray screenRay = CamToShootFrom.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
+        //RaycastHit hit;
+        //if (Physics.Raycast(CamToShootFrom.transform.position,CamToShootFrom.transform.forward, out hit, MaxGrappleDist, GrappleableLayers.value))
+        //{
+        //    Gizmos.DrawSphere(hit.point, 0.1f);
+        //}
     }
 }
