@@ -5,10 +5,12 @@ using UnityEngine;
 public class ThirdPersonCamera : MonoBehaviour
 {
     [Header("Dependencies")]
-    public Transform target;
-    public Transform PlayerObj;
+    public Transform targetTrans;
+    public Transform PlayerTrans;
 
     [Header("Settings")]
+    public Vector3 startOffset = Vector3.zero;
+    
     public bool invertX = false;
     public bool invertY = false;
 
@@ -31,6 +33,8 @@ public class ThirdPersonCamera : MonoBehaviour
     public float RayLength = 5.0f;
     public float CastWidth = 0.25f;
     public float CameraAcceleration = 0.5f;
+
+    public bool RaycastToPlayer = true;
     [Header("Debug")]
     [Tooltip("Press ` to enable/disable cursor locking.")]
     public bool UnlockCameraKeyBind = true;
@@ -42,9 +46,9 @@ public class ThirdPersonCamera : MonoBehaviour
     
     void Start()
     {
-        offset = target.position - transform.position;
-        storedPos.x = PlayerObj.eulerAngles.y;
-        storedPos.y = PlayerObj.eulerAngles.x;
+        offset = startOffset; // targetTrans.position - transform.position;
+        storedPos.x = PlayerTrans.eulerAngles.y;
+        storedPos.y = PlayerTrans.eulerAngles.x;
         storedPos.z = defaultZoom;
 
         Cursor.lockState = CursorLockMode.Locked;
@@ -82,7 +86,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
             //Rotate Target
 
-            float desiredAngleY = target.eulerAngles.y;
+            float desiredAngleY = targetTrans.eulerAngles.y;
 
             //Get the current stored Y angle and add mouse axis to it
             storedPos.y += vertical;
@@ -93,7 +97,7 @@ public class ThirdPersonCamera : MonoBehaviour
            
             if (!Input.GetKey(KeyCode.LeftAlt) && !waitingToReturn) //Not holding rightclick, allow player rotation
             {
-                PlayerObj.Rotate(0, horizontal, 0);//Rotate player along with the  camera
+                PlayerTrans.Rotate(0, horizontal, 0);//Rotate player along with the  camera
             }
             if (Input.GetKeyUp(KeyCode.LeftAlt))//If rightclick released, snap back to position
             {
@@ -102,9 +106,9 @@ public class ThirdPersonCamera : MonoBehaviour
             }
             if (waitingToReturn)
             {
-                if (storedPos.x != target.eulerAngles.y)
+                if (storedPos.x != targetTrans.eulerAngles.y)
                 {
-                    storedPos.x = Mathf.MoveTowardsAngle(storedPos.x, target.eulerAngles.y, CameraSnapAcceleration * Time.deltaTime);
+                    storedPos.x = Mathf.MoveTowardsAngle(storedPos.x, targetTrans.eulerAngles.y, CameraSnapAcceleration * Time.deltaTime);
                 }
                 else
                 {
@@ -132,23 +136,29 @@ public class ThirdPersonCamera : MonoBehaviour
 
             RaycastHit fronthit;
 
-            float currentDist = Vector3.Distance(target.position, transform.position);
+            float currentDist = Vector3.Distance(targetTrans.position, transform.position);
+
+                                            
+            Vector3 newPosBeforCollision = targetTrans.position - (newDir * newDist);
+            Vector3 playerToNewPos = newPosBeforCollision - PlayerTrans.position;
+
+            Vector3 origin = (RaycastToPlayer) ? (PlayerTrans.position) : (targetTrans.position);
+            Vector3 dir = (RaycastToPlayer) ? (playerToNewPos) : (-newDir);
 
             //If something ahead of you
-            if (Physics.SphereCast(target.position, CastWidth, -newDir, out fronthit, Mathf.Min(newDist, RayLength), CollisionLayers.value))
+            if (Physics.SphereCast(origin, CastWidth, dir, out fronthit, Mathf.Min(newDist, RayLength), CollisionLayers.value))
             {
-                
                 newDist = Mathf.MoveTowards(currentDist , fronthit.distance + camCollisionRadius , CameraAcceleration * Time.deltaTime);
             }
             else
             {
                 newDist = Mathf.MoveTowards(currentDist, newDist, CameraAcceleration * Time.deltaTime);
             }
-            Vector3 newPos = target.position - (newDir * newDist);
+            Vector3 newPos = targetTrans.position - (newDir * newDist);
             
             transform.position = newPos; //Set positions
 
-            transform.LookAt(target); //Set rotations
+            transform.LookAt(targetTrans); //Set rotations
         }
     }
 
@@ -160,14 +170,16 @@ public class ThirdPersonCamera : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
-
+        Gizmos.DrawSphere(PlayerTrans.position - startOffset, 0.1f);
         if (Application.isPlaying)
         {
 
             Quaternion rotation = Quaternion.Euler(storedPos.y, storedPos.x, 0);
             Vector3 newDir = (rotation * offset).normalized;
 
-            Gizmos.DrawLine(target.position, target.position - (newDir * storedPos.z));
+            Gizmos.DrawLine(targetTrans.position, targetTrans.position - (newDir * storedPos.z));
+
+            
         }
         else
         {
