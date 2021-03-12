@@ -14,6 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   texture: {fileID: 0}
   sprite: {fileID: 0}
-  saveName: 
+  saveName: 2
   timePlayed: 0
-  saveStates: []
+  saveStates:
+  - uniqueID: 1
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - uniqueID: 2
+    position: {x: 0.2426847, y: 3.8632603, z: 192.71147}
+    rotation: {x: -1.7877345e-11, y: 0.0006542843, z: 1.1696869e-14, w: 0.9999998}

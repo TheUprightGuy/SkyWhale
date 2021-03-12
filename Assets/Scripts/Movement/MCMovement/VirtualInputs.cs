@@ -14,7 +14,8 @@ public enum InputState
 public enum InputType
 {
     PLAYER,
-    WHALE
+    WHALE,
+    MENU
 }
 
 [System.Serializable]
@@ -108,6 +109,27 @@ public class VirtualInputs : MonoBehaviour
                 IJ.MethodToCall.Invoke(InputState.KEYUP);
             }
         }
+
+        foreach (InputListener IJ in instance.currentInput.menuInput)
+        {
+            if (IJ.NameForInput == "") //Leave name blank to stop listener
+            {
+                continue;
+            }
+
+            if (Input.GetKeyDown(IJ.KeyToListen) && IJ.CallOnKeyDown)
+            {
+                IJ.MethodToCall.Invoke(InputState.KEYDOWN);
+            }
+            else if (Input.GetKey(IJ.KeyToListen) && IJ.CallOnKeyHeld)
+            {
+                IJ.MethodToCall.Invoke(InputState.KEYHELD);
+            }
+            else if (Input.GetKeyUp(IJ.KeyToListen) && IJ.CallOnKeyUp)
+            {
+                IJ.MethodToCall.Invoke(InputState.KEYUP);
+            }
+        }
     }
 
     public static InputListener GetInputListener(InputType _type, string _ILName)
@@ -132,6 +154,17 @@ public class VirtualInputs : MonoBehaviour
                     if (instance.currentInput.whaleInput[i].NameForInput == _ILName)
                     {
                         return instance.currentInput.whaleInput[i];
+                    }
+                }
+                break;
+            }
+            case InputType.MENU:
+            {
+                for (int i = 0; i < instance.currentInput.menuInput.Count; i++)
+                {
+                    if (instance.currentInput.menuInput[i].NameForInput == _ILName)
+                    {
+                        return instance.currentInput.menuInput[i];
                     }
                 }
                 break;
@@ -164,6 +197,17 @@ public class VirtualInputs : MonoBehaviour
                     if (instance.currentInput.whaleInput[i].NameForInput == _ILName)
                     {
                         instance.currentInput.whaleInput[i].KeyToListen = _key;
+                    }
+                }
+                break;
+            }
+            case InputType.MENU:
+            {
+                for (int i = 0; i < instance.currentInput.menuInput.Count; i++)
+                {
+                    if (instance.currentInput.menuInput[i].NameForInput == _ILName)
+                    {
+                        instance.currentInput.menuInput[i].KeyToListen = _key;
                     }
                 }
                 break;

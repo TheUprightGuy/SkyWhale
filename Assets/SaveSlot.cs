@@ -4,12 +4,20 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public enum SlotType
+{
+    SAVE,
+    LOAD
+}
+
+
 public class SaveSlot : MonoBehaviour, IPointerDownHandler
 {
     [Header("Save Container")]
     public int saveSlot;
     SaveContainer save;
     [Header("Required Fields")]
+    public SlotType slotType;
     public TMPro.TextMeshProUGUI saveName;
     public TMPro.TextMeshProUGUI timePlayed;
     public Image renderImage;
@@ -23,8 +31,11 @@ public class SaveSlot : MonoBehaviour, IPointerDownHandler
         }
         else
         {
-            renderImage.enabled = false;
-            GetComponent<Image>().raycastTarget = false;
+            //renderImage.enabled = false;
+            if (slotType == SlotType.LOAD)
+            {
+                GetComponent<Image>().raycastTarget = false;
+            }
             saveName.SetText("Empty");
         }
     }
@@ -33,8 +44,11 @@ public class SaveSlot : MonoBehaviour, IPointerDownHandler
     {
         if (!save || save.saveName.Equals(""))
         {
-            renderImage.enabled = false;
-            GetComponent<Image>().raycastTarget = false;
+            //renderImage.enabled = false;
+            if (slotType == SlotType.LOAD)
+            {
+                GetComponent<Image>().raycastTarget = false;
+            }
             saveName.SetText("Empty");
             return;
         }
@@ -56,6 +70,26 @@ public class SaveSlot : MonoBehaviour, IPointerDownHandler
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
-        SaveManager.instance.LoadScene(saveSlot);
+        switch (slotType)
+        {
+            case SlotType.LOAD:
+            {
+                SaveManager.instance.saveToUse = saveSlot;
+                SaveManager.instance.LoadScene(saveSlot);
+                break;
+            }
+            case SlotType.SAVE:
+            {
+                if (save.saveName.Length == 0)
+                {
+                    save.saveName = saveSlot.ToString();
+                }
+
+                SaveManager.instance.saveToUse = saveSlot;
+                SaveManager.instance.Save();
+                Invoke("UpdateSlot", 0.1f);
+                break;
+            }
+        }
     }
 }

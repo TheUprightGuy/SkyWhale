@@ -102,3 +102,12 @@ MonoBehaviour:
     MethodToCall:
       m_PersistentCalls:
         m_Calls: []
+  menuInput:
+  - NameForInput: Pause
+    KeyToListen: 27
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 0
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []

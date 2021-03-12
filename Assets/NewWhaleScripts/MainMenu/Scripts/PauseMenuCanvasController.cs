@@ -16,7 +16,8 @@ public enum MenuOptions
     Back,
     Quit,
     QuitToMenu,
-    Continue
+    Continue,
+    Save
 }
 
 public class PauseMenuCanvasController : MonoBehaviour
@@ -39,11 +40,14 @@ public class PauseMenuCanvasController : MonoBehaviour
     {
         prevMenu = menu;
         Invoke("StartUpFunc", 0.01f);
+        VirtualInputs.GetInputListener(InputType.MENU, "Pause").MethodToCall.AddListener(Pause);
     }
 
     private void StartUpFunc()
     {
         ToggleMenuOption(menu);
+        if (toggle)
+            toggle.SetActive(false);
     }
     #endregion Setup
 
@@ -51,9 +55,15 @@ public class PauseMenuCanvasController : MonoBehaviour
     [HideInInspector] public MenuOptions prevMenu;
     [HideInInspector] public AudioSource audioSource;
 
+    public GameObject toggle;
     [Header("Game Settings")]
     public GameSettings gameSettings;
     public GameSettings defaultSettings;
+
+    public void Pause(InputState type)
+    {
+        toggle.SetActive(!toggle.activeSelf);
+    }
 
     public Action<MenuOptions> toggleMenuOption;
     public void ToggleMenuOption(MenuOptions _option)
@@ -62,17 +72,18 @@ public class PauseMenuCanvasController : MonoBehaviour
         {
             case MenuOptions.NewGame:
             {
-                SaveManager.instance.LoadScene(0);
+                SaveManager.instance.saveToUse = 3;
+                SaveManager.instance.LoadScene(3);
                 break;
             }
             case MenuOptions.Continue:
             {
-                //CallbackHandler.instance.TogglePause();
+                toggle.SetActive(false);
                 break;
             }
             case MenuOptions.QuitToMenu:
             {
-                //CallbackHandler.instance.QuitToMenu();
+                SaveManager.instance.ReturnToMain();
                 break;
             }
             case MenuOptions.Quit:

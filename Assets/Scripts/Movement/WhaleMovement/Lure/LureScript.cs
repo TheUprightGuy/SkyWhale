@@ -47,13 +47,13 @@ public class LureScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (EventHandler.instance.gameState.gamePaused) return;
+        //if (EventHandler.instance.gameState.gamePaused) return;
 
         speed = (currentForward + 2.0f) / 2.0f;
         lerpTimer -= Time.deltaTime;
         vertLerpTimer -= Time.deltaTime;
 
-        if (!Movement.instance.player.gameObject.activeSelf)
+        //if (!Movement.instance.player.gameObject.activeSelf)
         {
             if (Input.GetKey(KeyCode.A))
             {

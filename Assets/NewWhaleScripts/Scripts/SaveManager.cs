@@ -14,20 +14,35 @@ public class SaveManager : MonoBehaviour
         // temp
         if (instance != null)
         {
-            Debug.LogError("More than one Save Manager exists!");
+            Debug.Log("More than one Save Manager exists!");
             Destroy(this.gameObject);
         }
-        instance = this;
-        DontDestroyOnLoad(this.gameObject);
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
     }
     #endregion Singleton
 
-    public int saveToUse = 0;
+    private void Start()
+    {
+        ReturnToMain();
+    }
+
+    public int saveToUse = 4;
     public List<SaveContainer> saves;
 
     public void LoadScene(int _save)
     {
         saveToUse = _save;
+
+        SceneManager.LoadScene(2);
+    }
+
+    public void ReturnToMain()
+    {
+        saveToUse = 4;
 
         SceneManager.LoadScene(1);
     }
@@ -44,15 +59,9 @@ public class SaveManager : MonoBehaviour
 
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
+        uniqueID = 0;
+        Debug.Log("Loading with " + saveToUse);
         Invoke("Load", 0.1f);
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Save();
-        }
     }
 
     public void SaveElement(SaveMe _save)
@@ -106,6 +115,7 @@ public class SaveManager : MonoBehaviour
     public event Action save;
     public void Save()
     {
+        PauseMenuCanvasController.instance.Pause(InputState.KEYDOWN);
         TakeScreenShot();      
 
         if (save != null)

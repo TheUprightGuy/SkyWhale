@@ -7,6 +7,7 @@ public class InputData : ScriptableObject
 {
     public List<InputListener> playerInput;
     public List<InputListener> whaleInput;
+    public List<InputListener> menuInput;
 
     public void SetInputs(InputType _type, List<InputListener> _inputs)
     {
@@ -30,6 +31,15 @@ public class InputData : ScriptableObject
                 whaleInput = _inputs;
                 break;
             }
+            case InputType.MENU:
+            {
+                if (menuInput == null)
+                {
+                    menuInput = new List<InputListener>();
+                }
+                menuInput = _inputs;
+                break;
+            }
         }
     }
 
@@ -43,6 +53,10 @@ public class InputData : ScriptableObject
         for (int i = 0; i < whaleInput.Count; i++)
         {
             whaleInput[i].KeyToListen = _data.whaleInput[i].KeyToListen;
+        }
+        for (int i = 0; i < menuInput.Count; i++)
+        {
+            menuInput[i].KeyToListen = _data.menuInput[i].KeyToListen;
         }
     }
 }
