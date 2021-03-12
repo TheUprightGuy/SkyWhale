@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -355,19 +355,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb5c80a51e277f846bd12e86ce5f7f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &519762843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519762838}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19f7e6cf605184e4a8b80caff623a5f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saves: {fileID: 11400000, guid: 978a5c0869a870e4da9198d30b6712a7, type: 2}
 --- !u!1001 &551385843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -562,6 +549,27 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2460844434722522516, guid: 8ac971f13e07c644db4c324a561af280, type: 3}
+--- !u!1 &944446805 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7388909087441353766, guid: 340fb9a3858c41b459c8e205b31d2457,
+    type: 3}
+  m_PrefabInstance: {fileID: 944446802}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &944446806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 944446805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19de25431a1676945b1b8c4f68bc2bdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  info:
+    uniqueID: 0
+    position: {x: 0, y: 0, z: 0}
 --- !u!1001 &1069764185
 PrefabInstance:
   m_ObjectHideFlags: 0

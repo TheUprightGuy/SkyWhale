@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System;
 
 public enum MenuOptions
@@ -63,7 +62,7 @@ public class PauseMenuCanvasController : MonoBehaviour
         {
             case MenuOptions.NewGame:
             {
-                SceneManager.LoadScene(1);
+                SaveManager.instance.LoadScene(0);
                 break;
             }
             case MenuOptions.Continue:

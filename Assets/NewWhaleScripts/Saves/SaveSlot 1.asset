@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1620d816b08e45a4082083cb82145c9d, type: 3}
-  m_Name: Container
+  m_Name: SaveSlot 1
   m_EditorClassIdentifier: 
-  screenRender: {fileID: 8400000, guid: 92630931e8b564d438fe1cb6e9f58ecb, type: 2}
+  texture: {fileID: 0}
+  sprite: {fileID: 0}
   saveName: Yolo
   timePlayed: 500
   saveStates:
-  - uniqueID: -55744
-    position: {x: 16.171196, y: -91.64699, z: 35.946342}
-  - uniqueID: -3290
-    position: {x: 27.03636, y: -33.36, z: 62.772194}
-  - uniqueID: -82514
-    position: {x: 31.508469, y: -32.685642, z: 78.14378}
+  - uniqueID: 1
+    position: {x: 29.32349, y: -21.818657, z: 307.05}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
+  - uniqueID: 2
+    position: {x: 3.275497, y: 0, z: 12.158544}
+    rotation: {x: 0, y: 0, z: 0, w: 0}
