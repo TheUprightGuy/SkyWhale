@@ -64,7 +64,8 @@ public class DefaultsButton : MenuButton, IPointerEnterHandler, IPointerExitHand
             }
             case MenuOptions.Controls:
             {
-                // Keybindings
+                    // Keybindings
+                    VirtualInputs.ResetToDefaults();
                 break;
             }
             default:

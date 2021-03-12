@@ -45,6 +45,7 @@ public class DisplayValue : MonoBehaviour
             case SliderType.Master:
             {
                 slider.value = settings.masterVolume;
+                    Audio.AudioManager.instance.OnVolumeAdjusted(slider.value);
                 break;
             }
             case SliderType.Sound:

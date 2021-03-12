@@ -56,6 +56,7 @@ namespace Audio
         private AudioSource _audioSource;
         private int _currentTrackIndex;
 
+
         private void OnAwake()
         {
             InitialisePrivateVariables();
@@ -77,8 +78,6 @@ namespace Audio
                 StartCoroutine(PlayRandomAmbientTracks(ambientLayer, audioSource));
             }
             
-            audioMixer.GetFloat("MasterVolume", out defaultVolume);
-            defaultVolume = Mathf.Pow(10, defaultVolume / 20);
         }
         
         private void InitialisePrivateVariables()
@@ -178,7 +177,28 @@ namespace Audio
                 if (curAs.isPlaying) curAs.volume = curSoundInfo.VolumeDefault * masterVolume;
             }*/
         }
-    
+
+        public void OnVolumeAdjusted(float _value)
+        {
+            masterVolume = (((_value * 4) / 100) - 4.0f) * 10.0f;
+
+            //masterVolume = _value * 10;
+            if (Math.Abs(masterVolume - (-40f)) < .01f) masterVolume = -80f;
+            audioMixer.SetFloat("MasterVolume", masterVolume);
+            PlaySound("crackle");
+            /*_musicSource.volume = _musicDefaultVolume * masterVolume;
+            foreach (var layer in ambientLayers)
+            {
+                layer.GetComponent<AmbientLayer>().soundInfo.Reset(masterVolume);
+            }
+
+            foreach (var sound in soundDictionary)
+            {
+                var curSoundInfo = sound.Value;
+                var curAs = curSoundInfo.AudioSource;
+                if (curAs.isPlaying) curAs.volume = curSoundInfo.VolumeDefault * masterVolume;
+            }*/
+        }
 
         private void PlaySound(AudioSource audioSource) //Only play sound if it's not already playing
         {

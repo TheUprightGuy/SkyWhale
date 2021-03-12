@@ -27,11 +27,11 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             animator.SetBool("Selected", true);
 
-            if (Input.GetKeyDown(KeyCode.Return))
+            /*if (Input.GetKeyDown(KeyCode.Return))
             {
                 animator.SetTrigger("Pressed");
                 PauseMenuCanvasController.instance.ToggleMenuOption(menuOptions);
-            }
+            }*/
         }
         else
         {

@@ -11,15 +11,15 @@ public class Keybind : MonoBehaviour
     public TMPro.TextMeshProUGUI actionName;
     public TMPro.TextMeshProUGUI inputKey;
 
+    public void Setup(InputListener _input)
+    {
+        inputRef = _input;
+        UpdateElements();
+    }
+
     private void Start()
     {
-
-
-        // temp
-        inputRef = VirtualInputs.GetInputListener(InputType.WHALE, "Thrust");
-
         VirtualInputs.instance.resetToDefaults += UpdateElements;
-        UpdateElements();
     }
     private void OnDestroy()
     {

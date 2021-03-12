@@ -44,7 +44,7 @@ public class MenuButtonController : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetAxis("Vertical") != 0)
+        /*if (Input.GetAxis("Vertical") != 0)
         {
             if (!keyDown)
             {
@@ -62,7 +62,7 @@ public class MenuButtonController : MonoBehaviour
         else
         {
             keyDown = false;
-        }
+        }*/
     }
 
     public void ToggleMenuOption(MenuOptions _menuOption)
