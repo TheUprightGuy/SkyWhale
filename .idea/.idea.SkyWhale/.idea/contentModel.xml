@@ -58,14 +58,16 @@
           <e p="CameraJacob" t="Include">
             <e p="CinematicController.cs" t="Include" />
           </e>
-          <e p="CollectableIsland" t="Include">
-            <e p="IslandTrailing.cs" t="Include" />
-          </e>
           <e p="Compass" t="Include">
             <e p="CompassRotation.cs" t="Include" />
             <e p="Objective.cs" t="Include" />
           </e>
-          <e p="IslandGen" t="Include">
+          <e p="Island" t="Include">
+            <e p="CollectableIsland" t="Include">
+              <e p="ChainController.cs" t="Include" />
+              <e p="IslandChain.cs" t="Include" />
+              <e p="IslandTrailing.cs" t="Include" />
+            </e>
             <e p="GradMasks.cs" t="Include" />
             <e p="NewIslandGen" t="Include">
               <e p="Chunk.cs" t="Include" />

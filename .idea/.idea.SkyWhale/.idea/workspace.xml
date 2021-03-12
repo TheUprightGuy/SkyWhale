@@ -14,6 +14,9 @@
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/CollectableIsland/IslandTrailling.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/CollectableIsland/IslandTrailing.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/ChainController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandChain.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandTrailing.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
