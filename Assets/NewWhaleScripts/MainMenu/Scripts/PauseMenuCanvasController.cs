@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 
 public enum MenuOptions
 {
     Main,
     NewGame,
+    Load,
     Options,
     Game,
     Audio,
@@ -59,6 +61,11 @@ public class PauseMenuCanvasController : MonoBehaviour
     {
         switch (_option)
         {
+            case MenuOptions.NewGame:
+            {
+                SceneManager.LoadScene(1);
+                break;
+            }
             case MenuOptions.Continue:
             {
                 //CallbackHandler.instance.TogglePause();

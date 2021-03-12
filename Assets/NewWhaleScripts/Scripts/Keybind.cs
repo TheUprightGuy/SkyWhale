@@ -21,10 +21,6 @@ public class Keybind : MonoBehaviour
     {
         VirtualInputs.instance.resetToDefaults += UpdateElements;
     }
-    private void OnDestroy()
-    {
-        VirtualInputs.instance.resetToDefaults -= UpdateElements;
-    }
 
     void UpdateElements()
     {
