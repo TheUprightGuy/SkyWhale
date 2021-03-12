@@ -47,11 +47,13 @@ public class GrappleHook : MonoBehaviour
         hookSJ = Hook.GetComponent<SpringJoint>();
         cachedRB = GetComponent<Rigidbody>();
         hookLR = Hook.GetComponent<LineRenderer>();
-        SpringJointActive(false);
         
         VirtualInputs vInputs = GetComponent<VirtualInputs>();
         vInputs.GetInputListener("GrappleRetract").MethodToCall.AddListener(GrappleRetract);
         vInputs.GetInputListener("GrappleExtend").MethodToCall.AddListener(GrappleExtend);
+        
+        SpringJointActive(false);
+        ToggleAim(false);
     }
 
     private void Update()
@@ -63,20 +65,17 @@ public class GrappleHook : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))//Aiming with right click
         {
-            ToggleAimPos(true);
+            ToggleAim(true);
         }
 
         if (Input.GetMouseButtonUp(1))//Stopping aiming
         {
-            ToggleAimPos(false);
+            ToggleAim(false);
         }
-    }
-    // Update is called once per frame
-    void FixedUpdate()
-    {
+
         if (!GrappleActive)//If no grapple is there
         {
-            if (Input.GetMouseButtonDown(0) && Input.GetMouseButton(1) && LerpDone) //Aim done, rightclick held, and left click pressed
+            if (Input.GetMouseButtonDown(0) && Input.GetMouseButton(1) /*&& LerpDone*/) //Aim done, rightclick held, and left click pressed
             {
                 FireHook();
             }
@@ -86,19 +85,24 @@ public class GrappleHook : MonoBehaviour
             if (collidedObj != null)
             {
                 Vector3 offset = CollidedFrameOffset;
-                Hook.GetComponent<Rigidbody>().MovePosition(Hook.transform.position + offset); //apply movement with any moving objects latched too
             }
 
-            if (Input.GetMouseButtonDown(0))//On left click
+            if (Input.GetMouseButtonUp(1))//On right click release
             {
                 RetractHook();//Release
-                
+
             }
         }
 
-
+    }
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        
         if (collidedObj != null) //If attached to something
         {
+            Vector3 offset = CollidedFrameOffset;
+            Hook.GetComponent<Rigidbody>().MovePosition(Hook.transform.position + offset); //apply movement with any moving objects latched too
             collidedprevPos = collidedObj.position;
         }
     }
@@ -136,9 +140,9 @@ public class GrappleHook : MonoBehaviour
         Vector3 zAxis = -transform.right; //Vector3.ProjectOnPlane(-transform.right, playerToHook).normalized;
         zAxis *= inputAxis.z;
 
-        Vector3 inputDir = (xAxis + zAxis).normalized;
+        Vector3 inputDir = (xAxis + zAxis).normalized * SwingForce;
         //Ensure this can never have a force greater than gravity.
-        inputDir = Vector3.ClampMagnitude(inputDir * SwingForce, Physics.gravity.magnitude);
+        //inputDir = Vector3.ClampMagnitude(inputDir, Physics.gravity.magnitude * 0.95f);
         cachedRB.AddForce(inputDir);
     }
 
@@ -188,13 +192,20 @@ public class GrappleHook : MonoBehaviour
     /// <summary>
     /// Lerps the camera target from cachedStartPos to AimOffset or visa versa
     /// </summary>
-    /// <param name="_MovingToAim">if true goes to aimoffset, if false goes back to start</param>
-    void ToggleAimPos(bool _MovingToAim)
+    /// <param name="_startAim">if true goes to aimoffset, if false goes back to start</param>
+    void ToggleAim(bool _startAim)
     {
-        MovingToAim = _MovingToAim;
+        if (GrappleReticule != null)
+        {
+            GrappleReticule.SetActive(_startAim);
+        }
 
-        IEnumerator cor = MoveTargetToPos();
-        StartCoroutine(cor);
+        
+        MovingToAim = _startAim;
+
+        //Aim disabled
+        //IEnumerator cor = MoveTargetToPos();
+        //StartCoroutine(cor);
     }
 
 
@@ -215,6 +226,7 @@ public class GrappleHook : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
+        Gizmos.DrawSphere(transform.position + AimOffset, 0.1f);
         //Ray screenRay = CamToShootFrom.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
         //RaycastHit hit;
         //if (Physics.Raycast(CamToShootFrom.transform.position,CamToShootFrom.transform.forward, out hit, MaxGrappleDist, GrappleableLayers.value))
