@@ -27,6 +27,7 @@ public class ThirdPersonCamera : MonoBehaviour
     public float minZoomDist = 10.0f;
     public float maxZoomDist = 50.0f;
 
+    public float smoothTime = 0.1f;
     [Header("Collisions")]
     public LayerMask CollisionLayers;
     public float camCollisionRadius = 1.0f;
@@ -156,16 +157,17 @@ public class ThirdPersonCamera : MonoBehaviour
             }
             Vector3 newPos = targetTrans.position - (newDir * newDist);
             
-            transform.position = newPos; //Set positions
+            //transform.position = newPos; //Set positions
 
+            transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
             transform.LookAt(targetTrans); //Set rotations
         }
     }
 
-    Vector3 speed;
+    Vector3 velocityAngle ;
     float previousDist;
-    
 
+    Vector3 velocity = Vector3.zero;
 
     private void OnDrawGizmos()
     {
