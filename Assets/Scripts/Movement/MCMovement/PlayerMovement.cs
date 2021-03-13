@@ -77,21 +77,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        
         SetAnimations();
     }
 
     public Transform cam;
-    private void LateUpdate()
+
+    public Vector3 inputAxis = Vector3.zero;
+    void FixedUpdate()
     {
         Vector3 desired = new Vector3(transform.eulerAngles.x, cam.eulerAngles.y, transform.eulerAngles.z);
 
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desired), 20 * Time.deltaTime);
-    }
+        RB.MoveRotation(transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desired), 20 * Time.fixedDeltaTime));
 
-    Vector3 inputAxis = Vector3.zero;
-    void FixedUpdate()
-    {
         SetCurrentPlayerState();
         HandleMovement();
 
@@ -99,6 +96,7 @@ public class PlayerMovement : MonoBehaviour
         {
             collidedprevPos = collidedObj.position;
         }
+        inputAxis = Vector3.zero;
     }
 
     float minGroundDotProduct;
@@ -146,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool MOVINGCheck()
     {
-        return RB.velocity.magnitude > 0;
+        return RB.velocity.magnitude > 0.1f;
     }
      
     bool GRAPPLECheck()
@@ -189,8 +187,8 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case PlayerStates.CLIMBING:
-                break;
             case PlayerStates.JUMPING:
+                break;
             case PlayerStates.FALLING:
                 if (LocalToGround)
                 {
@@ -202,7 +200,7 @@ public class PlayerMovement : MonoBehaviour
             default:
                 break;
         }
-        inputAxis = Vector3.zero;
+        //inputAxis = Vector3.zero;
     }
 
     void MoveOnXZ(float speed, float accel)
@@ -214,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
         float currentZ = Vector3.Dot(RB.velocity, zAxis);
 
         float acceleration = accel;
-        float maxSpeedChange = acceleration * Time.deltaTime;
+        float maxSpeedChange = acceleration * Time.fixedDeltaTime;
 
         Vector3 desiredVel = inputAxis;
         desiredVel.y = 0;
@@ -230,12 +228,13 @@ public class PlayerMovement : MonoBehaviour
 
         RB.velocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ);
 
-        if (collidedObj != null)
+        /*if (collidedObj != null)
         {
             Vector3 offset = GetCollidedFrameOffset();
             RB.MovePosition(transform.position + offset);
-        }
+        }*/
     }
+
     void Jump()
     {
         float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);

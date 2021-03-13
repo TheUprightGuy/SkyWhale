@@ -1288,7 +1288,7 @@ MonoBehaviour:
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
   m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
+  m_BlendUpdateMethod: 0
   m_DefaultBlend:
     m_Style: 1
     m_Time: 2
@@ -2722,6 +2722,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 617583925563883009, guid: 6ca982678f57a364f8dec24aadc93252,
+        type: 3}
+      propertyPath: m_Strategy
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2718180353237441339, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -2750,12 +2755,12 @@ PrefabInstance:
     - target: {fileID: 2737352283168376413, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.0000000041224535
+      value: 0.0000000041224526
       objectReference: {fileID: 0}
     - target: {fileID: 2737352283168376413, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000001228456
+      value: -0.0000000012284558
       objectReference: {fileID: 0}
     - target: {fileID: 2737352283168376413, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
@@ -2770,6 +2775,11 @@ PrefabInstance:
     - target: {fileID: 2737352283168376413, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3626586420993587299, guid: 6ca982678f57a364f8dec24aadc93252,
+        type: 3}
+      propertyPath: m_LookaheadSmoothing
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3750871608668109043, guid: 6ca982678f57a364f8dec24aadc93252,
@@ -2792,6 +2802,11 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 5853718423908297843}
+    - target: {fileID: 5641963454067760930, guid: 6ca982678f57a364f8dec24aadc93252,
+        type: 3}
+      propertyPath: m_LookaheadSmoothing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5999542120188942440, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -4618,6 +4633,7 @@ MonoBehaviour:
   GroundCheckStartOffset: {x: 0, y: 0, z: 0}
   LocalToGround: 1
   cam: {fileID: 770325665}
+  inputAxis: {x: 0, y: 0, z: 0}
 --- !u!114 &5853718423908297805
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4686,10 +4702,10 @@ Rigidbody:
   m_Mass: 2
   m_Drag: 1
   m_AngularDrag: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 112
+  m_Interpolate: 0
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!4 &5893573581664231258
 Transform:
