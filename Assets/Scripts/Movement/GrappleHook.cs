@@ -79,26 +79,29 @@ public class GrappleHook : MonoBehaviour
             ToggleAim(false);
         }
 
-        if (!GrappleActive)//If no grapple is there
+        if (collidedObj != null)
         {
-            if (Input.GetMouseButtonDown(0) && Input.GetMouseButton(1) /*&& LerpDone*/) //Aim done, rightclick held, and left click pressed
-            {
-                FireHook();
-            }
+            Vector3 offset = CollidedFrameOffset;
         }
-        else//If grapple is already there
+
+        if (Input.GetMouseButtonDown(0) && Input.GetMouseButton(1) /*&& LerpDone*/) //Aim done, rightclick held, and left click pressed
         {
-            if (collidedObj != null)
-            {
-                Vector3 offset = CollidedFrameOffset;
-            }
-
-            if (Input.GetMouseButtonUp(1))//On right click release
-            {
-                RetractHook();//Release
-
-            }
+            FireHook();
         }
+        if (Input.GetMouseButtonUp(1))//On right click release
+        {
+            RetractHook();//Release
+
+        }
+
+        //if (!GrappleActive)//If no grapple is there
+        //{
+            
+        //}
+        //else//If grapple is already there
+        //{
+           
+        //}
 
     }
     // Update is called once per frame
@@ -145,13 +148,13 @@ public class GrappleHook : MonoBehaviour
         AngleToForward = Vector3.Angle(transform.forward, playerToHook);
                                             //Difference
         PercentageFToCenter = 1.0f - (Mathf.Abs(90.0f  - AngleToForward) / 90.0f);
-        Vector3 xAxis = /*transform.forward;//*/Vector3.ProjectOnPlane(transform.forward, playerToHook).normalized;
+        Vector3 xAxis = transform.forward;//Vector3.ProjectOnPlane(transform.forward, playerToHook).normalized;
         xAxis *= inputAxis.x;
 
         //Fully left = 0.0f, hanging = 90.0f, fully back = 0.0f;
         AngleToLeft = Vector3.Angle(transform.right, playerToHook);
         PercentageFToCenter = 1.0f - (Mathf.Abs(90.0f - AngleToForward) / 90.0f);
-        Vector3 zAxis = /*-transform.right; //*/Vector3.ProjectOnPlane(-transform.right, playerToHook).normalized;
+        Vector3 zAxis = -transform.right; //Vector3.ProjectOnPlane(-transform.right, playerToHook).normalized;
         zAxis *= inputAxis.z;
 
         Vector3 inputDir = (xAxis + zAxis).normalized * SwingForce;
@@ -162,18 +165,20 @@ public class GrappleHook : MonoBehaviour
 
     public void YeetPlayer()
     {
-        float velMag = cachedRB.velocity.magnitude;
+        //Make sure can't multiply the impulse and create a railgun
+        float velMag = Mathf.Clamp01(cachedRB.velocity.magnitude);
 
         //if not moving at all, doesn't yeet.
         //If moving, yeets hard
         float yeetForce = YeetForce * velMag;
+
 
         Vector3 playerToHook = (Hook.transform.position - transform.position).normalized;
         Vector3 velDir = cachedRB.velocity.normalized;//Direction moving
         Vector3 yeetDir = Vector3.ProjectOnPlane(velDir, playerToHook).normalized; //Project along arc of swing
 
         Vector3 yeetImpulse = yeetDir * yeetForce;
-        cachedRB.AddForce(yeetImpulse, ForceMode.Impulse);
+        cachedRB.AddForce(yeetImpulse, ForceMode.Impulse); 
     }
     void SpringJointActive(bool _active)
     {
