@@ -14,15 +14,30 @@ public class TestCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cam.m_XAxis.m_MaxSpeed = 0;
-        cam.m_YAxis.m_MaxSpeed = 0;
-        cam.m_RecenterToTargetHeading.m_enabled = true;
-
-        if (Input.GetMouseButton(0))
+        if (Input.GetKeyDown("`"))
         {
-            cam.m_XAxis.m_MaxSpeed = 400;
-            cam.m_YAxis.m_MaxSpeed = 5;
-            cam.m_RecenterToTargetHeading.m_enabled = false;
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
+
+        cam.m_XAxis.m_MaxSpeed = 400;
+        cam.m_YAxis.m_MaxSpeed = 5;
+        cam.m_RecenterToTargetHeading.m_enabled = false;
+    }
+
+    private void OnEnable()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void OnDisable()
+    {
+        Cursor.lockState = CursorLockMode.None;
     }
 }

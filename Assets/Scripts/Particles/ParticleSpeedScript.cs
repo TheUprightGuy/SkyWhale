@@ -28,7 +28,7 @@ public class ParticleSpeedScript : MonoBehaviour
         }
         else
         {
-            alpha = Movement.instance.currentSpeed / 200;
+            alpha = GetComponentInParent<NewWhaleMovement>().currentSpeed / 200;
         }
         //Debug.Log(alpha);
         ps.startColor = new Color(ps.startColor.r, ps.startColor.g, ps.startColor.b, alpha);

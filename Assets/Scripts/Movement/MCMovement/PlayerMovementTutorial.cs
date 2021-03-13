@@ -54,8 +54,6 @@ public class PlayerMovementTutorial : MonoBehaviour
 
 	int stepsSinceLastGrounded, stepsSinceLastJump;
 
-	VirtualInputs VInputs;
-
 	void OnValidate()
 	{
 		minGroundDotProduct = Mathf.Cos(maxGroundAngle * Mathf.Deg2Rad);
@@ -64,16 +62,15 @@ public class PlayerMovementTutorial : MonoBehaviour
 
 	void Awake()
 	{
-		VInputs = GetComponent<VirtualInputs>();
 		body = GetComponent<Rigidbody>();
 
 
-		VInputs.GetInputListener("Forward").MethodToCall.AddListener(Forward);
-		VInputs.GetInputListener("Back").MethodToCall.AddListener(Back);
-		VInputs.GetInputListener("Left").MethodToCall.AddListener(Left);
-		VInputs.GetInputListener("Right").MethodToCall.AddListener(Right);
-		VInputs.GetInputListener("Run").MethodToCall.AddListener(Run);
-		VInputs.GetInputListener("Jump").MethodToCall.AddListener(Jump);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Forward").MethodToCall.AddListener(Forward);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Back").MethodToCall.AddListener(Back);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Left").MethodToCall.AddListener(Left);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Right").MethodToCall.AddListener(Right);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Run").MethodToCall.AddListener(Run);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(Jump);
 
 		desiredSpeed = walkSpeed;
 		OnValidate();

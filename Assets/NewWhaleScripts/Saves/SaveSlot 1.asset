@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1620d816b08e45a4082083cb82145c9d, type: 3}
+  m_Name: SaveSlot 1
+  m_EditorClassIdentifier: 
+  texture: {fileID: 0}
+  sprite: {fileID: 0}
+  saveName: Yolo
+  timePlayed: 500
+  saveStates:
+  - uniqueID: 1
+    position: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0, w: 1}
+  - uniqueID: 2
+    position: {x: 15.32846, y: 3.863263, z: 95.69297}
+    rotation: {x: 5.5458376e-16, y: 0.9547751, z: 1.7808652e-15, w: -0.29732904}

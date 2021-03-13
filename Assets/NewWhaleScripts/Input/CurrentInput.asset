@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55d354525f436af40bc222336b569d76, type: 3}
+  m_Name: CurrentInput
+  m_EditorClassIdentifier: 
+  playerInput:
+  - NameForInput: Forward
+    KeyToListen: 119
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: Back
+    KeyToListen: 115
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: Left
+    KeyToListen: 97
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: Right
+    KeyToListen: 100
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: Jump
+    KeyToListen: 32
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 0
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: Run
+    KeyToListen: 304
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: GrappleRetract
+    KeyToListen: 32
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: GrappleExtend
+    KeyToListen: 102
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  whaleInput:
+  - NameForInput: YawLeft
+    KeyToListen: 97
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: YawRight
+    KeyToListen: 100
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: PitchUp
+    KeyToListen: 115
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: PitchDown
+    KeyToListen: 119
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: Thrust
+    KeyToListen: 32
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  menuInput:
+  - NameForInput: Pause
+    KeyToListen: 27
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 0
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []

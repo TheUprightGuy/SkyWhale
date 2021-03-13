@@ -53,11 +53,10 @@ public class GrappleHook : MonoBehaviour
         hookSJ = Hook.GetComponent<SpringJoint>();
         cachedRB = GetComponent<Rigidbody>();
         hookLR = Hook.GetComponent<LineRenderer>();
+
+        VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleRetract").MethodToCall.AddListener(GrappleRetract);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleExtend").MethodToCall.AddListener(GrappleExtend);
         
-        VirtualInputs vInputs = GetComponent<VirtualInputs>();
-        vInputs.GetInputListener("GrappleRetract").MethodToCall.AddListener(GrappleRetract);
-        vInputs.GetInputListener("GrappleExtend").MethodToCall.AddListener(GrappleExtend);
-        //vInputs.GetInputListener("SwingForce").MethodToCall.AddListener(SwingAction);
         SpringJointActive(false);
         ToggleAim(false);
     }
@@ -78,6 +77,7 @@ public class GrappleHook : MonoBehaviour
         {
             ToggleAim(false);
         }
+
 
         if (collidedObj != null)
         {
@@ -118,7 +118,7 @@ public class GrappleHook : MonoBehaviour
 
     void FireHook()
     {
-        Ray screenRay = CamToShootFrom.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
+        //Ray screenRay = CamToShootFrom.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
 
         RaycastHit hit;
         if (Physics.Raycast(CamToShootFrom.transform.position, CamToShootFrom.transform.forward, out hit, MaxGrappleDist, GrappleableLayers.value))
@@ -262,10 +262,10 @@ public class GrappleHook : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawSphere(transform.position + AimOffset, 0.1f);
         //Ray screenRay = CamToShootFrom.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
-        //RaycastHit hit;
-        //if (Physics.Raycast(CamToShootFrom.transform.position,CamToShootFrom.transform.forward, out hit, MaxGrappleDist, GrappleableLayers.value))
-        //{
-        //    Gizmos.DrawSphere(hit.point, 0.1f);
-        //}
+        RaycastHit hit;
+        if (Physics.Raycast(CamToShootFrom.transform.position,CamToShootFrom.transform.forward, out hit, MaxGrappleDist, GrappleableLayers.value))
+        {
+            Gizmos.DrawSphere(hit.point, 0.1f);
+        }
     }
 }

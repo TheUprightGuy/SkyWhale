@@ -14,8 +14,6 @@ public class PlayerMovement : MonoBehaviour
         GRAPPLE
     }
 
-
-    VirtualInputs vInputs;
     Rigidbody RB;
     Animator anims;
     GrappleHook gHook;
@@ -67,32 +65,41 @@ public class PlayerMovement : MonoBehaviour
         RB = GetComponent<Rigidbody>();
         anims = GetComponentInChildren<Animator>();
         gHook = GetComponent<GrappleHook>();
-        vInputs = GetComponent<VirtualInputs>();
-        vInputs.GetInputListener("Forward").MethodToCall.AddListener(Forward);
-        vInputs.GetInputListener("Back").MethodToCall.AddListener(Back);
-        vInputs.GetInputListener("Left").MethodToCall.AddListener(Left);
-        vInputs.GetInputListener("Right").MethodToCall.AddListener(Right);
-        vInputs.GetInputListener("Run").MethodToCall.AddListener(Run);
-        vInputs.GetInputListener("Jump").MethodToCall.AddListener(Jump);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Forward").MethodToCall.AddListener(Forward);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Back").MethodToCall.AddListener(Back);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Left").MethodToCall.AddListener(Left);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Right").MethodToCall.AddListener(Right);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Run").MethodToCall.AddListener(Run);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(Jump);
 
         OnValidate();
     }
 
     private void Update()
     {
-        
         SetAnimations();
     }
 
-    Vector3 inputAxis = Vector3.zero;
+    public Transform cam;
+
+    public Vector3 inputAxis = Vector3.zero;
     void FixedUpdate()
     {
+        Vector3 desired = new Vector3(transform.eulerAngles.x, cam.eulerAngles.y, transform.eulerAngles.z);
+
+        RB.MoveRotation(transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desired), 20 * Time.fixedDeltaTime));
+
         SetCurrentPlayerState();
         HandleMovement();
 
         if (collidedObj != null) //If attached to something
         {
             collidedprevPos = collidedObj.position;
+        }
+
+        if (inputAxis != Vector3.zero)
+        {
+            inputAxis = Vector3.zero;
         }
     }
 
@@ -141,7 +148,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool MOVINGCheck()
     {
-        return RB.velocity.magnitude > 0;
+        return RB.velocity.magnitude > 0.1f;
     }
      
     bool GRAPPLECheck()
@@ -184,8 +191,8 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case PlayerStates.CLIMBING:
-                break;
             case PlayerStates.JUMPING:
+                break;
             case PlayerStates.FALLING:
                 if (LocalToGround)
                 {
@@ -197,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
             default:
                 break;
         }
-        inputAxis = Vector3.zero;
+        //inputAxis = Vector3.zero;
     }
 
     void MoveOnXZ(float speed, float accel)
@@ -209,7 +216,7 @@ public class PlayerMovement : MonoBehaviour
         float currentZ = Vector3.Dot(RB.velocity, zAxis);
 
         float acceleration = accel;
-        float maxSpeedChange = acceleration * Time.deltaTime;
+        float maxSpeedChange = acceleration * Time.fixedDeltaTime;
 
         Vector3 desiredVel = inputAxis;
         desiredVel.y = 0;
@@ -225,12 +232,13 @@ public class PlayerMovement : MonoBehaviour
 
         RB.velocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ);
 
-        if (collidedObj != null)
+        /*if (collidedObj != null)
         {
             Vector3 offset = GetCollidedFrameOffset();
             RB.MovePosition(transform.position + offset);
-        }
+        }*/
     }
+
     void Jump()
     {
         float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
@@ -276,12 +284,10 @@ public class PlayerMovement : MonoBehaviour
     void Back(InputState type)
     {
         inputAxis.x = -1;
-
     }
     void Left(InputState type)
     {
         inputAxis.z = 1;
-
     }
     void Right(InputState type)
     {
@@ -292,7 +298,6 @@ public class PlayerMovement : MonoBehaviour
         if (PlayerState == PlayerStates.MOVING)
         {
             anims.SetTrigger("Jump");
-
         }
 
         inputAxis.y = 1;
