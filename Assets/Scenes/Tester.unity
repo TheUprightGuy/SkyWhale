@@ -1033,7 +1033,7 @@ MonoBehaviour:
   defaultZoom: 2
   minZoomDist: 1
   maxZoomDist: 10
-  smoothTime: 0.5
+  smoothTime: 0.013
   CollisionLayers:
     serializedVersion: 2
     m_Bits: 16183
@@ -3652,7 +3652,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - NameForInput: GrappleRetract
-    KeyToListen: 32
+    KeyToListen: 114
     CallOnKeyDown: 0
     CallOnKeyHeld: 1
     CallOnKeyUp: 0
@@ -3714,12 +3714,16 @@ MonoBehaviour:
   GrappleableLayers:
     serializedVersion: 2
     m_Bits: 16183
-  SwingForce: 8
+  SwingForce: 10
   RetractExtendSpeed: 2
   MinGrappleDist: 0.5
   MaxGrappleDist: 10
+  pullUpLength: 0.5
   AimOffset: {x: 0.25, y: 0.1, z: 0.5}
   CamTransitionTime: 0.1
+  AngleToForward: 0
+  AngleToLeft: 0
+  PercentageFToCenter: 0
   GrappleActive: 0
 --- !u!4 &5853718423908297843
 Transform:

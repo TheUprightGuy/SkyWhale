@@ -13,6 +13,7 @@ public class GrappleHook : MonoBehaviour
     [Header("Grapple")]
     public LayerMask GrappleableLayers;
     public float SwingForce = 8.0f;
+    public float YeetForce = 1.0f;
     public float RetractExtendSpeed = 5.0f;
     public float MinGrappleDist = 0.5f;
     public float MaxGrappleDist = 10.0f;
@@ -21,6 +22,12 @@ public class GrappleHook : MonoBehaviour
     public Vector3 AimOffset;
     public float CamTransitionTime = 0.5f;
 
+
+    [Header("Debug")]
+    public float AngleToForward = 0.0f;
+    public float AngleToLeft = 0.0f;
+
+    public float PercentageFToCenter = 0.0f;
     [HideInInspector]
     public bool GrappleActive = false;
     float storedSpringVal;
@@ -37,7 +44,6 @@ public class GrappleHook : MonoBehaviour
     //The movement vector since the last frame;
     Vector3 CollidedFrameOffset => (collidedObj == null) ? (Vector3.zero) : (collidedObj.position - collidedprevPos);
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -51,7 +57,7 @@ public class GrappleHook : MonoBehaviour
         VirtualInputs vInputs = GetComponent<VirtualInputs>();
         vInputs.GetInputListener("GrappleRetract").MethodToCall.AddListener(GrappleRetract);
         vInputs.GetInputListener("GrappleExtend").MethodToCall.AddListener(GrappleExtend);
-        
+        //vInputs.GetInputListener("SwingForce").MethodToCall.AddListener(SwingAction);
         SpringJointActive(false);
         ToggleAim(false);
     }
@@ -125,6 +131,7 @@ public class GrappleHook : MonoBehaviour
 
     void RetractHook()
     {
+        YeetPlayer();
         SpringJointActive(false);
         GrappleActive = false;
     }
@@ -134,10 +141,17 @@ public class GrappleHook : MonoBehaviour
         Vector3 playerToHook = (Hook.transform.position - transform.position).normalized;
         //Place all forces on the place of the rope
 
-        Vector3 xAxis = transform.forward;//Vector3.ProjectOnPlane(transform.forward, playerToHook).normalized;
+        //Fully forward = 0.0f, hanging = 90.0f, fully back = 0.0f;
+        AngleToForward = Vector3.Angle(transform.forward, playerToHook);
+                                            //Difference
+        PercentageFToCenter = 1.0f - (Mathf.Abs(90.0f  - AngleToForward) / 90.0f);
+        Vector3 xAxis = /*transform.forward;//*/Vector3.ProjectOnPlane(transform.forward, playerToHook).normalized;
         xAxis *= inputAxis.x;
 
-        Vector3 zAxis = -transform.right; //Vector3.ProjectOnPlane(-transform.right, playerToHook).normalized;
+        //Fully left = 0.0f, hanging = 90.0f, fully back = 0.0f;
+        AngleToLeft = Vector3.Angle(transform.right, playerToHook);
+        PercentageFToCenter = 1.0f - (Mathf.Abs(90.0f - AngleToForward) / 90.0f);
+        Vector3 zAxis = /*-transform.right; //*/Vector3.ProjectOnPlane(-transform.right, playerToHook).normalized;
         zAxis *= inputAxis.z;
 
         Vector3 inputDir = (xAxis + zAxis).normalized * SwingForce;
@@ -146,6 +160,21 @@ public class GrappleHook : MonoBehaviour
         cachedRB.AddForce(inputDir);
     }
 
+    public void YeetPlayer()
+    {
+        float velMag = cachedRB.velocity.magnitude;
+
+        //if not moving at all, doesn't yeet.
+        //If moving, yeets hard
+        float yeetForce = YeetForce * velMag;
+
+        Vector3 playerToHook = (Hook.transform.position - transform.position).normalized;
+        Vector3 velDir = cachedRB.velocity.normalized;//Direction moving
+        Vector3 yeetDir = Vector3.ProjectOnPlane(velDir, playerToHook).normalized; //Project along arc of swing
+
+        Vector3 yeetImpulse = yeetDir * yeetForce;
+        cachedRB.AddForce(yeetImpulse, ForceMode.Impulse);
+    }
     void SpringJointActive(bool _active)
     {
         Hook.SetActive(_active);
