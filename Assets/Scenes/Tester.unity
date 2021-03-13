@@ -885,7 +885,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704699788}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 4.993, z: 7.16}
+  m_LocalPosition: {x: 0, y: 4.993, z: 7.63}
   m_LocalScale: {x: 0.409445, y: 0.34269, z: 0.42345}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3715,10 +3715,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 16183
   SwingForce: 10
+  YeetForce: 5
   RetractExtendSpeed: 2
   MinGrappleDist: 0.5
   MaxGrappleDist: 10
-  pullUpLength: 0.5
   AimOffset: {x: 0.25, y: 0.1, z: 0.5}
   CamTransitionTime: 0.1
   AngleToForward: 0

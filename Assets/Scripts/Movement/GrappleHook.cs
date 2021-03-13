@@ -13,7 +13,7 @@ public class GrappleHook : MonoBehaviour
     [Header("Grapple")]
     public LayerMask GrappleableLayers;
     public float SwingForce = 8.0f;
-    public float YeetForce = 1.0f;
+    public float YeetForce = 5.0f;
     public float RetractExtendSpeed = 5.0f;
     public float MinGrappleDist = 0.5f;
     public float MaxGrappleDist = 10.0f;
