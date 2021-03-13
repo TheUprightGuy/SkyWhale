@@ -96,7 +96,11 @@ public class PlayerMovement : MonoBehaviour
         {
             collidedprevPos = collidedObj.position;
         }
-        inputAxis = Vector3.zero;
+
+        if (inputAxis != Vector3.zero)
+        {
+            inputAxis = Vector3.zero;
+        }
     }
 
     float minGroundDotProduct;
