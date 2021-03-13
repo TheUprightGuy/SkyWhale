@@ -8,7 +8,8 @@ public class NewOrbitScript : MonoBehaviour
     Vector3 objToIsland;
     Vector3 path;
     int orbitDirection = 1;
-    [HideInInspector] public GameObject orbit;
+    //[HideInInspector]
+    public GameObject orbit;
     float orbitDistance;
     public float rotSpeed;
     public bool atOrbit;

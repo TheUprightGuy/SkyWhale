@@ -155,9 +155,9 @@ public class ThirdPersonCamera : MonoBehaviour
                 newDist = Mathf.MoveTowards(currentDist, newDist, CameraAcceleration * Time.deltaTime);
             }
             Vector3 newPos = targetTrans.position - (newDir * newDist);
-            
+            Vector3 vel = Vector3.zero;
             transform.position = newPos; //Set positions
-
+            //transform.position = Vector3.SmoothDamp(transform.position, newPos, ref vel, 0.3f);
             transform.LookAt(targetTrans); //Set rotations
         }
     }

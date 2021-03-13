@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2884179543958615853}
   - component: {fileID: 2884179543958615852}
   - component: {fileID: 2884179543958615843}
+  - component: {fileID: 129877819228068598}
   m_Layer: 0
   m_Name: EventManager
   m_TagString: Untagged
@@ -58,3 +59,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeQuests:
   - {fileID: 11400000, guid: 27395a46c4bff484e910c2a14af09510, type: 2}
+--- !u!114 &129877819228068598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2884179543958615842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb5c80a51e277f846bd12e86ce5f7f20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

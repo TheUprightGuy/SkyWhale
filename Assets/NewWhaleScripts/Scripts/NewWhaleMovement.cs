@@ -17,7 +17,8 @@ public class NewWhaleMovement : MonoBehaviour
 
     #region Local Variables
     [HideInInspector] public bool tooClose;
-    [HideInInspector] public bool control = true;
+    //[HideInInspector]
+    public bool control = true;
     float buckTimer = 0.0f;
     float distance;
     float rotationSpeed = 0.2f;

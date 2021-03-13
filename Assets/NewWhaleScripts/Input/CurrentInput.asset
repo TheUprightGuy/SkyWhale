@@ -30,7 +30,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - NameForInput: Left
-    KeyToListen: 115
+    KeyToListen: 97
     CallOnKeyDown: 1
     CallOnKeyHeld: 1
     CallOnKeyUp: 0
@@ -38,7 +38,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - NameForInput: Right
-    KeyToListen: 115
+    KeyToListen: 100
     CallOnKeyDown: 1
     CallOnKeyHeld: 1
     CallOnKeyUp: 0
@@ -46,15 +46,31 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - NameForInput: Jump
-    KeyToListen: 115
+    KeyToListen: 32
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 0
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: Run
+    KeyToListen: 304
     CallOnKeyDown: 1
     CallOnKeyHeld: 1
     CallOnKeyUp: 0
     MethodToCall:
       m_PersistentCalls:
         m_Calls: []
-  - NameForInput: Run
-    KeyToListen: 115
+  - NameForInput: GrappleRetract
+    KeyToListen: 32
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: GrappleExtend
+    KeyToListen: 102
     CallOnKeyDown: 1
     CallOnKeyHeld: 1
     CallOnKeyUp: 0

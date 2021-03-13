@@ -47,10 +47,9 @@ public class GrappleHook : MonoBehaviour
         hookSJ = Hook.GetComponent<SpringJoint>();
         cachedRB = GetComponent<Rigidbody>();
         hookLR = Hook.GetComponent<LineRenderer>();
-        
-        VirtualInputs vInputs = GetComponent<VirtualInputs>();
-        vInputs.GetInputListener("GrappleRetract").MethodToCall.AddListener(GrappleRetract);
-        vInputs.GetInputListener("GrappleExtend").MethodToCall.AddListener(GrappleExtend);
+
+        VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleRetract").MethodToCall.AddListener(GrappleRetract);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleExtend").MethodToCall.AddListener(GrappleExtend);
         
         SpringJointActive(false);
         ToggleAim(false);
@@ -73,12 +72,14 @@ public class GrappleHook : MonoBehaviour
             ToggleAim(false);
         }
 
+        if (Input.GetMouseButtonDown(0) && Input.GetMouseButton(1) /*&& LerpDone*/) //Aim done, rightclick held, and left click pressed
+        {
+            FireHook();
+        }
+
         if (!GrappleActive)//If no grapple is there
         {
-            if (Input.GetMouseButtonDown(0) && Input.GetMouseButton(1) /*&& LerpDone*/) //Aim done, rightclick held, and left click pressed
-            {
-                FireHook();
-            }
+
         }
         else//If grapple is already there
         {
@@ -109,7 +110,7 @@ public class GrappleHook : MonoBehaviour
 
     void FireHook()
     {
-        Ray screenRay = CamToShootFrom.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
+        //Ray screenRay = CamToShootFrom.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
 
         RaycastHit hit;
         if (Physics.Raycast(CamToShootFrom.transform.position, CamToShootFrom.transform.forward, out hit, MaxGrappleDist, GrappleableLayers.value))
@@ -228,10 +229,10 @@ public class GrappleHook : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawSphere(transform.position + AimOffset, 0.1f);
         //Ray screenRay = CamToShootFrom.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
-        //RaycastHit hit;
-        //if (Physics.Raycast(CamToShootFrom.transform.position,CamToShootFrom.transform.forward, out hit, MaxGrappleDist, GrappleableLayers.value))
-        //{
-        //    Gizmos.DrawSphere(hit.point, 0.1f);
-        //}
+        RaycastHit hit;
+        if (Physics.Raycast(CamToShootFrom.transform.position,CamToShootFrom.transform.forward, out hit, MaxGrappleDist, GrappleableLayers.value))
+        {
+            Gizmos.DrawSphere(hit.point, 0.1f);
+        }
     }
 }
