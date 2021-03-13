@@ -94,16 +94,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6046376297610438283, guid: d6309d7e241e0bd458102f414e26ba8e,
         type: 3}
-      propertyPath: m_Strategy
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6046376297610438283, guid: d6309d7e241e0bd458102f414e26ba8e,
-        type: 3}
-      propertyPath: m_SmoothingTime
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6046376297610438283, guid: d6309d7e241e0bd458102f414e26ba8e,
-        type: 3}
       propertyPath: m_Damping
       value: 7.1
       objectReference: {fileID: 0}
