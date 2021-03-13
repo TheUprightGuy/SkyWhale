@@ -14,7 +14,7 @@ public class TestCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        cam.m_XAxis.m_MaxSpeed = 0;
+       /* cam.m_XAxis.m_MaxSpeed = 0;
         cam.m_YAxis.m_MaxSpeed = 0;
         cam.m_RecenterToTargetHeading.m_enabled = true;
 
@@ -23,6 +23,10 @@ public class TestCam : MonoBehaviour
             cam.m_XAxis.m_MaxSpeed = 400;
             cam.m_YAxis.m_MaxSpeed = 5;
             cam.m_RecenterToTargetHeading.m_enabled = false;
-        }
+        }*/
+
+        cam.m_XAxis.m_MaxSpeed = 400;
+        cam.m_YAxis.m_MaxSpeed = 5;
+        cam.m_RecenterToTargetHeading.m_enabled = false;
     }
 }

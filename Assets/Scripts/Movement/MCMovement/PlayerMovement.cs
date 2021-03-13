@@ -81,6 +81,14 @@ public class PlayerMovement : MonoBehaviour
         SetAnimations();
     }
 
+    public Transform cam;
+    private void LateUpdate()
+    {
+        Vector3 desired = new Vector3(transform.eulerAngles.x, cam.eulerAngles.y, transform.eulerAngles.z);
+
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desired), 20 * Time.deltaTime);
+    }
+
     Vector3 inputAxis = Vector3.zero;
     void FixedUpdate()
     {

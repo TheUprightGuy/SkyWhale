@@ -9,8 +9,8 @@ public class InputOnMouseDown : MonoBehaviour, AxisState.IInputAxisProvider
     public float GetAxisValue(int axis)
     {
         // No input unless left mouse is down
-        if (!Input.GetMouseButton(0))
-            return 0;
+        /*if (!Input.GetMouseButton(0))
+            return 0;*/
 
         switch (axis)
         {
