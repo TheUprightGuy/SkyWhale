@@ -11,7 +11,8 @@ public class PlayerMovement : MonoBehaviour
         JUMPING,
         FALLING,
         CLIMBING,
-        GRAPPLE
+        GRAPPLE,
+        GLIDING
     }
 
 
@@ -19,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody RB;
     Animator anims;
     GrappleHook gHook;
-
+    Glider glider;
     [Tooltip("This can't be set, and sets to IDLE on Start call, so no touchy")]
     public PlayerStates PlayerState;
 
@@ -41,8 +42,6 @@ public class PlayerMovement : MonoBehaviour
     [Space(20.0f)]
 
     public float jumpHeight = 5.0f;
-    [Space(20.0f)]
-    public float stickForce = 1.0f;
 
     float maxGroundAngle = 40f;
 
@@ -67,6 +66,8 @@ public class PlayerMovement : MonoBehaviour
         RB = GetComponent<Rigidbody>();
         anims = GetComponentInChildren<Animator>();
         gHook = GetComponent<GrappleHook>();
+        glider = GetComponent<Glider>();
+
         vInputs = GetComponent<VirtualInputs>();
         vInputs.GetInputListener("Forward").MethodToCall.AddListener(Forward);
         vInputs.GetInputListener("Back").MethodToCall.AddListener(Back);
@@ -126,6 +127,11 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerState = PlayerStates.GRAPPLE;
         }
+        if (GLIDINGCheck())
+        {
+            PlayerState = PlayerStates.GLIDING;
+
+        }
         if (CLIMBINGCheck()) //Currently disabled
         {
             PlayerState = PlayerStates.CLIMBING;
@@ -163,6 +169,12 @@ public class PlayerMovement : MonoBehaviour
         float currenty = Vector3.Dot(RB.velocity, transform.up);
         return currenty < 0.0f && !IsGrounded();
     }
+
+    bool GLIDINGCheck()
+    {
+        return (glider != null && glider.enabled && glider.GliderActive && !IsGrounded() &&
+                PlayerState !=PlayerStates.CLIMBING && PlayerState != PlayerStates.GRAPPLE);
+    }
     #endregion
 
 
@@ -184,6 +196,11 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case PlayerStates.CLIMBING:
+                break;
+            case PlayerStates.GLIDING:
+                {
+                    glider.ApplyForces(inputAxis);
+                }
                 break;
             case PlayerStates.JUMPING:
             case PlayerStates.FALLING:
