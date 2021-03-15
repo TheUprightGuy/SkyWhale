@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: 7afc2ec1d8e0f1f41aa73e524af84144,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1246,8 +1246,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   body: {fileID: 798025784}
   currentSpeed: 0
-  maxSpeed: 30
+  maxSpeed: 60
+  liftSpeed: 30
   position: {x: 0, y: 0, z: 0}
+  lerpDelay: 0
+  lerpMultiplier: 5
+  parabolLerp: 0
   lerping: {fileID: 2099364431}
   speed: {fileID: 1170933744}
   gravity: {fileID: 1489231434}

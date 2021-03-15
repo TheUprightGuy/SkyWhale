@@ -20,7 +20,7 @@ public class GliderMovement : MonoBehaviour
     float myTurn = 0.0f;
     float myPitch = 0.0f;
     float turnSpeed = 40;
-    float liftSpeed = 20;
+    public float liftSpeed = 20;
     float rollSpeed = 20;
 
     float moveSpeed = 1;
@@ -65,6 +65,7 @@ public class GliderMovement : MonoBehaviour
             myRoll -= Time.deltaTime * rollSpeed;
         }
         yawChange = true;
+        parabolLerp = 0.0f;
     }
     void YawLeft(InputState type)
     {
@@ -78,6 +79,7 @@ public class GliderMovement : MonoBehaviour
             myRoll += Time.deltaTime * rollSpeed;
         }
         yawChange = true;
+        parabolLerp = 0.0f;
     }
 
     bool pitchChange = false;
@@ -88,6 +90,7 @@ public class GliderMovement : MonoBehaviour
             myPitch += Time.deltaTime * liftSpeed;
         }
         pitchChange = true;
+        parabolLerp = 0.0f;
     }
     void PitchUp(InputState type)
     {
@@ -96,21 +99,47 @@ public class GliderMovement : MonoBehaviour
             myPitch -= Time.deltaTime * liftSpeed;
         }
         pitchChange = true;
+        parabolLerp = 0.0f;
     }
+
+    public float lerpDelay;
+    public float lerpMultiplier = 1.0f;
+    public float parabolLerp;
 
     public void MovementCorrections()
     {
+        lerpDelay -= Time.fixedDeltaTime;
+
+        float myLerpAmount = 0.0f;
+
+        if (lerpTest)
+        {
+            parabolLerp += Time.deltaTime * Time.deltaTime * lerpMultiplier;
+            parabolLerp = Mathf.Clamp01(parabolLerp);
+            myLerpAmount = parabolLerp;
+        }
+
         if (!yawChange)
         {
-            myTurn = Mathf.Lerp(myTurn, 0, Time.deltaTime * turnSpeed);
-            myRoll = Mathf.Lerp(myRoll, 0, Time.deltaTime * rollSpeed * 5);
+            if (lerpTest)
+            {
+                if (lerpDelay <= 0)
+                {
+                    
+                    myTurn = Mathf.Lerp(myTurn, 0, Time.deltaTime * turnSpeed * myLerpAmount);
+                    myRoll = Mathf.Lerp(myRoll, 0, Time.deltaTime * rollSpeed * 5 * myLerpAmount);
+                }
+            }
         }
         if (!pitchChange)
         {
             if (lerpTest)
             {
-                myPitch = Mathf.Lerp(myPitch, 0.0f, Time.deltaTime);
-                moveSpeed = Mathf.Lerp(moveSpeed, baseSpeed, Time.deltaTime * 0.5f);
+                if (lerpDelay <= 0)
+                {
+                    myPitch = Mathf.Lerp(myPitch, 0.0f, Time.deltaTime * myLerpAmount);
+                    moveSpeed = Mathf.Lerp(moveSpeed, baseSpeed, Time.deltaTime * 0.5f);
+                }
             }
         }
 
