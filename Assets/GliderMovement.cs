@@ -16,7 +16,7 @@ public class GliderMovement : MonoBehaviour
     float rotationSpeed = 1.0f;
     Vector3 desiredVec;
     Vector3 desiredRoll;
-    float myRoll = 0.0f;
+    public float myRoll = 0.0f;
     float myTurn = 0.0f;
     float myPitch = 0.0f;
     float turnSpeed = 40;
@@ -34,8 +34,8 @@ public class GliderMovement : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        position = transform.position;
+        rb = GetComponentInChildren<Rigidbody>();
+        position = gliderMaster.position;
     }
 
     // Start is called before the first frame update
@@ -155,18 +155,18 @@ public class GliderMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R))
         {
             lerpTest = !lerpTest;
-            transform.position = position;
+            gliderMaster.position = position;
             moveSpeed = baseSpeed;
             currentSpeed = moveSpeed;
         }
 
-        if (transform.forward.y < 0)
+        if (gliderMaster.forward.y < 0)
         {
-            moveSpeed += (transform.forward.y * -20) * Time.fixedDeltaTime;
+            moveSpeed += (gliderMaster.forward.y * -20) * Time.fixedDeltaTime;
         }
         else
         {
-            moveSpeed += (transform.forward.y * -7.0f) * Time.fixedDeltaTime;
+            moveSpeed += (gliderMaster.forward.y * -7.0f) * Time.fixedDeltaTime;
         }
 
         moveSpeed = Mathf.Clamp(moveSpeed, 1.0f, maxSpeed);
@@ -189,20 +189,22 @@ public class GliderMovement : MonoBehaviour
     public Transform playerRot;
     public void RotatePlayer()
     {
-        float absAngle = Mathf.Abs(transform.forward.y) * 90.0f;
+        float absAngle = Mathf.Abs(gliderMaster.forward.y) * 90.0f;
 
         playerRot.localRotation = Quaternion.Euler(Vector3.right * absAngle);
     }
 
+    public Transform gliderMaster;
 
     private void FixedUpdate()
     {
-        desiredRoll = new Vector3(body.transform.eulerAngles.x, body.transform.eulerAngles.y, myRoll);
-        body.transform.rotation = Quaternion.Slerp(body.transform.rotation, Quaternion.Euler(desiredRoll), Time.deltaTime * rotationSpeed);
+        //desiredRoll = new Vector3(body.transform.eulerAngles.x, body.transform.eulerAngles.y, myRoll);
+        //body.transform.rotation = Quaternion.Slerp(body.transform.rotation, Quaternion.Euler(desiredRoll), Time.deltaTime * rotationSpeed);
         // Rot
-        desiredVec = new Vector3(myPitch, transform.eulerAngles.y + myTurn, transform.eulerAngles.z);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0)), Time.deltaTime * 10.0f);
+        desiredVec = new Vector3(myPitch, gliderMaster.eulerAngles.y + myTurn, myRoll);
+
+        gliderMaster.rotation = Quaternion.Slerp(gliderMaster.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);
+        //gliderMaster.rotation = Quaternion.Lerp(gliderMaster.rotation, Quaternion.Euler(new Vector3(gliderMaster.rotation.eulerAngles.x, gliderMaster.rotation.eulerAngles.y, 0)), Time.deltaTime * 10.0f);
 
         gravScale = Mathf.Clamp01((0.5f - currentSpeed / maxSpeed) * 4.0f);
         Vector3 movementGrav = transform.forward * currentSpeed + gravScale * Physics.gravity;
