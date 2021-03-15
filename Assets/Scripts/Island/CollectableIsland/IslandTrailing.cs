@@ -8,13 +8,15 @@ namespace Island.CollectableIsland
         [Header("Follow Point Variables")]
         public Transform followPoint;
         public float minDistance = 20f;
+        
         [Header("Island Variables")]
         public Rigidbody islandRigidBody;
         public float followStrength = 0.01f;
         public float yDistanceBelowIsland = 15.0f;
+        
         //Constant variables
         private const float SlowingDistanceMultiplier = 1.75f;
-        private const float MAXDistanceMultiplier = 2.25f;
+        
         [Header("Bobbing Variables")]
         public float bobAmount = 0.5f;
         public float bobTime = 3f;
@@ -22,7 +24,7 @@ namespace Island.CollectableIsland
         [Header("Bobbing Variables")] 
         public float rotationTime = 0.5f;
         private LTDescr _rotateTween;
-        private LTDescr bobTween;
+        private LTDescr _bobTween;
 
         private void Start()
         {
@@ -33,9 +35,14 @@ namespace Island.CollectableIsland
             _rotateTween = RotateTowardsIsland();
         }
 
+        /// <summary>
+        /// Recursive coroutine which causes the island to bob around its follow point's height
+        /// </summary>
+        /// <param name="direction">Whether its currently bobbing upwards or downwards (Alternates every function call)</param>
+        /// <returns>After a set amount of seconds (bob time)</returns>
         private IEnumerator BobIsland(float direction)
         {
-            bobTween = LeanTween.moveY(gameObject, followPoint.position.y + bobAmount * direction - yDistanceBelowIsland, bobTime)
+            _bobTween = LeanTween.moveY(gameObject, followPoint.position.y + bobAmount * direction - yDistanceBelowIsland, bobTime)
                 .setEase(LeanTweenType.easeInOutQuad);
             yield return new WaitForSeconds(bobTime);
             StartCoroutine(BobIsland(direction*-1f));
@@ -58,15 +65,6 @@ namespace Island.CollectableIsland
             }
         }
 
-        private LTDescr RotateTowardsIsland()
-        {
-            var islandRotationVector = Vector3.RotateTowards(Vector3.one, followPoint.position, 7f, 100f);
-            var islandRotationEuler = Quaternion.FromToRotation(transform.forward, islandRotationVector).eulerAngles;
-            islandRotationEuler.x = 0f;
-            islandRotationEuler.z = 0f;
-            return LeanTween.rotate(this.gameObject, islandRotationEuler, rotationTime);
-        }
-
         /// <summary>
         /// Function checks whether the island should:
         ///     Slow to avoid colliding with the whale, add trailing force to trail behind the whale or do nothing. 
@@ -86,6 +84,24 @@ namespace Island.CollectableIsland
                 //Add trailing force to move in the direction of the follow point
                 islandRigidBody.AddForce(followPointVector * followStrength, ForceMode.Impulse);
             }
+        }
+        
+        /// <summary>
+        /// Causes the island to rotate towards its follow point
+        /// </summary>
+        /// <returns>Lean tween descriptor so the update function can tell when the tweening is complete</returns>
+        private LTDescr RotateTowardsIsland()
+        {
+            //Calculate euler angle rotation required to rotate to face follow point
+            var islandRotationVector = Vector3.RotateTowards(Vector3.one, followPoint.position, 7f, 100f);
+            var islandRotationEuler = Quaternion.FromToRotation(transform.forward, islandRotationVector).eulerAngles;
+            
+            //Ignore rotation on x and z axis
+            islandRotationEuler.x = 0f;
+            islandRotationEuler.z = 0f;
+            
+            //Start rotation tweening utilizing lean tween (rotates over the rotation time)
+            return LeanTween.rotate(this.gameObject, islandRotationEuler, rotationTime);
         }
     }
 }

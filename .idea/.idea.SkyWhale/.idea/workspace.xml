@@ -11,13 +11,13 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
-    <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/CollectableIsland/IslandTrailling.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/CollectableIsland/IslandTrailing.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/ChainController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandChain.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandTrailing.cs" />
-    </changedPaths>
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandTrailing.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandChain.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/ChainController.cs" />
+      </list>
+    </option>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
   <component name="ProjectViewState">
@@ -30,7 +30,9 @@
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.C#" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -38,7 +40,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -47,12 +49,26 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="49862464-cfeb-4e97-917e-e5f39af90043" name="Default Changelist" comment="" />
+      <created>1615764464940</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1615764464940</updated>
+      <workItem from="1615764470332" duration="1964000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="VcsManagerConfiguration">

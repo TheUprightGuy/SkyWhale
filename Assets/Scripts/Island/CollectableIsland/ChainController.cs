@@ -9,6 +9,14 @@ namespace Island.CollectableIsland
         public Transform previousIslandPosition1;
         public Transform previousIslandPosition2;
 
+        /// <summary>
+        /// Returns the transform of the connect points from the last island trailing the whale
+        /// (this is the whale's connect points if there are no trailing islands)
+        /// </summary>
+        /// <param name="index">The index of the chain (O is for the left chain and 1 for the right chain)
+        /// This determines whether it returns the transform for the left side or the right side
+        /// </param>
+        /// <returns>The appropriate connect point transform</returns>
         public Transform GetPreviousIslandPosition(int index)
         {
             switch (index)
@@ -22,11 +30,17 @@ namespace Island.CollectableIsland
 
             return null;
         }
+        
+        /// <summary>
+        /// Updates the stored transforms to be the last island connected
+        /// </summary>
+        /// <param name="position">The position of one of the connect points for the connecting island</param>
+        /// <param name="index">The index of the chain point</param>
         public void SetPreviousIslandPosition(Transform position, int index)
         {
             switch (index)
             {
-                //return previous island's chain connect positions (this is the whale connect points if no islands have been connected)
+                //Updates  previous island's chain connect positions
                 case 0:
                     previousIslandPosition1 = position;
                     break;
