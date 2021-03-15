@@ -15,6 +15,6 @@ public class ForceInDir : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        GetComponent<Rigidbody>().MovePosition(transform.position + dir * force);
+        GetComponent<Rigidbody>().MovePosition(transform.position + dir * force * TimeSlowDown.instance.timeScale);
     }
 }

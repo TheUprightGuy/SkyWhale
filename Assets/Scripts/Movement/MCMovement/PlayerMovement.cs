@@ -229,8 +229,7 @@ public class PlayerMovement : MonoBehaviour
         float newZ =
             Mathf.MoveTowards(currentZ, desiredVel.z, maxSpeedChange);
 
-
-        RB.velocity += xAxis * (newX - currentX) + zAxis * (newZ - currentZ);
+        RB.velocity += (xAxis * (newX - currentX) + zAxis * (newZ - currentZ)) * TimeSlowDown.instance.timeScale;
 
         /*if (collidedObj != null)
         {

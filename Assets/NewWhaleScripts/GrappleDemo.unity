@@ -632,7 +632,7 @@ Transform:
   m_GameObject: {fileID: 318779294}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -27.89, y: 2.22, z: 37.721622}
-  m_LocalScale: {x: 1.8709, y: 0.26069286, z: 1.8709}
+  m_LocalScale: {x: 10, y: 0.26069286, z: 10}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 17
@@ -3327,17 +3327,17 @@ PrefabInstance:
     - target: {fileID: 2718180353237441339, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.06758917
+      value: -0.067589134
       objectReference: {fileID: 0}
     - target: {fileID: 2718180353237441339, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.000000004144117
+      value: 1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 2718180353237441339, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000011532675
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2718180353237441339, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
@@ -3362,17 +3362,17 @@ PrefabInstance:
     - target: {fileID: 2737352283168376413, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.049430124
+      value: -0.04943008
       objectReference: {fileID: 0}
     - target: {fileID: 2737352283168376413, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.00000001795067
+      value: -0.0000000041224535
       objectReference: {fileID: 0}
     - target: {fileID: 2737352283168376413, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0000000053491456
+      value: 0.000000001228456
       objectReference: {fileID: 0}
     - target: {fileID: 2737352283168376413, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
@@ -3427,17 +3427,17 @@ PrefabInstance:
     - target: {fileID: 5999542120188942440, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.085678026
+      value: -0.08567799
       objectReference: {fileID: 0}
     - target: {fileID: 5999542120188942440, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.000000004164357
       objectReference: {fileID: 0}
     - target: {fileID: 5999542120188942440, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: -0.0000000010778975
       objectReference: {fileID: 0}
     - target: {fileID: 5999542120188942440, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
@@ -3472,7 +3472,7 @@ PrefabInstance:
     - target: {fileID: 6703295753732638933, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -35.039692
+      value: -31.064
       objectReference: {fileID: 0}
     - target: {fileID: 6703295753732638933, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
@@ -3482,7 +3482,7 @@ PrefabInstance:
     - target: {fileID: 6703295753732638933, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 25.081093
+      value: 27.911095
       objectReference: {fileID: 0}
     - target: {fileID: 6703295753732638933, guid: 6ca982678f57a364f8dec24aadc93252,
         type: 3}
@@ -3645,7 +3645,7 @@ MonoBehaviour:
   m_MinValue: 60
   m_MaxValue: 300
   m_WholeNumbers: 1
-  m_Value: 60
+  m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -5528,7 +5528,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5853718423908297801}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -35.039692, y: 4.029, z: 31.08}
+  m_LocalPosition: {x: -31.064, y: 4.029, z: 33.91}
   m_LocalScale: {x: 0.32340005, y: 0.32340002, z: 0.32340005}
   m_Children:
   - {fileID: 6248230569510185175}
