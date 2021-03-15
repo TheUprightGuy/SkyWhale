@@ -28,6 +28,7 @@ namespace Island.CollectableIsland
 
         private void Start()
         {
+            //Set follow point
             //Start looping bobbing motion using LeanTween library
             transform.position = new Vector3(transform.position.x, followPoint.position.y - yDistanceBelowIsland,
                 transform.position.z);
@@ -93,7 +94,7 @@ namespace Island.CollectableIsland
         private LTDescr RotateTowardsIsland()
         {
             //Calculate euler angle rotation required to rotate to face follow point
-            var islandRotationVector = Vector3.RotateTowards(Vector3.one, followPoint.position, 7f, 100f);
+            var islandRotationVector = Vector3.RotateTowards(Vector3.one, followPoint.position, 1f, 10f);
             var islandRotationEuler = Quaternion.FromToRotation(transform.forward, islandRotationVector).eulerAngles;
             
             //Ignore rotation on x and z axis

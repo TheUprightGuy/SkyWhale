@@ -10,14 +10,17 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandSpawner.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandTrailing.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandChain.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/ChainController.cs" />
-      </list>
-    </option>
+    <changedPaths>
+      <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/ChainController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandChain.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandSpawner.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandTrailing.cs" />
+    </changedPaths>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
   <component name="ProjectViewState">
@@ -40,7 +43,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <set />
+        <list />
       </option>
       <method v="2" />
     </configuration>
@@ -49,7 +52,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <set />
+        <list />
       </option>
       <method v="2" />
     </configuration>

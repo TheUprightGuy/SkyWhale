@@ -1,5 +1,65 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1816872678
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1816872679}
+  m_Layer: 0
+  m_Name: ControlPoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1816872679
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1816872678}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8778267500622852734}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1849619029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1849619030}
+  m_Layer: 0
+  m_Name: ControlPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1849619030
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1849619029}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8778267500622852734}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2366316385253070647
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,7 +561,9 @@ Transform:
   - {fileID: 8778267499227794034}
   - {fileID: 8778267499839697578}
   - {fileID: 8778267500834310794}
+  - {fileID: 1849619030}
   - {fileID: 8778267501169869494}
+  - {fileID: 1816872679}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -524,7 +586,7 @@ MonoBehaviour:
   yDistanceBelowIsland: 15
   bobAmount: 0.5
   bobTime: 1.5
-  rotationTime: 0.5
+  rotationTime: 1
 --- !u!54 &8778267500622852728
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -682,10 +744,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4ec50c50be24a45814268e6a9fdb1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chainController: {fileID: 0}
   point0: {fileID: 0}
   point1: {fileID: 0}
-  controlPoint: {fileID: 0}
+  controlPoint: {fileID: 1849619030}
   index: 0
 --- !u!1 &8778267501169869495
 GameObject:
@@ -717,7 +778,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8778267500622852734}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &8778267501169869492
 LineRenderer:
@@ -828,10 +889,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae4ec50c50be24a45814268e6a9fdb1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chainController: {fileID: 0}
   point0: {fileID: 0}
   point1: {fileID: 0}
-  controlPoint: {fileID: 0}
+  controlPoint: {fileID: 1816872679}
   index: 1
 --- !u!1 &8778267501273164419
 GameObject:

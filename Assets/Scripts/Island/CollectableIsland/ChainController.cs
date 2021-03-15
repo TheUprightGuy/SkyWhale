@@ -6,6 +6,22 @@ namespace Island.CollectableIsland
 {
     public class ChainController : MonoBehaviour
     {
+        #region Singleton
+        public static ChainController instance;
+        private void Awake()
+        {
+            if (instance != null)
+            {
+                Debug.LogError("More than one ChainController exists!");
+                Destroy(this);
+            }
+            else
+            {
+                instance = this;
+                //OnAwake();
+            }
+        }
+        #endregion Singleton
         public Transform previousIslandPosition1;
         public Transform previousIslandPosition2;
 
@@ -47,6 +63,14 @@ namespace Island.CollectableIsland
                 case 1:
                     previousIslandPosition2 = position;
                     break;
+            }
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                CallbackHandler.instance.SpawnCollectableIsland();
             }
         }
     }

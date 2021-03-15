@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\jacob\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\jacob\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_SkyWhale.-1246438828.00" t="ExcludeRecursive" />
-    <e p="D:\Projects\SkyWhale" t="IncludeRecursive">
+    <e p="D:\Users\mds00001nb\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="D:\Users\mds00001nb\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_SkyWhale.1258164377.00" t="ExcludeRecursive" />
+    <e p="H:\Production\Alpha\SkyWhale" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
@@ -66,6 +66,7 @@
             <e p="CollectableIsland" t="Include">
               <e p="ChainController.cs" t="Include" />
               <e p="IslandChain.cs" t="Include" />
+              <e p="IslandSpawner.cs" t="Include" />
               <e p="IslandTrailing.cs" t="Include" />
             </e>
             <e p="GradMasks.cs" t="Include" />

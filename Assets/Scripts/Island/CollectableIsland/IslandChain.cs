@@ -4,7 +4,6 @@ namespace Island.CollectableIsland
 {
     public class IslandChain : MonoBehaviour
     {
-        public ChainController chainController;
         private LineRenderer _line;
 
         public Transform point0, point1, controlPoint;
@@ -14,13 +13,13 @@ namespace Island.CollectableIsland
 
         public int index;
 
-        private void Awake()
+        private void Start()
         {
             _line = GetComponent<LineRenderer>();
             _line.positionCount = NumPoints;
             point0 = _line.transform;
-            point1 = chainController.GetPreviousIslandPosition(index);
-            chainController.SetPreviousIslandPosition(point0, index);
+            point1 = ChainController.instance.GetPreviousIslandPosition(index);
+            ChainController.instance.SetPreviousIslandPosition(point0, index);
         }
 
         // Update is called once per frame
