@@ -62,7 +62,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - NameForInput: GrappleRetract
-    KeyToListen: 32
+    KeyToListen: 114
     CallOnKeyDown: 1
     CallOnKeyHeld: 1
     CallOnKeyUp: 0

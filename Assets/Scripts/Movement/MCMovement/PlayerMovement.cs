@@ -264,6 +264,44 @@ public class PlayerMovement : MonoBehaviour
             RB.MovePosition(transform.position + offset);
         }*/
     }
+    void MoveOnXY(float speed, float accel)
+    {
+        /*Vector3 xAxis = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
+        Vector3 zAxis = Vector3.ProjectOnPlane(-transform.right, groundContactNormal);
+        xAxis *= inputAxis.x;
+        zAxis *= inputAxis.z;
+
+
+        inputAxis = Vector3.Normalize(inputAxis);
+        //Vector3 temp = Vector3.Dot(inputAxis, transform.forward);
+
+
+        float currentX = Vector3.Dot(RB.velocity, xAxis);
+        float currentZ = Vector3.Dot(RB.velocity, zAxis);
+
+        float acceleration = accel;
+        float maxSpeedChange = acceleration * Time.fixedDeltaTime;
+
+        Vector3 desiredVel = xAxis + zAxis;
+        desiredVel.y = 0;
+        desiredVel *= speed;
+
+
+        float newX =
+            Mathf.MoveTowards(currentX, desiredVel.x, maxSpeedChange);
+        float newZ =
+            Mathf.MoveTowards(currentZ, desiredVel.z, maxSpeedChange);
+
+        //RB.velocity += (xAxis * (newX - currentX) + zAxis * (newZ - currentZ)) * TimeSlowDown.instance.timeScale;
+
+        RB.MovePosition(transform.position + desiredVel * Time.deltaTime);*/
+
+        /*if (collidedObj != null)
+        {
+            Vector3 offset = GetCollidedFrameOffset();
+            RB.MovePosition(transform.position + offset);
+        }*/
+    }
     // check this
     void Jump(Vector3 jumpVec, float jumpHeight)
     {
