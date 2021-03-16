@@ -5,43 +5,40 @@ using UnityEngine;
 public class GliderMovement : MonoBehaviour
 {
     [Header("Setup Fields")]
-    public GameObject body;
-    private Rigidbody rb;
-    [Header("Movement")]
-    public float currentSpeed = 0.0f;
+    public Transform playerRot;
     public float maxSpeed = 5.0f;
-
+    public float recenterFactor = 5.0f;
+    public GameObject glider;
+    new public bool enabled;
 
     #region Local Variables
+    float currentSpeed = 0.0f;
+    private Rigidbody rb;
     float rotationSpeed = 1.0f;
     Vector3 desiredVec;
     Vector3 desiredRoll;
-    public float myRoll = 0.0f;
+    float myRoll = 0.0f;
     float myTurn = 0.0f;
     float myPitch = 0.0f;
     float turnSpeed = 40;
-    public float liftSpeed = 20;
+    float liftSpeed = 20;
     float rollSpeed = 20;
 
+    float parabolLerp;
     float moveSpeed = 1;
     float baseSpeed = 5.0f;
     float gravScale = 1.0f;
     #endregion Local Variables
 
-
-    [Header("Testing")]
-    public Vector3 position;
-
     private void Awake()
     {
         rb = GetComponentInChildren<Rigidbody>();
-        position = gliderMaster.position;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        desiredVec = body.transform.eulerAngles;
+        desiredVec = transform.transform.eulerAngles;
         VirtualInputs.GetInputListener(InputType.WHALE, "YawLeft").MethodToCall.AddListener(YawLeft);
         VirtualInputs.GetInputListener(InputType.WHALE, "YawRight").MethodToCall.AddListener(YawRight);
         VirtualInputs.GetInputListener(InputType.WHALE, "PitchDown").MethodToCall.AddListener(PitchDown);
@@ -52,11 +49,23 @@ public class GliderMovement : MonoBehaviour
         currentSpeed = moveSpeed;
     }
 
+    public void Toggle()
+    {
+        enabled = !enabled;
+        glider.SetActive(enabled);
+        rb.useGravity = !enabled;
+    }
+
+
     bool yawChange = false;
     void YawRight(InputState type)
     {
         if (myTurn + Time.deltaTime * turnSpeed < 40)
         {
+            if (myTurn + Time.deltaTime * turnSpeed < 0)
+            {
+                myTurn += Time.deltaTime * turnSpeed;
+            }
             myTurn += Time.deltaTime * turnSpeed;
         }
 
@@ -71,6 +80,10 @@ public class GliderMovement : MonoBehaviour
     {
         if (myTurn - Time.deltaTime * turnSpeed > -40)
         {
+            if (myTurn - Time.deltaTime * turnSpeed > 0)
+            {
+                myTurn -= Time.deltaTime * turnSpeed;
+            }
             myTurn -= Time.deltaTime * turnSpeed;
         }
 
@@ -102,71 +115,45 @@ public class GliderMovement : MonoBehaviour
         parabolLerp = 0.0f;
     }
 
-    public float lerpDelay;
-    public float lerpMultiplier = 1.0f;
-    public float parabolLerp;
 
     public void MovementCorrections()
     {
-        lerpDelay -= Time.fixedDeltaTime;
-
-        float myLerpAmount = 0.0f;
-
-        if (lerpTest)
-        {
-            parabolLerp += Time.deltaTime * Time.deltaTime * lerpMultiplier;
-            parabolLerp = Mathf.Clamp01(parabolLerp);
-            myLerpAmount = parabolLerp;
-        }
+        parabolLerp += Time.deltaTime * Time.deltaTime * recenterFactor;
+        parabolLerp = Mathf.Clamp01(parabolLerp);
 
         if (!yawChange)
-        {
-            if (lerpTest)
-            {
-                if (lerpDelay <= 0)
-                {
-                    
-                    myTurn = Mathf.Lerp(myTurn, 0, Time.deltaTime * turnSpeed * myLerpAmount);
-                    myRoll = Mathf.Lerp(myRoll, 0, Time.deltaTime * rollSpeed * 5 * myLerpAmount);
-                }
-            }
+        {              
+            myTurn = Mathf.Lerp(myTurn, 0, Time.deltaTime * turnSpeed * parabolLerp);
+            myRoll = Mathf.Lerp(myRoll, 0, Time.deltaTime * rollSpeed * 5 * parabolLerp);            
         }
         if (!pitchChange)
-        {
-            if (lerpTest)
-            {
-                if (lerpDelay <= 0)
-                {
-                    myPitch = Mathf.Lerp(myPitch, 0.0f, Time.deltaTime * myLerpAmount);
-                    moveSpeed = Mathf.Lerp(moveSpeed, baseSpeed, Time.deltaTime * 0.5f);
-                }
-            }
+        {      
+            myPitch = Mathf.Lerp(myPitch, 0.0f, Time.deltaTime * parabolLerp);
+            moveSpeed = Mathf.Lerp(moveSpeed, baseSpeed, Time.deltaTime * 0.5f);                     
         }
 
         yawChange = false;
         pitchChange = false;
     }
 
-    bool lerpTest = true;
-
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            lerpTest = !lerpTest;
-            gliderMaster.position = position;
-            moveSpeed = baseSpeed;
-            currentSpeed = moveSpeed;
+            Toggle();
         }
 
-        if (gliderMaster.forward.y < 0)
+        if (!enabled) 
+            return;
+
+        if (base.transform.forward.y < 0)
         {
-            moveSpeed += (gliderMaster.forward.y * -20) * Time.fixedDeltaTime;
+            moveSpeed += (base.transform.forward.y * -(maxSpeed / 1.5f)) * Time.fixedDeltaTime;
         }
         else
         {
-            moveSpeed += (gliderMaster.forward.y * -7.0f) * Time.fixedDeltaTime;
+            moveSpeed += (base.transform.forward.y * -(maxSpeed / 3.0f)) * Time.fixedDeltaTime;
         }
 
         moveSpeed = Mathf.Clamp(moveSpeed, 1.0f, maxSpeed);
@@ -175,40 +162,28 @@ public class GliderMovement : MonoBehaviour
         MovementCorrections();
 
         RotatePlayer();
-
-        lerping.SetText("LERPING: " + lerpTest.ToString());
-        speed.SetText("SPEED: " + currentSpeed.ToString());
-        gravity.SetText("GRAVITY: " + gravScale.ToString());
     }
-    public TMPro.TextMeshProUGUI lerping;
-    public TMPro.TextMeshProUGUI speed;
-    public TMPro.TextMeshProUGUI gravity;
 
-
-
-    public Transform playerRot;
     public void RotatePlayer()
     {
-        float absAngle = Mathf.Abs(gliderMaster.forward.y) * 90.0f;
+        float absAngle = Mathf.Abs(base.transform.forward.y) * 90.0f;
 
         playerRot.localRotation = Quaternion.Euler(Vector3.right * absAngle);
     }
 
-    public Transform gliderMaster;
-
     private void FixedUpdate()
     {
-        //desiredRoll = new Vector3(body.transform.eulerAngles.x, body.transform.eulerAngles.y, myRoll);
-        //body.transform.rotation = Quaternion.Slerp(body.transform.rotation, Quaternion.Euler(desiredRoll), Time.deltaTime * rotationSpeed);
+        if (!enabled)
+            return;
+
         // Rot
-        desiredVec = new Vector3(myPitch, gliderMaster.eulerAngles.y + myTurn, myRoll);
+        desiredVec = new Vector3(myPitch, base.transform.eulerAngles.y + myTurn, myRoll);
 
-        gliderMaster.rotation = Quaternion.Slerp(gliderMaster.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);
-        //gliderMaster.rotation = Quaternion.Lerp(gliderMaster.rotation, Quaternion.Euler(new Vector3(gliderMaster.rotation.eulerAngles.x, gliderMaster.rotation.eulerAngles.y, 0)), Time.deltaTime * 10.0f);
-
+        base.transform.rotation = Quaternion.Slerp(base.transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);
+        
         gravScale = Mathf.Clamp01((0.5f - currentSpeed / maxSpeed) * 4.0f);
-        Vector3 movementGrav = transform.forward * currentSpeed + gravScale * Physics.gravity;
+         Vector3 movementGrav = base.transform.forward * currentSpeed + gravScale * Physics.gravity * Time.deltaTime;
 
-        rb.MovePosition(transform.position + movementGrav * Time.deltaTime);       
+        rb.velocity = movementGrav; 
     }
 }
