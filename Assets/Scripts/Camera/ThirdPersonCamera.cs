@@ -60,6 +60,15 @@ public class ThirdPersonCamera : MonoBehaviour
     
     private void Update()
     {
+        /*if (Input.GetKey(KeyCode.W))
+        {
+            if (storedPos.x != targetTrans.eulerAngles.y)
+            {
+                storedPos.x = Mathf.MoveTowardsAngle(storedPos.x, targetTrans.eulerAngles.y, CameraSnapAcceleration * Time.deltaTime);
+            }
+        }*/
+
+
         if (Input.GetKeyDown("`"))
         {
             if (Cursor.lockState == CursorLockMode.Locked)
@@ -96,10 +105,10 @@ public class ThirdPersonCamera : MonoBehaviour
             storedPos.x += horizontal;
 
            
-            if (!Input.GetKey(KeyCode.LeftAlt) && !waitingToReturn) //Not holding rightclick, allow player rotation
+            /*if (!Input.GetKey(KeyCode.LeftAlt) && !waitingToReturn) //Not holding rightclick, allow player rotation
             {
                 PlayerTrans.Rotate(0, horizontal, 0);//Rotate player along with the  camera
-            }
+            }*/
             if (Input.GetKeyUp(KeyCode.LeftAlt))//If rightclick released, snap back to position
             {
                 waitingToReturn = true;

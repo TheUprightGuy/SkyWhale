@@ -78,17 +78,20 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         SetAnimations();
+
+        if (inputAxis.magnitude > 0.1f)
+        {
+            Vector3 desired = new Vector3(transform.eulerAngles.x, cam.eulerAngles.y, transform.eulerAngles.z);
+
+            RB.MoveRotation(transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desired), 20 * Time.fixedDeltaTime));
+        }
     }
 
     public Transform cam;
 
     public Vector3 inputAxis = Vector3.zero;
     void FixedUpdate()
-    {
-        Vector3 desired = new Vector3(transform.eulerAngles.x, cam.eulerAngles.y, transform.eulerAngles.z);
-
-        RB.MoveRotation(transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desired), 20 * Time.fixedDeltaTime));
-
+    { 
         SetCurrentPlayerState();
         HandleMovement();
 
@@ -211,6 +214,13 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 xAxis = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
         Vector3 zAxis = Vector3.ProjectOnPlane(-transform.right, groundContactNormal);
+        xAxis *= inputAxis.x;
+        zAxis *= inputAxis.z;
+
+
+        inputAxis = Vector3.Normalize(inputAxis);
+        //Vector3 temp = Vector3.Dot(inputAxis, transform.forward);
+        
 
         float currentX = Vector3.Dot(RB.velocity, xAxis);
         float currentZ = Vector3.Dot(RB.velocity, zAxis);
@@ -218,7 +228,7 @@ public class PlayerMovement : MonoBehaviour
         float acceleration = accel;
         float maxSpeedChange = acceleration * Time.fixedDeltaTime;
 
-        Vector3 desiredVel = inputAxis;
+        Vector3 desiredVel = xAxis + zAxis;
         desiredVel.y = 0;
         desiredVel *= speed;
 
@@ -229,7 +239,9 @@ public class PlayerMovement : MonoBehaviour
         float newZ =
             Mathf.MoveTowards(currentZ, desiredVel.z, maxSpeedChange);
 
-        RB.velocity += (xAxis * (newX - currentX) + zAxis * (newZ - currentZ)) * TimeSlowDown.instance.timeScale;
+        //RB.velocity += (xAxis * (newX - currentX) + zAxis * (newZ - currentZ)) * TimeSlowDown.instance.timeScale;
+
+        RB.MovePosition(transform.position + desiredVel * Time.deltaTime);
 
         /*if (collidedObj != null)
         {
