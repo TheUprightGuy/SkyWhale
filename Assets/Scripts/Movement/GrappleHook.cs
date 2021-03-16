@@ -252,10 +252,10 @@ public class GrappleHook : MonoBehaviour
     {
         hookSJ.maxDistance = Mathf.Min(hookSJ.maxDistance + (RetractExtendSpeed * Time.deltaTime), MaxGrappleDist);
     }
-    private void OnDisable()
-    {
-        Hook.SetActive(false);
-    }
+    //private void OnDisable()
+    //{
+    //    Hook.SetActive(false);
+    //}
 
     private void OnDrawGizmos()
     {
