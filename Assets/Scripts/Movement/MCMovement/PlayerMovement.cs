@@ -11,13 +11,14 @@ public class PlayerMovement : MonoBehaviour
         JUMPING,
         FALLING,
         CLIMBING,
-        GRAPPLE
+        GRAPPLE,
+        GLIDING
     }
 
     Rigidbody RB;
     Animator anims;
     GrappleHook gHook;
-
+    Glider glider;
     [Tooltip("This can't be set, and sets to IDLE on Start call, so no touchy")]
     public PlayerStates PlayerState;
 
@@ -38,22 +39,24 @@ public class PlayerMovement : MonoBehaviour
     public float maxAirAcceleration = 10.0f;
     [Space(20.0f)]
 
-    public float jumpHeight = 5.0f;
-    [Space(20.0f)]
-    public float stickForce = 1.0f;
+    public float groundjumpHeight = 5.0f;
+    public float wallJumpHeight = 5.0f;
 
-    float maxGroundAngle = 40f;
+    float maxGroundAngle = 40.0f;
+    float maxClimbAngle = 60.0f;
 
     [Header("GroundChecks")]
     public LayerMask GroundLayers;
+    public LayerMask ClimbLayers;
     public float GroundCheckDistance = 1.0f;
-    public float GroundCheckRadius = 0.1f;
+    public float ClimbCheckDistance = 1.0f;
+    public float CheckRadius = 0.1f;
     public Vector3 GroundCheckStartOffset = Vector3.zero;
-
+    public Vector3 ClimbCheckStartOffset = Vector3.zero;
     [Header("Misc")]
     public bool LocalToGround = true;
 
-
+    public GameObject collidedObj = null;
 
     void Start()
     {
@@ -65,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
         RB = GetComponent<Rigidbody>();
         anims = GetComponentInChildren<Animator>();
         gHook = GetComponent<GrappleHook>();
+        glider = GetComponent<Glider>();
         VirtualInputs.GetInputListener(InputType.PLAYER, "Forward").MethodToCall.AddListener(Forward);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Back").MethodToCall.AddListener(Back);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Left").MethodToCall.AddListener(Left);
@@ -72,6 +76,7 @@ public class PlayerMovement : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.PLAYER, "Run").MethodToCall.AddListener(Run);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(Jump);
 
+       //RB.useGravity = false;
         OnValidate();
     }
 
@@ -88,18 +93,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public Transform cam;
-
     public Vector3 inputAxis = Vector3.zero;
     void FixedUpdate()
     { 
         SetCurrentPlayerState();
         HandleMovement();
-
-        if (collidedObj != null) //If attached to something
-        {
-            collidedprevPos = collidedObj.position;
-        }
-
         if (inputAxis != Vector3.zero)
         {
             inputAxis = Vector3.zero;
@@ -107,9 +105,11 @@ public class PlayerMovement : MonoBehaviour
     }
 
     float minGroundDotProduct;
+    float minClimbDotProduct;
     private void OnValidate()
     {
         minGroundDotProduct = Mathf.Cos(maxGroundAngle * Mathf.Deg2Rad);
+        minClimbDotProduct = Mathf.Cos(maxClimbAngle * Mathf.Deg2Rad);
     }
 
     void SetCurrentPlayerState()
@@ -136,7 +136,12 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerState = PlayerStates.GRAPPLE;
         }
-        if (CLIMBINGCheck()) //Currently disabled
+        if (GLIDINGCheck())
+        {
+            PlayerState = PlayerStates.GLIDING;
+
+        }
+        if (CLIMBINGCheck())
         {
             PlayerState = PlayerStates.CLIMBING;
         }
@@ -161,17 +166,23 @@ public class PlayerMovement : MonoBehaviour
     }
     bool CLIMBINGCheck()//ToDo Later when implementing climbing
     {
-        return false;
+        return (!IsGrounded() && IsClimbing());
     }
     bool JUMPINGCheck()
     {
         float currenty = Vector3.Dot(RB.velocity, transform.up);
-        return currenty > 0.0f && !IsGrounded();
+        return currenty > 0.0f && !IsGrounded() && !IsClimbing();
     }
     bool FALLINGCheck()
     {
         float currenty = Vector3.Dot(RB.velocity, transform.up);
-        return currenty < 0.0f && !IsGrounded();
+        return currenty < 0.0f && !IsGrounded() && !IsClimbing();
+    }
+
+    bool GLIDINGCheck()
+    {
+        return (glider != null && glider.enabled && glider.GliderActive && !IsGrounded() &&
+                PlayerState !=PlayerStates.CLIMBING && PlayerState != PlayerStates.GRAPPLE);
     }
     #endregion
 
@@ -185,7 +196,7 @@ public class PlayerMovement : MonoBehaviour
                 MoveOnXZ(setSpeed, setAccel);
                 if (inputAxis.y > 0)
                 {
-                    Jump();
+                    Jump(groundContactNormal + Vector3.up, groundjumpHeight);
                 }
                 break;
             case PlayerStates.GRAPPLE:
@@ -194,14 +205,19 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case PlayerStates.CLIMBING:
-            case PlayerStates.JUMPING:
-                break;
-            case PlayerStates.FALLING:
-                if (LocalToGround)
+                MoveOnXY(inAirSpeed, maxAirAcceleration);
+                if (inputAxis.y > 0)
                 {
-                    collidedObj = null;
-                    
+                    Jump(climbContactNormal +Vector3.up, wallJumpHeight);
                 }
+                break;
+            case PlayerStates.GLIDING:
+                {
+                    glider.ApplyForces(inputAxis);
+                }
+                break;
+            case PlayerStates.JUMPING:
+            case PlayerStates.FALLING:
                 MoveOnXZ(inAirSpeed, maxAirAcceleration);
                 break;
             default:
@@ -233,7 +249,6 @@ public class PlayerMovement : MonoBehaviour
         desiredVel *= speed;
 
         
-
         float newX =
             Mathf.MoveTowards(currentX, desiredVel.x, maxSpeedChange);
         float newZ =
@@ -249,14 +264,14 @@ public class PlayerMovement : MonoBehaviour
             RB.MovePosition(transform.position + offset);
         }*/
     }
-
-    void Jump()
+    // check this
+    void Jump(Vector3 jumpVec, float jumpHeight)
     {
         float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
-        Vector3 jumpDirection = (groundContactNormal + Vector3.up).normalized;
+        Vector3 jumpDirection = (/*groundContactNormal + Vector3.up*/jumpVec).normalized;
         float alignedSpeed = Vector3.Dot(RB.velocity, jumpDirection);
 
-        RB.velocity += jumpDirection * jumpSpeed;
+        RB.velocity += jumpDirection * jumpSpeed + (Physics.gravity * Time.deltaTime);
     }
 
     void SetAnimations()
@@ -335,11 +350,12 @@ public class PlayerMovement : MonoBehaviour
     public bool IsGrounded()
     {
         RaycastHit rh;
-        if (Physics.SphereCast(transform.position + GroundCheckStartOffset, GroundCheckRadius,
+        if (Physics.SphereCast(transform.position + GroundCheckStartOffset, CheckRadius,
             Vector3.down, out rh,
             GroundCheckDistance, GroundLayers.value))
         {
-            if (rh.normal.y >= minGroundDotProduct)
+            float upDot = Vector3.Dot(transform.up, rh.normal);
+            if (upDot >= minGroundDotProduct)
             {
                 return true;
             }
@@ -347,6 +363,21 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
 
+    public bool IsClimbing()
+    {
+        RaycastHit rh;
+        if (Physics.SphereCast(transform.position + ClimbCheckStartOffset, CheckRadius,
+            transform.forward, out rh,
+            ClimbCheckDistance, ClimbLayers.value))
+        {
+            float degreeCheck = Vector3.Angle(transform.forward, -rh.normal);
+            if (degreeCheck <= maxClimbAngle)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     private void OnCollisionEnter(Collision collision)
     {
         
@@ -360,7 +391,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool onGround;
     Vector3 groundContactNormal;
-
+    Vector3 climbContactNormal;
     /// <summary>
     /// Evaluates when this collider hits some other collider
     /// </summary>
@@ -369,28 +400,27 @@ public class PlayerMovement : MonoBehaviour
     private void EvalCollision(Collision collision, int collisionEvent = 0)
     {
         Vector3 normal = collision.GetContact(0).normal;
-        if (normal.y >= minGroundDotProduct)
+        float degreeCheck = Vector3.Angle(transform.forward, -normal);
+        if (degreeCheck <= maxClimbAngle)
+        {
+            climbContactNormal = normal;
+        }
+
+
+        float upDot = Vector3.Dot(transform.up, normal);
+
+        if (upDot >= minGroundDotProduct)
         {
             groundContactNormal = normal;
-            if (LocalToGround)
-            {
-                collidedObj = collision.transform;
-                if (collisionEvent == 0) //OnEnter
-                {
-                    collidedprevPos = collision.transform.position;
-                }
-            }
-            
+
         }
+
+
+     
+        
+
     }
 
-    Vector3 collidedprevPos = Vector3.zero;
-    Transform collidedObj;
-    Vector3 GetCollidedFrameOffset() //The movement vector since the last frame;
-    {
-        return (collidedObj == null) ? (Vector3.zero) :
-            (collidedObj.position - collidedprevPos);
-    }
 
     #region Utility
 
@@ -403,6 +433,12 @@ public class PlayerMovement : MonoBehaviour
 
         Gizmos.DrawLine(offsetPos, offsetPos + (Vector3.down * GroundCheckDistance));
 
+        Gizmos.color = Color.red;
+        offsetPos = transform.position + ClimbCheckStartOffset;
+        Gizmos.DrawSphere(offsetPos, 0.1f);
+        Gizmos.DrawLine(offsetPos, offsetPos + (transform.forward * ClimbCheckDistance));
+
+        Gizmos.color = Color.green;
         Vector3 dir = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
         Vector3 origin = transform.position;
         origin.y -= transform.localScale.y / 2;

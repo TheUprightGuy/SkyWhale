@@ -58,7 +58,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
     }
     
-    private void Update()
+    private void LateUpdate()
     {
         /*if (Input.GetKey(KeyCode.W))
         {
