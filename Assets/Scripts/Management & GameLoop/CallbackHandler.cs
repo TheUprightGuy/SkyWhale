@@ -71,6 +71,16 @@ public class CallbackHandler : MonoBehaviour
             openDoors();
         }
     }
+
+    public event Action spawnCollectableIsland;
+
+    public void SpawnCollectableIsland()
+    {
+        if (spawnCollectableIsland != null)
+        {
+            spawnCollectableIsland();
+        }
+    }
     #endregion Puzzles
     #region ResourcePopups
     public event Action<string> supplyPopUp;
