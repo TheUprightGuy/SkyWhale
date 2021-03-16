@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody RB;
     Animator anims;
     GrappleHook gHook;
-    Glider glider;
+    GliderMovement glider;
     [Tooltip("This can't be set, and sets to IDLE on Start call, so no touchy")]
     public PlayerStates PlayerState;
 
@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
         RB = GetComponent<Rigidbody>();
         anims = GetComponentInChildren<Animator>();
         gHook = GetComponent<GrappleHook>();
-        glider = GetComponent<Glider>();
+        glider = GetComponent<GliderMovement>();
         VirtualInputs.GetInputListener(InputType.PLAYER, "Forward").MethodToCall.AddListener(Forward);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Back").MethodToCall.AddListener(Back);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Left").MethodToCall.AddListener(Left);
@@ -84,7 +84,12 @@ public class PlayerMovement : MonoBehaviour
     {
         SetAnimations();
 
-        if (inputAxis.magnitude > 0.1f)
+        if (Input.GetKeyDown(KeyCode.Space) && PlayerState == PlayerStates.JUMPING)
+        {
+            glider.Toggle();
+        }
+
+        if (inputAxis.magnitude > 0.1f && !glider.enabled)
         {
             Vector3 desired = new Vector3(transform.eulerAngles.x, cam.eulerAngles.y, transform.eulerAngles.z);
 
@@ -181,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool GLIDINGCheck()
     {
-        return (glider != null && glider.enabled && glider.GliderActive && !IsGrounded() &&
+        return (glider != null && glider.enabled && !IsGrounded() &&
                 PlayerState !=PlayerStates.CLIMBING && PlayerState != PlayerStates.GRAPPLE);
     }
     #endregion
@@ -213,7 +218,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PlayerStates.GLIDING:
                 {
-                    glider.ApplyForces(inputAxis);
+                    //glider.ApplyForces(inputAxis);
                 }
                 break;
             case PlayerStates.JUMPING:

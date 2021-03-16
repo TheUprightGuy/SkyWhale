@@ -55,6 +55,14 @@ public class NewWhaleMovement : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.WHALE, "PitchDown").MethodToCall.AddListener(PitchDown);
         VirtualInputs.GetInputListener(InputType.WHALE, "PitchUp").MethodToCall.AddListener(PitchUp);
         VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").MethodToCall.AddListener(Thrust);
+
+        Invoke("AddIsland", 0.1f);
+    }
+
+    // temp
+    void AddIsland()
+    {
+        NewCallbackHandler.instance.SpawnCollectableIsland();
     }
 
     bool yawChange = false;

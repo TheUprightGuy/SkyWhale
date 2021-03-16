@@ -61,6 +61,22 @@ MonoBehaviour:
     MethodToCall:
       m_PersistentCalls:
         m_Calls: []
+  - NameForInput: GrappleRetract
+    KeyToListen: 114
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: GrappleExtend
+    KeyToListen: 102
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
   whaleInput:
   - NameForInput: Thrust
     KeyToListen: 32

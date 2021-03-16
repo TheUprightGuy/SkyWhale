@@ -16,9 +16,15 @@ public class IslandSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CallbackHandler.instance.spawnCollectableIsland += SpawnIsland;
+        //CallbackHandler.instance.spawnCollectableIsland += SpawnIsland;
+        NewCallbackHandler.instance.spawnCollectableIsland += SpawnIsland;
         _spawnHeightDifference = 15f;
         trailingIslands.Add(whale);
+    }
+
+    private void OnDestroy()
+    {
+        NewCallbackHandler.instance.spawnCollectableIsland -= SpawnIsland;
     }
 
     private void Update()

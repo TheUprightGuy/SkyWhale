@@ -20,6 +20,8 @@ public class NewOrbitScript : MonoBehaviour
     private void Start()
     {
         NewCallbackHandler.instance.setOrbit += SetOrbit;
+        // testing purposes
+        SetOrbit(orbit);
     }
     private void OnDestroy()
     {
