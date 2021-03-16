@@ -60,12 +60,16 @@ public class SaveSlot : MonoBehaviour, IPointerDownHandler
         renderImage.enabled = true;
         string imagePath = Application.persistentDataPath + "/Resources/" + save.saveName + ".png";
         // Load bytes
-        byte[] bytes = System.IO.File.ReadAllBytes(imagePath);
-        // Create texture of correct size then load bytes
-        save.texture = new Texture2D(Screen.width, Screen.height);
-        save.texture.LoadImage(bytes);
-        // Create sprite to render on screen
-        renderImage.sprite = Sprite.Create(save.texture, new Rect(0, 0, save.texture.width, save.texture.height), new Vector2(0.5f, 0.5f));
+        if (System.IO.File.Exists(imagePath))
+        { 
+            byte[] bytes = System.IO.File.ReadAllBytes(imagePath);
+  
+            // Create texture of correct size then load bytes
+            save.texture = new Texture2D(Screen.width, Screen.height);
+            save.texture.LoadImage(bytes);
+            // Create sprite to render on screen
+            renderImage.sprite = Sprite.Create(save.texture, new Rect(0, 0, save.texture.width, save.texture.height), new Vector2(0.5f, 0.5f));
+        }
     }
 
     public virtual void OnPointerDown(PointerEventData eventData)
