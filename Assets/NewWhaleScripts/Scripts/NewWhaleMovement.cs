@@ -144,7 +144,7 @@ public class NewWhaleMovement : MonoBehaviour
     {
         if (!yawChange)
         {
-            myTurn = Mathf.Lerp(myTurn, 0, Time.deltaTime * turnSpeed);
+            myTurn = Mathf.Lerp(myTurn, 0, Time.deltaTime * turnSpeed / 8.0f);
             myRoll = Mathf.Lerp(myRoll, 0, Time.deltaTime * rollSpeed * 5);
         }
         if (!pitchChange)
@@ -227,6 +227,8 @@ public class NewWhaleMovement : MonoBehaviour
         desiredVec = new Vector3(myPitch, transform.eulerAngles.y + myTurn, transform.eulerAngles.z);
         Vector3 temp = new Vector3(myPitch + transform.eulerAngles.x, myTurn + transform.eulerAngles.y, 0);
 
+        Vector3 myVec = Quaternion.Euler(desiredVec) * Vector3.forward;
+
         if (!orbit.enabled)
         {
             //rb.angularVelocity = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed).eulerAngles;
@@ -236,12 +238,12 @@ public class NewWhaleMovement : MonoBehaviour
             //rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path), Time.deltaTime * rotSpeed));
 
             Debug.DrawRay(transform.position, transform.forward * 1000.0f, Color.blue);
-            Debug.DrawRay(transform.position, temp * 1000.0f, Color.black);
+            Debug.DrawRay(transform.position, myVec * 1000.0f, Color.black);
 
-            float angleDiff = Vector3.Angle(transform.forward, Vector3.Normalize(temp));
-            Vector3 cross = Vector3.Cross(transform.forward, Vector3.Normalize(temp));
+            float angleDiff = Vector3.Angle(transform.forward, Vector3.Normalize(myVec));
+            Vector3 cross = Vector3.Cross(transform.forward, Vector3.Normalize(myVec));
             Vector3 rotVec = Vector3.ClampMagnitude(cross * angleDiff, 0.1f);
-            //rb.angularVelocity = rotVec;
+            rb.angularVelocity = rotVec;
 
             /*float angleDiff = Vector3.Angle(transform.forward, path);
             Vector3 cross = Vector3.Cross(transform.forward, path);
@@ -266,7 +268,7 @@ public class NewWhaleMovement : MonoBehaviour
         }
         else
         {
-            //rb.velocity = transform.forward * currentSpeed;// * Time.deltaTime;
+            rb.velocity = transform.forward * currentSpeed;// * Time.deltaTime;
             //rb.MovePosition(transform.position + transform.forward * currentSpeed * Time.deltaTime);
         }
     }
