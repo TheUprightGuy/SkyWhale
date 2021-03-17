@@ -4,21 +4,6 @@ using UnityEngine;
 
 public class LureScript : MonoBehaviour
 {
-    #region Singleton
-    public static LureScript instance;
-    private void Awake()
-    {
-        if (instance != null)
-        {
-            Debug.Log("More than one Lure Exists!");
-            Destroy(gameObject);
-        }
-        else
-        {
-            instance = this;
-        }
-    }
-    #endregion Singleton
     [Header("Current Position")]
     public float currentSide;
     public float currentForward;
@@ -47,6 +32,7 @@ public class LureScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        return;
         //if (EventHandler.instance.gameState.gamePaused) return;
 
         speed = (currentForward + 2.0f) / 2.0f;

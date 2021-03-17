@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -738,12 +738,12 @@ PrefabInstance:
     - target: {fileID: 1815383407295762212, guid: 07b11c2a3796cf64d800dee108dcc2ac,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.582276
+      value: 3.35
       objectReference: {fileID: 0}
     - target: {fileID: 1815383407295762212, guid: 07b11c2a3796cf64d800dee108dcc2ac,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 41.123714
+      value: 39.3
       objectReference: {fileID: 0}
     - target: {fileID: 1815383407295762212, guid: 07b11c2a3796cf64d800dee108dcc2ac,
         type: 3}
@@ -1288,6 +1288,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: d3b294227f4cf63458a6fb1ede2af03e, type: 2}
+    - target: {fileID: 4803243847453720838, guid: 340fb9a3858c41b459c8e205b31d2457,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 7f52f05faffef0b46b0b1f60f208b2e4,
+        type: 2}
     - target: {fileID: 7388909087441353765, guid: 340fb9a3858c41b459c8e205b31d2457,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3144,7 +3150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRot: {fileID: 7559769323808933126}
-  maxSpeed: 60
+  maxSpeed: 20
   recenterFactor: 5
   glider: {fileID: 1951205307}
   enabled: 1
@@ -3224,7 +3230,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5853718423908297801}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -28.275, y: 0.92, z: 43.795}
+  m_LocalPosition: {x: -28.275, y: 3.03, z: 43.795}
   m_LocalScale: {x: 0.32340005, y: 0.32340002, z: 0.32340005}
   m_Children:
   - {fileID: 6248230569510185175}
@@ -3258,7 +3264,7 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 2
   m_Drag: 0
-  m_AngularDrag: 1
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0

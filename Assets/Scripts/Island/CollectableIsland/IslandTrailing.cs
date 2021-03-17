@@ -98,7 +98,9 @@ namespace Island.CollectableIsland
             var transformRotation = Quaternion.LookRotation(islandRotationVector);
             transformRotation.x = 0f;
             transformRotation.z = 0f;
-            transform.rotation = transformRotation;
+            transformRotation = transform.rotation.normalized;
+            islandRigidBody.MoveRotation(transformRotation);
+            //transform.rotation = transformRotation;
         }
 
         public void Flock(List<GameObject> trailingIslands)

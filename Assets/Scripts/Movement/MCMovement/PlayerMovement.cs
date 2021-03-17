@@ -58,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject collidedObj = null;
 
+    new public bool enabled;
+
     void Start()
     {
         setSpeed = walkSpeed;
@@ -84,16 +86,19 @@ public class PlayerMovement : MonoBehaviour
     {
         SetAnimations();
 
-        if (Input.GetKeyDown(KeyCode.Space) && PlayerState == PlayerStates.JUMPING)
+        if (!enabled)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.Space) && (!IsGrounded() || glider.enabled))
         {
-            glider.Toggle();
+            glider.Toggle();           
         }
 
         if (inputAxis.magnitude > 0.1f && !glider.enabled)
         {
             Vector3 desired = new Vector3(transform.eulerAngles.x, cam.eulerAngles.y, transform.eulerAngles.z);
 
-            RB.MoveRotation(transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desired), 20 * Time.fixedDeltaTime));
+            RB.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.Euler(desired), 20 * Time.fixedDeltaTime));
         }
     }
 
@@ -102,6 +107,10 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     { 
         SetCurrentPlayerState();
+
+        if (!enabled)
+            return;
+
         HandleMovement();
         if (inputAxis != Vector3.zero)
         {
@@ -423,7 +432,15 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        
+        if (glider.enabled)
+        {
+            // temp
+            glider.Toggle();
+        }
+
+        RB.velocity = Vector3.zero;
+        RB.angularVelocity = Vector3.zero;
+
         EvalCollision(collision);
     }
 

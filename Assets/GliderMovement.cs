@@ -60,6 +60,9 @@ public class GliderMovement : MonoBehaviour
         rb.useGravity = !enabled;
         mainCamera.depth = enabled ? -1.0f : 1.0f;
         glideCam.depth = enabled ? 1.0f : -1.0f;
+        rb.angularVelocity = Vector3.zero;
+
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
 
@@ -145,10 +148,10 @@ public class GliderMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             Toggle();
-        }
+        }*/
 
         if (!enabled) 
             return;

@@ -10,7 +10,8 @@ public class IslandSpawner : MonoBehaviour
     public List<GameObject> trailingIslands;
     public Transform followPoint;
     public GameObject islandPrefab;
-    private float _spawnHeightDifference = 15f;
+    public GameObject islandColliderPrefab;
+    private float _spawnHeightDifference = 2.0f;
     public GameObject whale;
     
     // Start is called before the first frame update
@@ -18,7 +19,6 @@ public class IslandSpawner : MonoBehaviour
     {
         //CallbackHandler.instance.spawnCollectableIsland += SpawnIsland;
         NewCallbackHandler.instance.spawnCollectableIsland += SpawnIsland;
-        _spawnHeightDifference = 15f;
         trailingIslands.Add(whale);
     }
 
@@ -67,5 +67,7 @@ public class IslandSpawner : MonoBehaviour
         _spawnHeightDifference = 0f;
         
         trailingIslands.Add(island);
+        /*IslandColliderScript temp = Instantiate(islandColliderPrefab, island.transform.position, island.transform.rotation).GetComponent<IslandColliderScript>();
+        temp.island = island.transform;*/
     }
 }

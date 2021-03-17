@@ -16,7 +16,8 @@ public class NewWhaleMovement : MonoBehaviour
     public float minimumDistance = 15.0f;
 
     #region Local Variables
-    [HideInInspector] public bool tooClose;
+    //[HideInInspector] 
+    public bool tooClose;
     //[HideInInspector]
     public bool control = true;
     float buckTimer = 0.0f;
@@ -25,13 +26,14 @@ public class NewWhaleMovement : MonoBehaviour
     Vector3 desiredVec;
     Vector3 desiredRoll;
     float myRoll = 0.0f;
-    float myTurn = 0.0f;
-    float myPitch = 0.0f;
+    public float myTurn = 0.0f;
+    public float myPitch = 0.0f;
     float turnSpeed = 40;
     float liftSpeed = 20;
     float rollSpeed = 20;
     #endregion Local Variables
 
+    NewPickUp pickUp;
     NewOrbitScript orbit;
     NewCharacter cc;
 
@@ -41,13 +43,14 @@ public class NewWhaleMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         orbit = GetComponent<NewOrbitScript>();
+        pickUp = GetComponent<NewPickUp>();
         cc = GetComponentInChildren<NewCharacter>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        orbit.enabled = false;
+        //orbit.enabled = false;
         desiredVec = body.transform.eulerAngles;
 
         VirtualInputs.GetInputListener(InputType.WHALE, "YawLeft").MethodToCall.AddListener(YawLeft);
@@ -68,6 +71,9 @@ public class NewWhaleMovement : MonoBehaviour
     bool yawChange = false;
     void YawRight(InputState type)
     {
+        if (orbit.enabled)
+            return;
+
         if (myTurn + Time.deltaTime * turnSpeed < 40)
         {
             myTurn += Time.deltaTime * turnSpeed;
@@ -81,6 +87,9 @@ public class NewWhaleMovement : MonoBehaviour
     }
     void YawLeft(InputState type)
     {
+        if (orbit.enabled)
+            return;
+
         if (myTurn - Time.deltaTime * turnSpeed > -40)
         {
             myTurn -= Time.deltaTime * turnSpeed;
@@ -96,6 +105,9 @@ public class NewWhaleMovement : MonoBehaviour
     bool pitchChange = false;
     void PitchDown(InputState type)
     {
+        if (orbit.enabled)
+            return;
+
         if (myPitch + Time.deltaTime * liftSpeed < 30)
         {
             myPitch += Time.deltaTime * liftSpeed;
@@ -104,6 +116,9 @@ public class NewWhaleMovement : MonoBehaviour
     }
     void PitchUp(InputState type)
     {
+        if (orbit.enabled)
+            return;
+
         if (myPitch - Time.deltaTime * liftSpeed > -30)
         {
             myPitch -= Time.deltaTime * liftSpeed;
@@ -114,6 +129,9 @@ public class NewWhaleMovement : MonoBehaviour
     bool thrustChange = false;
     private void Thrust(InputState type)
     {
+        if (orbit.enabled)
+            return;
+
         if (moveSpeed < maxSpeed)
         {
             moveSpeed += accelSpeed * Time.deltaTime;
@@ -205,13 +223,38 @@ public class NewWhaleMovement : MonoBehaviour
         desiredRoll = new Vector3(body.transform.eulerAngles.x, body.transform.eulerAngles.y, myRoll);
         body.transform.rotation = Quaternion.Slerp(body.transform.rotation, Quaternion.Euler(desiredRoll), Time.deltaTime * rotationSpeed);
         // Rot
+
         desiredVec = new Vector3(myPitch, transform.eulerAngles.y + myTurn, transform.eulerAngles.z);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0)), Time.deltaTime * 10.0f);
+        Vector3 temp = new Vector3(myPitch + transform.eulerAngles.x, myTurn + transform.eulerAngles.y, 0);
+
+        if (!orbit.enabled)
+        {
+            //rb.angularVelocity = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed).eulerAngles;
+            //rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed));
+
+
+            //rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path), Time.deltaTime * rotSpeed));
+
+            Debug.DrawRay(transform.position, transform.forward * 1000.0f, Color.blue);
+            Debug.DrawRay(transform.position, temp * 1000.0f, Color.black);
+
+            float angleDiff = Vector3.Angle(transform.forward, Vector3.Normalize(temp));
+            Vector3 cross = Vector3.Cross(transform.forward, Vector3.Normalize(temp));
+            Vector3 rotVec = Vector3.ClampMagnitude(cross * angleDiff, 0.1f);
+            //rb.angularVelocity = rotVec;
+
+            /*float angleDiff = Vector3.Angle(transform.forward, path);
+            Vector3 cross = Vector3.Cross(transform.forward, path);
+            Vector3 rotVec = Vector3.ClampMagnitude(cross * angleDiff, rotSpeed);
+            rb.angularVelocity = rotVec;*/
+
+        }
+        //rb.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0)), Time.deltaTime * 10.0f));
 
         if (tooClose)
         {
-            rb.MovePosition(transform.position - transform.forward * maxSpeed * Time.deltaTime);
+            //rb.MovePosition(transform.position - transform.forward * maxSpeed * Time.deltaTime);
+            rb.velocity = -transform.forward * maxSpeed;
             buckTimer -= Time.deltaTime;
             CatapultPlayer();
 
@@ -223,14 +266,18 @@ public class NewWhaleMovement : MonoBehaviour
         }
         else
         {
-            rb.MovePosition(transform.position + transform.forward * currentSpeed * Time.deltaTime);
+            //rb.velocity = transform.forward * currentSpeed;// * Time.deltaTime;
+            //rb.MovePosition(transform.position + transform.forward * currentSpeed * Time.deltaTime);
         }
     }
 
     public void CatapultPlayer()
     {
-        cc.transform.parent = null;
-        cc.Punt();
+        if (cc)
+        {
+            cc.transform.parent = null;
+            cc.Punt();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -240,5 +287,13 @@ public class NewWhaleMovement : MonoBehaviour
             Crash(other.gameObject);
             Destroy(other.gameObject);
         }
+    }
+
+    public void GiveControl()
+    {
+        orbit.enabled = false;
+        pickUp.enabled = false;
+        control = true;
+        tooClose = false;
     }
 }
