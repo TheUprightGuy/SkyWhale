@@ -68,10 +68,11 @@ namespace Island.CollectableIsland
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.I))
+           /*if (Input.GetKeyDown(KeyCode.I))
             {
-                CallbackHandler.instance.SpawnCollectableIsland();
-            }
+                //CallbackHandler.instance.SpawnCollectableIsland();
+                NewCallbackHandler.instance.SpawnCollectableIsland();
+            }*/
         }
     }
 }

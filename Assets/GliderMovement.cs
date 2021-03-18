@@ -11,6 +11,9 @@ public class GliderMovement : MonoBehaviour
     public GameObject glider;
     new public bool enabled;
 
+    public Camera mainCamera;
+    public Camera glideCam;
+
     #region Local Variables
     float currentSpeed = 0.0f;
     private Rigidbody rb;
@@ -47,13 +50,19 @@ public class GliderMovement : MonoBehaviour
         baseSpeed = maxSpeed * 0.4f;
         moveSpeed = baseSpeed;
         currentSpeed = moveSpeed;
+        Toggle();
     }
 
     public void Toggle()
     {
         enabled = !enabled;
         glider.SetActive(enabled);
-        rb.useGravity = !enabled;
+        //rb.useGravity = !enabled;
+        mainCamera.depth = enabled ? -1.0f : 1.0f;
+        glideCam.depth = enabled ? 1.0f : -1.0f;
+        rb.angularVelocity = Vector3.zero;
+
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
 
@@ -139,10 +148,10 @@ public class GliderMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             Toggle();
-        }
+        }*/
 
         if (!enabled) 
             return;

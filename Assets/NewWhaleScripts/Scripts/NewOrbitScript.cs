@@ -14,12 +14,23 @@ public class NewOrbitScript : MonoBehaviour
     public float rotSpeed;
     public bool atOrbit;
     public float dist;
+    Rigidbody rb;
     [HideInInspector] public float currentDistance;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
 
     #region Callbacks
     private void Start()
     {
         NewCallbackHandler.instance.setOrbit += SetOrbit;
+        // testing purposes
+        if (enabled)
+        {
+            SetOrbit(orbit);
+        }
     }
     private void OnDestroy()
     {
@@ -53,10 +64,10 @@ public class NewOrbitScript : MonoBehaviour
             
 
             vecToDesired *= dist;
+            Debug.DrawRay(transform.position, vecToDesired * 1000.0f, Color.blue);
 
             path = Vector3.Cross(objToIsland, Vector3.up);
-
-            Debug.DrawRay(transform.position, vecToDesired * 1000.0f, Color.blue);        
+    
 
             path.y = orbit.transform.position.y - transform.position.y;
             path = Vector3.Normalize(path);
@@ -65,13 +76,29 @@ public class NewOrbitScript : MonoBehaviour
             Debug.DrawRay(transform.position, path * 1000.0f, Color.green);
 
             path = new Vector3(path.x * orbitDirection, path.y, path.z * orbitDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path), Time.deltaTime * rotSpeed);
+
+            //rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path), Time.deltaTime * rotSpeed));
+
+            float angleDiff = Vector3.Angle(transform.forward, path);
+            Vector3 cross = Vector3.Cross(transform.forward, path);
+            Vector3 rotVec = Vector3.ClampMagnitude(cross * angleDiff, rotSpeed);
+            rb.angularVelocity = rotVec;
+
+            //rb.AddRelativeTorque(cross * angleDiff * 0.1f);
+
+
+            //Quaternion temp = Quaternion.FromToRotation(transform.rotation.eulerAngles, Quaternion.LookRotation(path).eulerAngles);
+            //rb.AddTorque(temp.eulerAngles);
+            //rb.angularVelocity = temp.eulerAngles * Time.fixedDeltaTime;
+            //rb.AddTorque(transform.rotation.eulerAngles - Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path), rotSpeed).eulerAngles);
+
+
         }
     }
 
     public void SetOrbit(GameObject _orbit)
     {
-        if (!enabled)
+        //if (!enabled)
         {
             orbit = _orbit;
             orbitDistance = orbit.GetComponent<SphereCollider>().radius;

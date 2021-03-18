@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody RB;
     Animator anims;
     GrappleHook gHook;
-    Glider glider;
+    GliderMovement glider;
     [Tooltip("This can't be set, and sets to IDLE on Start call, so no touchy")]
     public PlayerStates PlayerState;
 
@@ -58,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject collidedObj = null;
 
+    new public bool enabled;
+
     void Start()
     {
         setSpeed = walkSpeed;
@@ -68,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
         RB = GetComponent<Rigidbody>();
         anims = GetComponentInChildren<Animator>();
         gHook = GetComponent<GrappleHook>();
-        glider = GetComponent<Glider>();
+        glider = GetComponent<GliderMovement>();
         VirtualInputs.GetInputListener(InputType.PLAYER, "Forward").MethodToCall.AddListener(Forward);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Back").MethodToCall.AddListener(Back);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Left").MethodToCall.AddListener(Left);
@@ -84,19 +86,39 @@ public class PlayerMovement : MonoBehaviour
     {
         SetAnimations();
 
-        if (inputAxis.magnitude > 0.1f)
-        {
-            Vector3 desired = new Vector3(transform.eulerAngles.x, cam.eulerAngles.y, transform.eulerAngles.z);
+        if (!enabled)
+            return;
 
-            RB.MoveRotation(transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desired), 20 * Time.fixedDeltaTime));
+        if (Input.GetKeyDown(KeyCode.Space) && (!IsGrounded() || glider.enabled))
+        {
+            glider.Toggle();           
         }
+
+        Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
+        rot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
+
+
+        if ((inputAxis.magnitude > 0.1f && !glider.enabled) || Input.GetKeyDown(KeyCode.O))
+        {
+            transform.Rotate(rot.eulerAngles, Space.World);
+            //transform.forward = camForwardRelativeToPlayerRot;
+        }
+
+        Debug.DrawRay(transform.position, camForwardRelativeToPlayerRot, Color.black);
+
     }
+
+    public Quaternion rot;
 
     public Transform cam;
     public Vector3 inputAxis = Vector3.zero;
     void FixedUpdate()
     { 
         SetCurrentPlayerState();
+
+        if (!enabled)
+            return;
+
         HandleMovement();
         if (inputAxis != Vector3.zero)
         {
@@ -181,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool GLIDINGCheck()
     {
-        return (glider != null && glider.enabled && glider.GliderActive && !IsGrounded() &&
+        return (glider != null && glider.enabled && !IsGrounded() &&
                 PlayerState !=PlayerStates.CLIMBING && PlayerState != PlayerStates.GRAPPLE);
     }
     #endregion
@@ -213,7 +235,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PlayerStates.GLIDING:
                 {
-                    glider.ApplyForces(inputAxis);
+                    //glider.ApplyForces(inputAxis);
                 }
                 break;
             case PlayerStates.JUMPING:
@@ -232,7 +254,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 zAxis = Vector3.ProjectOnPlane(-transform.right, groundContactNormal);
         xAxis *= inputAxis.x;
         zAxis *= inputAxis.z;
-
 
         inputAxis = Vector3.Normalize(inputAxis);
         //Vector3 temp = Vector3.Dot(inputAxis, transform.forward);
@@ -257,6 +278,19 @@ public class PlayerMovement : MonoBehaviour
         //RB.velocity += (xAxis * (newX - currentX) + zAxis * (newZ - currentZ)) * TimeSlowDown.instance.timeScale;
 
         RB.MovePosition(transform.position + desiredVel * Time.deltaTime);
+
+
+        Vector3 manualGrav = groundContactNormal * -9.81f;
+        if (groundContactNormal == Vector3.zero)
+        {
+            RB.AddForce(Physics.gravity, ForceMode.Acceleration);
+            Debug.DrawRay(transform.position, Physics.gravity, Color.black);
+        }
+        else
+        {
+            RB.AddForce(manualGrav, ForceMode.Acceleration);
+            Debug.DrawRay(transform.position, manualGrav, Color.gray);
+        }
 
         /*if (collidedObj != null)
         {
@@ -305,6 +339,9 @@ public class PlayerMovement : MonoBehaviour
     // check this
     void Jump(Vector3 jumpVec, float jumpHeight)
     {
+        if (!enabled)
+            return;
+
         float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
         Vector3 jumpDirection = (/*groundContactNormal + Vector3.up*/jumpVec).normalized;
         float alignedSpeed = Vector3.Dot(RB.velocity, jumpDirection);
@@ -314,6 +351,9 @@ public class PlayerMovement : MonoBehaviour
 
     void SetAnimations()
     {
+        if (!enabled)
+            return;
+
         switch (PlayerState)
         {
             case PlayerStates.IDLE:
@@ -359,6 +399,9 @@ public class PlayerMovement : MonoBehaviour
     }
     void Jump(InputState type)
     {
+        if (!enabled)
+            return;
+
         if (PlayerState == PlayerStates.MOVING)
         {
             anims.SetTrigger("Jump");
@@ -418,7 +461,15 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        
+        if (glider.enabled)
+        {
+            // temp
+            glider.Toggle();
+        }
+
+        RB.velocity = Vector3.zero;
+        RB.angularVelocity = Vector3.zero;
+
         EvalCollision(collision);
     }
 

@@ -34,5 +34,12 @@ public class NewCallbackHandler : MonoBehaviour
         }
     }
 
-
+    public event Action spawnCollectableIsland;
+    public void SpawnCollectableIsland()
+    {
+        if (spawnCollectableIsland != null)
+        {
+            spawnCollectableIsland();
+        }
+    }
 }

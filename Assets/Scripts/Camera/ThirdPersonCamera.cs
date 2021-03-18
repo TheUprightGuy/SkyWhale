@@ -60,6 +60,8 @@ public class ThirdPersonCamera : MonoBehaviour
     
     private void LateUpdate()
     {
+        //transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, PlayerTrans.rotation.eulerAngles.z));
+
         /*if (Input.GetKey(KeyCode.W))
         {
             if (storedPos.x != targetTrans.eulerAngles.y)
@@ -171,6 +173,7 @@ public class ThirdPersonCamera : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
             transform.LookAt(targetTrans); //Set rotations
         }
+        //transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, PlayerTrans.rotation.eulerAngles.z));
     }
 
     Vector3 velocityAngle ;
