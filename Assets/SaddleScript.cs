@@ -16,7 +16,9 @@ public class SaddleScript : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.GetComponent<PlayerMovement>())
+        PlayerMovement pc = other.gameObject.GetComponent<PlayerMovement>();
+
+        if (pc)
         {
             if (Input.GetKeyDown(KeyCode.E))
             {

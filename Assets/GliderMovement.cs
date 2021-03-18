@@ -57,7 +57,7 @@ public class GliderMovement : MonoBehaviour
     {
         enabled = !enabled;
         glider.SetActive(enabled);
-        rb.useGravity = !enabled;
+        //rb.useGravity = !enabled;
         mainCamera.depth = enabled ? -1.0f : 1.0f;
         glideCam.depth = enabled ? 1.0f : -1.0f;
         rb.angularVelocity = Vector3.zero;
