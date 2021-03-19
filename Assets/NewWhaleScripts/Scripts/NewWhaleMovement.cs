@@ -223,9 +223,6 @@ public class NewWhaleMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!control)
-            return;
-
         if (tooClose)
         {
             rb.MovePosition(transform.position - transform.forward * maxSpeed * Time.deltaTime);
@@ -235,6 +232,7 @@ public class NewWhaleMovement : MonoBehaviour
             if (buckTimer <= 0)
             {
                 tooClose = false;
+                moveSpeed = maxSpeed / 2.0f;
                 orbit.SetOrbit(cachedHeightRef);
             }
         }
@@ -242,6 +240,9 @@ public class NewWhaleMovement : MonoBehaviour
         {
             rb.MovePosition(transform.position + transform.forward * currentSpeed * Time.deltaTime);
         }
+
+        if (!control)
+            return;
 
         Quaternion temp = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);
         rb.MoveRotation(temp);

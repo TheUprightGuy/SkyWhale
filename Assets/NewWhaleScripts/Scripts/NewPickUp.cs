@@ -11,6 +11,7 @@ public class NewPickUp : MonoBehaviour
     NewOrbitScript orbit;
     NewWhaleMovement whale;
     GameObject heightRef;
+    Rigidbody rb;
     bool homing;
     Vector3 target;
     [HideInInspector] new public bool enabled;
@@ -19,6 +20,7 @@ public class NewPickUp : MonoBehaviour
     {
         orbit = GetComponent<NewOrbitScript>();
         whale = GetComponent<NewWhaleMovement>();
+        rb = GetComponent<Rigidbody>();
     }
 
     #region Callbacks
@@ -64,7 +66,7 @@ public class NewPickUp : MonoBehaviour
             {
                 float dist = Vector3.Distance(transform.position, target);
                 whale.moveSpeed = 5.0f * Mathf.Clamp01(dist/approachDistance);
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * orbit.rotSpeed);
+                rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * orbit.rotSpeed));
 
                 if (dist < 2.0f)
                 {
