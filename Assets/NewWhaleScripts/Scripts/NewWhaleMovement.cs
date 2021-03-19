@@ -187,6 +187,8 @@ public class NewWhaleMovement : MonoBehaviour
             MovementCorrections();
         }
         GetDistance();
+
+        Movement();
     }
 
     public void GetDistance()
@@ -215,7 +217,8 @@ public class NewWhaleMovement : MonoBehaviour
         NewIslandScript temp = (hit.GetComponent<NewIslandScript>()) ? hit.GetComponent<NewIslandScript>() : hit.GetComponentInParent<NewIslandScript>();
         cachedHeightRef = temp.heightRef;
 
-        EventManager.TriggerEvent("Crash");
+        // Quest Example
+        //EventManager.TriggerEvent("Crash");
     }
 
     private void FixedUpdate()
@@ -223,43 +226,9 @@ public class NewWhaleMovement : MonoBehaviour
         if (!control)
             return;
 
-        desiredRoll = new Vector3(body.transform.eulerAngles.x, body.transform.eulerAngles.y, myRoll);
-        body.transform.rotation = Quaternion.Slerp(body.transform.rotation, Quaternion.Euler(desiredRoll), Time.deltaTime * rotationSpeed);
-        // Rot
-
-        desiredVec = new Vector3(myPitch, transform.eulerAngles.y + myTurn, transform.eulerAngles.z);
-        Vector3 temp = new Vector3(myPitch + transform.eulerAngles.x, myTurn + transform.eulerAngles.y, 0);
-
-        Vector3 myVec = Quaternion.Euler(desiredVec) * Vector3.forward;
-
-        if (!orbit.enabled)
-        {
-            //rb.angularVelocity = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed).eulerAngles;
-            //rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed));
-
-
-            //rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path), Time.deltaTime * rotSpeed));
-
-            Debug.DrawRay(transform.position, transform.forward * 1000.0f, Color.blue);
-            Debug.DrawRay(transform.position, myVec * 1000.0f, Color.black);
-
-            float angleDiff = Vector3.Angle(transform.forward, Vector3.Normalize(myVec));
-            Vector3 cross = Vector3.Cross(transform.forward, Vector3.Normalize(myVec));
-            Vector3 rotVec = Vector3.ClampMagnitude(cross * angleDiff, 0.1f);
-            rb.angularVelocity = rotVec;
-
-            /*float angleDiff = Vector3.Angle(transform.forward, path);
-            Vector3 cross = Vector3.Cross(transform.forward, path);
-            Vector3 rotVec = Vector3.ClampMagnitude(cross * angleDiff, rotSpeed);
-            rb.angularVelocity = rotVec;*/
-
-        }
-        //rb.MoveRotation(Quaternion.Lerp(transform.rotation, Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0)), Time.deltaTime * 10.0f));
-
         if (tooClose)
         {
-            //rb.MovePosition(transform.position - transform.forward * maxSpeed * Time.deltaTime);
-            rb.velocity = -transform.forward * maxSpeed;
+            rb.MovePosition(transform.position - transform.forward * maxSpeed * Time.deltaTime);
             buckTimer -= Time.deltaTime;
             CatapultPlayer();
 
@@ -271,9 +240,22 @@ public class NewWhaleMovement : MonoBehaviour
         }
         else
         {
-            rb.velocity = transform.forward * currentSpeed;// * Time.deltaTime;
-            //rb.MovePosition(transform.position + transform.forward * currentSpeed * Time.deltaTime);
+            rb.MovePosition(transform.position + transform.forward * currentSpeed * Time.deltaTime);
         }
+
+        Quaternion temp = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);
+        rb.MoveRotation(temp);
+    }
+
+    void Movement()
+    {
+        if (!control)
+            return;
+
+        desiredRoll = new Vector3(body.transform.eulerAngles.x, body.transform.eulerAngles.y, myRoll);
+        body.transform.rotation = Quaternion.Slerp(body.transform.rotation, Quaternion.Euler(desiredRoll), Time.deltaTime * rotationSpeed);
+        // Rot
+        desiredVec = new Vector3(myPitch, transform.eulerAngles.y + myTurn, 0);
     }
 
     public void CatapultPlayer()
