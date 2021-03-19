@@ -99,12 +99,8 @@ public class NewGrappleScript : MonoBehaviour
         }
         else
         {
-            Rigidbody rb = GetComponent<Rigidbody>();
-
             GetComponent<PlayerMovement>().enabled = true;
-
         }
-
     }
 
     void FireHook()
@@ -121,6 +117,7 @@ public class NewGrappleScript : MonoBehaviour
             temp.YeetPlayer(this.transform);
             temp.retracting = true;
             temp.connected = false;
+            temp.manualRetract = true;
         }
     }
 

@@ -14,6 +14,7 @@ public class NewGrappleHook : MonoBehaviour
     public LayerMask grappleableLayers;
     public Transform pc;
     public bool connected;
+    public bool manualRetract;
     MeshRenderer mr;
     LineRenderer lr;
     private void Awake()
@@ -60,6 +61,7 @@ public class NewGrappleHook : MonoBehaviour
         {
             if (!retracting)
             {
+                GetComponent<SphereCollider>().enabled = true;
                 flightTime += Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
                 if (flightTime > 2.0f)
                 {
@@ -76,17 +78,19 @@ public class NewGrappleHook : MonoBehaviour
         }
         if (retracting)
         {
+            GetComponent<SphereCollider>().enabled = false;
             flightTime = 0.0f;
-
-            forceDir = Vector3.Normalize(pc.position - transform.position) * 24.0f;
+            
+            forceDir = Vector3.Normalize(pc.position - transform.position) * (manualRetract ? 48.0f : 24.0f);
             rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
 
-            if (Vector3.Distance(transform.position, pc.position) < 0.2f)
+            if (Vector3.Distance(transform.position, pc.position) < (forceDir.magnitude * Time.fixedDeltaTime))
             {
                 enabled = false;
                 retracting = false;
                 GetComponent<SphereCollider>().enabled = true;
                 connected = false;
+                manualRetract = false;
             }
         }
 
@@ -97,6 +101,7 @@ public class NewGrappleHook : MonoBehaviour
         {
             YeetPlayer(pc);
             retracting = true;
+            manualRetract = false;
         }
     }
 
