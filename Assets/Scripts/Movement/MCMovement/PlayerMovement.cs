@@ -19,6 +19,7 @@ public class PlayerMovement : MonoBehaviour
     Animator anims;
     GrappleHook gHook;
     GliderMovement glider;
+    NewGrappleScript waydsHook;
     [Tooltip("This can't be set, and sets to IDLE on Start call, so no touchy")]
     public PlayerStates PlayerState;
 
@@ -71,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         anims = GetComponentInChildren<Animator>();
         gHook = GetComponent<GrappleHook>();
         glider = GetComponent<GliderMovement>();
+        waydsHook = GetComponent<NewGrappleScript>();
         VirtualInputs.GetInputListener(InputType.PLAYER, "Forward").MethodToCall.AddListener(Forward);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Back").MethodToCall.AddListener(Back);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Left").MethodToCall.AddListener(Left);

@@ -5,8 +5,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Input", menuName = "Data/Input", order = 1)]
 public class InputData : ScriptableObject
 {
+    [Header("PLAYER CONTROLS")]
     public List<InputListener> playerInput;
+    [Header("WHALE CONTROLS")]
     public List<InputListener> whaleInput;
+    [Header("MENU CONTROLS")]
     public List<InputListener> menuInput;
 
     public void SetInputs(InputType _type, List<InputListener> _inputs)
