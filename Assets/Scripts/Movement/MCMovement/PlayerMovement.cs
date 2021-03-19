@@ -252,7 +252,7 @@ public class PlayerMovement : MonoBehaviour
 
     void MoveOnXZ(float speed, float accel)
     {
-        Vector3 xAxis = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
+        /*Vector3 xAxis = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
         Vector3 zAxis = Vector3.ProjectOnPlane(-transform.right, groundContactNormal);
         xAxis *= inputAxis.x;
         zAxis *= inputAxis.z;
@@ -279,7 +279,7 @@ public class PlayerMovement : MonoBehaviour
 
         //RB.velocity += (xAxis * (newX - currentX) + zAxis * (newZ - currentZ)) * TimeSlowDown.instance.timeScale;
 
-        RB.MovePosition(transform.position + desiredVel * Time.deltaTime);
+        RB.MovePosition(transform.position + desiredVel * Time.deltaTime);*/
 
 
         Vector3 manualGrav = groundContactNormal * -9.81f;
@@ -287,11 +287,13 @@ public class PlayerMovement : MonoBehaviour
         {
             RB.AddForce(Physics.gravity * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
             Debug.DrawRay(transform.position, Physics.gravity, Color.black);
+            transform.up = Vector3.up;
         }
         else
         {
             RB.AddForce(manualGrav * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
             Debug.DrawRay(transform.position, manualGrav, Color.gray);
+            transform.up = groundContactNormal;
         }
 
         /*if (collidedObj != null)

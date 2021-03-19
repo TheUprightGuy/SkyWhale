@@ -30,6 +30,7 @@ public class NewOrbitScript : MonoBehaviour
         if (enabled)
         {
             SetOrbit(orbit);
+            GetComponent<NewWhaleMovement>().moveSpeed = 2.5f;
         }
     }
     private void OnDestroy()
