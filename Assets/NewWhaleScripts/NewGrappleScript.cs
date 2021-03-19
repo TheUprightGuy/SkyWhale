@@ -65,11 +65,13 @@ public class NewGrappleScript : MonoBehaviour
         if (Input.GetMouseButtonDown(1))//Aiming with right click
         {
             ToggleAim(true);
+            TimeSlowDown.instance.SlowDown();
         }
 
         if (Input.GetMouseButtonUp(1))//Stopping aiming
         {
             ToggleAim(false);
+            TimeSlowDown.instance.SpeedUp();
         }
 
         if (Input.GetMouseButtonDown(0) && Input.GetMouseButton(1))
@@ -93,7 +95,7 @@ public class NewGrappleScript : MonoBehaviour
         {
             GetComponent<PlayerMovement>().enabled = false;
             //GetComponent<Rigidbody>().MovePosition(transform.position + moveDir * Time.fixedDeltaTime);
-            GetComponent<Rigidbody>().AddForce(moveDir, ForceMode.Acceleration);
+            GetComponent<Rigidbody>().AddForce(moveDir * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
         }
         else
         {

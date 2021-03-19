@@ -24,14 +24,19 @@ public class TimeSlowDown : MonoBehaviour
         grav = Physics.gravity;
     }
 
+    public void SlowDown()
+    {
+        slowDown = true;
+    }
+
+    public void SpeedUp()
+    {
+        slowDown = false;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            slowDown = !slowDown;
-        }
-
         if (slowDown)
         {
             timeScale = Mathf.Lerp(timeScale, slowMo, Time.deltaTime * Time.deltaTime * 1000.0f);

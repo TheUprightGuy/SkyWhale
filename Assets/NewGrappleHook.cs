@@ -27,9 +27,10 @@ public class NewGrappleHook : MonoBehaviour
     {
         pc = _player;
         transform.position = _player.position;
-        forceDir = _dir * 8.0f;
+        forceDir = _dir * 24.0f;
         enabled = true;
         flightTime = 0.0f;
+        TimeSlowDown.instance.SpeedUp();
     }
 
     private void Update()
@@ -59,12 +60,12 @@ public class NewGrappleHook : MonoBehaviour
         {
             if (!retracting)
             {
-                flightTime += Time.fixedDeltaTime;
+                flightTime += Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
                 if (flightTime > 2.0f)
                 {
-                    forceDir += (transform.up * -Time.fixedDeltaTime);
+                    forceDir += (transform.up * -Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
                 }
-                rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime);
+                rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
 
                 if (flightTime > 4.0f)
                 {
@@ -77,8 +78,8 @@ public class NewGrappleHook : MonoBehaviour
         {
             flightTime = 0.0f;
 
-            forceDir = Vector3.Normalize(pc.position - transform.position) * 8.0f;
-            rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime);
+            forceDir = Vector3.Normalize(pc.position - transform.position) * 24.0f;
+            rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
 
             if (Vector3.Distance(transform.position, pc.position) < 0.2f)
             {

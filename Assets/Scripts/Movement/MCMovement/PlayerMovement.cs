@@ -265,7 +265,7 @@ public class PlayerMovement : MonoBehaviour
         float currentZ = Vector3.Dot(RB.velocity, zAxis);
 
         float acceleration = accel;
-        float maxSpeedChange = acceleration * Time.fixedDeltaTime;
+        float maxSpeedChange = acceleration * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
 
         Vector3 desiredVel = xAxis + zAxis;
         desiredVel.y = 0;
@@ -285,12 +285,12 @@ public class PlayerMovement : MonoBehaviour
         Vector3 manualGrav = groundContactNormal * -9.81f;
         if (groundContactNormal == Vector3.zero)
         {
-            RB.AddForce(Physics.gravity, ForceMode.Acceleration);
+            RB.AddForce(Physics.gravity * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
             Debug.DrawRay(transform.position, Physics.gravity, Color.black);
         }
         else
         {
-            RB.AddForce(manualGrav, ForceMode.Acceleration);
+            RB.AddForce(manualGrav * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
             Debug.DrawRay(transform.position, manualGrav, Color.gray);
         }
 
