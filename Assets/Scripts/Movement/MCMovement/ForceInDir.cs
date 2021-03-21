@@ -25,12 +25,7 @@ public class ForceInDir : MonoBehaviour
     {
 
     }
-
-    private void Update()
-    {
-
-    }
-
+    
     private void Update()
     {
         rot = rot.normalized;

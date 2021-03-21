@@ -10,11 +10,11 @@ public class ThirdPersonCamera : MonoBehaviour
 
     [Header("Settings")]
     public Vector3 startOffset = Vector3.zero;
-    
+
     public bool invertX = false;
     public bool invertY = false;
 
-  
+
     public float rotateSpeed = 5;
     public float zoomSpeed = 5;
 
@@ -44,7 +44,7 @@ public class ThirdPersonCamera : MonoBehaviour
     Vector3 offset;
     Vector3 storedPos = Vector3.zero;
     bool waitingToReturn = false;
-    
+
     void Start()
     {
         offset = startOffset; // targetTrans.position - transform.position;
@@ -57,7 +57,7 @@ public class ThirdPersonCamera : MonoBehaviour
         lastCalculatedPos = transform.position;
 
     }
-    
+
     private void LateUpdate()
     {
         //transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, PlayerTrans.rotation.eulerAngles.z));
@@ -106,7 +106,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
             storedPos.x += horizontal;
 
-           
+
             /*if (!Input.GetKey(KeyCode.LeftAlt) && !waitingToReturn) //Not holding rightclick, allow player rotation
             {
                 PlayerTrans.Rotate(0, horizontal, 0);//Rotate player along with the  camera
@@ -150,7 +150,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
             float currentDist = Vector3.Distance(targetTrans.position, transform.position);
 
-                                            
+
             Vector3 newPosBeforCollision = targetTrans.position - (newDir * newDist);
             Vector3 playerToNewPos = newPosBeforCollision - PlayerTrans.position;
 
@@ -160,14 +160,14 @@ public class ThirdPersonCamera : MonoBehaviour
             //If something ahead of you
             if (Physics.SphereCast(origin, CastWidth, dir, out fronthit, Mathf.Min(newDist, RayLength), CollisionLayers.value))
             {
-                newDist = Mathf.MoveTowards(currentDist , fronthit.distance + camCollisionRadius , CameraAcceleration * Time.deltaTime);
+                newDist = Mathf.MoveTowards(currentDist, fronthit.distance + camCollisionRadius, CameraAcceleration * Time.deltaTime);
             }
             else
             {
                 newDist = Mathf.MoveTowards(currentDist, newDist, CameraAcceleration * Time.deltaTime);
             }
             Vector3 newPos = targetTrans.position - (newDir * newDist);
-            
+
             //transform.position = newPos; //Set positions
 
             transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
@@ -176,7 +176,7 @@ public class ThirdPersonCamera : MonoBehaviour
         //transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, PlayerTrans.rotation.eulerAngles.z));
     }
 
-    Vector3 velocityAngle ;
+    Vector3 velocityAngle;
     float previousDist;
 
     Vector3 velocity = Vector3.zero;
@@ -193,14 +193,14 @@ public class ThirdPersonCamera : MonoBehaviour
 
             Gizmos.DrawLine(targetTrans.position, targetTrans.position - (newDir * storedPos.z));
 
-            
+
         }
         else
         {
         }
     }
 
-  
+
     private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.Locked;
