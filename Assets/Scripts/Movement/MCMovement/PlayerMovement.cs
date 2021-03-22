@@ -30,6 +30,9 @@ public class PlayerMovement : MonoBehaviour
     public float runSpeed = 6.0f;
     public float maxRunAcceleration = 20f;
 
+    public float currentSpeed;
+    public float moveSpeed;
+
     [Space(20.0f)]
     private float setSpeed;
     private float setAccel;
@@ -101,11 +104,9 @@ public class PlayerMovement : MonoBehaviour
         if ((inputAxis.magnitude > 0.1f && !glider.enabled) || Input.GetKey(KeyCode.O))
         {
             transform.Rotate(rot.eulerAngles, Space.World);
-            //transform.forward = camForwardRelativeToPlayerRot;
         }
 
         Debug.DrawRay(transform.position, camForwardRelativeToPlayerRot, Color.black);
-
     }
 
     public Quaternion rot;
@@ -120,10 +121,10 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         HandleMovement();
-        if (inputAxis != Vector3.zero)
+        /*if (inputAxis != Vector3.zero)
         {
             inputAxis = Vector3.zero;
-        }
+        }*/
     }
 
     float minGroundDotProduct;
@@ -136,15 +137,15 @@ public class PlayerMovement : MonoBehaviour
 
     void SetCurrentPlayerState()
     {
-        if (IDLECheck())
-        {
-            PlayerState = PlayerStates.IDLE;
-        }
-
         if (MOVINGCheck())
         {
             PlayerState = PlayerStates.MOVING;
         }
+        else if (IDLECheck())
+        {
+            PlayerState = PlayerStates.IDLE;
+        }
+
         if (FALLINGCheck())
         {
             PlayerState = PlayerStates.FALLING;
@@ -173,12 +174,14 @@ public class PlayerMovement : MonoBehaviour
     #region PlayerStateChecks
     bool IDLECheck()
     {
-        return RB.velocity.magnitude <= 0.1f;
+        return (IsGrounded() && inputAxis.magnitude <= 0.0f);
+        //return RB.velocity.magnitude <= 0.1f;
     }
 
     bool MOVINGCheck()
     {
-        return RB.velocity.magnitude > 0.1f;
+        return (IsGrounded() && inputAxis.magnitude > 0.0f);
+        //return RB.velocity.magnitude > 0.1f;
     }
 
     bool GRAPPLECheck()
@@ -197,6 +200,8 @@ public class PlayerMovement : MonoBehaviour
     }
     bool FALLINGCheck()
     {
+
+
         float currenty = Vector3.Dot(RB.velocity, transform.up);
         return currenty < 0.0f && !IsGrounded() && !IsClimbing();
     }
@@ -211,11 +216,22 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleMovement()
     {
+        if (inputAxis == Vector3.zero)
+        {
+            currentSpeed = Mathf.MoveTowards(currentSpeed, 0, maxWalkAcceleration * Time.deltaTime);
+        }
+        else
+        {
+            currentSpeed = Mathf.MoveTowards(currentSpeed, setSpeed, maxWalkAcceleration * Time.deltaTime);
+        }
+
+
+
         switch (PlayerState)
         {
             case PlayerStates.IDLE:
             case PlayerStates.MOVING:
-                MoveOnXZ(setSpeed, setAccel);
+                MoveOnXZ(currentSpeed, setAccel);
                 if (inputAxis.y > 0)
                 {
                     Jump(groundContactNormal + Vector3.up, groundjumpHeight);
@@ -363,7 +379,7 @@ public class PlayerMovement : MonoBehaviour
                 Vector3 flatRBV = RB.velocity;
                 flatRBV.y = 0.0f;
                 flatRBV = Vector3.ClampMagnitude(flatRBV, setSpeed);
-                anims.SetFloat("MovementSpeed", flatRBV.magnitude / runSpeed);
+                anims.SetFloat("MovementSpeed", currentSpeed);
                 break;
             case PlayerStates.JUMPING:
                 break;
@@ -383,19 +399,83 @@ public class PlayerMovement : MonoBehaviour
 
     void Forward(InputState type)
     {
-        inputAxis.x = 1;
+        switch (type)
+        {
+            case InputState.KEYDOWN:
+
+                inputAxis.x = 1;
+                break;
+            case InputState.KEYHELD:
+
+                inputAxis.x = 1;
+                break;
+            case InputState.KEYUP:
+
+                inputAxis.x = 0;
+                break;
+            default:
+                break;
+        }
     }
     void Back(InputState type)
     {
-        inputAxis.x = -1;
+        switch (type)
+        {
+            case InputState.KEYDOWN:
+
+                inputAxis.x = -1;
+                break;
+            case InputState.KEYHELD:
+
+                inputAxis.x = -1;
+                break;
+            case InputState.KEYUP:
+
+                inputAxis.x = 0;
+                break;
+            default:
+                break;
+        }
     }
     void Left(InputState type)
     {
-        inputAxis.z = 1;
+        switch (type)
+        {
+            case InputState.KEYDOWN:
+
+                inputAxis.z = 1;
+                break;
+            case InputState.KEYHELD:
+
+                inputAxis.z = 1;
+                break;
+            case InputState.KEYUP:
+
+                inputAxis.z = 0;
+                break;
+            default:
+                break;
+        }
     }
     void Right(InputState type)
     {
-        inputAxis.z = -1;
+        switch (type)
+        {
+            case InputState.KEYDOWN:
+
+                inputAxis.z = -1;
+                break;
+            case InputState.KEYHELD:
+
+                inputAxis.z = -1;
+                break;
+            case InputState.KEYUP:
+
+                inputAxis.z = 0;
+                break;
+            default:
+                break;
+        }
     }
     void Jump(InputState type)
     {
@@ -432,7 +512,7 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit rh;
         if (Physics.SphereCast(transform.position + GroundCheckStartOffset, CheckRadius,
-            Vector3.down, out rh,
+            -transform.up, out rh,
             GroundCheckDistance, GroundLayers.value))
         {
             float upDot = Vector3.Dot(transform.up, rh.normal);

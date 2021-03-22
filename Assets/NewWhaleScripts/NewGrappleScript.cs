@@ -6,30 +6,11 @@ public class NewGrappleScript : MonoBehaviour
 {
     [Header("Dependencies")]
     public GameObject hook;
-    public Transform camTarget;
     public Camera camToShootFrom;
     public GameObject grappleReticule;
 
     [Header("Grapple")]
     public LayerMask grappleableLayers;
-    public float swingForce = 8.0f;
-    public float yeetForce = 5.0f;
-    public float retractExtendSpeed = 5.0f;
-    public float minGrappleDist = 0.5f;
-    public float maxGrappleDist = 10.0f;
-
-    [Header("Camera")]
-    public Vector3 aimOffset;
-    public float camTransitionTime = 0.5f;
-
-
-    [Header("Debug")]
-    public float angleToForward = 0.0f;
-    public float angleToLeft = 0.0f;
-
-    public float percentageFToCenter = 0.0f;
-    [HideInInspector]
-    public bool grappleActive = false;
 
     // Start is called before the first frame update
     void Start()
