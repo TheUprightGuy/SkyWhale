@@ -268,12 +268,25 @@ public class NewWhaleMovement : MonoBehaviour
         }
     }
 
+    void ComeToHalt()
+    {
+        moveSpeed = 0.0f;
+        currentSpeed = 0.0f;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponentInParent<NewIslandScript>())
+        /*if (other.gameObject.GetComponentInParent<NewIslandScript>())
         {
             Crash(other.gameObject);
             Destroy(other.gameObject);
+        }*/
+
+        PlayerMovement pc = other.GetComponent<PlayerMovement>();
+        NewGrappleHook gh = other.GetComponent<NewGrappleHook>();
+        if (pc || gh)
+        {
+            ComeToHalt();
         }
     }
 

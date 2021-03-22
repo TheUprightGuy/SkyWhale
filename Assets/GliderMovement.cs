@@ -15,7 +15,7 @@ public class GliderMovement : MonoBehaviour
     public Camera glideCam;
 
     #region Local Variables
-    float currentSpeed = 0.0f;
+    public float currentSpeed = 0.0f;
     private Rigidbody rb;
     float rotationSpeed = 1.0f;
     Vector3 desiredVec;
@@ -28,8 +28,8 @@ public class GliderMovement : MonoBehaviour
     float rollSpeed = 20;
 
     float parabolLerp;
-    float moveSpeed = 1;
-    float baseSpeed = 5.0f;
+    public float moveSpeed = 1;
+    public float baseSpeed = 5.0f;
     float gravScale = 1.0f;
     #endregion Local Variables
 
@@ -49,7 +49,7 @@ public class GliderMovement : MonoBehaviour
 
         baseSpeed = maxSpeed * 0.4f;
         moveSpeed = baseSpeed;
-        currentSpeed = moveSpeed;
+        currentSpeed = 0.0f;
         Toggle();
     }
 

@@ -30,6 +30,33 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -8754237523362392943, guid: 2092b7eaf226fcd498975979bf27a0f5, type: 3}
+--- !u!136 &882479828838153405
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6275921031120424281}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.4271631
+  m_Height: 7.08
+  m_Direction: 2
+  m_Center: {x: -0.041338213, y: 0.76, z: 0.62612295}
+--- !u!65 &6373751931588159757
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6275921031120424281}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 5, z: 15}
+  m_Center: {x: 0, y: 2, z: 1}
 --- !u!1001 &8880512482795596362
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -144,7 +171,7 @@ PrefabInstance:
     - target: {fileID: 3181062924976657240, guid: de0d3db4122d2d340bf40e52a07a152a,
         type: 3}
       propertyPath: m_Name
-      value: Whale
+      value: Whale Variant
       objectReference: {fileID: 0}
     - target: {fileID: 3181062924976657240, guid: de0d3db4122d2d340bf40e52a07a152a,
         type: 3}
@@ -263,7 +290,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2091306607, guid: de0d3db4122d2d340bf40e52a07a152a, type: 3}
+    - {fileID: 3181062924976657247, guid: de0d3db4122d2d340bf40e52a07a152a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: de0d3db4122d2d340bf40e52a07a152a, type: 3}
+--- !u!1 &6275921031120424281 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3181062924976657240, guid: de0d3db4122d2d340bf40e52a07a152a,
+    type: 3}
+  m_PrefabInstance: {fileID: 8880512482942131713}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6275921031771431449 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3181062924518276120, guid: de0d3db4122d2d340bf40e52a07a152a,
