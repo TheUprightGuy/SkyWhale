@@ -11,8 +11,8 @@ public class GliderMovement : MonoBehaviour
     public GameObject glider;
     new public bool enabled;
 
-    public Camera mainCamera;
-    public Camera glideCam;
+    public Cinemachine.CinemachineVirtualCamera mainCam;
+    public Cinemachine.CinemachineVirtualCamera glideCam;
 
     #region Local Variables
     public float currentSpeed = 0.0f;
@@ -58,8 +58,10 @@ public class GliderMovement : MonoBehaviour
         enabled = !enabled;
         glider.SetActive(enabled);
         //rb.useGravity = !enabled;
-        mainCamera.depth = enabled ? -1.0f : 1.0f;
-        glideCam.depth = enabled ? 1.0f : -1.0f;
+        //mainCamera.depth = enabled ? -1.0f : 1.0f;
+        //glideCam.depth = enabled ? 1.0f : -1.0f;
+        mainCam.m_Priority = enabled ? 0 : 1;
+        glideCam.m_Priority = enabled ? 1 : 0;
         rb.angularVelocity = Vector3.zero;
 
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
@@ -171,6 +173,11 @@ public class GliderMovement : MonoBehaviour
         MovementCorrections();
 
         RotatePlayer();
+
+        // Rot
+        desiredVec = new Vector3(myPitch, base.transform.eulerAngles.y + myTurn, myRoll);
+
+        base.transform.rotation = Quaternion.Slerp(base.transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);
     }
 
     public void RotatePlayer()
@@ -185,10 +192,10 @@ public class GliderMovement : MonoBehaviour
         if (!enabled)
             return;
 
-        // Rot
+       /* // Rot
         desiredVec = new Vector3(myPitch, base.transform.eulerAngles.y + myTurn, myRoll);
 
-        base.transform.rotation = Quaternion.Slerp(base.transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);
+        base.transform.rotation = Quaternion.Slerp(base.transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);*/
         
         gravScale = Mathf.Clamp01((0.5f - currentSpeed / maxSpeed) * 4.0f);
          Vector3 movementGrav = base.transform.forward * currentSpeed + gravScale * Physics.gravity * Time.deltaTime;
