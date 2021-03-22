@@ -17,6 +17,9 @@ public class NewGrappleHook : MonoBehaviour
     public bool manualRetract;
     MeshRenderer mr;
     LineRenderer lr;
+    GameObject connectedObj;
+    Vector3 cachedPos;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -37,6 +40,13 @@ public class NewGrappleHook : MonoBehaviour
     private void Update()
     {
         mr.enabled = enabled || retracting || connected;
+
+        if (connectedObj)
+        {
+            Vector3 shift = connectedObj.transform.position - cachedPos;
+            cachedPos = connectedObj.transform.position;
+            transform.position += shift;
+        }
 
         UpdateLR();
     }
@@ -73,11 +83,13 @@ public class NewGrappleHook : MonoBehaviour
                 {
                     enabled = false;
                     retracting = true;
+                    connectedObj = null;
                 }
             }
         }
         if (retracting)
         {
+            connectedObj = null;
             GetComponent<SphereCollider>().enabled = false;
             flightTime = 0.0f;
             
@@ -91,17 +103,19 @@ public class NewGrappleHook : MonoBehaviour
                 GetComponent<SphereCollider>().enabled = true;
                 connected = false;
                 manualRetract = false;
+                connectedObj = null;
             }
         }
 
         if (!pc)
             return;
 
-        if (Vector3.Distance(transform.position, pc.position) < 0.2f && connected)
+        if (Vector3.Distance(transform.position, pc.position) < 0.3f && connected)
         {
             YeetPlayer(pc);
             retracting = true;
             manualRetract = false;
+            connectedObj = null;
         }
     }
 
@@ -117,6 +131,7 @@ public class NewGrappleHook : MonoBehaviour
     void Retract()
     {
         GetComponent<SphereCollider>().enabled = false;
+        connectedObj = null;
     }
 
     // Hit Something
@@ -128,11 +143,14 @@ public class NewGrappleHook : MonoBehaviour
         {
             Debug.Log("Correct Layer");
             connected = true;
+            connectedObj = collision.gameObject;
+            cachedPos = connectedObj.transform.position;
             // need to fix the hook to this point
         }   
         // Retract
         else
         {
+            connectedObj = null;
             retracting = true;
             // Start Retracting
         }
