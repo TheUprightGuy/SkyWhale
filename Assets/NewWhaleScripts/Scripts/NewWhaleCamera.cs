@@ -13,7 +13,7 @@ public class NewWhaleCamera : MonoBehaviour
     float distance = 2.0f;
     float xSpeed = 10.0f, ySpeed = 2.0f;
     float yMinLimit = -60.0f, yMaxLimit = 60.0f;
-    float distanceMin = 0.5f, distanceMax = 13.0f;
+    float distanceMin = 0.5f, distanceMax = 20.0f;
     float x = 0.0f, y = 0.0f;
     bool rotating = false;
     float timer = 0.0f, lerpTimer = 0.0f;
@@ -28,6 +28,15 @@ public class NewWhaleCamera : MonoBehaviour
         target = GetComponentInParent<NewWhaleMovement>().transform;
     }
     #endregion Setup
+
+    private void Start()
+    {
+        CameraManager.instance.switchCam += SwitchCam;
+    }
+    private void OnDestroy()
+    {
+        CameraManager.instance.switchCam -= SwitchCam;
+    }
 
     void LateUpdate()
     {
@@ -76,7 +85,17 @@ public class NewWhaleCamera : MonoBehaviour
         
 
     }
-
+    public void SwitchCam(CameraType _cam)
+    {
+        if (_cam == CameraType.WhaleCamera)
+        {
+            GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Priority = 1;
+        }
+        else
+        {
+            GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Priority = 0;
+        }
+    }
     public static float ClampAngle(float angle, float min, float max)
     {
         if (angle < -360F) angle += 360F;

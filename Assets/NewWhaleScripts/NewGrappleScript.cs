@@ -30,33 +30,10 @@ public class NewGrappleScript : MonoBehaviour
     public float percentageFToCenter = 0.0f;
     [HideInInspector]
     public bool grappleActive = false;
-    float storedSpringVal;
-    Rigidbody cachedRB;
-    SpringJoint hookSJ;
-    LineRenderer hookLR;
-
-    Vector3 cachedTargetPos;
-    Vector3 targetStartOffset;
-    Vector3 calcGotoPos;
-
-    Vector3 collidedprevPos = Vector3.zero;
-    Transform collidedObj = null; //latched onto obj
-    //The movement vector since the last frame;
-    Vector3 collidedFrameOffset => (collidedObj == null) ? (Vector3.zero) : (collidedObj.position - collidedprevPos);
 
     // Start is called before the first frame update
     void Start()
     {
-        targetStartOffset = (camTarget.position - transform.position);
-        cachedTargetPos = camTarget.position;
-        calcGotoPos = transform.position + aimOffset;
-        hookSJ = hook.GetComponent<SpringJoint>();
-        cachedRB = GetComponent<Rigidbody>();
-        hookLR = hook.GetComponent<LineRenderer>();
-
-        //VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleRetract").MethodToCall.AddListener(GrappleRetract);
-        //VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleExtend").MethodToCall.AddListener(GrappleExtend);
-
         ToggleAim(false);
     }
 
@@ -94,7 +71,6 @@ public class NewGrappleScript : MonoBehaviour
         if (temp.connected)
         {
             GetComponent<PlayerMovement>().enabled = false;
-            //GetComponent<Rigidbody>().MovePosition(transform.position + moveDir * Time.fixedDeltaTime);
             GetComponent<Rigidbody>().AddForce(moveDir * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
         }
         else
@@ -107,7 +83,6 @@ public class NewGrappleScript : MonoBehaviour
     {
         NewGrappleHook temp = hook.GetComponent<NewGrappleHook>();
 
-        //Ray screenRay = CamToShootFrom.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0.0f));
         if (!temp.connected && !temp.retracting && temp.flightTime <= 0.0f)
         {
             temp.Fire(this.transform, camToShootFrom.transform.forward);
@@ -120,18 +95,12 @@ public class NewGrappleScript : MonoBehaviour
             temp.manualRetract = true;
         }
     }
-
-    bool lerpDone = true;
-    bool movingToAim = true;
-
-
     void ToggleAim(bool _startAim)
     {
         if (grappleReticule != null)
         {
             grappleReticule.SetActive(_startAim);
         }
-        movingToAim = _startAim;
     }
 
     private void OnCollisionEnter(Collision collision)

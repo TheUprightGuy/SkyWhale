@@ -56,6 +56,12 @@ public class ThirdPersonCamera : MonoBehaviour
 
         lastCalculatedPos = transform.position;
 
+        CameraManager.instance.switchCam += SwitchCam;
+    }
+
+    private void OnDestroy()
+    {
+        CameraManager.instance.switchCam -= SwitchCam;
     }
 
     private void LateUpdate()
@@ -176,8 +182,11 @@ public class ThirdPersonCamera : MonoBehaviour
         //transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, PlayerTrans.rotation.eulerAngles.z));
     }
 
-    Vector3 velocityAngle;
-    float previousDist;
+    public void SetRotation(Transform _camTransform)
+    {
+        transform.position = _camTransform.position;
+        transform.rotation = _camTransform.rotation;
+    }
 
     Vector3 velocity = Vector3.zero;
 
@@ -209,5 +218,17 @@ public class ThirdPersonCamera : MonoBehaviour
     private void OnDisable()
     {
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void SwitchCam(CameraType _cam)
+    {
+        if (_cam == CameraType.PlayerCamera)
+        {
+            GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Priority = 1;
+        }
+        else
+        {
+            GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Priority = 0;
+        }
     }
 }

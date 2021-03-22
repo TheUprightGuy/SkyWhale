@@ -277,10 +277,10 @@ public class PlayerMovement : MonoBehaviour
 
         //RB.velocity += (xAxis * (newX - currentX) + zAxis * (newZ - currentZ)) * TimeSlowDown.instance.timeScale;
 
-        RB.MovePosition(transform.position + desiredVel * Time.fixedDeltaTime);
+        RB.MovePosition(transform.position + desiredVel * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
 
 
-        Vector3 manualGrav = groundContactNormal * -9.81f;
+        Vector3 manualGrav = groundContactNormal * -9.81f * TimeSlowDown.instance.timeScale;
         if (groundContactNormal == Vector3.zero)
         {
             RB.AddForce(Physics.gravity, ForceMode.Acceleration);

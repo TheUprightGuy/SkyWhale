@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2884179543958615843}
   - component: {fileID: -8857613784983885348}
   - component: {fileID: 5008371596773838823}
+  - component: {fileID: 351910707944113262}
   m_Layer: 0
   m_Name: EventManager
   m_TagString: Untagged
@@ -136,3 +137,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentInput: {fileID: 11400000, guid: da619ff95d2126641ba18dbd8479cff4, type: 2}
   defaultInput: {fileID: 11400000, guid: 07d1e11979096e2439b5acad4b56b230, type: 2}
+--- !u!114 &351910707944113262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2884179543958615842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 509a314b9511c7f46b65fec53988581d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

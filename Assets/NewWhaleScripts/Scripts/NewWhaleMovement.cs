@@ -39,6 +39,7 @@ public class NewWhaleMovement : MonoBehaviour
 
     GameObject cachedHeightRef;
 
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -238,13 +239,13 @@ public class NewWhaleMovement : MonoBehaviour
         }
         else
         {
-            rb.MovePosition(transform.position + transform.forward * currentSpeed * Time.deltaTime);
+            rb.MovePosition(transform.position + transform.forward * currentSpeed * Time.deltaTime * TimeSlowDown.instance.timeScale);
         }
 
         if (!control)
             return;
 
-        Quaternion temp = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);
+        Quaternion temp = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed * TimeSlowDown.instance.timeScale);
         rb.MoveRotation(temp);
     }
 
@@ -254,7 +255,7 @@ public class NewWhaleMovement : MonoBehaviour
             return;
 
         desiredRoll = new Vector3(body.transform.eulerAngles.x, body.transform.eulerAngles.y, myRoll);
-        body.transform.rotation = Quaternion.Slerp(body.transform.rotation, Quaternion.Euler(desiredRoll), Time.deltaTime * rotationSpeed);
+        body.transform.rotation = Quaternion.Slerp(body.transform.rotation, Quaternion.Euler(desiredRoll), Time.deltaTime * rotationSpeed * TimeSlowDown.instance.timeScale);
         // Rot
         desiredVec = new Vector3(myPitch, transform.eulerAngles.y + myTurn, 0);
     }
@@ -287,8 +288,15 @@ public class NewWhaleMovement : MonoBehaviour
         if (pc || gh)
         {
             ComeToHalt();
+            control = true;
+            CameraManager.instance.SwitchCamera(CameraType.WhaleCamera);
+            other.gameObject.SetActive(false);
+            myPC.gameObject.SetActive(false);
         }
     }
+
+    // TEMPORARY HORRID
+    public PlayerMovement myPC;
 
     public void GiveControl()
     {

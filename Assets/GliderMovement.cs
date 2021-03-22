@@ -13,6 +13,7 @@ public class GliderMovement : MonoBehaviour
 
     public Cinemachine.CinemachineVirtualCamera mainCam;
     public Cinemachine.CinemachineVirtualCamera glideCam;
+    DumbCamera dc;
 
     #region Local Variables
     public float currentSpeed = 0.0f;
@@ -36,6 +37,7 @@ public class GliderMovement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponentInChildren<Rigidbody>();
+        dc = glideCam.GetComponent<DumbCamera>();
     }
 
     // Start is called before the first frame update
@@ -60,8 +62,12 @@ public class GliderMovement : MonoBehaviour
         //rb.useGravity = !enabled;
         //mainCamera.depth = enabled ? -1.0f : 1.0f;
         //glideCam.depth = enabled ? 1.0f : -1.0f;
-        mainCam.m_Priority = enabled ? 0 : 1;
-        glideCam.m_Priority = enabled ? 1 : 0;
+        //mainCam.m_Priority = enabled ? 0 : 1;
+        //glideCam.m_Priority = enabled ? 1 : 0;
+
+        CameraManager.instance.SwitchCamera((enabled) ? CameraType.GlideCamera : CameraType.PlayerCamera);
+
+        mainCam.GetComponent<ThirdPersonCamera>().SetRotation(glideCam.transform);
         rb.angularVelocity = Vector3.zero;
 
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
@@ -157,6 +163,8 @@ public class GliderMovement : MonoBehaviour
 
         if (!enabled) 
             return;
+
+        dc.SetDistance(currentSpeed / maxSpeed);
 
         if (base.transform.forward.y < 0)
         {
