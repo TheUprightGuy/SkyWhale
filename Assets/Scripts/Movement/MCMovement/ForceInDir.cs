@@ -14,6 +14,9 @@ public class ForceInDir : MonoBehaviour
     [Header("Rotation")]
     public Vector3 rot;
     public float torque;
+
+    public float timer;
+
     public enum MoveTypes
     {
         VELOCITY,
@@ -30,6 +33,14 @@ public class ForceInDir : MonoBehaviour
     {
         rot = rot.normalized;
         dir = dir.normalized;
+
+        timer += Time.deltaTime * TimeSlowDown.instance.timeScale;
+        if (timer >= 10.0f)
+        {
+            GetComponent<Rigidbody>().velocity = Vector3.zero;
+            timer = 0.0f;
+            dir *= -1.0f;
+        }
     }
     // Update is called once per frame
     void FixedUpdate()
