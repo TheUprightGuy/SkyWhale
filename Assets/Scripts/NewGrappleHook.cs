@@ -19,7 +19,7 @@ public class NewGrappleHook : MonoBehaviour
     MeshRenderer mr;
     LineRenderer lr;
     GameObject connectedObj;
-    Transform pc;
+    [HideInInspector] public Transform pc;
     SphereCollider sc;
     Vector3 cachedPos;
     Vector3 forceDir;

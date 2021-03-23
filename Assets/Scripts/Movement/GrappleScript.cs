@@ -8,6 +8,9 @@ public class GrappleScript : MonoBehaviour
     public NewGrappleHook hook;
     public LayerMask grappleableLayers;
 
+    public bool grapplingFromWhale = false;
+    public bool shotGrapple = false;
+
     #region Setup
     // Local Variables
     Camera camToShootFrom;
@@ -57,6 +60,13 @@ public class GrappleScript : MonoBehaviour
 
         if (hook.connected)
         {
+            if(grapplingFromWhale)
+            {
+                CallbackHandler.instance.GrappleHitFromWhale(transform);
+                gameObject.SetActive(false);
+                return;
+            }
+
             Vector3 moveDir = Vector3.Normalize(hook.transform.position - transform.position) * 8.0f;
             rb.AddForce(moveDir * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
             transform.LookAt(hook.transform);
@@ -70,6 +80,7 @@ public class GrappleScript : MonoBehaviour
         if (!HookInUse())
         {
             hook.Fire(this.transform, camToShootFrom.transform.forward);
+            shotGrapple = true;
         }
         else if (AbleToRetract())
         {
@@ -91,12 +102,18 @@ public class GrappleScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (hook.connected)
+        if (hook.connected && shotGrapple)
         {
             hook.connected = false;
             hook.retracting = true;
         }
     }
+
+    private void OngrappleHitFromWhale(Transform obj)
+    {
+        ToggleAim(false);
+    }
+
 
     #region Checks
     bool HookInUse()

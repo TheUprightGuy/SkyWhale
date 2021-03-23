@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AnimatorFunctions : MonoBehaviour
 {
-    public void PlaySound(AudioClip _sound)
+    public void PlaySound(string _sound)
     {
-        PauseMenuCanvasController.instance.audioSource.PlayOneShot(_sound);
+        Audio.AudioManager.instance.PlaySound(_sound);
     }
 }

@@ -388,9 +388,8 @@ AnimationClip:
   m_Events:
   - time: 0
     functionName: PlaySound
-    data: 
-    objectReferenceParameter: {fileID: 8300000, guid: f1d8cb18a429e604f88bfb5f40d7bb92,
-      type: 3}
+    data: Click_Progress
+    objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0

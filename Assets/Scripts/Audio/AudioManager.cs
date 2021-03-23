@@ -26,20 +26,20 @@ namespace Audio
             instance = this;
 
             DontDestroyOnLoad(this.gameObject);
-            
-            
+
+
             OnAwake();
         }
         #endregion
         [Header("Main Settings")]
-        public float masterVolume = 1.0f;
+        public float sfxVolume = 1.0f;
         public float defaultVolume;
         public bool randomlyCycleMusic;
         public bool playAmbientSounds = true;
         public float ambientSoundTimerMin = 30f;
         public float ambientSoundTimerMax = 50f;
         public float fadeDuration = 3f;
-        
+
         [Header("Audio Sources Used To Create Sound Dictionary:")]
         public List<AudioSource> audioSources;
         public List<AudioClip> musicTracks;
@@ -56,7 +56,6 @@ namespace Audio
         private AudioSource _audioSource;
         private int _currentTrackIndex;
 
-
         private void OnAwake()
         {
             InitialisePrivateVariables();
@@ -65,8 +64,8 @@ namespace Audio
                 AddAudioSourceToDictionary(audioSource);
             }
 
-            _soundsUnrestricted = new List<string> {};
-            
+            _soundsUnrestricted = new List<string> { "Click", "Click_Progress" };
+
             if (!randomlyCycleMusic) return;
             _audioSource.loop = false;
             //Start recursive coroutine for changing the music
@@ -77,9 +76,9 @@ namespace Audio
                 var audioSource = layer.GetComponent<AudioSource>();
                 StartCoroutine(PlayRandomAmbientTracks(ambientLayer, audioSource));
             }
-            
+
         }
-        
+
         private void InitialisePrivateVariables()
         {
             soundDictionary = new Dictionary<string, SoundInfo>();
@@ -106,16 +105,16 @@ namespace Audio
             _audioSource.clip = musicTracks[randomIndex];
             _audioSource.Play();
             yield return new WaitForSeconds(_audioSource.clip.length);
-            if(randomlyCycleMusic) StartCoroutine(PlayRandomMusicTracks());
+            if (randomlyCycleMusic) StartCoroutine(PlayRandomMusicTracks());
         }
-        
+
         private IEnumerator PlayRandomAmbientTracks(AmbientLayer ambientLayer, AudioSource audioSource)
         {
             yield return FadeAmbientTracks(ambientLayer.exposedParamName, 0f);
             RandomiseAudioClip(ambientLayer, audioSource);
             yield return FadeAmbientTracks(ambientLayer.exposedParamName, ambientLayer.soundInfo.VolumeDefault);
             yield return new WaitForSeconds(Random.Range(ambientSoundTimerMin, ambientSoundTimerMax));
-            if(playAmbientSounds) StartCoroutine(PlayRandomAmbientTracks(ambientLayer, audioSource));
+            if (playAmbientSounds) StartCoroutine(PlayRandomAmbientTracks(ambientLayer, audioSource));
         }
 
         private static void RandomiseAudioClip(AmbientLayer ambientLayer, AudioSource audioSource)
@@ -158,46 +157,28 @@ namespace Audio
             soundDictionary[soundName].AudioSource.Stop();
         }
 
-        public void OnVolumeAdjusted()
+        public void OnVolumeAdjusted(int mixerNumber, float _value)
         {
-            masterVolume = _slider.value * 10;
-            if (Math.Abs(masterVolume - (-40f)) < .01f) masterVolume = -80f;
-            audioMixer.SetFloat("MasterVolume", masterVolume);
-            PlaySound("crackle");
-            /*_musicSource.volume = _musicDefaultVolume * masterVolume;
-            foreach (var layer in ambientLayers)
-            {
-                layer.GetComponent<AmbientLayer>().soundInfo.Reset(masterVolume);
-            }
-
-            foreach (var sound in soundDictionary)
-            {
-                var curSoundInfo = sound.Value;
-                var curAs = curSoundInfo.AudioSource;
-                if (curAs.isPlaying) curAs.volume = curSoundInfo.VolumeDefault * masterVolume;
-            }*/
-        }
-
-        public void OnVolumeAdjusted(float _value)
-        {
-            masterVolume = (((_value * 4) / 100) - 4.0f) * 10.0f;
+            var newVolume = (((_value * 4) / 100) - 4.0f) * 10.0f;
 
             //masterVolume = _value * 10;
-            if (Math.Abs(masterVolume - (-40f)) < .01f) masterVolume = -80f;
-            audioMixer.SetFloat("MasterVolume", masterVolume);
-            PlaySound("crackle");
-            /*_musicSource.volume = _musicDefaultVolume * masterVolume;
-            foreach (var layer in ambientLayers)
+            if (Math.Abs(newVolume - (-40f)) < .01f) newVolume = -80f;
+            switch (mixerNumber)
             {
-                layer.GetComponent<AmbientLayer>().soundInfo.Reset(masterVolume);
+                case 0:
+                    audioMixer.SetFloat("MasterVolume", newVolume);
+                    break;
+                case 1:
+                    audioMixer.SetFloat("MusicVolume", newVolume);
+                    break;
+                case 2:
+                    sfxVolume = _value / 100f;
+                    audioMixer.SetFloat("SfxVolume", newVolume);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(mixerNumber), mixerNumber, null);
             }
-
-            foreach (var sound in soundDictionary)
-            {
-                var curSoundInfo = sound.Value;
-                var curAs = curSoundInfo.AudioSource;
-                if (curAs.isPlaying) curAs.volume = curSoundInfo.VolumeDefault * masterVolume;
-            }*/
+            //PlaySound("crackle");
         }
 
         private void PlaySound(AudioSource audioSource) //Only play sound if it's not already playing
@@ -210,7 +191,7 @@ namespace Audio
         private void AdjustPitchAndVolume(AudioSource audioSource)
         {
             audioSource.pitch *= (Random.value * 0.5f + 0.75f); //Pitch is default multiplied by random value between 0.75 and 1.25
-            audioSource.volume *= masterVolume;
+            audioSource.volume *= sfxVolume;
         }
 
         public void SwitchMusicTrack(string trackName)

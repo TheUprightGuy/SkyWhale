@@ -52,4 +52,33 @@ public class CallbackHandler : MonoBehaviour
         }
         
     }
+
+    public event Action<Transform> grappleHitFromWhale;
+    public void GrappleHitFromWhale(Transform grapplePos)
+    {
+        if (grappleHitFromWhale != null)
+        {
+            grappleHitFromWhale(grapplePos);
+        }
+    }
+
+    public event Action<Transform> dismountPlayer;
+
+    public void DismountPlayer(Transform dismountPos)
+    {
+        if (dismountPlayer != null)
+        {
+            dismountPlayer(dismountPos);
+        }
+    }
+
+    public event Action<Transform> grappleFromWhale;
+
+    public void GrappleFromWhale(Transform grapplePos)
+    {
+        if (grappleFromWhale != null)
+        {
+            grappleFromWhale(grapplePos);
+        }
+    }
 }
