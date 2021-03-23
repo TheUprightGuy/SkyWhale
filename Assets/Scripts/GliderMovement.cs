@@ -52,18 +52,12 @@ public class GliderMovement : MonoBehaviour
         baseSpeed = maxSpeed * 0.4f;
         moveSpeed = baseSpeed;
         currentSpeed = 0.0f;
-        Toggle();
     }
 
     public void Toggle()
     {
         enabled = !enabled;
         glider.SetActive(enabled);
-        //rb.useGravity = !enabled;
-        //mainCamera.depth = enabled ? -1.0f : 1.0f;
-        //glideCam.depth = enabled ? 1.0f : -1.0f;
-        //mainCam.m_Priority = enabled ? 0 : 1;
-        //glideCam.m_Priority = enabled ? 1 : 0;
 
         CameraManager.instance.SwitchCamera((enabled) ? CameraType.GlideCamera : CameraType.PlayerCamera);
 

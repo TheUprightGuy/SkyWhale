@@ -43,21 +43,23 @@ public class DisplayValue : MonoBehaviour
         switch (sliderType)
         {
             case SliderType.Master:
-            {
-                slider.value = settings.masterVolume;
-                    Audio.AudioManager.instance.OnVolumeAdjusted(slider.value);
-                break;
-            }
-            case SliderType.Sound:
-            {
-                slider.value = settings.soundVolume;
-                break;
-            }
+                {
+                    slider.value = settings.masterVolume;
+                    Audio.AudioManager.instance.OnVolumeAdjusted(0, slider.value);
+                    break;
+                }
             case SliderType.Music:
-            {
-                slider.value = settings.musicVolume;
-                break;
-            }
+                {
+                    slider.value = settings.musicVolume;
+                    Audio.AudioManager.instance.OnVolumeAdjusted(1, slider.value);
+                    break;
+                }
+            case SliderType.Sound:
+                {
+                    slider.value = settings.soundVolume;
+                    Audio.AudioManager.instance.OnVolumeAdjusted(2, slider.value);
+                    break;
+                }
         }
     }
 
@@ -68,22 +70,23 @@ public class DisplayValue : MonoBehaviour
             switch (sliderType)
             {
                 case SliderType.Master:
-                {
-                    settings.masterVolume = (int)slider.value;
-                    break;
-                }
+                    {
+                        settings.masterVolume = (int)slider.value;
+                        break;
+                    }
                 case SliderType.Sound:
-                {
-                    settings.soundVolume = (int)slider.value;
-                    break;
-                }
+                    {
+                        settings.soundVolume = (int)slider.value;
+                        break;
+                    }
                 case SliderType.Music:
-                {
-                    settings.musicVolume = (int)slider.value;
-                    break;
-                }
+                    {
+                        settings.musicVolume = (int)slider.value;
+                        break;
+                    }
             }
 
+            SetSettings();
             text.SetText(slider.value.ToString());
         }
     }
