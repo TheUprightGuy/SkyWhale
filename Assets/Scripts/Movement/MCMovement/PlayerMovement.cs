@@ -43,8 +43,10 @@ public class PlayerMovement : MonoBehaviour
     [Space(20.0f)]
     public float inAirSpeed = 1.0f;
     public float maxAirAcceleration = 10.0f;
-    [Space(20.0f)]
-
+    [Space(20.0f)]
+
+
+
     public float climbSpeed = 1.0f;
     public float maxClimbAcceleration = 10.0f;
     public float climbGripForce = 1.0f;
@@ -652,7 +654,8 @@ public class PlayerMovement : MonoBehaviour
         Gizmos.DrawLine(origin, origin + dir);
 
         Gizmos.color = Color.white;
-        Vector3 xAxis = Vector3.ProjectOnPlane(transform.up, climbContactNormal);
+        Vector3 xAxis = Vector3.ProjectOnPlane(transform.up, climbContactNormal);
+
         Gizmos.DrawLine(origin, origin + xAxis);
     }
 

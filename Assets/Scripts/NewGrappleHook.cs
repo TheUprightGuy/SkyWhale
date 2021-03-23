@@ -23,7 +23,8 @@ public class NewGrappleHook : MonoBehaviour
     MeshRenderer mr;
     LineRenderer lr;
     GameObject connectedObj;
-    [HideInInspector] public Transform pc;
+    //[HideInInspector]
+    public Transform pc;
     SphereCollider sc;
     Vector3 cachedPos;
     Vector3 forceDir;
@@ -102,7 +103,7 @@ public class NewGrappleHook : MonoBehaviour
             forceDir = Vector3.Normalize(pc.position - transform.position) * (manualRetract ? retractSpeed * 2 : retractSpeed);
             rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
 
-            if (Vector3.Distance(transform.position, pc.position) < (forceDir.magnitude * Time.fixedDeltaTime))
+            if (Vector3.Distance(transform.position, pc.position) < Mathf.Max((forceDir.magnitude * Time.fixedDeltaTime), 0.3f))
             {
                 enabled = false;
                 retracting = false;
@@ -150,6 +151,23 @@ public class NewGrappleHook : MonoBehaviour
             retracting = true;
         }
     }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        enabled = false;
+        if (GrappleAbleCheck(collision.gameObject.layer))
+        {
+            connected = true;
+            connectedObj = collision.gameObject;
+            cachedPos = connectedObj.transform.position;
+        }
+        else
+        {
+            connectedObj = null;
+            retracting = true;
+        }
+    }
+
 
     public bool GrappleAbleCheck(int layer)
     {
