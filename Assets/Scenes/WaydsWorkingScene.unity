@@ -250,7 +250,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7650530901893121817, guid: bb3deedbd456dfc46942b17dd13c789f, type: 3}
 --- !u!1 &597863345
@@ -1984,6 +1984,16 @@ PrefabInstance:
       propertyPath: pullSpeed
       value: 16
       objectReference: {fileID: 0}
+    - target: {fileID: 2547422257388001877, guid: 34a05d3f0592b9645b8d45d5a897a37c,
+        type: 3}
+      propertyPath: m_Center.y
+      value: -0.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 2547422257388001877, guid: 34a05d3f0592b9645b8d45d5a897a37c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3354385710615303146, guid: 34a05d3f0592b9645b8d45d5a897a37c,
         type: 3}
       propertyPath: m_Name
@@ -2074,6 +2084,26 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 742923025}
+    - target: {fileID: 7416749029238927893, guid: 34a05d3f0592b9645b8d45d5a897a37c,
+        type: 3}
+      propertyPath: ClimbLayers.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 7416749029238927893, guid: 34a05d3f0592b9645b8d45d5a897a37c,
+        type: 3}
+      propertyPath: groundjumpHeight
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7416749029238927893, guid: 34a05d3f0592b9645b8d45d5a897a37c,
+        type: 3}
+      propertyPath: wallJumpHeight
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7416749029238927893, guid: 34a05d3f0592b9645b8d45d5a897a37c,
+        type: 3}
+      propertyPath: ClimbCheckStartOffset.y
+      value: -0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 8335761592001914028, guid: 34a05d3f0592b9645b8d45d5a897a37c,
         type: 3}
       propertyPath: ShapeModule.radius.value
