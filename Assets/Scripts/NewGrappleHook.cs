@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class NewGrappleHook : MonoBehaviour
 {
-    Rigidbody rb;
-    Vector3 hitPos;
     public Vector3 forceDir;
-    //[HideInInspector]
     new public bool enabled;
     public bool retracting;
     public float flightTime;
     public LayerMask grappleableLayers;
-    public Transform pc;
     public bool connected;
     public bool manualRetract;
+
+
+    // Local References
+    Rigidbody rb;
     MeshRenderer mr;
     LineRenderer lr;
     GameObject connectedObj;
+    Transform pc;
     Vector3 cachedPos;
 
     private void Awake()
@@ -128,12 +129,6 @@ public class NewGrappleHook : MonoBehaviour
         pc.GetComponent<Rigidbody>().AddForce(pc.GetComponent<Rigidbody>().velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up)), ForceMode.Impulse);
     }
 
-    void Retract()
-    {
-        GetComponent<SphereCollider>().enabled = false;
-        connectedObj = null;
-    }
-
     // Hit Something
     private void OnCollisionEnter(Collision collision)
     {
@@ -141,11 +136,9 @@ public class NewGrappleHook : MonoBehaviour
         // Check if we can Grabble to It
         if (GrappleAbleCheck(collision.gameObject.layer))
         {
-            Debug.Log("Correct Layer");
             connected = true;
             connectedObj = collision.gameObject;
             cachedPos = connectedObj.transform.position;
-            // need to fix the hook to this point
         }   
         // Retract
         else

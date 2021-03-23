@@ -127,8 +127,8 @@ public class PlayerMovement : MonoBehaviour
             inputAxis = Vector3.zero;
         }*/
         
-        groundContactNormal = climbContactNormal = Vector3.zero;
-        groundContactCount = climbContactCount = 0;
+        //groundContactNormal = climbContactNormal = Vector3.zero;
+        //groundContactCount = climbContactCount = 0;
     }
 
     float minGroundDotProduct;
@@ -304,7 +304,7 @@ public class PlayerMovement : MonoBehaviour
         RB.MovePosition(transform.position + desiredVel * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
 
 
-        Vector3 manualGrav = groundContactNormal * -9.81f * TimeSlowDown.instance.timeScale;
+        /*Vector3 manualGrav = groundContactNormal * -9.81f * TimeSlowDown.instance.timeScale;
         if (groundContactNormal == Vector3.zero)
         {
             RB.AddForce(Physics.gravity, ForceMode.Acceleration);
@@ -314,7 +314,7 @@ public class PlayerMovement : MonoBehaviour
         {
             RB.AddForce(manualGrav, ForceMode.Acceleration);
             Debug.DrawRay(transform.position, manualGrav, Color.gray);
-        }
+        }*/
 
         /*if (collidedObj != null)
         {
