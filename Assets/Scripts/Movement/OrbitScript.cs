@@ -4,80 +4,90 @@ using UnityEngine;
 
 public class OrbitScript : MonoBehaviour
 {
+    new public bool enabled;
     Vector3 objToIsland;
     Vector3 path;
-    Quaternion lookRot;
-    WhaleInfo whaleInfo;
-    //[HideInInspector] 
-    public GameObject leashObject = null;
-    [HideInInspector] public MeshCollider islandBase;
-    [HideInInspector] public float initialSlerp = 0.0f;
-    [HideInInspector] public int orbitDirection = 1;
+    int orbitDirection = 1;
+    //[HideInInspector]
+    public GameObject orbit;
+    float orbitDistance;
+    public float rotSpeed;
+    public bool atOrbit;
+    public float dist;
+    Rigidbody rb;
+    [HideInInspector] public float currentDistance;
 
-    #region Setup
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    #region Callbacks
     private void Start()
     {
-        whaleInfo = CallbackHandler.instance.whaleInfo;
-        WhaleHandler.instance.shiftWhale += ShiftWhale;
+        CallbackHandler.instance.setOrbit += SetOrbit;
+        // testing purposes
+        if (enabled)
+        {
+            SetOrbit(orbit);
+            GetComponent<WhaleMovement>().moveSpeed = 2.5f;
+        }
     }
-
     private void OnDestroy()
     {
-        WhaleHandler.instance.shiftWhale -= ShiftWhale;
+        CallbackHandler.instance.setOrbit -= SetOrbit;
     }
-    #endregion Setup
-
-    public void SetOrbitDirection()
-    {
-        initialSlerp = 2.1f;
-        // Direction from pos to island
-        Vector3 dir = (leashObject.transform.position - transform.position);
-        Vector3 path = Vector3.Normalize(Vector3.Cross(dir, Vector3.up));
-
-        if (Vector3.Dot(transform.forward, path) >= 0.0f)
-        {
-            orbitDirection = 1;
-        }
-        else
-        {
-            orbitDirection = -1;
-        }
-
-        gameObject.GetComponent<HomingScript>().pickupHeight = leashObject.GetComponent<IslandSlowDown>().colliderHeight;
-    }
-
-    public void ShiftWhale()
-    {
-        float rad = leashObject.GetComponent<SphereCollider>().radius / 2;
-        transform.position += new Vector3(rad * orbitDirection, 0, rad * orbitDirection);
-    }
+    #endregion Callbacks
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (whaleInfo.leashed && leashObject)
+        if (enabled)
         {
-            objToIsland = leashObject.transform.position - transform.position;
-            path = Vector3.Normalize(Vector3.Cross(objToIsland, Vector3.up));
-            path = new Vector3(path.x * orbitDirection, 0, path.z * orbitDirection);
+            objToIsland = orbit.transform.position - transform.position;
+            Vector3 islandToObj = transform.position - orbit.transform.position;
 
-            if (initialSlerp > 0)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path), Time.deltaTime);
-                initialSlerp -= Time.deltaTime;
-            }
-            else
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path), Time.deltaTime * 5);
-            }
+            Vector3 orbitPos = new Vector3(orbit.transform.position.x, 0, orbit.transform.position.z);
+            Vector3 whalePos = new Vector3(transform.position.x, 0, transform.position.z);
+
+            currentDistance = Vector3.Distance(orbitPos, whalePos);
+
+            objToIsland *= orbitDistance / currentDistance;
+
+            Vector3 desiredPos = orbit.transform.position + islandToObj * orbitDistance / currentDistance;
+            Vector3 vecToDesired = desiredPos - transform.position;
+
+            vecToDesired = Vector3.Normalize(vecToDesired);
+
+            float distanceToDesired = Vector3.Distance(transform.position, desiredPos);
+            dist = distanceToDesired / orbitDistance;
+
+
+
+            vecToDesired *= dist;
+
+            path = Vector3.Cross(objToIsland, Vector3.up);
+
+            Debug.DrawRay(transform.position, vecToDesired * 1000.0f, Color.blue);
+
+            path.y = orbit.transform.position.y - transform.position.y;
+            path = Vector3.Normalize(path);
+            path = Vector3.Normalize(path + vecToDesired);
+
+            Debug.DrawRay(transform.position, path * 1000.0f, Color.green);
+
+            path = new Vector3(path.x * orbitDirection, path.y, path.z * orbitDirection);
+            rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(path), Time.deltaTime * rotSpeed));
         }
     }
 
-    private void FixedUpdate()
+    public void SetOrbit(GameObject _orbit)
     {
-        if (!leashObject)
+        //if (!enabled)
         {
-            whaleInfo.leashed = false;
+            orbit = _orbit;
+            orbitDistance = orbit.GetComponent<SphereCollider>().radius;
+            enabled = true;
         }
     }
 }

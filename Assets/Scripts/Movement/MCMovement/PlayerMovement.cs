@@ -17,7 +17,6 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody RB;
     Animator anims;
-    GrappleHook gHook;
     GliderMovement glider;
     [Tooltip("This can't be set, and sets to IDLE on Start call, so no touchy")]
     public PlayerStates PlayerState;
@@ -72,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
 
         RB = GetComponent<Rigidbody>();
         anims = GetComponentInChildren<Animator>();
-        gHook = GetComponent<GrappleHook>();
         glider = GetComponent<GliderMovement>();
         VirtualInputs.GetInputListener(InputType.PLAYER, "Forward").MethodToCall.AddListener(Forward);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Back").MethodToCall.AddListener(Back);
@@ -187,7 +185,8 @@ public class PlayerMovement : MonoBehaviour
     bool GRAPPLECheck()
     {
         //Only check if available, currently hooked, and on the ground to allow grapple movement
-        return (gHook != null && gHook.enabled && gHook.GrappleActive && !IsGrounded());
+        //return (gHook != null && gHook.enabled && gHook.GrappleActive && !IsGrounded());
+        return false;
     }
     bool CLIMBINGCheck()//ToDo Later when implementing climbing
     {
@@ -239,7 +238,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PlayerStates.GRAPPLE:
                 {
-                    gHook.ApplyForces(inputAxis);
+                    //gHook.ApplyForces(inputAxis);
                 }
                 break;
             case PlayerStates.CLIMBING:

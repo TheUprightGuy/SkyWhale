@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ResourceDisplayScript : MonoBehaviour
 {
-    #region Singleton
+    /*#region Singleton
     public static ResourceDisplayScript instance;
     private void Awake()
     {
@@ -174,6 +174,6 @@ public class ResourceDisplayScript : MonoBehaviour
         DisplayProvisions();
         provisionsPercentage = (float)provisions / (float)provisionsMax;
         return true;
-    }
+    }*/
 
 }

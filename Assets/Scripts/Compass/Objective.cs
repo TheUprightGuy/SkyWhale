@@ -12,6 +12,6 @@ public class Objective : MonoBehaviour
 
     public void SetObj()
     {
-        CallbackHandler.instance.SetQuestObjective(gameObject);
+        //CallbackHandler.instance.SetQuestObjective(gameObject);
     }
 }

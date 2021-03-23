@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class ShopOwner : MonoBehaviour
 {
-    Animator animator;
-    TestMovement player;
+    /*Animator animator;
     public float distToPlayer;
     bool waving;
 
@@ -68,5 +67,5 @@ public class ShopOwner : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         player = null;
-    }
+    }*/
 }

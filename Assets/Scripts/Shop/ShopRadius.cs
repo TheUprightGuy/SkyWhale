@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShopRadius : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<TestMovement>())
         {
@@ -19,5 +19,5 @@ public class ShopRadius : MonoBehaviour
             CallbackHandler.instance.inShopRange = false;
             CallbackHandler.instance.HideDetails();
         }
-    }
+    }*/
 }

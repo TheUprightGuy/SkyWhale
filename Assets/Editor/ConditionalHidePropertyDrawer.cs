@@ -5,11 +5,11 @@ using System.Collections.Generic;
 //Original version of the ConditionalHideAttribute created by Brecht Lecluyse (www.brechtos.com)
 //Modified by: Sebastian Lague
 
-[CustomPropertyDrawer(typeof(ConditionalHideAttribute))]
+//[CustomPropertyDrawer(typeof(ConditionalHideAttribute))]
 public class ConditionalHidePropertyDrawer : PropertyDrawer
 {
 
-    public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    /*public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
         ConditionalHideAttribute condHAtt = (ConditionalHideAttribute)attribute;
         
@@ -81,5 +81,5 @@ public class ConditionalHidePropertyDrawer : PropertyDrawer
                 Debug.LogError("Data type of the property used for conditional hiding [" + sourcePropertyValue.propertyType + "] is currently not supported");
                 return true;
         }
-    }
+    }*/
 }

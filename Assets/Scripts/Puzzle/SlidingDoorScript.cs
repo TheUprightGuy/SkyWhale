@@ -11,13 +11,13 @@ public class SlidingDoorScript : MonoBehaviour
     #region Callbacks
     private void Start()
     {
-        CallbackHandler.instance.openDoors += OpenDoors;
+        //CallbackHandler.instance.openDoors += OpenDoors;
         door1.parent = this;
         door2.parent = this;
     }
     private void OnDestroy()
     {
-        CallbackHandler.instance.openDoors -= OpenDoors;
+        //CallbackHandler.instance.openDoors -= OpenDoors;
     }
     #endregion Callbacks
 

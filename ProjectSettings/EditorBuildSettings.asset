@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/NewWhaleScripts/WaydsWorkingScene.unity
+    path: Assets/Scenes/WaydsWorkingScene.unity
     guid: a1629340a63a8664fb4e0a2f9f4dab7c
   m_configObjects: {}

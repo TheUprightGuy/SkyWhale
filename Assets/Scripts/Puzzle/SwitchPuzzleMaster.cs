@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class SwitchPuzzleMaster : MonoBehaviour
 {
     public static SwitchPuzzleMaster instance;
-    private void Awake()
+    /*private void Awake()
     {
         if (instance != null)
         {
@@ -81,5 +81,5 @@ public class SwitchPuzzleMaster : MonoBehaviour
             cam.m_Priority = 0;
             // switch to normal cam;
         }
-    }
+    }*/
 }

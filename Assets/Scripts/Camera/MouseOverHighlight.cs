@@ -5,7 +5,7 @@ using UnityEngine;
 public class MouseOverHighlight : MonoBehaviour
 {
     public static MouseOverHighlight instance;
-    private void Awake()
+    /*private void Awake()
     {
         if (instance != null)
         {
@@ -22,7 +22,6 @@ public class MouseOverHighlight : MonoBehaviour
     public PuzzleSwitch highlightedSwitch;
     public ShopItem highlightedShopItem;
     public ShopOwner shopOwner;
-    public CollectableMan collectableMan;
     public CirclePuzzle circle;
 
 
@@ -34,7 +33,6 @@ public class MouseOverHighlight : MonoBehaviour
         highlightedSwitch = null;
         highlightedShopItem = null;
         shopOwner = null;
-        collectableMan = null;
         circle = null;
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -44,16 +42,16 @@ public class MouseOverHighlight : MonoBehaviour
         {
             PuzzleSwitch tempSwitch = n.collider.gameObject.GetComponent<PuzzleSwitch>();
             ShopItem tempItem = null;
-            if (CallbackHandler.instance.inShopRange)
+            if (//CallbackHandler.instance.inShopRange)
             {
                 if (!tutMessage)
                 {
-                    TutorialMessage shopTutorial = new TutorialMessage();
-                    shopTutorial.message = "Use your mouse to select and click items.";
-                    shopTutorial.timeout = 5.0f;
-                    shopTutorial.key = KeyCode.E;
-                    CallbackHandler.instance.AddMessage(shopTutorial);
-                    CallbackHandler.instance.NextMessage();
+                    //TutorialMessage shopTutorial = new TutorialMessage();
+                    //shopTutorial.message = "Use your mouse to select and click items.";
+                    //shopTutorial.timeout = 5.0f;
+                    //shopTutorial.key = KeyCode.E;
+                    //CallbackHandler.instance.AddMessage(shopTutorial);
+                    //CallbackHandler.instance.NextMessage();
 
                     //PopUpHandler.instance.QueuePopUp("Use your mouse to select and click items", 7);
                 }
@@ -109,5 +107,5 @@ public class MouseOverHighlight : MonoBehaviour
                 circle.Rotate();
             }
         }
-    }
+    }*/
 }

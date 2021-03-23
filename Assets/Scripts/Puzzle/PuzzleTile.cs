@@ -11,7 +11,7 @@ public class PuzzleTile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (puzzleTileSo.triggered || puzzleGenerator.disabled)
+        /*if (puzzleTileSo.triggered || puzzleGenerator.disabled)
             return;
         //Check if correct type
         if (puzzleGenerator.CheckIfCorrectType(puzzleTileSo.type))
@@ -22,6 +22,6 @@ public class PuzzleTile : MonoBehaviour
         else
         {
             puzzleGenerator.ResetPuzzle(other.gameObject);
-        }
+        }*/
     }
 }

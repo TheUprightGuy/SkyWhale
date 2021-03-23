@@ -61,7 +61,7 @@ public class CirclePuzzleMaster : MonoBehaviour
         return (temp >= 2);
     }
 
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
         TestMovement player = other.GetComponent<TestMovement>();
         if (player && !completed)
@@ -80,5 +80,5 @@ public class CirclePuzzleMaster : MonoBehaviour
             cam.m_Priority = 0;
             // switch to normal cam;
         }
-    }
+    }*/
 }

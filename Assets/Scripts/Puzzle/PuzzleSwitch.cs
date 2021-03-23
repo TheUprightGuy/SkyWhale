@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PuzzleSwitch : MonoBehaviour
 {
-    public List<PuzzleSwitch> adjacentSwitches;
+    /*public List<PuzzleSwitch> adjacentSwitches;
 
     //[HideInInspector] 
     public bool active;
@@ -58,5 +58,5 @@ public class PuzzleSwitch : MonoBehaviour
                 n.material.SetFloat("Boolean_55E471DA", 0.0f);
             }
         }
-    }
+    }*/
 }

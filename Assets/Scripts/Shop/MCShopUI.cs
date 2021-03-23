@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class MCShopUI : MonoBehaviour
 {
-    #region Setup&Callbacks
+    //#region Setup&Callbacks
     public static MCShopUI instance;
 
-    public Animator animator;
+    /*public Animator animator;
     private void Awake()
     {
         if (instance != null)
@@ -150,5 +150,5 @@ public class MCShopUI : MonoBehaviour
 
         HideDetails();
         CallbackHandler.instance.BuyItem();
-    }
+    }*/
 }

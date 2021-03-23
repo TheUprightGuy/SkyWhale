@@ -7,7 +7,7 @@ public class LampManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CallbackHandler.instance.toggleLamp += ToggleLamp;
+        //CallbackHandler.instance.toggleLamp += ToggleLamp;
     }
 
     public void ToggleLamp(bool _toggle)

@@ -23,7 +23,7 @@ public enum ItemType
 
 public class ShopItem : MonoBehaviour
 {
-    public bool active;
+    /*public bool active;
     public Material highlightMaterial;  
 
     public MeshRenderer meshRenderer;
@@ -57,5 +57,5 @@ public class ShopItem : MonoBehaviour
     public void ShowUI()
     {
         CallbackHandler.instance.ShowDetails(item, this);
-    }
+    }*/
 }

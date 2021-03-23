@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 public class ResourceFeedBack : MonoBehaviour
 {
-    public GameObject PopupPrefab;
+    /*public GameObject PopupPrefab;
     public Sprite Supplies;
     public Sprite Provs;
 
@@ -58,5 +58,5 @@ public class ResourceFeedBack : MonoBehaviour
         Animator anims = temp.GetComponent<Animator>();
 
         Destroy(temp, anims.GetCurrentAnimatorClipInfo(0)[0].clip.length);
-    }
+    }*/
 }

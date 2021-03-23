@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterControllerScript : MonoBehaviour
 {
-    [Header("Movement Positions")]
+    /*[Header("Movement Positions")]
     public Transform targetPos;
     public Transform campFirePos;
     public Transform saddlePos;
@@ -169,5 +169,5 @@ public class CharacterControllerScript : MonoBehaviour
         animator.SetBool("Standing", standing);
         animator.SetBool("Sitting", sitting);
         animator.SetBool("Steering", steering);
-    }
+    }*/
 }

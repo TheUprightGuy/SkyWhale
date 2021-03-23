@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CollectableResource : MonoBehaviour
 {
-    public int suppliesCount;
+    /*public int suppliesCount;
     public int provisionsCount;
 
 
@@ -31,5 +31,5 @@ public class CollectableResource : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-    }
+    }*/
 }

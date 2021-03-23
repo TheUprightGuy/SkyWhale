@@ -115,7 +115,7 @@ public class MapHandler : MonoBehaviour
             Transform GoalTransform = Objectives[ActiveObjectiveIndex].ObjectiveTransformInWorld;
             CompassRotation.instance.goal = GoalTransform;
             
-            StartCoroutine(EventHandler.instance.HighlightObjective(GoalTransform.gameObject));
+            //StartCoroutine(EventHandler.instance.HighlightObjective(GoalTransform.gameObject));
             return true;
         }
         return false;

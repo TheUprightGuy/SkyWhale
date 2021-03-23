@@ -11,7 +11,7 @@ public class Collectable : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Collectable found!");
-        puzzleGenerator.FoundCollectable();
+        //puzzleGenerator.FoundCollectable();
         Destroy(gameObject);
     }
 }

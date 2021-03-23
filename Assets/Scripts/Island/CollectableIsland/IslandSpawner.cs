@@ -18,13 +18,13 @@ public class IslandSpawner : MonoBehaviour
     void Start()
     {
         //CallbackHandler.instance.spawnCollectableIsland += SpawnIsland;
-        NewCallbackHandler.instance.spawnCollectableIsland += SpawnIsland;
+        CallbackHandler.instance.spawnCollectableIsland += SpawnIsland;
         trailingIslands.Add(whale);
     }
 
     private void OnDestroy()
     {
-        NewCallbackHandler.instance.spawnCollectableIsland -= SpawnIsland;
+        CallbackHandler.instance.spawnCollectableIsland -= SpawnIsland;
     }
 
     private void Update()

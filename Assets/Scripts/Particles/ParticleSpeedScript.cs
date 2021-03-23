@@ -12,24 +12,11 @@ public class ParticleSpeedScript : MonoBehaviour
     }
     #endregion Setup
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
     // Update is called once per frame
     void Update()
     {
-        float alpha;
-        if (Movement.instance)
-        {
-            alpha = Movement.instance.currentSpeed / 200;
-        }
-        else
-        {
-            alpha = GetComponentInParent<NewWhaleMovement>().currentSpeed / 200;
-        }
+        float alpha = GetComponentInParent<WhaleMovement>().currentSpeed / 200;
+        
         //Debug.Log(alpha);
         ps.startColor = new Color(ps.startColor.r, ps.startColor.g, ps.startColor.b, alpha);
         ps.startLifetime = alpha * 100;
