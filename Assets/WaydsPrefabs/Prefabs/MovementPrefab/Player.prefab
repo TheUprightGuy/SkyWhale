@@ -1149,9 +1149,11 @@ MonoBehaviour:
   runSpeed: 5
   maxRunAcceleration: 15
   currentSpeed: 0
-  moveSpeed: 0
   inAirSpeed: 2
   maxAirAcceleration: 5
+  climbSpeed: 1
+  maxClimbAcceleration: 10
+  climbGripForce: 1
   groundjumpHeight: 5
   wallJumpHeight: 5
   GroundLayers:
@@ -1219,11 +1221,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hook: {fileID: 0}
-  camToShootFrom: {fileID: 0}
-  grappleReticule: {fileID: 86026474207419333}
   grappleableLayers:
     serializedVersion: 2
-    m_Bits: 16183
+    m_Bits: 8192
 --- !u!1 &3577484720783235353
 GameObject:
   m_ObjectHideFlags: 0

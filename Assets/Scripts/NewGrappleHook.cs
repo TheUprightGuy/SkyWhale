@@ -4,29 +4,34 @@ using UnityEngine;
 
 public class NewGrappleHook : MonoBehaviour
 {
-    public Vector3 forceDir;
+    [Header("Debug Fields")]
     new public bool enabled;
-    public bool retracting;
-    public float flightTime;
-    public LayerMask grappleableLayers;
     public bool connected;
     public bool manualRetract;
+    public bool retracting;
+    public float flightTime;
 
+    [HideInInspector] public LayerMask grappleableLayers;
 
+    #region Setup
     // Local References
     Rigidbody rb;
     MeshRenderer mr;
     LineRenderer lr;
     GameObject connectedObj;
     Transform pc;
+    SphereCollider sc;
     Vector3 cachedPos;
+    Vector3 forceDir;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         mr = GetComponent<MeshRenderer>();
         lr = GetComponent<LineRenderer>();
+        sc = GetComponent<SphereCollider>();
     }
+    #endregion Setup
 
     public void Fire(Transform _player, Vector3 _dir)
     {
@@ -54,16 +59,12 @@ public class NewGrappleHook : MonoBehaviour
 
     void UpdateLR()
     {
-        if (mr.enabled)
-        {
-            lr.positionCount = 2;
-            lr.SetPosition(0, transform.position);
-            lr.SetPosition(1, pc.position);
-        }
-        else
-        {
-            lr.positionCount = 0;
-        }
+        lr.positionCount = mr.enabled ? 2 : 0;
+        if (!mr.enabled)
+            return;
+
+        lr.SetPosition(0, transform.position);
+        lr.SetPosition(1, pc.position);
     }
 
     private void FixedUpdate()
@@ -72,7 +73,7 @@ public class NewGrappleHook : MonoBehaviour
         {
             if (!retracting)
             {
-                GetComponent<SphereCollider>().enabled = true;
+                sc.enabled = true;
                 flightTime += Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
                 if (flightTime > 2.0f)
                 {
@@ -91,7 +92,7 @@ public class NewGrappleHook : MonoBehaviour
         if (retracting)
         {
             connectedObj = null;
-            GetComponent<SphereCollider>().enabled = false;
+            sc.enabled = false;
             flightTime = 0.0f;
             
             forceDir = Vector3.Normalize(pc.position - transform.position) * (manualRetract ? 48.0f : 24.0f);
@@ -101,7 +102,7 @@ public class NewGrappleHook : MonoBehaviour
             {
                 enabled = false;
                 retracting = false;
-                GetComponent<SphereCollider>().enabled = true;
+                sc.enabled = true;
                 connected = false;
                 manualRetract = false;
                 connectedObj = null;
@@ -126,26 +127,23 @@ public class NewGrappleHook : MonoBehaviour
             return;
 
         pc = _player;
-        pc.GetComponent<Rigidbody>().AddForce(pc.GetComponent<Rigidbody>().velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up)), ForceMode.Impulse);
+        Rigidbody temp = pc.GetComponent<Rigidbody>();
+        temp.AddForce(temp.velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up)), ForceMode.Impulse);
     }
 
-    // Hit Something
     private void OnCollisionEnter(Collision collision)
     {
         enabled = false;
-        // Check if we can Grabble to It
         if (GrappleAbleCheck(collision.gameObject.layer))
         {
             connected = true;
             connectedObj = collision.gameObject;
             cachedPos = connectedObj.transform.position;
         }   
-        // Retract
         else
         {
             connectedObj = null;
             retracting = true;
-            // Start Retracting
         }
     }
 

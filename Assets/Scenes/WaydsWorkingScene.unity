@@ -661,12 +661,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bc15495c0cb45b47bf1f93955d3a070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1112163701 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4983379942550152174, guid: d4abd0ddd61d9e04f9df8b0ba38245b2,
+--- !u!114 &1112163702 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4983379942550152166, guid: d4abd0ddd61d9e04f9df8b0ba38245b2,
     type: 3}
   m_PrefabInstance: {fileID: 4983379943662053019}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e71edb74dc45a8f4e8056d8a3eacbc1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1149562179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1657,7 +1663,9 @@ PrefabInstance:
       propertyPath: m_Follow
       value: 
       objectReference: {fileID: 5853718423908297843}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 295798894353751446, guid: 53ba3972d8fbf6d4d8efaee4feb2eb02, type: 3}
+    - {fileID: 295798894353751440, guid: 53ba3972d8fbf6d4d8efaee4feb2eb02, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 53ba3972d8fbf6d4d8efaee4feb2eb02, type: 3}
 --- !u!1001 &4838435617264621216
 PrefabInstance:
@@ -1825,11 +1833,16 @@ PrefabInstance:
       propertyPath: m_UseGravity
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1025371458974576488, guid: 34a05d3f0592b9645b8d45d5a897a37c,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1175161780599159901, guid: 34a05d3f0592b9645b8d45d5a897a37c,
         type: 3}
       propertyPath: hook
       value: 
-      objectReference: {fileID: 1112163701}
+      objectReference: {fileID: 1112163702}
     - target: {fileID: 1175161780599159901, guid: 34a05d3f0592b9645b8d45d5a897a37c,
         type: 3}
       propertyPath: camToShootFrom
@@ -1915,6 +1928,11 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 742923025}
+    - target: {fileID: 8335761592001914028, guid: 34a05d3f0592b9645b8d45d5a897a37c,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 4.53
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34a05d3f0592b9645b8d45d5a897a37c, type: 3}
 --- !u!1001 &9051547295841867559

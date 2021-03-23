@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody RB;
     Animator anims;
     GliderMovement glider;
+    GrappleScript grapple;
     [Tooltip("This can't be set, and sets to IDLE on Start call, so no touchy")]
     public PlayerStates PlayerState;
 
@@ -65,16 +66,20 @@ public class PlayerMovement : MonoBehaviour
 
     new public bool enabled;
 
-    void Start()
+    private void Awake()
     {
         setSpeed = walkSpeed;
         setAccel = maxWalkAcceleration;
-
         PlayerState = PlayerStates.IDLE;
 
         RB = GetComponent<Rigidbody>();
         anims = GetComponentInChildren<Animator>();
         glider = GetComponent<GliderMovement>();
+        grapple = GetComponent<GrappleScript>();
+    }
+
+    void Start()
+    {
         VirtualInputs.GetInputListener(InputType.PLAYER, "Forward").MethodToCall.AddListener(Forward);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Back").MethodToCall.AddListener(Back);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Left").MethodToCall.AddListener(Left);
@@ -82,7 +87,6 @@ public class PlayerMovement : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.PLAYER, "Run").MethodToCall.AddListener(Run);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(Jump);
 
-        //RB.useGravity = false;
         OnValidate();
     }
 
@@ -122,13 +126,6 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         HandleMovement();
-        /*if (inputAxis != Vector3.zero)
-        {
-            inputAxis = Vector3.zero;
-        }*/
-        
-        //groundContactNormal = climbContactNormal = Vector3.zero;
-        //groundContactCount = climbContactCount = 0;
     }
 
     float minGroundDotProduct;
@@ -172,29 +169,26 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerState = PlayerStates.CLIMBING;
         }
-    }
 
+        RB.useGravity = !(GRAPPLECheck()|| GLIDINGCheck());
+    }
 
     #region PlayerStateChecks
     bool IDLECheck()
     {
         return (IsGrounded() && inputAxis.magnitude <= 0.0f);
-        //return RB.velocity.magnitude <= 0.1f;
     }
 
     bool MOVINGCheck()
     {
         return (IsGrounded() && inputAxis.magnitude > 0.0f);
-        //return RB.velocity.magnitude > 0.1f;
     }
 
     bool GRAPPLECheck()
     {
-        //Only check if available, currently hooked, and on the ground to allow grapple movement
-        //return (gHook != null && gHook.enabled && gHook.GrappleActive && !IsGrounded());
-        return false;
+        return grapple.InUse();
     }
-    bool CLIMBINGCheck()//ToDo Later when implementing climbing
+    bool CLIMBINGCheck()
     {
         return (!IsGrounded() && IsClimbing());
     }
@@ -205,8 +199,6 @@ public class PlayerMovement : MonoBehaviour
     }
     bool FALLINGCheck()
     {
-
-
         float currenty = Vector3.Dot(RB.velocity, transform.up);
         return currenty < 0.0f && !IsGrounded() && !IsClimbing();
     }
@@ -221,7 +213,6 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleMovement()
     {
-                //RB.useGravity = true;
         if (inputAxis == Vector3.zero)
         {
             currentSpeed = Mathf.MoveTowards(currentSpeed, 0, maxWalkAcceleration * Time.deltaTime);
@@ -230,9 +221,6 @@ public class PlayerMovement : MonoBehaviour
         {
             currentSpeed = Mathf.MoveTowards(currentSpeed, setSpeed, maxWalkAcceleration * Time.deltaTime);
         }
-
-
-
 
         switch (PlayerState)
         {
@@ -246,12 +234,9 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PlayerStates.GRAPPLE:
                 {
-                    //gHook.ApplyForces(inputAxis);
                 }
                 break;
             case PlayerStates.CLIMBING:
-                
-
                 if (inputAxis.y > 0)
                 {
                     Jump(climbContactNormal + Vector3.up, wallJumpHeight);
@@ -259,7 +244,6 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PlayerStates.GLIDING:
                 {
-                    //glider.ApplyForces(inputAxis);
                 }
                 break;
             case PlayerStates.JUMPING:
@@ -269,7 +253,6 @@ public class PlayerMovement : MonoBehaviour
             default:
                 break;
         }
-        //inputAxis = Vector3.zero;
     }
 
     void MoveOnXZ(float speed, float accel)
@@ -280,8 +263,6 @@ public class PlayerMovement : MonoBehaviour
         zAxis *= inputAxis.z;
 
         inputAxis = Vector3.Normalize(inputAxis);
-        //Vector3 temp = Vector3.Dot(inputAxis, transform.forward);
-
 
         float currentX = Vector3.Dot(RB.velocity, xAxis);
         float currentZ = Vector3.Dot(RB.velocity, zAxis);
@@ -293,34 +274,12 @@ public class PlayerMovement : MonoBehaviour
         desiredVel.y = 0;
         desiredVel *= speed;
 
-
         float newX =
             Mathf.MoveTowards(currentX, desiredVel.x, maxSpeedChange);
         float newZ =
             Mathf.MoveTowards(currentZ, desiredVel.z, maxSpeedChange);
 
-        //RB.velocity += (xAxis * (newX - currentX) + zAxis * (newZ - currentZ)) * TimeSlowDown.instance.timeScale;
-
         RB.MovePosition(transform.position + desiredVel * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
-
-
-        /*Vector3 manualGrav = groundContactNormal * -9.81f * TimeSlowDown.instance.timeScale;
-        if (groundContactNormal == Vector3.zero)
-        {
-            RB.AddForce(Physics.gravity, ForceMode.Acceleration);
-            Debug.DrawRay(transform.position, Physics.gravity, Color.black);
-        }
-        else
-        {
-            RB.AddForce(manualGrav, ForceMode.Acceleration);
-            Debug.DrawRay(transform.position, manualGrav, Color.gray);
-        }*/
-
-        /*if (collidedObj != null)
-        {
-            Vector3 offset = GetCollidedFrameOffset();
-            RB.MovePosition(transform.position + offset);
-        }*/
     }
     void MoveOnXY(float speed, float accel)
     {
@@ -329,10 +288,7 @@ public class PlayerMovement : MonoBehaviour
         xAxis *= inputAxis.x;
         zAxis *= inputAxis.z;
 
-
         inputAxis = Vector3.Normalize(inputAxis);
-        //Vector3 temp = Vector3.Dot(inputAxis, transform.forward);
-
 
         float currentX = Vector3.Dot(RB.velocity, xAxis);
         float currentZ = Vector3.Dot(RB.velocity, zAxis);
@@ -344,25 +300,22 @@ public class PlayerMovement : MonoBehaviour
         desiredVel.y = 0;
         desiredVel *= speed;
 
-
-        float newX =
+       float newX =
             Mathf.MoveTowards(currentX, desiredVel.x, maxSpeedChange);
         float newZ =
             Mathf.MoveTowards(currentZ, desiredVel.z, maxSpeedChange);
 
         
         RB.MovePosition(transform.position + (desiredVel * Time.deltaTime));
-
-       
-
-        if (climbContactNormal != Vector3.zero)
-        {
-            RB.AddForce(-climbContactNormal.normalized * ((climbGripForce * 0.9f) * Time.deltaTime));
-            transform.forward = -climbContactNormal;
+
+        if (climbContactNormal != Vector3.zero)
+        {
+            RB.AddForce(-climbContactNormal.normalized * ((climbGripForce * 0.9f) * Time.deltaTime));
+            transform.forward = -climbContactNormal;
         }
-        else
-        {
-            RB.AddForce(transform.forward * ((climbGripForce * 0.9f) * Time.deltaTime));
+        else
+        {
+            RB.AddForce(transform.forward * ((climbGripForce * 0.9f) * Time.deltaTime));
         }
     }
     // check this
@@ -372,8 +325,7 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
-        Vector3 jumpDirection = (/*groundContactNormal + Vector3.up*/jumpVec).normalized;
-        float alignedSpeed = Vector3.Dot(RB.velocity, jumpDirection);
+        Vector3 jumpDirection = jumpVec.normalized;
 
         RB.velocity += jumpDirection * jumpSpeed + (Physics.gravity * Time.deltaTime);
     }

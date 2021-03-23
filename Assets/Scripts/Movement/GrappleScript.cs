@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class GrappleScript : MonoBehaviour
 {
-    [Header("Dependencies")]
-    public GameObject hook;
-    public Camera camToShootFrom;
-    public GameObject grappleReticule;
-
-    [Header("Grapple")]
+    [Header("Required Fields")]
+    public NewGrappleHook hook;
     public LayerMask grappleableLayers;
+
+    // Local Variables
+    Camera camToShootFrom;
+    GameObject grappleReticule;
 
     // Start is called before the first frame update
     void Start()
     {
+        camToShootFrom = Camera.main;
+        grappleReticule = GetComponentInChildren<UnityEngine.UI.Image>().gameObject;
+        hook.grappleableLayers = grappleableLayers;
         ToggleAim(false);
     }
 
@@ -39,17 +42,16 @@ public class GrappleScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            hook.GetComponent<NewGrappleHook>().YeetPlayer(this.transform);
+            hook.YeetPlayer(this.transform);
         }
 
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        NewGrappleHook temp = hook.GetComponent<NewGrappleHook>();
         Vector3 moveDir = Vector3.Normalize(hook.transform.position - transform.position) * 8.0f;
 
-        if (temp.connected)
+        if (hook.connected)
         {
             GetComponent<PlayerMovement>().enabled = false;
             GetComponent<Rigidbody>().AddForce(moveDir * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
@@ -62,18 +64,16 @@ public class GrappleScript : MonoBehaviour
 
     void FireHook()
     {
-        NewGrappleHook temp = hook.GetComponent<NewGrappleHook>();
-
-        if (!temp.connected && !temp.retracting && temp.flightTime <= 0.0f)
+        if (!hook.connected && !hook.retracting && hook.flightTime <= 0.0f)
         {
-            temp.Fire(this.transform, camToShootFrom.transform.forward);
+            hook.Fire(this.transform, camToShootFrom.transform.forward);
         }
-        else if ((temp.connected && !temp.retracting) || (temp.enabled && temp.flightTime > 0.0f))
+        else if ((hook.connected && !hook.retracting) || (hook.enabled && hook.flightTime > 0.0f))
         {
-            temp.YeetPlayer(this.transform);
-            temp.retracting = true;
-            temp.connected = false;
-            temp.manualRetract = true;
+            hook.YeetPlayer(this.transform);
+            hook.retracting = true;
+            hook.connected = false;
+            hook.manualRetract = true;
         }
     }
     void ToggleAim(bool _startAim)
@@ -84,13 +84,17 @@ public class GrappleScript : MonoBehaviour
         }
     }
 
+    public bool InUse()
+    {
+        return (hook.connected);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        NewGrappleHook temp = hook.GetComponent<NewGrappleHook>();
-        if (temp.connected)
+        if (hook.connected)
         {
-            temp.connected = false;
-            temp.retracting = true;
+            hook.connected = false;
+            hook.retracting = true;
         }
     }
 }
