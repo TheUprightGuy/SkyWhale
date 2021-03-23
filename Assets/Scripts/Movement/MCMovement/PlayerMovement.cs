@@ -186,7 +186,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool GRAPPLECheck()
     {
-        return grapple.InUse();
+        return grapple.IsConnected();
     }
     bool CLIMBINGCheck()
     {
