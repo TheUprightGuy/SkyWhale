@@ -52,7 +52,6 @@ public class GliderMovement : MonoBehaviour
         baseSpeed = maxSpeed * 0.4f;
         moveSpeed = baseSpeed;
         currentSpeed = 0.0f;
-        Toggle();
     }
 
     public void Toggle()

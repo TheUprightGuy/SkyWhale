@@ -53,16 +53,19 @@ public class GrappleScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        pm.enabled = hook.connected;
+        pm.enabled = !hook.connected;
 
         if (hook.connected)
         {
             Vector3 moveDir = Vector3.Normalize(hook.transform.position - transform.position) * 8.0f;
             rb.AddForce(moveDir * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
+            transform.LookAt(hook.transform);
+            return;
         }
+        transform.up = Vector3.up;
     }
 
-    void FireHook()
+    public void FireHook()
     {
         if (!HookInUse())
         {

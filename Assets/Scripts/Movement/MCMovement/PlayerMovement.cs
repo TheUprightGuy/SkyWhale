@@ -94,17 +94,20 @@ public class PlayerMovement : MonoBehaviour
     {
         SetAnimations();
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (!(IsGrounded() || GRAPPLECheck()) || glider.enabled)
+                glider.Toggle();
+
+            if (GRAPPLECheck())
+                grapple.FireHook();
+        }
+
         if (!enabled)
             return;
 
-        if (Input.GetKeyDown(KeyCode.Space) && (!IsGrounded() || glider.enabled))
-        {
-            glider.Toggle();
-        }
-
         Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
         rot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
-
 
         if ((inputAxis.magnitude > 0.1f && !glider.enabled) || Input.GetKey(KeyCode.O))
         {
@@ -169,7 +172,6 @@ public class PlayerMovement : MonoBehaviour
         {
             PlayerState = PlayerStates.CLIMBING;
         }
-
         RB.useGravity = !(GRAPPLECheck()|| GLIDINGCheck());
     }
 
