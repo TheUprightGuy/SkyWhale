@@ -22,6 +22,10 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("This can't be set, and sets to IDLE on Start call, so no touchy")]
     public PlayerStates PlayerState;
 
+
+    [Header("Dependencies")]
+    public Transform cam;
+
     [Header("Forces")]
     public float walkSpeed = 2.0f;
     public float maxWalkAcceleration = 10f;
@@ -62,8 +66,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Misc")]
     public bool LocalToGround = true;
 
-    public GameObject collidedObj = null;
-
+    [HideInInspector]
     new public bool enabled;
 
     private void Awake()
@@ -102,21 +105,19 @@ public class PlayerMovement : MonoBehaviour
             glider.Toggle();
         }
 
-        Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
-        rot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
 
-
-        if ((inputAxis.magnitude > 0.1f && !glider.enabled) || Input.GetKey(KeyCode.O))
+        //Move in dir of cam on input
+        if ((inputAxis.magnitude > 0.1f && !glider.enabled))
         {
+            Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
+            Quaternion rot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
+
             transform.Rotate(rot.eulerAngles, Space.World);
         }
-
-        Debug.DrawRay(transform.position, camForwardRelativeToPlayerRot, Color.black);
+        HandleRotation();
     }
 
-    public Quaternion rot;
 
-    public Transform cam;
     public Vector3 inputAxis = Vector3.zero;
     void FixedUpdate()
     {
@@ -126,14 +127,14 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         HandleMovement();
+
+        groundContactNormal = climbContactNormal = Vector3.zero;
     }
 
     float minGroundDotProduct;
-    float minClimbDotProduct;
     private void OnValidate()
     {
         minGroundDotProduct = Mathf.Cos(maxGroundAngle * Mathf.Deg2Rad);
-        minClimbDotProduct = Mathf.Cos(maxClimbAngle * Mathf.Deg2Rad);
     }
 
     void SetCurrentPlayerState()
@@ -170,7 +171,10 @@ public class PlayerMovement : MonoBehaviour
             PlayerState = PlayerStates.CLIMBING;
         }
 
-        RB.useGravity = !(GRAPPLECheck()|| GLIDINGCheck());
+        //Don't use gravity if grappling or gliding or climbing
+        RB.useGravity = !(PlayerState == PlayerStates.GRAPPLE 
+                            || PlayerState == PlayerStates.GRAPPLE
+                                || PlayerState == PlayerStates.CLIMBING);
     }
 
     #region PlayerStateChecks
@@ -211,6 +215,30 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
 
+    void HandleRotation()
+    {
+        switch (PlayerState)
+        {
+            case PlayerStates.IDLE:
+            case PlayerStates.MOVING:
+                transform.rotation = (Quaternion.LookRotation(transform.forward, Vector3.up));
+                break;
+            case PlayerStates.JUMPING:
+            case PlayerStates.FALLING:
+                RB.MoveRotation(Quaternion.LookRotation(transform.forward, Vector3.up));
+                break;
+            case PlayerStates.CLIMBING:
+                Vector3 rotateTo = (climbContactNormal != Vector3.zero) ? (-climbContactNormal) : (transform.forward);
+                transform.rotation = (Quaternion.LookRotation(rotateTo, transform.up));
+                break;
+            case PlayerStates.GRAPPLE:
+                break;
+            case PlayerStates.GLIDING:
+                break;
+            default:
+                break;
+        }
+    }
     void HandleMovement()
     {
         if (inputAxis == Vector3.zero)
@@ -237,6 +265,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case PlayerStates.CLIMBING:
+                MoveOnXY(currentSpeed, setAccel);
                 if (inputAxis.y > 0)
                 {
                     Jump(climbContactNormal + Vector3.up, wallJumpHeight);
@@ -249,6 +278,7 @@ public class PlayerMovement : MonoBehaviour
             case PlayerStates.JUMPING:
             case PlayerStates.FALLING:
                 MoveOnXZ(inAirSpeed, maxAirAcceleration);
+
                 break;
             default:
                 break;
@@ -280,6 +310,9 @@ public class PlayerMovement : MonoBehaviour
             Mathf.MoveTowards(currentZ, desiredVel.z, maxSpeedChange);
 
         RB.MovePosition(transform.position + desiredVel * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
+
+        //Vector3 rotateTo = (groundContactNormal != Vector3.zero) ? (groundContactNormal) : (Vector3.up);
+        
     }
     void MoveOnXY(float speed, float accel)
     {
@@ -297,7 +330,6 @@ public class PlayerMovement : MonoBehaviour
         float maxSpeedChange = acceleration * Time.fixedDeltaTime;
 
         Vector3 desiredVel = xAxis + zAxis;
-        desiredVel.y = 0;
         desiredVel *= speed;
 
        float newX =
@@ -310,12 +342,13 @@ public class PlayerMovement : MonoBehaviour
 
         if (climbContactNormal != Vector3.zero)
         {
-            RB.AddForce(-climbContactNormal.normalized * ((climbGripForce * 0.9f) * Time.deltaTime));
-            transform.forward = -climbContactNormal;
+            RB.AddForce(-climbContactNormal.normalized * ((climbGripForce * 0.9f) ));
+            
+            //transform.forward = -climbContactNormal;
         }
         else
         {
-            RB.AddForce(transform.forward * ((climbGripForce * 0.9f) * Time.deltaTime));
+            RB.AddForce(transform.forward * ((climbGripForce * 0.9f)));
         }
     }
     // check this
@@ -523,8 +556,8 @@ public class PlayerMovement : MonoBehaviour
             glider.Toggle();
         }
 
-        RB.velocity = Vector3.zero;
-        RB.angularVelocity = Vector3.zero;
+        //RB.velocity = Vector3.zero;
+        //RB.angularVelocity = Vector3.zero;
 
         EvalCollision(collision);
     }
@@ -551,18 +584,12 @@ public class PlayerMovement : MonoBehaviour
             climbContactNormal = normal;
         }
 
-
         float upDot = Vector3.Dot(transform.up, normal);
 
         if (upDot >= minGroundDotProduct)
         {
             groundContactNormal = normal;
-
         }
-
-
-
-
 
     }
 
