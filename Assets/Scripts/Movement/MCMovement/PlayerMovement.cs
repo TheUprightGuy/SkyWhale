@@ -30,7 +30,6 @@ public class PlayerMovement : MonoBehaviour
     public float maxRunAcceleration = 20f;
 
     public float currentSpeed;
-    public float moveSpeed;
 
     [Space(20.0f)]
     private float setSpeed;
@@ -39,8 +38,12 @@ public class PlayerMovement : MonoBehaviour
     [Space(20.0f)]
     public float inAirSpeed = 1.0f;
     public float maxAirAcceleration = 10.0f;
+    [Space(20.0f)]
+
+    public float climbSpeed = 1.0f;
+    public float maxClimbAcceleration = 10.0f;
+    public float climbGripForce = 1.0f;
     [Space(20.0f)]
-
     public float groundjumpHeight = 5.0f;
     public float wallJumpHeight = 5.0f;
 
@@ -123,6 +126,9 @@ public class PlayerMovement : MonoBehaviour
         {
             inputAxis = Vector3.zero;
         }*/
+        
+        groundContactNormal = climbContactNormal = Vector3.zero;
+        groundContactCount = climbContactCount = 0;
     }
 
     float minGroundDotProduct;
@@ -215,6 +221,7 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleMovement()
     {
+                //RB.useGravity = true;
         if (inputAxis == Vector3.zero)
         {
             currentSpeed = Mathf.MoveTowards(currentSpeed, 0, maxWalkAcceleration * Time.deltaTime);
@@ -223,6 +230,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentSpeed = Mathf.MoveTowards(currentSpeed, setSpeed, maxWalkAcceleration * Time.deltaTime);
         }
+
 
 
 
@@ -242,7 +250,8 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case PlayerStates.CLIMBING:
-                MoveOnXY(inAirSpeed, maxAirAcceleration);
+                
+
                 if (inputAxis.y > 0)
                 {
                     Jump(climbContactNormal + Vector3.up, wallJumpHeight);
@@ -315,8 +324,8 @@ public class PlayerMovement : MonoBehaviour
     }
     void MoveOnXY(float speed, float accel)
     {
-        /*Vector3 xAxis = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
-        Vector3 zAxis = Vector3.ProjectOnPlane(-transform.right, groundContactNormal);
+        Vector3 xAxis = Vector3.ProjectOnPlane(transform.up, climbContactNormal);
+        Vector3 zAxis = Vector3.ProjectOnPlane(-transform.right, climbContactNormal);
         xAxis *= inputAxis.x;
         zAxis *= inputAxis.z;
 
@@ -341,15 +350,20 @@ public class PlayerMovement : MonoBehaviour
         float newZ =
             Mathf.MoveTowards(currentZ, desiredVel.z, maxSpeedChange);
 
-        //RB.velocity += (xAxis * (newX - currentX) + zAxis * (newZ - currentZ)) * TimeSlowDown.instance.timeScale;
-
-        RB.MovePosition(transform.position + desiredVel * Time.deltaTime);*/
-
-        /*if (collidedObj != null)
-        {
-            Vector3 offset = GetCollidedFrameOffset();
-            RB.MovePosition(transform.position + offset);
-        }*/
+        
+        RB.MovePosition(transform.position + (desiredVel * Time.deltaTime));
+
+       
+
+        if (climbContactNormal != Vector3.zero)
+        {
+            RB.AddForce(-climbContactNormal.normalized * ((climbGripForce * 0.9f) * Time.deltaTime));
+            transform.forward = -climbContactNormal;
+        }
+        else
+        {
+            RB.AddForce(transform.forward * ((climbGripForce * 0.9f) * Time.deltaTime));
+        }
     }
     // check this
     void Jump(Vector3 jumpVec, float jumpHeight)
@@ -611,6 +625,10 @@ public class PlayerMovement : MonoBehaviour
         Vector3 origin = transform.position;
         origin.y -= transform.localScale.y / 2;
         Gizmos.DrawLine(origin, origin + dir);
+
+        Gizmos.color = Color.white;
+        Vector3 xAxis = Vector3.ProjectOnPlane(transform.up, climbContactNormal);
+        Gizmos.DrawLine(origin, origin + xAxis);
     }
 
     #endregion
