@@ -500,7 +500,18 @@ public class PlayerMovement : MonoBehaviour
             anims.SetTrigger("Jump");
         }
 
-        inputAxis.y = 1;
+        switch (type)
+        {
+            case InputState.KEYDOWN:
+                inputAxis.y = 1;
+                break;
+            case InputState.KEYUP:
+
+                inputAxis.y = 0;
+                break;
+            default:
+                break;
+        }
     }
     void Run(InputState type)
     {
