@@ -58,11 +58,6 @@ public class GliderMovement : MonoBehaviour
     {
         enabled = !enabled;
         glider.SetActive(enabled);
-        //rb.useGravity = !enabled;
-        //mainCamera.depth = enabled ? -1.0f : 1.0f;
-        //glideCam.depth = enabled ? 1.0f : -1.0f;
-        //mainCam.m_Priority = enabled ? 0 : 1;
-        //glideCam.m_Priority = enabled ? 1 : 0;
 
         CameraManager.instance.SwitchCamera((enabled) ? CameraType.GlideCamera : CameraType.PlayerCamera);
 

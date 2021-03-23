@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class NewGrappleHook : MonoBehaviour
 {
+    [Header("Setup Fields")]
+    public float retractSpeed = 24.0f;
+    public float shootSpeed = 24.0f;
+
     [Header("Debug Fields")]
     new public bool enabled;
     public bool connected;
@@ -37,7 +41,7 @@ public class NewGrappleHook : MonoBehaviour
     {
         pc = _player;
         transform.position = _player.position;
-        forceDir = _dir * 24.0f;
+        forceDir = _dir * shootSpeed;
         enabled = true;
         flightTime = 0.0f;
         TimeSlowDown.instance.SpeedUp();
@@ -95,7 +99,7 @@ public class NewGrappleHook : MonoBehaviour
             sc.enabled = false;
             flightTime = 0.0f;
             
-            forceDir = Vector3.Normalize(pc.position - transform.position) * (manualRetract ? 48.0f : 24.0f);
+            forceDir = Vector3.Normalize(pc.position - transform.position) * (manualRetract ? retractSpeed * 2 : retractSpeed);
             rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
 
             if (Vector3.Distance(transform.position, pc.position) < (forceDir.magnitude * Time.fixedDeltaTime))

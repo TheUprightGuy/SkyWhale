@@ -345,30 +345,6 @@ Transform:
   m_Father: {fileID: 1319264396}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -77.972, y: -54.385002, z: 122.59801}
---- !u!1 &614735633 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7092851393635236333, guid: 1cb8a66b21256ed4abe9d5d047860c3f,
-    type: 3}
-  m_PrefabInstance: {fileID: 7232927517898763305}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &614735634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 614735633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dffec264b439d6c41b6fe7c708b627e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hook: {fileID: 1112163702}
-  grappleableLayers:
-    serializedVersion: 2
-    m_Bits: 8192
-  grapplingFromWhale: 0
-  shotGrapple: 0
 --- !u!20 &742923024 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 4838435617739099568, guid: 322a1d509c204d94d8353a2b81a6052d,
@@ -1879,6 +1855,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4983379942550152166, guid: d4abd0ddd61d9e04f9df8b0ba38245b2,
+        type: 3}
+      propertyPath: retractSpeed
+      value: 48
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983379942550152166, guid: d4abd0ddd61d9e04f9df8b0ba38245b2,
+        type: 3}
+      propertyPath: shootSpeed
+      value: 48
+      objectReference: {fileID: 0}
     - target: {fileID: 4983379942550152174, guid: d4abd0ddd61d9e04f9df8b0ba38245b2,
         type: 3}
       propertyPath: m_Name
@@ -1993,6 +1979,11 @@ PrefabInstance:
       propertyPath: camToShootFrom
       value: 
       objectReference: {fileID: 742923024}
+    - target: {fileID: 1175161780599159901, guid: 34a05d3f0592b9645b8d45d5a897a37c,
+        type: 3}
+      propertyPath: pullSpeed
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 3354385710615303146, guid: 34a05d3f0592b9645b8d45d5a897a37c,
         type: 3}
       propertyPath: m_Name

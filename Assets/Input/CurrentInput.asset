@@ -61,6 +61,30 @@ MonoBehaviour:
     MethodToCall:
       m_PersistentCalls:
         m_Calls: []
+  - NameForInput: GrappleAim
+    KeyToListen: 324
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 0
+    CallOnKeyUp: 1
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: Grapple
+    KeyToListen: 323
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 0
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: Glide
+    KeyToListen: 101
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 0
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
   whaleInput:
   - NameForInput: YawLeft
     KeyToListen: 97

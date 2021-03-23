@@ -7,6 +7,7 @@ public class GrappleScript : MonoBehaviour
     [Header("Required Fields")]
     public NewGrappleHook hook;
     public LayerMask grappleableLayers;
+    public float pullSpeed = 8.0f;
 
     public bool grapplingFromWhale = false;
     public bool shotGrapple = false;
@@ -31,28 +32,52 @@ public class GrappleScript : MonoBehaviour
         camToShootFrom = Camera.main;
         hook.grappleableLayers = grappleableLayers;
         ToggleAim(false);
+
+        VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").MethodToCall.AddListener(GrappleAim);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(Grapple);
     }
     #endregion Setup
 
-    private void Update()
+    void Grapple(InputState type)
     {
-        if (Input.GetMouseButtonDown(1))//Aiming with right click
+        switch (type)
         {
-            ToggleAim(true);
-            TimeSlowDown.instance.SlowDown();
-        }
-
-        if (Input.GetMouseButtonUp(1))//Stopping aiming
-        {
-            ToggleAim(false);
-            TimeSlowDown.instance.SpeedUp();
-        }
-
-        if (Input.GetMouseButtonDown(0) && (Input.GetMouseButton(1) || AbleToRetract()))
-        {
-            FireHook();
+            case InputState.KEYDOWN:
+                if (AbleToRetract() || aim)
+                    FireHook();
+                break;
+            case InputState.KEYHELD:
+                break;
+            case InputState.KEYUP:
+                break;
+            default:
+                break;
         }
     }
+
+    bool aim;
+    void GrappleAim(InputState type)
+    {
+        switch (type)
+        {
+            case InputState.KEYDOWN:
+
+                ToggleAim(true);
+                aim = true;
+                TimeSlowDown.instance.SlowDown();
+                break;
+            case InputState.KEYHELD:
+                break;
+            case InputState.KEYUP:
+                ToggleAim(false);
+                aim = false;
+                TimeSlowDown.instance.SpeedUp();
+                break;
+            default:
+                break;
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -67,17 +92,21 @@ public class GrappleScript : MonoBehaviour
                 return;
             }
 
-            Vector3 moveDir = Vector3.Normalize(hook.transform.position - transform.position) * 8.0f;
+            Vector3 moveDir = Vector3.Normalize(hook.transform.position - transform.position) * pullSpeed;
             rb.AddForce(moveDir * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
             transform.LookAt(hook.transform);
             return;
         }
-        transform.up = Vector3.up;
+
+        if (pm.GLIDINGCheck())
+            return;
+
+        transform.rotation = Quaternion.Euler(new Vector3(0.0f, transform.rotation.eulerAngles.y, 0.0f));
     }
 
     public void FireHook()
     {
-        if (!HookInUse())
+        if (!HookInUse() && !pm.GLIDINGCheck())
         {
             hook.Fire(this.transform, camToShootFrom.transform.forward);
             shotGrapple = true;

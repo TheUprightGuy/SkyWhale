@@ -86,22 +86,51 @@ public class PlayerMovement : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.PLAYER, "Right").MethodToCall.AddListener(Right);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Run").MethodToCall.AddListener(Run);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(Jump);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Glide").MethodToCall.AddListener(ToggleGlider);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(CancelGrappleGlide);
 
         OnValidate();
+    }
+
+    void CancelGrappleGlide(InputState type)
+    {
+        switch (type)
+        {
+            case InputState.KEYDOWN:
+                if (GRAPPLECheck())
+                    grapple.FireHook();
+                if (glider.enabled)
+                    glider.Toggle();
+                break;
+            case InputState.KEYHELD:
+                break;
+            case InputState.KEYUP:
+                break;
+            default:
+                break;
+        }
+    }
+
+    void ToggleGlider(InputState type)
+    {
+        switch (type)
+        {
+            case InputState.KEYDOWN:
+                if (!(IsGrounded() || GRAPPLECheck() || grapple.hook.enabled) || glider.enabled)
+                    glider.Toggle();               
+                break;
+            case InputState.KEYHELD:
+                break;
+            case InputState.KEYUP:
+                break;
+            default:
+                break;
+        }
     }
 
     private void Update()
     {
         SetAnimations();
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!(IsGrounded() || GRAPPLECheck()) || glider.enabled)
-                glider.Toggle();
-
-            if (GRAPPLECheck())
-                grapple.FireHook();
-        }
 
         if (!enabled)
             return;
@@ -205,7 +234,7 @@ public class PlayerMovement : MonoBehaviour
         return currenty < 0.0f && !IsGrounded() && !IsClimbing();
     }
 
-    bool GLIDINGCheck()
+    public bool GLIDINGCheck()
     {
         return (glider != null && glider.enabled && !IsGrounded() &&
                 PlayerState != PlayerStates.CLIMBING && PlayerState != PlayerStates.GRAPPLE);
@@ -340,6 +369,7 @@ public class PlayerMovement : MonoBehaviour
         switch (PlayerState)
         {
             case PlayerStates.IDLE:
+                anims.SetFloat("MovementSpeed", currentSpeed);
                 break;
             case PlayerStates.MOVING:
 
