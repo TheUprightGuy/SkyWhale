@@ -16,6 +16,7 @@ public class GrappleScript : MonoBehaviour
     // Local Variables
     Camera camToShootFrom;
     GameObject grappleReticule;
+    UnityEngine.UI.Image grapplePoint;
     PlayerMovement pm;
     Rigidbody rb;
 
@@ -23,7 +24,8 @@ public class GrappleScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();
-        grappleReticule = GetComponentInChildren<UnityEngine.UI.Image>().gameObject;
+        grapplePoint = GetComponentInChildren<UnityEngine.UI.Image>();
+        grappleReticule = grapplePoint.gameObject;
     }
 
     // Start is called before the first frame update
@@ -104,10 +106,48 @@ public class GrappleScript : MonoBehaviour
         transform.rotation = Quaternion.Euler(new Vector3(0.0f, transform.rotation.eulerAngles.y, 0.0f));
     }
 
+    public LayerMask raycastTargets;
+    Vector3 RaycastToTarget()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(camToShootFrom.transform.position, camToShootFrom.transform.forward, out hit, Mathf.Infinity, raycastTargets))
+        {
+            Debug.DrawRay(camToShootFrom.transform.position, camToShootFrom.transform.forward * hit.distance, Color.yellow);
+
+            if (grappleableLayers == (grappleableLayers | (1 << hit.transform.gameObject.layer)))
+            {
+                grapplePoint.color = Color.red;
+                return hit.point;
+            }
+
+            grapplePoint.color = Color.white;
+            return hit.point;
+        }
+
+        grapplePoint.color = Color.white;
+        return Vector3.zero;
+    }
+
+
+    private void Update()
+    {
+        if (!aim)
+            return;
+
+        RaycastToTarget();
+    }
+
     public void FireHook()
     {
         if (!HookInUse() && !pm.GLIDINGCheck())
         {
+            if (RaycastToTarget() != Vector3.zero)
+            {
+                hook.Fire(this.transform, Vector3.Normalize(RaycastToTarget() - transform.position));
+                shotGrapple = true;
+                return;
+            }
+
             hook.Fire(this.transform, camToShootFrom.transform.forward);
             shotGrapple = true;
         }

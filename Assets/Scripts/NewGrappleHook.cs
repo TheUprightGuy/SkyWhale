@@ -80,10 +80,10 @@ public class NewGrappleHook : MonoBehaviour
             {
                 sc.enabled = true;
                 flightTime += Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
-                if (flightTime > 2.0f)
+                /*if (flightTime > 2.0f)
                 {
                     forceDir += (transform.up * -Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
-                }
+                }*/
                 rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
 
                 if (flightTime > 4.0f)
