@@ -221,13 +221,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e71edb74dc45a8f4e8056d8a3eacbc1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  forceDir: {x: 0, y: 0, z: 0}
+  retractSpeed: 48
+  shootSpeed: 48
+  smokePrefab: {fileID: 5703808025242366775, guid: ae62032292cc48f47bf8e11b3871151f,
+    type: 3}
   enabled: 0
+  connected: 0
+  manualRetract: 0
   retracting: 0
   flightTime: 0
   grappleableLayers:
     serializedVersion: 2
     m_Bits: 8192
   pc: {fileID: 0}
-  connected: 0
-  manualRetract: 0

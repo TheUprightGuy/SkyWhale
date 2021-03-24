@@ -1144,6 +1144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerState: 0
+  cam: {fileID: 0}
   walkSpeed: 1
   maxWalkAcceleration: 10
   runSpeed: 5
@@ -1154,24 +1155,21 @@ MonoBehaviour:
   climbSpeed: 1
   maxClimbAcceleration: 10
   climbGripForce: 1
-  groundjumpHeight: 5
-  wallJumpHeight: 5
+  groundjumpHeight: 0.1
+  wallJumpHeight: 0.1
   GroundLayers:
     serializedVersion: 2
     m_Bits: 48951
   ClimbLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   GroundCheckDistance: 0.46
   ClimbCheckDistance: 1
   CheckRadius: 0.1
   GroundCheckStartOffset: {x: 0, y: 0, z: 0}
-  ClimbCheckStartOffset: {x: 0, y: 0, z: 0}
+  ClimbCheckStartOffset: {x: 0, y: -0.25, z: 0}
   LocalToGround: 1
-  collidedObj: {fileID: 0}
   enabled: 1
-  rot: {x: 0, y: 0, z: 0, w: 0}
-  cam: {fileID: 0}
   inputAxis: {x: 0, y: 0, z: 0}
 --- !u!114 &3471998379395172067
 MonoBehaviour:
@@ -1189,7 +1187,7 @@ MonoBehaviour:
   maxSpeed: 30
   recenterFactor: 5
   glider: {fileID: 3598670350658017394}
-  enabled: 1
+  enabled: 0
   mainCam: {fileID: 0}
   glideCam: {fileID: 0}
   currentSpeed: 0
@@ -1224,6 +1222,12 @@ MonoBehaviour:
   grappleableLayers:
     serializedVersion: 2
     m_Bits: 8192
+  pullSpeed: 16
+  grapplingFromWhale: 0
+  shotGrapple: 0
+  raycastTargets:
+    serializedVersion: 2
+    m_Bits: 16183
 --- !u!1 &3577484720783235353
 GameObject:
   m_ObjectHideFlags: 0

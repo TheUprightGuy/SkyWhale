@@ -7,6 +7,7 @@ public class NewGrappleHook : MonoBehaviour
     [Header("Setup Fields")]
     public float retractSpeed = 24.0f;
     public float shootSpeed = 24.0f;
+    public GameObject smokePrefab;
 
     [Header("Debug Fields")]
     new public bool enabled;
@@ -45,6 +46,7 @@ public class NewGrappleHook : MonoBehaviour
         forceDir = _dir * shootSpeed;
         enabled = true;
         flightTime = 0.0f;
+        rb.velocity = Vector3.zero;
         TimeSlowDown.instance.SpeedUp();
     }
 
@@ -84,7 +86,9 @@ public class NewGrappleHook : MonoBehaviour
                 {
                     forceDir += (transform.up * -Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
                 }*/
-                rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
+                //rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
+                rb.AddForce((forceDir / flightTime) * 10.0f * Time.fixedDeltaTime, ForceMode.Acceleration);
+
 
                 if (flightTime > 4.0f)
                 {
@@ -138,6 +142,9 @@ public class NewGrappleHook : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        GameObject temp = Instantiate(smokePrefab, transform.position, Quaternion.identity);
+        Destroy(temp, 2.0f);
+
         enabled = false;
         if (GrappleAbleCheck(collision.gameObject.layer))
         {
@@ -150,9 +157,11 @@ public class NewGrappleHook : MonoBehaviour
             connectedObj = null;
             retracting = true;
         }
+
+        rb.velocity = Vector3.zero;
     }
 
-    private void OnCollisionStay(Collision collision)
+    /*private void OnCollisionStay(Collision collision)
     {
         enabled = false;
         if (GrappleAbleCheck(collision.gameObject.layer))
@@ -166,7 +175,13 @@ public class NewGrappleHook : MonoBehaviour
             connectedObj = null;
             retracting = true;
         }
-    }
+
+        if (!retracting && !connectedObj)
+        {
+            GameObject temp = Instantiate(smokePrefab, transform.position, Quaternion.identity);
+            Destroy(temp, 2.0f);
+        }
+    }*/
 
 
     public bool GrappleAbleCheck(int layer)

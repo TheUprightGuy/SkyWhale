@@ -1501,7 +1501,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 30
+  m_CookingOptions: 0
   m_Mesh: {fileID: -1644690252157365340, guid: 6a95d5f96d91d0b489869ff5b16a2a39, type: 3}
 --- !u!4 &1896776506 stripped
 Transform:
@@ -1524,7 +1524,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 6a95d5f96d91d0b489869ff5b16a2a39,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -60
+      value: -20
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6a95d5f96d91d0b489869ff5b16a2a39,
         type: 3}
@@ -1574,17 +1574,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 6a95d5f96d91d0b489869ff5b16a2a39,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 250
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6a95d5f96d91d0b489869ff5b16a2a39,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 250
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6a95d5f96d91d0b489869ff5b16a2a39,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 250
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 6a95d5f96d91d0b489869ff5b16a2a39,
         type: 3}
@@ -1855,10 +1855,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4983379942550152166, guid: d4abd0ddd61d9e04f9df8b0ba38245b2,
+    - target: {fileID: 4983379942550152162, guid: d4abd0ddd61d9e04f9df8b0ba38245b2,
         type: 3}
-      propertyPath: retractSpeed
-      value: 48
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4983379942550152163, guid: d4abd0ddd61d9e04f9df8b0ba38245b2,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4983379942550152166, guid: d4abd0ddd61d9e04f9df8b0ba38245b2,
         type: 3}
@@ -1979,11 +1984,6 @@ PrefabInstance:
       propertyPath: camToShootFrom
       value: 
       objectReference: {fileID: 742923024}
-    - target: {fileID: 1175161780599159901, guid: 34a05d3f0592b9645b8d45d5a897a37c,
-        type: 3}
-      propertyPath: pullSpeed
-      value: 16
-      objectReference: {fileID: 0}
     - target: {fileID: 2547422257388001877, guid: 34a05d3f0592b9645b8d45d5a897a37c,
         type: 3}
       propertyPath: m_Center.y
@@ -2009,11 +2009,6 @@ PrefabInstance:
       propertyPath: glideCam
       value: 
       objectReference: {fileID: 1235833219}
-    - target: {fileID: 3471998379395172067, guid: 34a05d3f0592b9645b8d45d5a897a37c,
-        type: 3}
-      propertyPath: enabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3598670350658017394, guid: 34a05d3f0592b9645b8d45d5a897a37c,
         type: 3}
       propertyPath: m_IsActive
@@ -2084,26 +2079,6 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 742923025}
-    - target: {fileID: 7416749029238927893, guid: 34a05d3f0592b9645b8d45d5a897a37c,
-        type: 3}
-      propertyPath: ClimbLayers.m_Bits
-      value: 4294967295
-      objectReference: {fileID: 0}
-    - target: {fileID: 7416749029238927893, guid: 34a05d3f0592b9645b8d45d5a897a37c,
-        type: 3}
-      propertyPath: groundjumpHeight
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7416749029238927893, guid: 34a05d3f0592b9645b8d45d5a897a37c,
-        type: 3}
-      propertyPath: wallJumpHeight
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7416749029238927893, guid: 34a05d3f0592b9645b8d45d5a897a37c,
-        type: 3}
-      propertyPath: ClimbCheckStartOffset.y
-      value: -0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 8335761592001914028, guid: 34a05d3f0592b9645b8d45d5a897a37c,
         type: 3}
       propertyPath: ShapeModule.radius.value
