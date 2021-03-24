@@ -184,6 +184,11 @@ public class PlayerMovement : MonoBehaviour
             PlayerState = PlayerStates.IDLE;
         }
 
+        if (CLIMBINGCheck())
+        {
+            PlayerState = PlayerStates.CLIMBING;
+        }
+
         if (FALLINGCheck())
         {
             PlayerState = PlayerStates.FALLING;
@@ -202,15 +207,12 @@ public class PlayerMovement : MonoBehaviour
             PlayerState = PlayerStates.GLIDING;
 
         }
-        if (CLIMBINGCheck())
-        {
-            PlayerState = PlayerStates.CLIMBING;
-        }
 
         //Don't use gravity if grappling or gliding or climbing
         RB.useGravity = !(PlayerState == PlayerStates.GRAPPLE 
-                            || PlayerState == PlayerStates.GRAPPLE
-                                || PlayerState == PlayerStates.CLIMBING);
+                            || PlayerState == PlayerStates.GLIDING
+                                /*|| PlayerState == PlayerStates.CLIMBING*/);
+
     }
 
     #region PlayerStateChecks
@@ -277,20 +279,13 @@ public class PlayerMovement : MonoBehaviour
     }
     void HandleMovement()
     {
-        if (inputAxis == Vector3.zero)
-        {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, 0, maxWalkAcceleration * Time.deltaTime);
-        }
-        else
-        {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, setSpeed, maxWalkAcceleration * Time.deltaTime);
-        }
+     
 
         switch (PlayerState)
         {
             case PlayerStates.IDLE:
             case PlayerStates.MOVING:
-                MoveOnXZ(currentSpeed, setAccel);
+                MoveOnXZ(setSpeed, setAccel);
                 if (inputAxis.y > 0)
                 {
                     Jump(groundContactNormal + Vector3.up, groundjumpHeight);
@@ -301,7 +296,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case PlayerStates.CLIMBING:
-                MoveOnXY(currentSpeed, setAccel);
+                MoveOnXY(climbSpeed, maxClimbAcceleration);
                 if (inputAxis.y > 0)
                 {
                     Jump(climbContactNormal + Vector3.up, wallJumpHeight);
@@ -328,22 +323,14 @@ public class PlayerMovement : MonoBehaviour
         xAxis *= inputAxis.x;
         zAxis *= inputAxis.z;
 
+        float xzMag = (new Vector2(inputAxis.x, inputAxis.z)).normalized.magnitude;
+        currentSpeed = Mathf.MoveTowards(currentSpeed, speed * xzMag, accel * Time.deltaTime);
+
         inputAxis = Vector3.Normalize(inputAxis);
-
-        float currentX = Vector3.Dot(RB.velocity, xAxis);
-        float currentZ = Vector3.Dot(RB.velocity, zAxis);
-
-        float acceleration = accel;
-        float maxSpeedChange = acceleration * Time.fixedDeltaTime;
 
         Vector3 desiredVel = xAxis + zAxis;
         desiredVel.y = 0;
-        desiredVel *= speed;
-
-        float newX =
-            Mathf.MoveTowards(currentX, desiredVel.x, maxSpeedChange);
-        float newZ =
-            Mathf.MoveTowards(currentZ, desiredVel.z, maxSpeedChange);
+        desiredVel *= currentSpeed;
 
         RB.MovePosition(transform.position + desiredVel * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
 
@@ -359,27 +346,20 @@ public class PlayerMovement : MonoBehaviour
 
         inputAxis = Vector3.Normalize(inputAxis);
 
-        float currentX = Vector3.Dot(RB.velocity, xAxis);
-        float currentZ = Vector3.Dot(RB.velocity, zAxis);
 
-        float acceleration = accel;
-        float maxSpeedChange = acceleration * Time.fixedDeltaTime;
+
+        float xzMag = (new Vector2(inputAxis.x, inputAxis.z)).normalized.magnitude;
+        currentSpeed = Mathf.MoveTowards(currentSpeed, speed * xzMag, accel * Time.deltaTime);
 
         Vector3 desiredVel = xAxis + zAxis;
         desiredVel *= speed;
 
-       float newX =
-            Mathf.MoveTowards(currentX, desiredVel.x, maxSpeedChange);
-        float newZ =
-            Mathf.MoveTowards(currentZ, desiredVel.z, maxSpeedChange);
+        RB.MovePosition(transform.position + (desiredVel * Time.deltaTime * TimeSlowDown.instance.timeScale));
 
-        
-        RB.MovePosition(transform.position + (desiredVel * Time.deltaTime));
-
+        RB.AddForce(-Physics.gravity, ForceMode.Acceleration);
         if (climbContactNormal != Vector3.zero)
         {
             RB.AddForce(-climbContactNormal.normalized * ((climbGripForce * 0.9f) ));
-            
             //transform.forward = -climbContactNormal;
         }
         else
