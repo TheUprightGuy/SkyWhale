@@ -6,6 +6,7 @@ public class GrappleScript : MonoBehaviour
 {
     [Header("Required Fields")]
     public NewGrappleHook hook;
+    public GameObject GrappleUI;
     public LayerMask grappleableLayers;
     public float pullSpeed = 8.0f;
 
@@ -16,6 +17,7 @@ public class GrappleScript : MonoBehaviour
     // Local Variables
     Camera camToShootFrom;
     GameObject grappleReticule;
+
     UnityEngine.UI.Image grapplePoint;
     PlayerMovement pm;
     Rigidbody rb;
@@ -24,7 +26,13 @@ public class GrappleScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();
-        grapplePoint = GetComponentInChildren<UnityEngine.UI.Image>();
+
+        grapplePoint = (GrappleUI != null) ? 
+            (GrappleUI.GetComponent<UnityEngine.UI.Image>()) : 
+            (GetComponentInChildren<UnityEngine.UI.Image>());
+
+        //grapplePoint = GetComponentInChildren<UnityEngine.UI.Image>();
+
         grappleReticule = grapplePoint.gameObject;
     }
 

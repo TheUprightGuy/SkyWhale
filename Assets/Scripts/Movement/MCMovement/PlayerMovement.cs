@@ -635,28 +635,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Vector3 offsetPos = transform.position + GroundCheckStartOffset;
+        //Vector3 offsetPos = transform.position + GroundCheckStartOffset;
 
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawSphere(offsetPos, 0.1f);
+        //Gizmos.color = Color.cyan;
+        //Gizmos.DrawSphere(offsetPos, 0.1f);
 
-        Gizmos.DrawLine(offsetPos, offsetPos + (Vector3.down * GroundCheckDistance));
+        //Gizmos.DrawLine(offsetPos, offsetPos + (Vector3.down * GroundCheckDistance));
 
-        Gizmos.color = Color.red;
-        offsetPos = transform.position + ClimbCheckStartOffset;
-        Gizmos.DrawSphere(offsetPos, 0.1f);
-        Gizmos.DrawLine(offsetPos, offsetPos + (transform.forward * ClimbCheckDistance));
+        //Gizmos.color = Color.red;
+        //offsetPos = transform.position + ClimbCheckStartOffset;
+        //Gizmos.DrawSphere(offsetPos, 0.1f);
+        //Gizmos.DrawLine(offsetPos, offsetPos + (transform.forward * ClimbCheckDistance));
 
-        Gizmos.color = Color.green;
-        Vector3 dir = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
-        Vector3 origin = transform.position;
-        origin.y -= transform.localScale.y / 2;
-        Gizmos.DrawLine(origin, origin + dir);
+        //Gizmos.color = Color.green;
+        //Vector3 dir = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
+        //Vector3 origin = transform.position;
+        //origin.y -= transform.localScale.y / 2;
+        //Gizmos.DrawLine(origin, origin + dir);
 
-        Gizmos.color = Color.white;
-        Vector3 xAxis = Vector3.ProjectOnPlane(transform.up, climbContactNormal);
+        //Gizmos.color = Color.white;
+        //Vector3 xAxis = Vector3.ProjectOnPlane(transform.up, climbContactNormal);
 
-        Gizmos.DrawLine(origin, origin + xAxis);
+        //Gizmos.DrawLine(origin, origin + xAxis);
+
+
     }
 
     #endregion
