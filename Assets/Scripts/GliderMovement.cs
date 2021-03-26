@@ -21,9 +21,9 @@ public class GliderMovement : MonoBehaviour
     float rotationSpeed = 1.0f;
     Vector3 desiredVec;
     Vector3 desiredRoll;
-    float myRoll = 0.0f;
-    float myTurn = 0.0f;
-    float myPitch = 0.0f;
+    public float myRoll = 0.0f;
+    public float myTurn = 0.0f;
+    public float myPitch = 0.0f;
     float turnSpeed = 40;
     float liftSpeed = 20;
     float rollSpeed = 20;
@@ -58,6 +58,10 @@ public class GliderMovement : MonoBehaviour
     {
         enabled = !enabled;
         glider.SetActive(enabled);
+        myRoll = 0.0f;
+        myPitch = 0.0f;
+        myTurn = 0.0f;
+        currentSpeed = baseSpeed;
 
         CameraManager.instance.SwitchCamera((enabled) ? CameraType.GlideCamera : CameraType.PlayerCamera);
 

@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
         switch (type)
         {
             case InputState.KEYDOWN:
-                if (!(IsGrounded() || GRAPPLECheck() || grapple.hook.enabled) || glider.enabled)
+                if ((!(IsGrounded() || GRAPPLECheck() || grapple.hook.enabled) || glider.enabled) && distanceFromGround > 3.0f)
                     glider.Toggle();               
                 break;
             case InputState.KEYHELD:
@@ -132,10 +132,16 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
+    public float distanceFromGround;
 
     private void Update()
     {
         SetAnimations();
+        RaycastHit rh;
+        if (Physics.SphereCast(transform.position, CheckRadius, -transform.up, out rh, 1000.0f, GroundLayers.value))
+        {
+            distanceFromGround = Vector3.Distance(rh.point, transform.position);
+        }
 
         if (!enabled)
             return;
