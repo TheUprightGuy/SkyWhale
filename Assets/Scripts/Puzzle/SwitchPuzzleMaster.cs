@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.Events;
 public class SwitchPuzzleMaster : MonoBehaviour
 {
+    #region Singleton
     public static SwitchPuzzleMaster instance;
-    /*private void Awake()
+    private void Awake()
     {
         if (instance != null)
         {
@@ -16,15 +17,11 @@ public class SwitchPuzzleMaster : MonoBehaviour
         {
             instance = this;
         }
+
+        switches = new List<PuzzleSwitch>();
     }
-
-    public List<PuzzleSwitch> switches;
-    public Material on;
-    public Material off;
-    public bool complete;
-    public UnityEvent CompletionEvent;
-    public Cinemachine.CinemachineVirtualCamera cam;
-
+    #endregion Singleton
+    #region Singleton
     private void Start()
     {
         foreach (Transform n in transform)
@@ -40,14 +37,48 @@ public class SwitchPuzzleMaster : MonoBehaviour
             n.Switch();
         }
     }
+    #endregion Singleton
+
+    [Header("Setup Fields")]
+    public Material on;
+    public Material off;
+
+    //Local Variables
+    List<PuzzleSwitch> switches;
+    PlayerMovement pm;
+    [HideInInspector] public bool complete;
+    bool inUse;
+
 
     private void Update()
     {
+        if (complete)
+            return;
+
+        if (pm && Input.GetKeyDown(KeyCode.E))
+        {
+            inUse = !inUse;
+            ToggleCam(inUse);
+            Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
+        }
+
         if (CheckComplete())
         {
-            CompletionEvent.Invoke();
+            Debug.Log("COMPLETE");
         }
     }
+
+    public void ToggleCam(bool _toggle)
+    {
+        inUse = _toggle;
+        if (_toggle)
+        {
+            CameraManager.instance.SwitchCamera(CameraType.PuzzleCamera);
+            return;
+        }
+        CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
+    }
+
     public bool CheckComplete()
     {
         foreach(PuzzleSwitch n in switches)
@@ -57,29 +88,27 @@ public class SwitchPuzzleMaster : MonoBehaviour
                 return false;
             }
         }
-        cam.m_Priority = 0;
+
         complete = true;
         return true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        TestMovement player = other.GetComponent<TestMovement>();
+        PlayerMovement player = other.GetComponent<PlayerMovement>();
         if (player && !complete)
         {
-            CallbackHandler.instance.LerpCam();
-            cam.m_Priority = 20;
-            // switch to fixed cam;
+            pm = player;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        TestMovement player = other.GetComponent<TestMovement>();
+        PlayerMovement player = other.GetComponent<PlayerMovement>();
         if (player)
         {
-            cam.m_Priority = 0;
-            // switch to normal cam;
+            ToggleCam(false);
+            pm = null;
         }
-    }*/
+    }
 }
