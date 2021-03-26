@@ -142,9 +142,14 @@ public class GrappleScript : MonoBehaviour
         if (!aim)
             return;
 
+        if (cachedShoot)
+            FireHook();
+
         RaycastToTarget();
     }
 
+
+    bool cachedShoot = false;
     public void FireHook()
     {
         if (!HookInUse() && !pm.GLIDINGCheck())
@@ -153,11 +158,15 @@ public class GrappleScript : MonoBehaviour
             {
                 hook.Fire(this.transform, Vector3.Normalize(RaycastToTarget() - transform.position));
                 shotGrapple = true;
+                cachedShoot = false;
+                ToggleAim(false);
                 return;
             }
 
             hook.Fire(this.transform, camToShootFrom.transform.forward);
             shotGrapple = true;
+            cachedShoot = false;
+            ToggleAim(false);
         }
         else if (AbleToRetract())
         {
@@ -166,6 +175,8 @@ public class GrappleScript : MonoBehaviour
             hook.retracting = true;
             hook.connected = false;
             hook.manualRetract = true;
+            if (aim)
+                cachedShoot = true;
         }
     }
 

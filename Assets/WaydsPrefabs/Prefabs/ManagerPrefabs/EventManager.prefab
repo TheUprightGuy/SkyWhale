@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: -8857613784983885348}
   - component: {fileID: 5008371596773838823}
   - component: {fileID: 351910707944113262}
+  - component: {fileID: 225987496028827481}
   m_Layer: 0
   m_Name: EventManager
   m_TagString: Untagged
@@ -123,6 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeScale: 1
+  adjustments: {fileID: 0}
 --- !u!114 &5008371596773838823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,3 +151,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 509a314b9511c7f46b65fec53988581d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &225987496028827481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2884179543958615842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1d8fd84f8794e4bbd1ccb91322348c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  mainCam: {fileID: 0}
+  whaleCam: {fileID: 0}
+  whaleGrappleCam: {fileID: 0}
+  whaleGrappleUIElement: {fileID: 0}
+  grappleHook: {fileID: 0}

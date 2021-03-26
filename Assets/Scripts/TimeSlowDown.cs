@@ -12,6 +12,7 @@ public class TimeSlowDown : MonoBehaviour
     Vector3 grav;
 
     public static TimeSlowDown instance;
+    UnityEngine.Rendering.Universal.ColorAdjustments adjustments;
 
     private void Awake()
     {
@@ -22,6 +23,11 @@ public class TimeSlowDown : MonoBehaviour
         }
         instance = this;
         grav = Physics.gravity;
+    }
+
+    private void Start()
+    {
+        Camera.main.GetComponent<UnityEngine.Rendering.Volume>().sharedProfile.TryGet<UnityEngine.Rendering.Universal.ColorAdjustments>(out adjustments);
     }
 
     public void SlowDown()
@@ -39,13 +45,16 @@ public class TimeSlowDown : MonoBehaviour
     {
         if (slowDown)
         {
-            //timeScale = Mathf.Lerp(timeScale, slowMo, Time.deltaTime * Time.deltaTime * 1000.0f);
-            //Physics.gravity = grav * timeScale;
+            timeScale = Mathf.Lerp(timeScale, slowMo, Time.deltaTime * 5.0f);
+            Physics.gravity = grav * timeScale;
         }
         else
         {
-            //timeScale = Mathf.Lerp(timeScale, 1.0f, Time.deltaTime * 15.0f);
-            //Physics.gravity = grav * timeScale;
+            timeScale = Mathf.Lerp(timeScale, 1.0f, Time.deltaTime * 5.0f);
+            Physics.gravity = grav * timeScale;
         }
+
+        Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = ((timeScale / 2) * 100.0f) + 50.0f;
+        adjustments.saturation.value = timeScale * 100.0f - 100.0f;
     }
 }

@@ -82,15 +82,10 @@ public class NewGrappleHook : MonoBehaviour
             {
                 sc.enabled = true;
                 flightTime += Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
-                /*if (flightTime > 2.0f)
-                {
-                    forceDir += (transform.up * -Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
-                }*/
-                //rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
+
                 rb.AddForce((forceDir / flightTime) * 10.0f * Time.fixedDeltaTime, ForceMode.Acceleration);
 
-
-                if (flightTime > 4.0f)
+                if (flightTime > 2.0f)
                 {
                     enabled = false;
                     retracting = true;
@@ -100,12 +95,14 @@ public class NewGrappleHook : MonoBehaviour
         }
         if (retracting)
         {
+            rb.velocity = Vector3.zero;
+
             connectedObj = null;
             sc.enabled = false;
             flightTime = 0.0f;
             
-            forceDir = Vector3.Normalize(pc.position - transform.position) * (manualRetract ? retractSpeed * 2 : retractSpeed);
-            rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
+            forceDir = Vector3.Normalize(pc.position - transform.position) * (manualRetract ? retractSpeed * 2 : retractSpeed * 2);
+            rb.MovePosition(transform.position + (manualRetract ? forceDir * Time.fixedDeltaTime : forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale));
 
             if (Vector3.Distance(transform.position, pc.position) < Mathf.Max((forceDir.magnitude * Time.fixedDeltaTime), 0.3f))
             {
@@ -160,29 +157,6 @@ public class NewGrappleHook : MonoBehaviour
 
         rb.velocity = Vector3.zero;
     }
-
-    /*private void OnCollisionStay(Collision collision)
-    {
-        enabled = false;
-        if (GrappleAbleCheck(collision.gameObject.layer))
-        {
-            connected = true;
-            connectedObj = collision.gameObject;
-            cachedPos = connectedObj.transform.position;
-        }
-        else
-        {
-            connectedObj = null;
-            retracting = true;
-        }
-
-        if (!retracting && !connectedObj)
-        {
-            GameObject temp = Instantiate(smokePrefab, transform.position, Quaternion.identity);
-            Destroy(temp, 2.0f);
-        }
-    }*/
-
 
     public bool GrappleAbleCheck(int layer)
     {
