@@ -33,7 +33,7 @@ public class NewGrappleHook : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        mr = GetComponent<MeshRenderer>();
+        mr = GetComponentInChildren<MeshRenderer>();
         lr = GetComponent<LineRenderer>();
         sc = GetComponent<SphereCollider>();
     }
@@ -43,6 +43,11 @@ public class NewGrappleHook : MonoBehaviour
     {
         pc = _player;
         transform.position = _player.position;
+
+        GameObject temp = Instantiate(smokePrefab, pc);
+        Destroy(temp, 2.0f);
+
+        transform.LookAt(transform.position + _dir);
         forceDir = _dir * shootSpeed;
         enabled = true;
         flightTime = 0.0f;
@@ -71,7 +76,7 @@ public class NewGrappleHook : MonoBehaviour
             return;
 
         lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, pc.position);
+        lr.SetPosition(1, pc.position);//.GetComponent<GrappleScript>().shootPoint.position);
     }
 
     private void FixedUpdate()
@@ -120,20 +125,19 @@ public class NewGrappleHook : MonoBehaviour
 
         if (Vector3.Distance(transform.position, pc.position) < 0.3f && connected)
         {
-            YeetPlayer(pc);
+            YeetPlayer(pc.GetComponentInParent<PlayerMovement>());
             retracting = true;
             manualRetract = false;
             connectedObj = null;
         }
     }
 
-    public void YeetPlayer(Transform _player)
+    public void YeetPlayer(PlayerMovement _player)
     {
         if (enabled || retracting)
             return;
 
-        pc = _player;
-        Rigidbody temp = pc.GetComponent<Rigidbody>();
+        Rigidbody temp = _player.GetComponent<Rigidbody>();
         temp.AddForce(temp.velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up)), ForceMode.Impulse);
     }
 
@@ -156,6 +160,11 @@ public class NewGrappleHook : MonoBehaviour
         }
 
         rb.velocity = Vector3.zero;
+    }
+
+    public bool InUse()
+    {
+        return (enabled || retracting || connected || manualRetract);
     }
 
     public bool GrappleAbleCheck(int layer)

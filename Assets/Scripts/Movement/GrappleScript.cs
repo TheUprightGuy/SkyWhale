@@ -12,6 +12,10 @@ public class GrappleScript : MonoBehaviour
 
     public bool grapplingFromWhale = false;
     public bool shotGrapple = false;
+    // temp
+    public Transform gunContainer;
+    public GunMeshSwitch shootPoint;
+
 
     #region Setup
     // Local Variables
@@ -26,6 +30,7 @@ public class GrappleScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();
+        shootPoint = GetComponentInChildren<GunMeshSwitch>();
 
         grapplePoint = (GrappleUI != null) ? 
             (GrappleUI.GetComponent<UnityEngine.UI.Image>()) : 
@@ -73,14 +78,12 @@ public class GrappleScript : MonoBehaviour
             case InputState.KEYDOWN:
 
                 ToggleAim(true);
-                aim = true;
                 TimeSlowDown.instance.SlowDown();
                 break;
             case InputState.KEYHELD:
                 break;
             case InputState.KEYUP:
                 ToggleAim(false);
-                aim = false;
                 TimeSlowDown.instance.SpeedUp();
                 break;
             default:
@@ -139,6 +142,16 @@ public class GrappleScript : MonoBehaviour
 
     private void Update()
     {
+        shootPoint.Loaded(!hook.InUse());
+        if (!hook.InUse())
+        {
+            gunContainer.rotation = Quaternion.Lerp(gunContainer.rotation, RaycastToTarget() == Vector3.zero ? Quaternion.LookRotation(camToShootFrom.transform.forward, camToShootFrom.transform.up) : Quaternion.LookRotation(RaycastToTarget() - transform.position), Time.deltaTime);
+        }
+        else
+        {
+            gunContainer.LookAt(hook.transform);
+        }
+
         if (!aim)
             return;
 
@@ -156,14 +169,14 @@ public class GrappleScript : MonoBehaviour
         {
             if (RaycastToTarget() != Vector3.zero)
             {
-                hook.Fire(this.transform, Vector3.Normalize(RaycastToTarget() - transform.position));
+                hook.Fire(shootPoint.shootPoint, Vector3.Normalize(RaycastToTarget() - transform.position));
                 shotGrapple = true;
                 cachedShoot = false;
                 ToggleAim(false);
                 return;
             }
 
-            hook.Fire(this.transform, camToShootFrom.transform.forward);
+            hook.Fire(shootPoint.shootPoint, camToShootFrom.transform.forward);
             shotGrapple = true;
             cachedShoot = false;
             ToggleAim(false);
@@ -171,7 +184,7 @@ public class GrappleScript : MonoBehaviour
         else if (AbleToRetract())
         {
             // Start retracting
-            hook.YeetPlayer(this.transform);
+            hook.YeetPlayer(this.GetComponent<PlayerMovement>());
             hook.retracting = true;
             hook.connected = false;
             hook.manualRetract = true;
@@ -182,6 +195,7 @@ public class GrappleScript : MonoBehaviour
 
     void ToggleAim(bool _startAim)
     {
+        aim = _startAim;
         if (grappleReticule != null)
         {
             grappleReticule.SetActive(_startAim);
