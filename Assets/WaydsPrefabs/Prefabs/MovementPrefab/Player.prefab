@@ -1258,7 +1258,7 @@ MonoBehaviour:
   pullSpeed: 16
   grapplingFromWhale: 0
   shotGrapple: 0
-  gunContainer: {fileID: 0}
+  gunContainer: {fileID: 715781394116979298}
   shootPoint: {fileID: 0}
   raycastTargets:
     serializedVersion: 2
@@ -7158,6 +7158,25 @@ Transform:
   m_Father: {fileID: 7060420656095187885}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8372246129999773795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5769345026092596831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cbba5ac2d21f1248a3857110f54e5c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shootPoint: {fileID: 4282936520967606052}
+  loadedMesh: {fileID: -4725484945169158019, guid: b0301426beb0f0c4697d6df3e8930e42,
+    type: 3}
+  emptyMesh: {fileID: 2941274158721294118, guid: f62d99ee920e2b747a59e022f4901da7,
+    type: 3}
+  loadedMat: {fileID: 2100000, guid: 081d0496c27b96f44bdf4f960d6c02c1, type: 2}
+  emptyMat: {fileID: 2100000, guid: 73f5228ae1da5aa44a2f0cf2b6a6f56c, type: 2}
 --- !u!1 &6313778057549714589
 GameObject:
   m_ObjectHideFlags: 0
@@ -7856,6 +7875,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0301426beb0f0c4697d6df3e8930e42, type: 3}
+--- !u!1 &5769345026092596831 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b0301426beb0f0c4697d6df3e8930e42,
+    type: 3}
+  m_PrefabInstance: {fileID: 6688335184701899534}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6582859779182044389 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b0301426beb0f0c4697d6df3e8930e42,

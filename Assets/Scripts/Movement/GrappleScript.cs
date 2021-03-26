@@ -147,7 +147,7 @@ public class GrappleScript : MonoBehaviour
         {
             if (aim)
             {
-                gunContainer.rotation = Quaternion.Lerp(gunContainer.rotation, RaycastToTarget() == Vector3.zero ? Quaternion.LookRotation(camToShootFrom.transform.forward, camToShootFrom.transform.up) : Quaternion.LookRotation(RaycastToTarget() - transform.position), Time.deltaTime);
+                gunContainer.rotation = RaycastToTarget() == Vector3.zero ? Quaternion.LookRotation(camToShootFrom.transform.forward, camToShootFrom.transform.up) : Quaternion.LookRotation(RaycastToTarget() - transform.position);
             }
             else
             {

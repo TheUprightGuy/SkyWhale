@@ -22,7 +22,7 @@ TagManager:
   - Whale
   - ObeliskCollider
   - MC
-  - CirclePuzzle
+  - Grappleable
   - Player
   - Hook
   - BigPP

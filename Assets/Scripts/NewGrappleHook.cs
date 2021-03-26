@@ -30,6 +30,8 @@ public class NewGrappleHook : MonoBehaviour
     Vector3 cachedPos;
     Vector3 forceDir;
 
+    public Transform hookModel;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -46,6 +48,8 @@ public class NewGrappleHook : MonoBehaviour
 
         GameObject temp = Instantiate(smokePrefab, pc);
         Destroy(temp, 2.0f);
+
+        sc.enabled = true;
 
         transform.LookAt(transform.position + _dir);
         forceDir = _dir * shootSpeed;
@@ -113,7 +117,6 @@ public class NewGrappleHook : MonoBehaviour
             {
                 enabled = false;
                 retracting = false;
-                sc.enabled = true;
                 connected = false;
                 manualRetract = false;
                 connectedObj = null;
@@ -143,23 +146,27 @@ public class NewGrappleHook : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        GameObject temp = Instantiate(smokePrefab, transform.position, Quaternion.identity);
-        Destroy(temp, 2.0f);
-
+        Collider[] grappleables = Physics.OverlapSphere(transform.position, sc.radius, grappleableLayers);
         enabled = false;
-        if (GrappleAbleCheck(collision.gameObject.layer))
+        if (grappleables.Length != 0)
         {
             connected = true;
             connectedObj = collision.gameObject;
             cachedPos = connectedObj.transform.position;
-        }   
+        }
         else
         {
             connectedObj = null;
             retracting = true;
         }
 
+
+        GameObject temp = Instantiate(smokePrefab, transform.position, Quaternion.identity);
+        Destroy(temp, 2.0f);
+
         rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        sc.enabled = false;
     }
 
     public bool InUse()

@@ -45,7 +45,7 @@ public class TimeSlowDown : MonoBehaviour
     {
         if (slowDown)
         {
-            timeScale = Mathf.Lerp(timeScale, slowMo, Time.deltaTime * 5.0f);
+            timeScale = Mathf.Lerp(timeScale, slowMo, Time.deltaTime * 15.0f);
             Physics.gravity = grav * timeScale;
         }
         else
