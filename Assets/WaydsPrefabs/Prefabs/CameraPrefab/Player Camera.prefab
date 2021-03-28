@@ -140,11 +140,11 @@ MonoBehaviour:
   rotateSpeed: 100
   zoomSpeed: 200
   CameraSnapAcceleration: 500
-  minYAngle: -60
-  maxYAngle: 89
-  defaultZoom: 2
-  minZoomDist: 3
-  maxZoomDist: 10
+  minYAngle: -40
+  maxYAngle: 60
+  defaultZoom: 1
+  minZoomDist: 1
+  maxZoomDist: 5
   smoothTime: 0
   CollisionLayers:
     serializedVersion: 2
