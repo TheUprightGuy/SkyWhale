@@ -156,6 +156,7 @@ public class PlayerMovement : MonoBehaviour
 
             transform.Rotate(rot.eulerAngles, Space.World);
         }
+
         HandleRotation();
     }
 
@@ -217,7 +218,7 @@ public class PlayerMovement : MonoBehaviour
         //Don't use gravity if grappling or gliding or climbing
         RB.useGravity = !(PlayerState == PlayerStates.GRAPPLE 
                             || PlayerState == PlayerStates.GLIDING
-                                /*|| PlayerState == PlayerStates.CLIMBING*/);
+                                || PlayerState == PlayerStates.CLIMBING);
 
     }
 
@@ -283,6 +284,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
+    public float multi = 0.1f;
     void HandleMovement()
     {
      
@@ -294,7 +296,17 @@ public class PlayerMovement : MonoBehaviour
                 MoveOnXZ(setSpeed, setAccel);
                 if (inputAxis.y > 0)
                 {
-                    Jump(groundContactNormal + Vector3.up, groundjumpHeight);
+                    if (IsClimbing())
+                    {
+                        //Jump(groundContactNormal + Vector3.up, groundjumpHeight* multi);
+                        RB.MovePosition(transform.position + (groundContactNormal.normalized * multi));
+                    }
+                    else
+                    {
+                        Jump(groundContactNormal + Vector3.up, groundjumpHeight);
+                    }
+                    
+
                 }
                 break;
             case PlayerStates.GRAPPLE:
@@ -305,7 +317,7 @@ public class PlayerMovement : MonoBehaviour
                 MoveOnXY(climbSpeed, maxClimbAcceleration);
                 if (inputAxis.y > 0)
                 {
-                    Jump(climbContactNormal + Vector3.up, wallJumpHeight);
+                    //Jump(climbContactNormal + Vector3.up, wallJumpHeight);
                 }
                 break;
             case PlayerStates.GLIDING:
@@ -362,7 +374,7 @@ public class PlayerMovement : MonoBehaviour
 
         RB.MovePosition(transform.position + (desiredVel * Time.deltaTime * TimeSlowDown.instance.timeScale));
 
-        RB.AddForce(-Physics.gravity, ForceMode.Acceleration);
+        //RB.AddForce(-Physics.gravity, ForceMode.Acceleration);
         if (climbContactNormal != Vector3.zero)
         {
             RB.AddForce(-climbContactNormal.normalized * ((climbGripForce * 0.9f) ));

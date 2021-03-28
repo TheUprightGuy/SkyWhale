@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -3562,6 +3562,7 @@ MonoBehaviour:
   ClimbCheckStartOffset: {x: 0, y: -0.25, z: 0}
   LocalToGround: 1
   enabled: 1
+  distanceFromGround: 0
   inputAxis: {x: 0, y: 0, z: 0}
 --- !u!1 &1111247275
 GameObject:
@@ -13341,17 +13342,17 @@ PrefabInstance:
     - target: {fileID: 295798893895929301, guid: 53ba3972d8fbf6d4d8efaee4feb2eb02,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.14378713
+      value: 0.14378712
       objectReference: {fileID: 0}
     - target: {fileID: 295798893895929301, guid: 53ba3972d8fbf6d4d8efaee4feb2eb02,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.01692146
+      value: 0.016921446
       objectReference: {fileID: 0}
     - target: {fileID: 295798893895929301, guid: 53ba3972d8fbf6d4d8efaee4feb2eb02,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0024590045
+      value: -0.0024590027
       objectReference: {fileID: 0}
     - target: {fileID: 295798893895929301, guid: 53ba3972d8fbf6d4d8efaee4feb2eb02,
         type: 3}
@@ -14249,7 +14250,7 @@ PrefabInstance:
     - target: {fileID: 4838435617739099568, guid: 322a1d509c204d94d8353a2b81a6052d,
         type: 3}
       propertyPath: field of view
-      value: 40
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4838435617739099569, guid: 322a1d509c204d94d8353a2b81a6052d,
         type: 3}
@@ -15020,6 +15021,9 @@ MonoBehaviour:
   mainCam: {fileID: 742923028}
   glideCam: {fileID: 1235833219}
   currentSpeed: 0
+  myRoll: 0
+  myTurn: 0
+  myPitch: 0
   moveSpeed: 1
   baseSpeed: 5
 --- !u!1 &6277066167419768897
@@ -15782,6 +15786,8 @@ MonoBehaviour:
   pullSpeed: 16
   grapplingFromWhale: 0
   shotGrapple: 0
+  gunContainer: {fileID: 0}
+  shootPoint: {fileID: 0}
   raycastTargets:
     serializedVersion: 2
     m_Bits: 16183
