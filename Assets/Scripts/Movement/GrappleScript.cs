@@ -215,6 +215,7 @@ public class GrappleScript : MonoBehaviour
         {
             hook.connected = false;
             hook.retracting = true;
+            hook.YeetPlayer(this.GetComponent<PlayerMovement>());
         }
     }
 

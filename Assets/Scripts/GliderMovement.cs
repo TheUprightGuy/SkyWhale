@@ -68,7 +68,7 @@ public class GliderMovement : MonoBehaviour
         mainCam.GetComponent<ThirdPersonCamera>().SetRotation(glideCam.transform);
         rb.angularVelocity = Vector3.zero;
 
-        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+        //transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
 

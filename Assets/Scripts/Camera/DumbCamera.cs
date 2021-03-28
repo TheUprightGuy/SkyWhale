@@ -26,7 +26,7 @@ public class DumbCamera : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = target.position + target.rotation * offset * distance;
+        transform.position = target.position + (target.rotation * offset * distance);
         transform.LookAt(target);
         //transform.rotation = target.rotation;
     }

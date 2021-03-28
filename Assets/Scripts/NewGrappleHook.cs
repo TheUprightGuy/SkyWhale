@@ -137,11 +137,11 @@ public class NewGrappleHook : MonoBehaviour
 
     public void YeetPlayer(PlayerMovement _player)
     {
-        if (enabled || retracting)
+        if (enabled)// || retracting)
             return;
 
         Rigidbody temp = _player.GetComponent<Rigidbody>();
-        temp.AddForce(temp.velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up)), ForceMode.Impulse);
+        temp.AddForce(temp.velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up * 2.0f)) * 3.0f, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
