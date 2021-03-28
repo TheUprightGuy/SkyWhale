@@ -90,6 +90,9 @@ public class SwitchPuzzleMaster : MonoBehaviour
         }
 
         complete = true;
+        inUse = !inUse;
+        ToggleCam(inUse);
+        Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
         return true;
     }
 
