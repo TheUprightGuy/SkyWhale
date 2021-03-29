@@ -7,7 +7,8 @@ public enum CameraType
 {
     PlayerCamera,
     WhaleCamera,
-    GlideCamera
+    GlideCamera,
+    WhaleGrappleCamera,
 }
 
 

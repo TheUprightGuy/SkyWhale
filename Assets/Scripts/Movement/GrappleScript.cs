@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class GrappleScript : MonoBehaviour
@@ -13,7 +14,7 @@ public class GrappleScript : MonoBehaviour
 
     #region Setup
     // Local Variables
-    Camera camToShootFrom;
+    public Transform camToShootFrom;
     GameObject grappleReticule;
     PlayerMovement pm;
     Rigidbody rb;
@@ -28,7 +29,6 @@ public class GrappleScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        camToShootFrom = Camera.main;
         hook.grappleableLayers = grappleableLayers;
         ToggleAim(false);
     }
@@ -56,23 +56,28 @@ public class GrappleScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        pm.enabled = !hook.connected;
-
-        if (hook.connected)
+        if (!grapplingFromWhale)
         {
-            if(grapplingFromWhale)
-            {
+            pm.enabled = !hook.connected;
+            
+            transform.up = Vector3.up;
+        }
+
+        if (!hook.connected) return;
+        switch (grapplingFromWhale)
+        {
+            case true when shotGrapple:
                 CallbackHandler.instance.GrappleHitFromWhale(transform);
                 gameObject.SetActive(false);
                 return;
+            case false:
+            {
+                Vector3 moveDir = Vector3.Normalize(hook.transform.position - transform.position) * 8.0f;
+                rb.AddForce(moveDir * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
+                transform.LookAt(hook.transform);
+                return;
             }
-
-            Vector3 moveDir = Vector3.Normalize(hook.transform.position - transform.position) * 8.0f;
-            rb.AddForce(moveDir * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
-            transform.LookAt(hook.transform);
-            return;
         }
-        transform.up = Vector3.up;
     }
 
     public void FireHook()

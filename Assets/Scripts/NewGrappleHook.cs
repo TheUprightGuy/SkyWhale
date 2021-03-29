@@ -100,12 +100,7 @@ public class NewGrappleHook : MonoBehaviour
 
             if (Vector3.Distance(transform.position, pc.position) < (forceDir.magnitude * Time.fixedDeltaTime))
             {
-                enabled = false;
-                retracting = false;
-                sc.enabled = true;
-                connected = false;
-                manualRetract = false;
-                connectedObj = null;
+                ResetHook();
             }
         }
 
@@ -119,6 +114,16 @@ public class NewGrappleHook : MonoBehaviour
             manualRetract = false;
             connectedObj = null;
         }
+    }
+
+    public void ResetHook()
+    {
+        enabled = false;
+        retracting = false;
+        sc.enabled = false;
+        connected = false;
+        manualRetract = false;
+        connectedObj = null;
     }
 
     public void YeetPlayer(Transform _player)
@@ -142,6 +147,7 @@ public class NewGrappleHook : MonoBehaviour
         }   
         else
         {
+            if (collision.gameObject.layer == 10) return;
             connectedObj = null;
             retracting = true;
         }

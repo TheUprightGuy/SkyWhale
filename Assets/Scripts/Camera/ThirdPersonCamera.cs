@@ -8,7 +8,8 @@ public class ThirdPersonCamera : MonoBehaviour
     public Transform targetTrans;
     public Transform PlayerTrans;
 
-    [Header("Settings")]
+    [Header("Settings")] 
+    public CameraType cameraType = CameraType.PlayerCamera;
     public Vector3 startOffset = Vector3.zero;
 
     public bool invertX = false;
@@ -57,6 +58,12 @@ public class ThirdPersonCamera : MonoBehaviour
         lastCalculatedPos = transform.position;
 
         CameraManager.instance.switchCam += SwitchCam;
+
+        if (cameraType == CameraType.WhaleGrappleCamera)
+        {
+            //Disable player on whale on startup
+            EntityManager.instance.DisablePlayerOnWhale();
+        }
     }
 
     private void OnDestroy()
@@ -222,7 +229,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
     public void SwitchCam(CameraType _cam)
     {
-        if (_cam == CameraType.PlayerCamera)
+        if (_cam == cameraType)
         {
             GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Priority = 1;
         }

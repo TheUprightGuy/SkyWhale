@@ -113,8 +113,8 @@ MonoBehaviour:
   - NameForInput: Grapple
     KeyToListen: 324
     CallOnKeyDown: 1
-    CallOnKeyHeld: 1
-    CallOnKeyUp: 0
+    CallOnKeyHeld: 0
+    CallOnKeyUp: 1
     MethodToCall:
       m_PersistentCalls:
         m_Calls: []

@@ -71,6 +71,16 @@ public class CallbackHandler : MonoBehaviour
             dismountPlayer(dismountPos);
         }
     }
+    
+    public event Action mountWhale;
+
+    public void MountWhale()
+    {
+        if (mountWhale != null)
+        {
+            mountWhale();
+        }
+    }
 
     public event Action<Transform> grappleFromWhale;
 
