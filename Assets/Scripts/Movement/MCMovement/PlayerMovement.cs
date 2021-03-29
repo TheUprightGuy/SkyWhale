@@ -393,6 +393,8 @@ public class PlayerMovement : MonoBehaviour
         if (!enabled)
             return;
 
+        anims.SetBool("Jump", true);
+
         float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
         Vector3 jumpDirection = jumpVec.normalized;
 
@@ -403,6 +405,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!enabled)
             return;
+
+        if (RB.velocity.y <= 0)
+           anims.SetBool("Jump", false);
 
         switch (PlayerState)
         {
