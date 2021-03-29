@@ -19,7 +19,24 @@ public class ElevatorScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
     }
+
+    private void Start()
+    {
+        EventManager.StartListening("TalkedToBlacksmith", StartElevator);
+    }
+
+    private void OnDestroy()
+    {
+        EventManager.StopListening("TalkedToBlacksmith", StartElevator);
+    }
+
     #endregion Setup
+
+    void StartElevator()
+    {
+        inUse = true;
+    }
+
 
     // Local Variables
     public bool inUse;

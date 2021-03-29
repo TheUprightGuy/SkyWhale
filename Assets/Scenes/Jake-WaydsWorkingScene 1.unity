@@ -6807,10 +6807,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79719d5447847eb438d074dc10fc8791, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inUse: 1
+  inUse: 0
   ec: 2
-  topPos: {x: -95, y: -17, z: 33}
-  botPos: {x: -95, y: -31, z: 33}
+  topPos: {x: -26, y: -9, z: -16}
+  botPos: {x: -26, y: -17, z: -16}
   timer: 0
 --- !u!65 &791575544
 BoxCollider:
@@ -6879,13 +6879,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 791575542}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -94.86, y: -17.28, z: 33.03}
+  m_LocalRotation: {x: -0, y: 0.13064425, z: -0, w: 0.9914294}
+  m_LocalPosition: {x: -25.6, y: -9.36, z: -16.1}
   m_LocalScale: {x: 2, y: 0.1, z: 2}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 16
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 15.014001, z: 0}
 --- !u!54 &791575548
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18984,6 +18984,11 @@ PrefabInstance:
       propertyPath: camToShootFrom
       value: 
       objectReference: {fileID: 742923024}
+    - target: {fileID: 1175161780599159901, guid: 34a05d3f0592b9645b8d45d5a897a37c,
+        type: 3}
+      propertyPath: grappleableLayers.m_Bits
+      value: 270336
+      objectReference: {fileID: 0}
     - target: {fileID: 2547422257388001877, guid: 34a05d3f0592b9645b8d45d5a897a37c,
         type: 3}
       propertyPath: m_Center.y
