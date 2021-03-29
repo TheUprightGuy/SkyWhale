@@ -37,10 +37,12 @@ public class DialogueManager : MonoBehaviour
 
 
         CallbackHandler.instance.setDialogue += SetDialogue;
+        CallbackHandler.instance.stopDialogue += StopDialogue;
     }
     private void OnDestroy()
     {
         CallbackHandler.instance.setDialogue -= SetDialogue;
+        CallbackHandler.instance.stopDialogue -= StopDialogue;
     }
 
     private void Update()
@@ -105,9 +107,11 @@ public class DialogueManager : MonoBehaviour
     {
         timer = dialogueTime;
 
+        if (typing)
+            return;
+        
         if (currentDialogue.Progress() != null)
         {
-            if (!typing)
                 ShowDialogue();
         }
         else
@@ -128,12 +132,18 @@ public class DialogueManager : MonoBehaviour
     public void ResetDialogue()
     {
         if (currentDialogue)
-            currentDialogue.inUse = false;
+            currentDialogue.StartUp();
     }
     public void SetInUse()
     {
         if (currentDialogue)
             currentDialogue.inUse = true;
+    }
+
+    public void StopDialogue()
+    {
+        ResetDialogue();
+        HideText();
     }
 
     bool typing;

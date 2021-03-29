@@ -18,13 +18,12 @@ public class NPCScript : MonoBehaviour
             Vector3 dir = pm.transform.position - transform.position;
             Quaternion rot = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime);
-        }
 
-        if (Input.GetKeyDown(KeyCode.E) && !dialogue.inUse)
-        {
-            Interact();
+            if (Input.GetKeyDown(KeyCode.E) && !dialogue.inUse)
+            {
+                Interact();
+            }
         }
-
     }
 
     public Dialogue dialogue;
@@ -48,6 +47,7 @@ public class NPCScript : MonoBehaviour
         if (other.GetComponent<PlayerMovement>())
         {
             pm = null;
+            CallbackHandler.instance.StopDialogue();
         }
     }
 }

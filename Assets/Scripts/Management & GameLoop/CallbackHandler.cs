@@ -91,4 +91,12 @@ public class CallbackHandler : MonoBehaviour
             setDialogue(_dialogue);
         }
     }
+    public event Action stopDialogue;
+    public void StopDialogue()
+    {
+        if (stopDialogue != null)
+        {
+            stopDialogue();
+        }
+    }
 }
