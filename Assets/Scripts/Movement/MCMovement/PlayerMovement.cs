@@ -182,18 +182,22 @@ public class PlayerMovement : MonoBehaviour
 
     void SetCurrentPlayerState()
     {
-        if (MOVINGCheck())
+        if (CLIMBINGCheck())
+        {
+            if (PlayerState == PlayerStates.MOVING)
+            {
+                RB.velocity = Vector3.zero;
+            }
+
+            PlayerState = PlayerStates.CLIMBING;
+        }
+        else if (MOVINGCheck())
         {
             PlayerState = PlayerStates.MOVING;
         }
         else if (IDLECheck())
         {
             PlayerState = PlayerStates.IDLE;
-        }
-
-        if (CLIMBINGCheck())
-        {
-            PlayerState = PlayerStates.CLIMBING;
         }
 
         if (FALLINGCheck())
@@ -287,8 +291,6 @@ public class PlayerMovement : MonoBehaviour
     public float multi = 0.1f;
     void HandleMovement()
     {
-     
-
         switch (PlayerState)
         {
             case PlayerStates.IDLE:
@@ -296,7 +298,8 @@ public class PlayerMovement : MonoBehaviour
                 MoveOnXZ(setSpeed, setAccel);
                 if (inputAxis.y > 0)
                 {
-                    if (IsClimbing())
+                    Jump(groundContactNormal + Vector3.up, groundjumpHeight);
+                    /*if (IsClimbing())
                     {
                         //Jump(groundContactNormal + Vector3.up, groundjumpHeight* multi);
                         RB.MovePosition(transform.position + (groundContactNormal.normalized * multi));
@@ -304,9 +307,7 @@ public class PlayerMovement : MonoBehaviour
                     else
                     {
                         Jump(groundContactNormal + Vector3.up, groundjumpHeight);
-                    }
-                    
-
+                    }*/
                 }
                 break;
             case PlayerStates.GRAPPLE:
