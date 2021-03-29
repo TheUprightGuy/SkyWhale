@@ -146,7 +146,7 @@ public class NewGrappleHook : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Collider[] grappleables = Physics.OverlapSphere(transform.position, sc.radius, grappleableLayers);
+        Collider[] grappleables = Physics.OverlapSphere(transform.position, sc.radius * 2.0f, grappleableLayers);
         enabled = false;
         if (grappleables.Length != 0)
         {

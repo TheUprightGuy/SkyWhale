@@ -10,7 +10,7 @@ public class CallbackHandler : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogError("Callback Handler already exists!");
+            Debug.Log("Callback Handler already exists!");
             Destroy(this.gameObject);
         }
         instance = this;
@@ -79,6 +79,16 @@ public class CallbackHandler : MonoBehaviour
         if (grappleFromWhale != null)
         {
             grappleFromWhale(grapplePos);
+        }
+    }
+
+
+    public event Action<Dialogue> setDialogue;
+    public void SetDialogue(Dialogue _dialogue)
+    {
+        if (setDialogue != null)
+        {
+            setDialogue(_dialogue);
         }
     }
 }

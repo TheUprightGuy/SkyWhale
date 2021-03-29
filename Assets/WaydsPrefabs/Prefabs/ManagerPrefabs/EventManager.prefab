@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 5008371596773838823}
   - component: {fileID: 351910707944113262}
   - component: {fileID: 225987496028827481}
+  - component: {fileID: 5316683755919673404}
   m_Layer: 0
   m_Name: EventManager
   m_TagString: Untagged
@@ -124,7 +125,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeScale: 1
-  adjustments: {fileID: 0}
 --- !u!114 &5008371596773838823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,3 +169,21 @@ MonoBehaviour:
   whaleGrappleCam: {fileID: 0}
   whaleGrappleUIElement: {fileID: 0}
   grappleHook: {fileID: 0}
+--- !u!114 &5316683755919673404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2884179543958615842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f7e6cf605184e4a8b80caff623a5f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveToUse: 4
+  saves:
+  - {fileID: 11400000, guid: 16328678b0113df439753e43f1c1cf1d, type: 2}
+  - {fileID: 11400000, guid: 978a5c0869a870e4da9198d30b6712a7, type: 2}
+  - {fileID: 11400000, guid: 67327b8cae48661448ed28da464f3553, type: 2}
+  - {fileID: 11400000, guid: 92d21c844926d334e8836020674297ae, type: 2}

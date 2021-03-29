@@ -12,7 +12,7 @@ public class QuestManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogError("More than one QuestManager exists!");
+            Debug.Log("More than one QuestManager exists!");
             Destroy(this.gameObject);
         }
         instance = this;

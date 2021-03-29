@@ -139,9 +139,25 @@ public class GrappleScript : MonoBehaviour
         return Vector3.zero;
     }
 
-
+    float floatTimer;
     private void Update()
     {
+        // NOT SURE IF THIS IS BETTER OR WORSE
+        //
+        if (hook.connected)
+            floatTimer = 0.0f;
+
+        if (floatTimer > 0)
+        {
+            floatTimer -= Time.deltaTime;
+            if (rb.velocity.y < 0)
+                rb.velocity = new Vector3(rb.velocity.x, 0.0f, rb.velocity.z);
+
+            rb.useGravity = floatTimer > 0;
+        }
+        //
+        // COMMENT OUT IF REQUIRED
+
         shootPoint.Loaded(!hook.InUse());
         if (!hook.InUse())
         {
@@ -180,6 +196,7 @@ public class GrappleScript : MonoBehaviour
                 shotGrapple = true;
                 cachedShoot = false;
                 ToggleAim(false);
+                floatTimer = 1.0f;
                 return;
             }
 
@@ -195,8 +212,21 @@ public class GrappleScript : MonoBehaviour
             hook.retracting = true;
             hook.connected = false;
             hook.manualRetract = true;
+
             if (aim)
-                cachedShoot = true;
+            {
+                hook.retracting = false;
+                hook.connected = false;
+                hook.manualRetract = false;
+
+                hook.Fire(shootPoint.shootPoint, Vector3.Normalize(RaycastToTarget() - transform.position));
+                shotGrapple = true;
+                cachedShoot = false;
+                ToggleAim(false);
+                floatTimer = 1.0f;
+                return;
+                //cachedShoot = true;
+            }
         }
     }
 

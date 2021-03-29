@@ -29,8 +29,11 @@ public class Dialogue : ScriptableObject
 
     public int dialogueIndex = 0;
 
+    public bool inUse;
+
     public void StartUp()
     {
+        inUse = false;
         dialogueIndex = 0;
         foreach(DialogueComponent n in dialogue)
         {

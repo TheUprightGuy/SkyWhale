@@ -20,9 +20,7 @@ public class DialogueManager : MonoBehaviour
         animator = GetComponent<Animator>();
     }
     #endregion Setup
-
-    public Dialogue testDialogue;
-
+    
     public Dialogue currentDialogue;
     public float dialogueTime;
     float timer;
@@ -36,6 +34,13 @@ public class DialogueManager : MonoBehaviour
             currentDialogue.StartUp();
         }
         ShowDialogue();
+
+
+        CallbackHandler.instance.setDialogue += SetDialogue;
+    }
+    private void OnDestroy()
+    {
+        CallbackHandler.instance.setDialogue -= SetDialogue;
     }
 
     private void Update()
@@ -43,15 +48,10 @@ public class DialogueManager : MonoBehaviour
         if (enabled)
         {
             timer -= Time.deltaTime;
-            if (timer <= 0 || Input.GetKeyDown(KeyCode.F))
+            if (timer <= 0 || Input.GetKeyDown(KeyCode.E))
             {
                 ProgressDialogue();
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            SetDialogue(testDialogue);
         }
     }
 
@@ -107,7 +107,8 @@ public class DialogueManager : MonoBehaviour
 
         if (currentDialogue.Progress() != null)
         {
-            ShowDialogue();
+            if (!typing)
+                ShowDialogue();
         }
         else
         {
@@ -124,8 +125,22 @@ public class DialogueManager : MonoBehaviour
         dialogue.text = "";
     }
 
+    public void ResetDialogue()
+    {
+        if (currentDialogue)
+            currentDialogue.inUse = false;
+    }
+    public void SetInUse()
+    {
+        if (currentDialogue)
+            currentDialogue.inUse = true;
+    }
+
+    bool typing;
+
     IEnumerator WriteDialogue(string _text)
     {
+        typing = true;
         animator.ResetTrigger("PopOut");
         animator.SetTrigger("PopIn");
         dialogue.SetText(" ");
@@ -136,5 +151,6 @@ public class DialogueManager : MonoBehaviour
             dialogue.text += n;
             yield return new WaitForSeconds(0.03f);
         }
+        typing = false;
     }
 }

@@ -49,7 +49,6 @@ namespace Audio
 
         public Dictionary<string, SoundInfo> soundDictionary;
         private List<string> _soundsUnrestricted;    //Audio source will play this sound regardless of if it's already playing
-        [SerializeField] private GameObject volumeSlider = null;
         private Slider _slider;
         private AudioSource _musicSource;
         private float _musicDefaultVolume;
@@ -82,7 +81,6 @@ namespace Audio
         private void InitialisePrivateVariables()
         {
             soundDictionary = new Dictionary<string, SoundInfo>();
-            if (volumeSlider != null) _slider = volumeSlider.GetComponent<Slider>();
             _musicSource = this.GetComponent<AudioSource>();
             _musicDefaultVolume = _musicSource.volume;
         }
