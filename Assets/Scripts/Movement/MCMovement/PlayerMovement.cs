@@ -184,14 +184,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if (CLIMBINGCheck())
         {
-            if (PlayerState == PlayerStates.MOVING)
+            if (PlayerState == PlayerStates.MOVING || PlayerState == PlayerStates.IDLE)
             {
                 RB.velocity = Vector3.zero;
             }
 
             PlayerState = PlayerStates.CLIMBING;
         }
-        else if (MOVINGCheck())
+
+        if (MOVINGCheck())
         {
             PlayerState = PlayerStates.MOVING;
         }
