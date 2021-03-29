@@ -35,20 +35,19 @@ public class EntityManager : MonoBehaviour
         _whaleGrappleUIElement.SetActive(false);
     }
 
-    private void OngrappleFromWhale(Transform grapplePos)
+    private void OngrappleFromWhale(Transform grapplePos, bool startingGrapple)
     {
-        //If UI was active then the player has stopped aiming the grapple and the camera should be disabled and UI hidden
-        _isWhaleGrappleUIActive = !_isWhaleGrappleUIActive;
-        if (isActiveAndEnabled) playerOnWhale.GetComponentInChildren<GrappleScript>().enabled = true;
-        _whaleGrappleUIElement.SetActive(_isWhaleGrappleUIActive);
-
-        CameraManager.instance.SwitchCamera(_isWhaleGrappleUIActive
-            ? CameraType.WhaleGrappleCamera
-            : CameraType.WhaleCamera);
+        bool shouldStartGrappling =
+            startingGrapple && !playerOnWhale.GetComponentInChildren<GrappleScript>().isActiveAndEnabled;
+        grappleHook.gameObject.layer = shouldStartGrappling?16:15;
+            playerOnWhale.GetComponentInChildren<GrappleScript>().enabled = shouldStartGrappling;
+            _whaleGrappleUIElement.SetActive(shouldStartGrappling);
+            CameraManager.instance.SwitchCamera(shouldStartGrappling? CameraType.WhaleGrappleCamera:CameraType.WhaleCamera);
     }
 
     private void OngrappleHitFromWhale(Transform grapplePos)
     {
+        StartCoroutine(ResetPlayerLayer());
         player.transform.position = grapplePos.position;
         player.transform.rotation = Quaternion.LookRotation(grappleHook.transform.position.normalized, Vector3.up);
 
@@ -66,6 +65,7 @@ public class EntityManager : MonoBehaviour
 
     private void OndismountPlayer(Transform dismountPosition)
     {
+        StartCoroutine(ResetPlayerLayer());
         player.transform.position = dismountPosition.position;
         player.transform.rotation = Quaternion.identity;
         player.SetActive(true);
@@ -76,6 +76,7 @@ public class EntityManager : MonoBehaviour
     
     private void OnMountWhale()
     {
+        player.layer = 16;
         player.SetActive(false);
         playerOnWhale.SetActive(true);
 
@@ -92,5 +93,11 @@ public class EntityManager : MonoBehaviour
     public void DisablePlayerOnWhale()
     {
         playerOnWhale.SetActive(false);
+    }
+
+    public IEnumerator ResetPlayerLayer()
+    {
+        yield return new WaitForSeconds(3f);
+        player.layer = 14;
     }
 } 

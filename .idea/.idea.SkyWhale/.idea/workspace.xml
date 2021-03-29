@@ -10,15 +10,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.4.2f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Layout/CanvasScaler.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/CameraManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Camera/ThirdPersonCamera.cs" />
-      <option value="$PROJECT_DIR$/Assets/EntityManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
+      <option value="$PROJECT_DIR$/Assets/EntityManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
@@ -84,5 +87,24 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs</url>
+          <line>130</line>
+          <properties documentPath="D:\Users\mds00001nb\Desktop\Alpha Project\SkyWhale\Assets\Scripts\NewGrappleHook.cs" initialLine="130" containingFunctionPresentation="method 'YeetPlayer'">
+            <startOffsets>
+              <option value="3490" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3516" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

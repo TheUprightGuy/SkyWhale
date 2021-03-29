@@ -82,13 +82,13 @@ public class CallbackHandler : MonoBehaviour
         }
     }
 
-    public event Action<Transform> grappleFromWhale;
+    public event Action<Transform, bool> grappleFromWhale;
 
-    public void GrappleFromWhale(Transform grapplePos)
+    public void GrappleStartFromWhale(Transform grapplePos, bool startingGrapple)
     {
         if (grappleFromWhale != null)
         {
-            grappleFromWhale(grapplePos);
+            grappleFromWhale(grapplePos, startingGrapple);
         }
     }
 }

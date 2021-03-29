@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
@@ -24,6 +25,11 @@ public class GrappleScript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();
         grappleReticule = GetComponentInChildren<UnityEngine.UI.Image>().gameObject;
+    }
+
+    private void OnEnable()
+    {
+        shotGrapple = false;
     }
 
     // Start is called before the first frame update
@@ -67,6 +73,7 @@ public class GrappleScript : MonoBehaviour
         switch (grapplingFromWhale)
         {
             case true when shotGrapple:
+                if(hook.connectedObj.layer == 10) return;
                 CallbackHandler.instance.GrappleHitFromWhale(transform);
                 gameObject.SetActive(false);
                 return;
@@ -99,6 +106,7 @@ public class GrappleScript : MonoBehaviour
 
     void ToggleAim(bool _startAim)
     {
+        if(grapplingFromWhale) return;
         if (grappleReticule != null)
         {
             grappleReticule.SetActive(_startAim);

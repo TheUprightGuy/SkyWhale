@@ -78,9 +78,9 @@ public class WhaleMovement : MonoBehaviour
     }
     
     private void Grapple(InputState arg0) 
-    { 
+    {
         if (!control) return; 
-        CallbackHandler.instance.GrappleFromWhale(grapplePos); 
+        CallbackHandler.instance.GrappleStartFromWhale(grapplePos, arg0 == InputState.KEYDOWN); 
     }
     
     private void Dismount(InputState arg0)
@@ -303,6 +303,8 @@ public class WhaleMovement : MonoBehaviour
             Crash(other.gameObject);
             Destroy(other.gameObject);
         }*/
+        
+        if(other.gameObject.layer == 16) return;
 
         PlayerMovement pc = other.GetComponent<PlayerMovement>();
         NewGrappleHook gh = other.GetComponent<NewGrappleHook>(); //Temp

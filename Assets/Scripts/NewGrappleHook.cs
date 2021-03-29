@@ -10,6 +10,7 @@ public class NewGrappleHook : MonoBehaviour
     public bool manualRetract;
     public bool retracting;
     public float flightTime;
+    public GameObject connectedObj;
 
     [HideInInspector] public LayerMask grappleableLayers;
 
@@ -18,7 +19,6 @@ public class NewGrappleHook : MonoBehaviour
     Rigidbody rb;
     MeshRenderer mr;
     LineRenderer lr;
-    GameObject connectedObj;
     [HideInInspector] public Transform pc;
     SphereCollider sc;
     Vector3 cachedPos;
@@ -132,6 +132,7 @@ public class NewGrappleHook : MonoBehaviour
             return;
 
         pc = _player;
+        if(!pc.GetComponent<Rigidbody>()) return;
         Rigidbody temp = pc.GetComponent<Rigidbody>();
         temp.AddForce(temp.velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up)), ForceMode.Impulse);
     }
