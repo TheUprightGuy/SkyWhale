@@ -52,10 +52,21 @@ public class GliderMovement : MonoBehaviour
         baseSpeed = maxSpeed * 0.4f;
         moveSpeed = baseSpeed;
         currentSpeed = 0.0f;
+        EventManager.StartListening("EnableGlider", EnableGlider);
     }
+
+    void EnableGlider()
+    {
+        unlocked = true;
+    }
+
+    bool unlocked;
 
     public void Toggle()
     {
+        if (!unlocked)
+            return;
+
         enabled = !enabled;
         glider.SetActive(enabled);
         myRoll = 0.0f;
