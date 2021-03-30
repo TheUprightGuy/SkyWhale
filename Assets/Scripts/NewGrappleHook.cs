@@ -15,6 +15,7 @@ public class NewGrappleHook : MonoBehaviour
     public bool manualRetract;
     public bool retracting;
     public float flightTime;
+    public GameObject connectedObj;
 
     [HideInInspector] public LayerMask grappleableLayers;
 
@@ -23,7 +24,6 @@ public class NewGrappleHook : MonoBehaviour
     Rigidbody rb;
     MeshRenderer mr;
     LineRenderer lr;
-    GameObject connectedObj;
     //[HideInInspector]
     public Transform pc;
     SphereCollider sc;
@@ -115,11 +115,7 @@ public class NewGrappleHook : MonoBehaviour
 
             if (Vector3.Distance(transform.position, pc.position) < Mathf.Max((forceDir.magnitude * Time.fixedDeltaTime), 0.3f))
             {
-                enabled = false;
-                retracting = false;
-                connected = false;
-                manualRetract = false;
-                connectedObj = null;
+                ResetHook();
             }
         }
 
@@ -128,18 +124,27 @@ public class NewGrappleHook : MonoBehaviour
 
         if (Vector3.Distance(transform.position, pc.position) < 0.3f && connected)
         {
-            YeetPlayer(pc.GetComponentInParent<PlayerMovement>());
             retracting = true;
             manualRetract = false;
             connectedObj = null;
+            if (!pc || !pc.GetComponent<PlayerMovement>()) return;
+            YeetPlayer(pc.GetComponentInParent<PlayerMovement>());
         }
+    }
+
+    public void ResetHook()
+    {
+        enabled = false;
+        retracting = false;
+        connected = false;
+        manualRetract = false;
+        connectedObj = null;
     }
 
     public void YeetPlayer(PlayerMovement _player)
     {
         if (enabled)// || retracting)
             return;
-
         Rigidbody temp = _player.GetComponent<Rigidbody>();
         temp.AddForce(temp.velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up * 2.0f)) * 3.0f, ForceMode.Impulse);
     }
@@ -156,6 +161,7 @@ public class NewGrappleHook : MonoBehaviour
         }
         else
         {
+            if (collision.gameObject.layer == 10) return;
             connectedObj = null;
             retracting = true;
         }

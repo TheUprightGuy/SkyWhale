@@ -7,9 +7,11 @@
       <Path>Library/PackageCache/com.unity.cinemachine@2.6.0</Path>
       <Path>Library/PackageCache/com.unity.collab-proxy@1.2.16</Path>
       <Path>Library/PackageCache/com.unity.ext.nunit@1.0.0</Path>
+      <Path>Library/PackageCache/com.unity.ext.nunit@1.0.6</Path>
       <Path>Library/PackageCache/com.unity.formats.fbx@3.2.0-preview.2</Path>
       <Path>Library/PackageCache/com.unity.ide.rider@1.1.4</Path>
       <Path>Library/PackageCache/com.unity.ide.vscode@1.2.1</Path>
+      <Path>Library/PackageCache/com.unity.ide.vscode@1.2.3</Path>
       <Path>Library/PackageCache/com.unity.postprocessing@2.2.2</Path>
       <Path>Library/PackageCache/com.unity.probuilder@4.2.3</Path>
       <Path>Library/PackageCache/com.unity.recorder@2.2.0-preview.4</Path>
@@ -19,8 +21,10 @@
       <Path>Library/PackageCache/com.unity.settings-manager@1.0.0</Path>
       <Path>Library/PackageCache/com.unity.shadergraph@7.4.3</Path>
       <Path>Library/PackageCache/com.unity.test-framework@1.1.14</Path>
+      <Path>Library/PackageCache/com.unity.test-framework@1.1.22</Path>
       <Path>Library/PackageCache/com.unity.textmeshpro@2.0.1</Path>
       <Path>Library/PackageCache/com.unity.timeline@1.2.15</Path>
+      <Path>Library/PackageCache/com.unity.visualeffectgraph@7.3.1</Path>
       <Path>Packages</Path>
       <Path>ProjectSettings</Path>
     </explicitIncludes>
@@ -28,7 +32,6 @@
       <Path>.git</Path>
       <Path>.idea</Path>
       <Path>Library</Path>
-      <Path>Temp</Path>
       <Path>obj</Path>
     </explicitExcludes>
   </component>

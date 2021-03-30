@@ -14,6 +14,8 @@ public class WhaleMovement : MonoBehaviour
     public float accelSpeed = 1;
     public float maxSpeed = 5.0f;
     public float minimumDistance = 15.0f;
+    [Header("Dismount")]
+    private Transform dismountPosition; 
 
     #region Local Variables
     //[HideInInspector] 
@@ -46,6 +48,7 @@ public class WhaleMovement : MonoBehaviour
         orbit = GetComponent<OrbitScript>();
         pickUp = GetComponent<PickUp>();
         cc = GetComponentInChildren<NewCharacter>();
+        dismountPosition = GameObject.Find("DismountPos").transform;
     }
 
     // Start is called before the first frame update
@@ -59,6 +62,8 @@ public class WhaleMovement : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.WHALE, "PitchDown").MethodToCall.AddListener(PitchDown);
         VirtualInputs.GetInputListener(InputType.WHALE, "PitchUp").MethodToCall.AddListener(PitchUp);
         VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").MethodToCall.AddListener(Thrust);
+        VirtualInputs.GetInputListener(InputType.WHALE, "Dismount").MethodToCall.AddListener(Dismount);
+        CallbackHandler.instance.grappleHitFromWhale += transform1 => control = false; 
 
         Invoke("AddIsland", 0.1f);
     }
@@ -67,6 +72,13 @@ public class WhaleMovement : MonoBehaviour
     void AddIsland()
     {
         CallbackHandler.instance.SpawnCollectableIsland();
+    }
+    
+    private void Dismount(InputState arg0)
+    {
+        if (!control) return;
+        control = false;
+        CallbackHandler.instance.DismountPlayer(dismountPosition);
     }
 
     bool yawChange = false;
@@ -282,21 +294,24 @@ public class WhaleMovement : MonoBehaviour
             Crash(other.gameObject);
             Destroy(other.gameObject);
         }*/
+        
+        if(other.gameObject.layer == 16) return;
 
         PlayerMovement pc = other.GetComponent<PlayerMovement>();
-        NewGrappleHook gh = other.GetComponent<NewGrappleHook>();
+        NewGrappleHook gh = other.GetComponent<NewGrappleHook>(); //Temp
         if (pc || gh)
         {
+            if (gh)
+            {
+                gh.ResetHook();
+                gh.flightTime = 0f;
+                gh.transform.position = new Vector3(0,1000f,0f);
+            }
             ComeToHalt();
             control = true;
-            CameraManager.instance.SwitchCamera(CameraType.WhaleCamera);
-            other.gameObject.SetActive(false);
-            myPC.gameObject.SetActive(false);
+            CallbackHandler.instance.MountWhale();
         }
     }
-
-    // TEMPORARY HORRID
-    public PlayerMovement myPC;
 
     public void GiveControl()
     {

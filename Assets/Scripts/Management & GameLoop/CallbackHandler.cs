@@ -71,14 +71,24 @@ public class CallbackHandler : MonoBehaviour
             dismountPlayer(dismountPos);
         }
     }
+    
+    public event Action mountWhale;
 
-    public event Action<Transform> grappleFromWhale;
-
-    public void GrappleFromWhale(Transform grapplePos)
+    public void MountWhale()
     {
-        if (grappleFromWhale != null)
+        if (mountWhale != null)
         {
-            grappleFromWhale(grapplePos);
+            mountWhale();
+        }
+    }
+
+    public event Action<Transform> grappleAim;
+
+    public void GrappleAim(Transform grapplePos)
+    {
+        if (grappleAim != null)
+        {
+            grappleAim(grapplePos);
         }
     }
 
