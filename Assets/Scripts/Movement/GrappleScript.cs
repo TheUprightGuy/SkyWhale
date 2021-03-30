@@ -17,7 +17,7 @@ public class GrappleScript : MonoBehaviour
     public GunMeshSwitch shootPoint;
 
 
-    public bool enabled;
+    new public bool enabled;
 
     #region Setup
     // Local Variables
