@@ -11,9 +11,8 @@ public class EntityManager : MonoBehaviour
     public GameObject playerOnWhale;
     public GameObject _whaleGrappleUIElement;
     public NewGrappleHook grappleHook;
-    private bool _isWhaleGrappleUIActive = false;
     #endregion
-
+    #region Singleton
     public static EntityManager instance;
     private void Awake()
     {
@@ -24,79 +23,43 @@ public class EntityManager : MonoBehaviour
         }
         instance = this;
     }
-    
+    #endregion Singleton
+
     private void Start()
     {
-        CallbackHandler.instance.dismountPlayer += OndismountPlayer;
-        CallbackHandler.instance.grappleAim += OngrappleFromWhale;
-        CallbackHandler.instance.grappleHitFromWhale += OngrappleHitFromWhale;
-        CallbackHandler.instance.mountWhale += OnMountWhale;
-        
-        _whaleGrappleUIElement.SetActive(false);
+        TogglePlayer(true); 
     }
 
-    private void OngrappleFromWhale(Transform grapplePos)
+    // Action to link up whale control and grapple script active to
+    public event Action<bool> toggleControl;
+    public void TogglePlayer(bool _toggle)
     {
-        bool shouldStartGrappling = playerOnWhale.GetComponent<GrappleScript>().enabled;
-        grappleHook.gameObject.layer = shouldStartGrappling?16:15;
-            _whaleGrappleUIElement.SetActive(shouldStartGrappling);
-            CameraManager.instance.SwitchCamera(shouldStartGrappling? CameraType.WhaleGrappleCamera:CameraType.WhaleCamera);
+        player.SetActive(_toggle);
+        playerOnWhale.SetActive(!_toggle);
+        grappleHook.pc = player.GetComponent<GrappleScript>().shootPoint.transform;
+
+        if (!_toggle)
+        {
+            player.transform.position = playerOnWhale.transform.position;
+            player.transform.rotation = Quaternion.LookRotation(grappleHook.transform.position.normalized, Vector3.up);
+        }
+
+        CameraManager.instance.SwitchCamera(_toggle ? CameraType.PlayerCamera : CameraType.WhaleCamera);
+
+        if (toggleControl != null)
+            toggleControl(_toggle);
     }
 
-    private void OngrappleHitFromWhale(Transform grapplePos)
+    public void OnDismountPlayer(Transform dismountPosition)
     {
-        player.transform.position = grapplePos.position;
-        player.transform.rotation = Quaternion.LookRotation(grappleHook.transform.position.normalized, Vector3.up);
+        grappleHook.connected = false;
+        grappleHook.connectedObj = null;
+        grappleHook.gameObject.layer = LayerMask.NameToLayer("Hook");
+        grappleHook.flightTime = 0.0f;
 
+        TogglePlayer(true);
 
-        player.SetActive(true);
-        playerOnWhale.SetActive(false);
-
-        CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
-
-        _whaleGrappleUIElement.SetActive(false);
-
-        grappleHook.connected = true;
-        grappleHook.pc = player.transform;
-        
-        StartCoroutine(ResetPlayerLayer());
-    }
-
-    private void OndismountPlayer(Transform dismountPosition)
-    {
-        StartCoroutine(ResetPlayerLayer());
         player.transform.position = dismountPosition.position;
         player.transform.rotation = Quaternion.identity;
-        player.SetActive(true);
-        playerOnWhale.SetActive(false);
-
-        CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
-    }
-    
-    private void OnMountWhale()
-    {
-        player.layer = 16;
-        player.SetActive(false);
-        playerOnWhale.SetActive(true);
-
-        CameraManager.instance.SwitchCamera(CameraType.WhaleCamera);
-    }
-
-    private void OnDestroy()
-    {
-        CallbackHandler.instance.dismountPlayer -= OndismountPlayer;
-        CallbackHandler.instance.grappleAim -= OngrappleFromWhale;
-        CallbackHandler.instance.grappleHitFromWhale -= OngrappleHitFromWhale;
-    }
-
-    public void DisablePlayerOnWhale()
-    { 
-        playerOnWhale.SetActive(false);
-    }
-
-    public IEnumerator ResetPlayerLayer()
-    {
-        yield return new WaitForSeconds(3f);
-        player.layer = 14;
     }
 } 

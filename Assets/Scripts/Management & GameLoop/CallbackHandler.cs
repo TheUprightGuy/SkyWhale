@@ -43,55 +43,14 @@ public class CallbackHandler : MonoBehaviour
         }
     }
 
-
     private void Update()
     {
+        // temp - restart scene
         if (Input.GetKeyDown(KeyCode.R))
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-        }
-        
+        }       
     }
-
-    public event Action<Transform> grappleHitFromWhale;
-    public void GrappleHitFromWhale(Transform grapplePos)
-    {
-        if (grappleHitFromWhale != null)
-        {
-            grappleHitFromWhale(grapplePos);
-        }
-    }
-
-    public event Action<Transform> dismountPlayer;
-
-    public void DismountPlayer(Transform dismountPos)
-    {
-        if (dismountPlayer != null)
-        {
-            dismountPlayer(dismountPos);
-        }
-    }
-    
-    public event Action mountWhale;
-
-    public void MountWhale()
-    {
-        if (mountWhale != null)
-        {
-            mountWhale();
-        }
-    }
-
-    public event Action<Transform> grappleAim;
-
-    public void GrappleAim(Transform grapplePos)
-    {
-        if (grappleAim != null)
-        {
-            grappleAim(grapplePos);
-        }
-    }
-
 
     public event Action<Dialogue> setDialogue;
     public void SetDialogue(Dialogue _dialogue)
@@ -101,6 +60,7 @@ public class CallbackHandler : MonoBehaviour
             setDialogue(_dialogue);
         }
     }
+
     public event Action stopDialogue;
     public void StopDialogue()
     {

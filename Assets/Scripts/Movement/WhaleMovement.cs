@@ -40,6 +40,7 @@ public class WhaleMovement : MonoBehaviour
     NewCharacter cc;
 
     GameObject cachedHeightRef;
+    GrappleScript gs;
 
 
     private void Awake()
@@ -48,6 +49,7 @@ public class WhaleMovement : MonoBehaviour
         orbit = GetComponent<OrbitScript>();
         pickUp = GetComponent<PickUp>();
         cc = GetComponentInChildren<NewCharacter>();
+        gs = GetComponentInChildren<GrappleScript>();
         dismountPosition = GameObject.Find("DismountPos").transform;
     }
 
@@ -63,9 +65,13 @@ public class WhaleMovement : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.WHALE, "PitchUp").MethodToCall.AddListener(PitchUp);
         VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").MethodToCall.AddListener(Thrust);
         VirtualInputs.GetInputListener(InputType.WHALE, "Dismount").MethodToCall.AddListener(Dismount);
-        CallbackHandler.instance.grappleHitFromWhale += transform1 => control = false; 
 
-        Invoke("AddIsland", 0.1f);
+        EntityManager.instance.toggleControl += ToggleControl;
+    }
+
+    public void ToggleControl(bool _toggle)
+    {
+        control = !_toggle;
     }
 
     // temp
@@ -76,9 +82,12 @@ public class WhaleMovement : MonoBehaviour
     
     private void Dismount(InputState arg0)
     {
-        if (!control) return;
+        if (!control) 
+            return;
+
         control = false;
-        CallbackHandler.instance.DismountPlayer(dismountPosition);
+        EntityManager.instance.OnDismountPlayer(dismountPosition);
+        //CallbackHandler.instance.DismountPlayer(dismountPosition);
     }
 
     bool yawChange = false;
@@ -229,9 +238,6 @@ public class WhaleMovement : MonoBehaviour
 
         NewIslandScript temp = (hit.GetComponent<NewIslandScript>()) ? hit.GetComponent<NewIslandScript>() : hit.GetComponentInParent<NewIslandScript>();
         cachedHeightRef = temp.heightRef;
-
-        // Quest Example
-        //EventManager.TriggerEvent("Crash");
     }
 
     private void FixedUpdate()
@@ -289,27 +295,18 @@ public class WhaleMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        /*if (other.gameObject.GetComponentInParent<NewIslandScript>())
-        {
-            Crash(other.gameObject);
-            Destroy(other.gameObject);
-        }*/
-        
-        if(other.gameObject.layer == 16) return;
-
         PlayerMovement pc = other.GetComponent<PlayerMovement>();
-        NewGrappleHook gh = other.GetComponent<NewGrappleHook>(); //Temp
-        if (pc || gh)
+        if (pc)
         {
-            if (gh)
-            {
-                gh.ResetHook();
-                gh.flightTime = 0f;
-                gh.transform.position = new Vector3(0,1000f,0f);
-            }
+            // Change Layer so when we transition back we don't collide with whale instantly
+            pc.gameObject.layer = LayerMask.NameToLayer("PlayerFromWhale");
+            //pc.gameObject.SetActive(false);
+            EntityManager.instance.TogglePlayer(false);
+
+            // Stop the whale and give control
             ComeToHalt();
-            control = true;
-            CallbackHandler.instance.MountWhale();
+            //control = true;
+            gs.active = true;
         }
     }
 

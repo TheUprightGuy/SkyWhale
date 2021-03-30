@@ -604,14 +604,14 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (glider.enabled)
-        {
-            // temp
-            glider.Toggle();
-        }
+        if (glider.enabled)      
+            glider.Toggle();     
 
-        //RB.velocity = Vector3.zero;
-        //RB.angularVelocity = Vector3.zero;
+        // Change Collisions Back - This isn't perfect, requires the player touches something and doesn't try to reconnect to whale after jumping off.
+        if (!collision.gameObject.GetComponent<WhaleMovement>() && this.gameObject.layer == LayerMask.NameToLayer("PlayerFromWhale"))
+        {
+            this.gameObject.layer = LayerMask.NameToLayer("Player");
+        }
 
         EvalCollision(collision);
     }

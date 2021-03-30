@@ -54,16 +54,9 @@ public class ThirdPersonCamera : MonoBehaviour
         storedPos.z = defaultZoom;
 
         Cursor.lockState = CursorLockMode.Locked;
-
         lastCalculatedPos = transform.position;
 
         CameraManager.instance.switchCam += SwitchCam;
-
-        if (cameraType == CameraType.WhaleGrappleCamera)
-        {
-            //Disable player on whale on startup
-            EntityManager.instance.DisablePlayerOnWhale();
-        }
     }
 
     private void OnDestroy()
@@ -75,17 +68,6 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         if (PlayerTrans.GetComponent<GliderMovement>() && PlayerTrans.GetComponent<GliderMovement>().enabled)
             return;
-
-        //transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, PlayerTrans.rotation.eulerAngles.z));
-
-        /*if (Input.GetKey(KeyCode.W))
-        {
-            if (storedPos.x != targetTrans.eulerAngles.y)
-            {
-                storedPos.x = Mathf.MoveTowardsAngle(storedPos.x, targetTrans.eulerAngles.y, CameraSnapAcceleration * Time.deltaTime);
-            }
-        }*/
-
 
         if (Input.GetKeyDown("`"))
         {
@@ -122,15 +104,9 @@ public class ThirdPersonCamera : MonoBehaviour
 
             storedPos.x += horizontal;
 
-
-            /*if (!Input.GetKey(KeyCode.LeftAlt) && !waitingToReturn) //Not holding rightclick, allow player rotation
-            {
-                PlayerTrans.Rotate(0, horizontal, 0);//Rotate player along with the  camera
-            }*/
             if (Input.GetKeyUp(KeyCode.LeftAlt))//If rightclick released, snap back to position
             {
                 waitingToReturn = true;
-                //storedPos.x = target.eulerAngles.y;
             }
             if (waitingToReturn)
             {
@@ -189,7 +165,6 @@ public class ThirdPersonCamera : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
             transform.LookAt(targetTrans); //Set rotations
         }
-        //transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, PlayerTrans.rotation.eulerAngles.z));
     }
 
     public void SetRotation(Transform _camTransform)
@@ -206,16 +181,10 @@ public class ThirdPersonCamera : MonoBehaviour
         Gizmos.DrawSphere(PlayerTrans.position - startOffset, 0.1f);
         if (Application.isPlaying)
         {
-
             Quaternion rotation = Quaternion.Euler(storedPos.y, storedPos.x, 0);
             Vector3 newDir = (rotation * offset).normalized;
 
             Gizmos.DrawLine(targetTrans.position, targetTrans.position - (newDir * storedPos.z));
-
-
-        }
-        else
-        {
         }
     }
 

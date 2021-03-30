@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CurrentLayer
+{
+    Hook,
+    FromWhaleHook,
+    Player,
+    FromWhalePlayer
+}
+
 public class NewGrappleHook : MonoBehaviour
 {
     [Header("Setup Fields")]
@@ -80,7 +88,7 @@ public class NewGrappleHook : MonoBehaviour
             return;
 
         lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, pc.position);//.GetComponent<GrappleScript>().shootPoint.position);
+        lr.SetPosition(1, pc.position);
     }
 
     private void FixedUpdate()
@@ -143,16 +151,31 @@ public class NewGrappleHook : MonoBehaviour
 
     public void YeetPlayer(PlayerMovement _player)
     {
-        if (enabled)// || retracting)
+        if (enabled)
             return;
+
         Rigidbody temp = _player.GetComponent<Rigidbody>();
         temp.AddForce(temp.velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up * 2.0f)) * 3.0f, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        // Change Collisions
+        if (collision.gameObject.GetComponent<WhaleMovement>())
+        {
+            this.gameObject.layer = LayerMask.NameToLayer("HookFromWhale");
+        }
+        // If not hitting whale, change layer back and enable the player
+        else if (this.gameObject.layer == LayerMask.NameToLayer("HookFromWhale"))
+        {
+            this.gameObject.layer = LayerMask.NameToLayer("Hook");
+            // Start Moving Player
+            EntityManager.instance.TogglePlayer(true);
+        }
+
         Collider[] grappleables = Physics.OverlapSphere(transform.position, sc.radius * 2.0f, grappleableLayers);
         enabled = false;
+
         if (grappleables.Length != 0)
         {
             connected = true;
@@ -161,11 +184,9 @@ public class NewGrappleHook : MonoBehaviour
         }
         else
         {
-            if (collision.gameObject.layer == 10) return;
             connectedObj = null;
             retracting = true;
         }
-
 
         GameObject temp = Instantiate(smokePrefab, transform.position, Quaternion.identity);
         Destroy(temp, 2.0f);

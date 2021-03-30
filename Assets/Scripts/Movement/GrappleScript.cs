@@ -13,13 +13,9 @@ public class GrappleScript : MonoBehaviour
     public float pullSpeed = 8.0f;
 
     public bool grapplingFromWhale = false;
-    public bool shotGrapple = false;
-    public bool enabled;
     // temp
     public Transform gunContainer;
     public GunMeshSwitch shootPoint;
-
-
     new public bool enabled;
 
     #region Setup
@@ -42,38 +38,35 @@ public class GrappleScript : MonoBehaviour
             (GrappleUI.GetComponent<UnityEngine.UI.Image>()) : 
             (GetComponentInChildren<UnityEngine.UI.Image>());
 
-        //grapplePoint = GetComponentInChildren<UnityEngine.UI.Image>();
-
         grappleReticule = grapplePoint.gameObject;
-        
-        whaleGrapplePos = GameObject.Find("GrapplePos").transform;
-    }
-
-    private void OnEnable()
-    {
-        shotGrapple = false;
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        // Setup Hook
         hook.grappleableLayers = grappleableLayers;
         ToggleAim(false);
 
-        if (!grapplingFromWhale)
-        {
-            VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").MethodToCall.AddListener(GrappleAim);
-            VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(Grapple);
-            EventManager.StartListening("EnableGrapple", EnableGrapple);
-        }
-        else
-        {
-            VirtualInputs.GetInputListener(InputType.WHALE, "GrappleAim").MethodToCall.AddListener(GrappleAim);
-            VirtualInputs.GetInputListener(InputType.WHALE, "Grapple").MethodToCall.AddListener(Grapple);
-        }
+        // Input Management
+        VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").MethodToCall.AddListener(GrappleAim);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(Grapple);
+
+        // Trigger to enable Grapple Tool
+        EventManager.StartListening("EnableGrapple", EnableGrapple);
+
+        // Callback to swap between Whale and Player
+        EntityManager.instance.toggleControl += ToggleGrapple;
+    }
+
+    private void OnDestroy()
+    {
+        // End Callback
+        EntityManager.instance.toggleControl -= ToggleGrapple;
     }
     #endregion Setup
 
+    // Function to run on trigger
     void EnableGrapple()
     {
         enabled = true;
@@ -81,7 +74,6 @@ public class GrappleScript : MonoBehaviour
 
     void Grapple(InputState type)
     {
-        if(!gameObject.activeInHierarchy) return;
         if (!enabled)
             return;
 
@@ -103,19 +95,12 @@ public class GrappleScript : MonoBehaviour
     bool aim;
     void GrappleAim(InputState type)
     {
-        if(!gameObject.activeInHierarchy) return;
-        if (grapplingFromWhale)
-        {
-            CallbackHandler.instance.GrappleAim(whaleGrapplePos);
-            enabled = type == InputState.KEYDOWN;
-        }
         if (!enabled)
             return;
 
         switch (type)
         {
             case InputState.KEYDOWN:
-
                 ToggleAim(true);
                 TimeSlowDown.instance.SlowDown();
                 break;
@@ -135,28 +120,19 @@ public class GrappleScript : MonoBehaviour
     {
         if (!enabled)
             return;
-        if (!grapplingFromWhale)
-        {
+
+        if (pm)       
             pm.enabled = !hook.connected;
-        }
 
         if (hook.connected)
         {
-            switch (grapplingFromWhale)
-        {
-            case true when shotGrapple:
-                if(hook.connectedObj.layer == 10) return;
-                CallbackHandler.instance.GrappleHitFromWhale(transform);
-                gameObject.SetActive(false);
-                return;
-            case false:
+            if (!grapplingFromWhale)
             {
                 Vector3 moveDir = Vector3.Normalize(hook.transform.position - transform.position) * pullSpeed;
                 rb.AddForce(moveDir * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
                 transform.LookAt(hook.transform);
                 return;
             }
-        }
         }
 
         if (!pm || pm.GLIDINGCheck())
@@ -193,12 +169,10 @@ public class GrappleScript : MonoBehaviour
         if (!enabled)
             return;
 
-        // NOT SURE IF THIS IS BETTER OR WORSE
-        //
         if (hook.connected)
             floatTimer = 0.0f;
 
-        if (floatTimer > 0)
+        if (floatTimer > 0 && !grapplingFromWhale)
         {
             floatTimer -= Time.deltaTime;
             if (rb.velocity.y < 0)
@@ -206,8 +180,6 @@ public class GrappleScript : MonoBehaviour
 
             rb.useGravity = floatTimer > 0;
         }
-        //
-        // COMMENT OUT IF REQUIRED
 
         shootPoint.Loaded(!hook.InUse());
         if (!hook.InUse())
@@ -239,15 +211,14 @@ public class GrappleScript : MonoBehaviour
     bool cachedShoot = false;
     public void FireHook()
     {
-        if (!HookInUse() && (!pm.GLIDINGCheck() || grapplingFromWhale))
+        if (!active)
+            return;
+
+        if (!HookInUse() && (pm ? !pm.GLIDINGCheck() : grapplingFromWhale))
         {
             if (RaycastToTarget() != Vector3.zero)
             {
-                Debug.Log(grapplingFromWhale);
-                Debug.Log(shootPoint.name);
-                
                 hook.Fire(shootPoint.shootPoint, Vector3.Normalize(RaycastToTarget() - transform.position));
-                shotGrapple = true;
                 cachedShoot = false;
                 ToggleAim(false);
                 floatTimer = 1.0f;
@@ -255,14 +226,16 @@ public class GrappleScript : MonoBehaviour
             }
 
             hook.Fire(shootPoint.shootPoint, camToShootFrom.transform.forward);
-            shotGrapple = true;
             cachedShoot = false;
             ToggleAim(false);
         }
+        // This can probably be cleaned up
         else if (AbleToRetract())
         {
             // Start retracting
-            if(!grapplingFromWhale) hook.YeetPlayer(this.GetComponent<PlayerMovement>());
+            if(!grapplingFromWhale) 
+                hook.YeetPlayer(this.GetComponent<PlayerMovement>());
+
             hook.retracting = true;
             hook.connected = false;
             hook.manualRetract = true;
@@ -274,25 +247,35 @@ public class GrappleScript : MonoBehaviour
                 hook.manualRetract = false;
 
                 hook.Fire(shootPoint.shootPoint, Vector3.Normalize(RaycastToTarget() - transform.position));
-                shotGrapple = true;
                 cachedShoot = false;
                 ToggleAim(false);
                 floatTimer = 1.0f;
                 return;
-                //cachedShoot = true;
             }
         }
     }
 
+    public bool active;
+    public void ToggleGrapple(bool _toggle)
+    {
+        active = grapplingFromWhale ? !_toggle : _toggle;
+    }
+
+
     void ToggleAim(bool _startAim)
     {
-        if(grapplingFromWhale) 
-            return;
-        
+        // Toggle Reticule
         aim = _startAim;
         if (grappleReticule != null)
         {
             grappleReticule.SetActive(_startAim);
+        }
+
+        // Switch Whale Cameras on right Click
+        if (grapplingFromWhale && active)
+        {
+            CameraManager.instance.SwitchCamera(_startAim ? CameraType.WhaleGrappleCamera : CameraType.WhaleCamera);
+            return;
         }
     }
 
@@ -301,19 +284,15 @@ public class GrappleScript : MonoBehaviour
         if (!enabled)
             return;
 
-        if (hook.connected && shotGrapple)
+        if (hook.connected)
         {
             hook.connected = false;
             hook.retracting = true;
-            if(!grapplingFromWhale) hook.YeetPlayer(this.GetComponent<PlayerMovement>());
+
+            if(!grapplingFromWhale) 
+                hook.YeetPlayer(this.GetComponent<PlayerMovement>());
         }
     }
-
-    private void OngrappleHitFromWhale(Transform obj)
-    {
-        ToggleAim(false);
-    }
-
 
     #region Checks
     bool HookInUse()
