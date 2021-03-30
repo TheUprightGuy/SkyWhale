@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PuzzleSwitch : MonoBehaviour
 {
-    /*public List<PuzzleSwitch> adjacentSwitches;
+    public List<PuzzleSwitch> adjacentSwitches;
 
     //[HideInInspector] 
     public bool active;
@@ -44,19 +44,6 @@ public class PuzzleSwitch : MonoBehaviour
 
     private void Update()
     {
-        if (MouseOverHighlight.instance.highlightedSwitch == this)
-        {
-            foreach (MeshRenderer n in glowMeshes)
-            {
-                n.material.SetFloat("Boolean_55E471DA", 1.0f);
-            }
-        }
-        else
-        {
-            foreach (MeshRenderer n in glowMeshes)
-            {
-                n.material.SetFloat("Boolean_55E471DA", 0.0f);
-            }
-        }
-    }*/
+
+    }
 }

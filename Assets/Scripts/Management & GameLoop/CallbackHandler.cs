@@ -10,7 +10,7 @@ public class CallbackHandler : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogError("Callback Handler already exists!");
+            Debug.Log("Callback Handler already exists!");
             Destroy(this.gameObject);
         }
         instance = this;
@@ -48,7 +48,7 @@ public class CallbackHandler : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
         }
         
     }
@@ -82,13 +82,31 @@ public class CallbackHandler : MonoBehaviour
         }
     }
 
-    public event Action<Transform, bool> grappleFromWhale;
+    public event Action<Transform> grappleAim;
 
-    public void GrappleStartFromWhale(Transform grapplePos, bool startingGrapple)
+    public void GrappleAim(Transform grapplePos)
     {
-        if (grappleFromWhale != null)
+        if (grappleAim != null)
         {
-            grappleFromWhale(grapplePos, startingGrapple);
+            grappleAim(grapplePos);
+        }
+    }
+
+
+    public event Action<Dialogue> setDialogue;
+    public void SetDialogue(Dialogue _dialogue)
+    {
+        if (setDialogue != null)
+        {
+            setDialogue(_dialogue);
+        }
+    }
+    public event Action stopDialogue;
+    public void StopDialogue()
+    {
+        if (stopDialogue != null)
+        {
+            stopDialogue();
         }
     }
 }

@@ -21,9 +21,9 @@ public class GliderMovement : MonoBehaviour
     float rotationSpeed = 1.0f;
     Vector3 desiredVec;
     Vector3 desiredRoll;
-    float myRoll = 0.0f;
-    float myTurn = 0.0f;
-    float myPitch = 0.0f;
+    public float myRoll = 0.0f;
+    public float myTurn = 0.0f;
+    public float myPitch = 0.0f;
     float turnSpeed = 40;
     float liftSpeed = 20;
     float rollSpeed = 20;
@@ -58,18 +58,17 @@ public class GliderMovement : MonoBehaviour
     {
         enabled = !enabled;
         glider.SetActive(enabled);
-        //rb.useGravity = !enabled;
-        //mainCamera.depth = enabled ? -1.0f : 1.0f;
-        //glideCam.depth = enabled ? 1.0f : -1.0f;
-        //mainCam.m_Priority = enabled ? 0 : 1;
-        //glideCam.m_Priority = enabled ? 1 : 0;
+        myRoll = 0.0f;
+        myPitch = 0.0f;
+        myTurn = 0.0f;
+        currentSpeed = baseSpeed;
 
         CameraManager.instance.SwitchCamera((enabled) ? CameraType.GlideCamera : CameraType.PlayerCamera);
 
         mainCam.GetComponent<ThirdPersonCamera>().SetRotation(glideCam.transform);
         rb.angularVelocity = Vector3.zero;
 
-        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+        //transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
 

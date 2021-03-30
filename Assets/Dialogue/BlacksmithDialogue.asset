@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9acc76f917637d6458e8e47e08610bdc, type: 3}
+  m_Name: BlacksmithDialogue
+  m_EditorClassIdentifier: 
+  dialogue:
+  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+    left: 1
+    name: Blacksmith
+    dialogue:
+    - Time to test out that glider of yours. See these rings here? Try glide through
+      each of them.
+    - To get out your glider, jump off a ledge then press the E button.
+    - Once you're done, return to me for a reward!
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+    left: 0
+    name: Chiken
+    dialogue:
+    - Sounds great! How do I get back up if I fail?
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+    left: 1
+    name: Blacksmith
+    dialogue:
+    - You can press R to restart the demo, or alternatively take the elevator back
+      up.
+    - I'll get that elevator up and running for you now.
+    dialogueIndex: 0
+  leftCharacter: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+  rightCharacter: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+  triggerEvent: TalkedToBlacksmith
+  dialogueIndex: 0
+  inUse: 0

@@ -12,7 +12,6 @@
           <e p="ObjDistributionEditor.cs" t="Include" />
           <e p="TexturePainterControllerEditor.cs" t="Include" />
         </e>
-        <e p="EntityManager.cs" t="Include" />
         <e p="LeanTween" t="Include">
           <e p="Editor" t="Include">
             <e p="LeanTweenDocumentationEditor.cs" t="Include" />
@@ -50,6 +49,7 @@
             <e p="TexturePainterController.cs" t="Include" />
           </e>
         </e>
+        <e p="NPCScript.cs" t="Include" />
         <e p="Scripts" t="Include">
           <e p="Audio" t="Include">
             <e p="AmbientLayer.cs" t="Include" />
@@ -75,8 +75,13 @@
             <e p="Quest.cs" t="Include" />
             <e p="SaveMe.cs" t="Include" />
           </e>
+          <e p="ElevatorScript.cs" t="Include" />
           <e p="EndScreen.cs" t="Include" />
+          <e p="EntityManager.cs" t="Include" />
+          <e p="FlightChallengeMaster.cs" t="Include" />
+          <e p="FlightChallengeRing.cs" t="Include" />
           <e p="GliderMovement.cs" t="Include" />
+          <e p="GunMeshSwitch.cs" t="Include" />
           <e p="Island" t="Include">
             <e p="CollectableIsland" t="Include">
               <e p="ChainController.cs" t="Include" />
@@ -142,6 +147,7 @@
             <e p="SlidingDoorScript.cs" t="Include" />
             <e p="SwitchPuzzleMaster.cs" t="Include" />
           </e>
+          <e p="PuzzleCamera.cs" t="Include" />
           <e p="Resources" t="Include">
             <e p="CollectableResource.cs" t="Include" />
             <e p="ResourceDisplayScript.cs" t="Include" />

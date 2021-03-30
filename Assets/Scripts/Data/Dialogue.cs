@@ -27,10 +27,15 @@ public class Dialogue : ScriptableObject
     public Sprite leftCharacter;
     public Sprite rightCharacter;
 
-    public int dialogueIndex = 0;
+    [HideInInspector] public int dialogueIndex = 0;
+    [HideInInspector] public bool inUse;
+
+    [Header("Trigger Callbacks")]
+    public string triggerEvent;
 
     public void StartUp()
     {
+        inUse = false;
         dialogueIndex = 0;
         foreach(DialogueComponent n in dialogue)
         {
@@ -62,7 +67,14 @@ public class Dialogue : ScriptableObject
             return dialogue[dialogueIndex];
         }
         // Return nullable value (end of dialogue)
+        FinishDialogueEvent();
         return null;        
+    }
+
+    void FinishDialogueEvent()
+    {
+        if (triggerEvent != "")
+            EventManager.TriggerEvent(triggerEvent);
     }
 
     public bool Advance()

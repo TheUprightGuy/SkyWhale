@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class DumbCamera : MonoBehaviour
 {
+    // Local Variables
     Vector3 offset;
     public Transform target;
     public float distance = 1.0f;
 
+    #region Callbacks
     // Start is called before the first frame update
     void Start()
     {
@@ -19,11 +21,12 @@ public class DumbCamera : MonoBehaviour
     {
         CameraManager.instance.switchCam -= SwitchCam;
     }
+    #endregion Callbacks
 
     // Update is called once per frame
     void LateUpdate()
     {
-        transform.position = target.position + target.rotation * offset * distance;
+        transform.position = target.position + (target.rotation * offset * distance);
         transform.LookAt(target);
         //transform.rotation = target.rotation;
     }

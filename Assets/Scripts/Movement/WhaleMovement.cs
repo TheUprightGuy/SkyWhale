@@ -65,7 +65,7 @@ public class WhaleMovement : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.WHALE, "PitchUp").MethodToCall.AddListener(PitchUp);
         VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").MethodToCall.AddListener(Thrust);
         VirtualInputs.GetInputListener(InputType.WHALE, "Dismount").MethodToCall.AddListener(Dismount);
-        VirtualInputs.GetInputListener(InputType.WHALE, "Grapple").MethodToCall.AddListener(Grapple);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").MethodToCall.AddListener(GrappleAim);
         CallbackHandler.instance.grappleHitFromWhale += transform1 => control = false; 
 
         Invoke("AddIsland", 0.1f);
@@ -77,10 +77,10 @@ public class WhaleMovement : MonoBehaviour
         CallbackHandler.instance.SpawnCollectableIsland();
     }
     
-    private void Grapple(InputState arg0) 
+    private void GrappleAim(InputState arg0) 
     {
         if (!control) return; 
-        CallbackHandler.instance.GrappleStartFromWhale(grapplePos, arg0 == InputState.KEYDOWN); 
+        CallbackHandler.instance.GrappleAim(grapplePos); 
     }
     
     private void Dismount(InputState arg0)

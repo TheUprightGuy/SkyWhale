@@ -73,6 +73,9 @@ public class ThirdPersonCamera : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (PlayerTrans.GetComponent<GliderMovement>() && PlayerTrans.GetComponent<GliderMovement>().enabled)
+            return;
+
         //transform.rotation = Quaternion.Euler(new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, PlayerTrans.rotation.eulerAngles.z));
 
         /*if (Input.GetKey(KeyCode.W))

@@ -20,9 +20,7 @@ public class DialogueManager : MonoBehaviour
         animator = GetComponent<Animator>();
     }
     #endregion Setup
-
-    public Dialogue testDialogue;
-
+    
     public Dialogue currentDialogue;
     public float dialogueTime;
     float timer;
@@ -36,6 +34,15 @@ public class DialogueManager : MonoBehaviour
             currentDialogue.StartUp();
         }
         ShowDialogue();
+
+
+        CallbackHandler.instance.setDialogue += SetDialogue;
+        CallbackHandler.instance.stopDialogue += StopDialogue;
+    }
+    private void OnDestroy()
+    {
+        CallbackHandler.instance.setDialogue -= SetDialogue;
+        CallbackHandler.instance.stopDialogue -= StopDialogue;
     }
 
     private void Update()
@@ -43,15 +50,10 @@ public class DialogueManager : MonoBehaviour
         if (enabled)
         {
             timer -= Time.deltaTime;
-            if (timer <= 0 || Input.GetKeyDown(KeyCode.F))
+            if (timer <= 0 || Input.GetKeyDown(KeyCode.E))
             {
                 ProgressDialogue();
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            SetDialogue(testDialogue);
         }
     }
 
@@ -105,9 +107,12 @@ public class DialogueManager : MonoBehaviour
     {
         timer = dialogueTime;
 
+        if (typing)
+            return;
+        
         if (currentDialogue.Progress() != null)
         {
-            ShowDialogue();
+                ShowDialogue();
         }
         else
         {
@@ -124,8 +129,28 @@ public class DialogueManager : MonoBehaviour
         dialogue.text = "";
     }
 
+    public void ResetDialogue()
+    {
+        if (currentDialogue)
+            currentDialogue.StartUp();
+    }
+    public void SetInUse()
+    {
+        if (currentDialogue)
+            currentDialogue.inUse = true;
+    }
+
+    public void StopDialogue()
+    {
+        ResetDialogue();
+        HideText();
+    }
+
+    bool typing;
+
     IEnumerator WriteDialogue(string _text)
     {
+        typing = true;
         animator.ResetTrigger("PopOut");
         animator.SetTrigger("PopIn");
         dialogue.SetText(" ");
@@ -136,5 +161,6 @@ public class DialogueManager : MonoBehaviour
             dialogue.text += n;
             yield return new WaitForSeconds(0.03f);
         }
+        typing = false;
     }
 }

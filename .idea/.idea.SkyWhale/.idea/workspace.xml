@@ -16,12 +16,13 @@
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/CameraManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/EntityManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Camera/ThirdPersonCamera.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
-      <option value="$PROJECT_DIR$/Assets/EntityManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/EntityManager.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
@@ -92,17 +93,56 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs</url>
-          <line>130</line>
-          <properties documentPath="D:\Users\mds00001nb\Desktop\Alpha Project\SkyWhale\Assets\Scripts\NewGrappleHook.cs" initialLine="130" containingFunctionPresentation="method 'YeetPlayer'">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs</url>
+          <line>199</line>
+          <properties documentPath="D:\Users\mds00001nb\Desktop\Alpha Project\SkyWhale\Assets\Scripts\Movement\GrappleScript.cs" initialLine="194" containingFunctionPresentation="method 'Update'">
             <startOffsets>
-              <option value="3490" />
+              <option value="5628" />
             </startOffsets>
             <endOffsets>
-              <option value="3516" />
+              <option value="5639" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="9" />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs</url>
+          <line>242</line>
+          <properties documentPath="D:\Users\mds00001nb\Desktop\Alpha Project\SkyWhale\Assets\Scripts\Movement\GrappleScript.cs" initialLine="234" containingFunctionPresentation="method 'FireHook'">
+            <startOffsets>
+              <option value="6924" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7016" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs</url>
+          <line>72</line>
+          <properties documentPath="D:\Users\mds00001nb\Desktop\Alpha Project\SkyWhale\Assets\Scripts\Movement\GrappleScript.cs" initialLine="67" containingFunctionPresentation="method 'Grapple'">
+            <startOffsets>
+              <option value="1961" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1972" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs</url>
+          <line>82</line>
+          <properties documentPath="D:\Users\mds00001nb\Desktop\Alpha Project\SkyWhale\Assets\Scripts\Movement\WhaleMovement.cs" initialLine="82" containingFunctionPresentation="method 'GrappleAim'">
+            <startOffsets>
+              <option value="2672" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2720" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="11" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

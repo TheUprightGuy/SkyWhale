@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4838435617739099571}
   - component: {fileID: 4838435617739099572}
   - component: {fileID: 4838435617739099573}
+  - component: {fileID: 8009420483058086641}
   m_Layer: 0
   m_Name: Player Camera
   m_TagString: MainCamera
@@ -62,7 +63,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 100
   orthographic: 0
   orthographic size: 5
   m_Depth: 1
@@ -139,11 +140,11 @@ MonoBehaviour:
   rotateSpeed: 100
   zoomSpeed: 200
   CameraSnapAcceleration: 500
-  minYAngle: -60
-  maxYAngle: 89
-  defaultZoom: 2
-  minZoomDist: 3
-  maxZoomDist: 10
+  minYAngle: -40
+  maxYAngle: 60
+  defaultZoom: 1
+  minZoomDist: 1
+  maxZoomDist: 5
   smoothTime: 0
   CollisionLayers:
     serializedVersion: 2
@@ -175,7 +176,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 40
+    FieldOfView: 100
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -209,7 +210,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 2
+    m_Time: 0.3
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -223,6 +224,23 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8009420483058086641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4838435617739099566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: dcafee9ed718aff4abdc97eb1dfdb48b, type: 2}
 --- !u!1 &4838435617864182866
 GameObject:
   m_ObjectHideFlags: 0

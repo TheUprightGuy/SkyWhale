@@ -22,6 +22,10 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("This can't be set, and sets to IDLE on Start call, so no touchy")]
     public PlayerStates PlayerState;
 
+
+    [Header("Dependencies")]
+    public Transform cam;
+
     [Header("Forces")]
     public float walkSpeed = 2.0f;
     public float maxWalkAcceleration = 10f;
@@ -39,8 +43,10 @@ public class PlayerMovement : MonoBehaviour
     [Space(20.0f)]
     public float inAirSpeed = 1.0f;
     public float maxAirAcceleration = 10.0f;
-    [Space(20.0f)]
-
+    [Space(20.0f)]
+
+
+
     public float climbSpeed = 1.0f;
     public float maxClimbAcceleration = 10.0f;
     public float climbGripForce = 1.0f;
@@ -62,8 +68,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Misc")]
     public bool LocalToGround = true;
 
-    public GameObject collidedObj = null;
-
+    [HideInInspector]
     new public bool enabled;
 
     private void Awake()
@@ -86,40 +91,76 @@ public class PlayerMovement : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.PLAYER, "Right").MethodToCall.AddListener(Right);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Run").MethodToCall.AddListener(Run);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(Jump);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Glide").MethodToCall.AddListener(ToggleGlider);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(CancelGrappleGlide);
 
         OnValidate();
     }
 
+    void CancelGrappleGlide(InputState type)
+    {
+        switch (type)
+        {
+            case InputState.KEYDOWN:
+                if (GRAPPLECheck())
+                    grapple.FireHook();
+                if (glider.enabled)
+                    glider.Toggle();
+                break;
+            case InputState.KEYHELD:
+                break;
+            case InputState.KEYUP:
+                break;
+            default:
+                break;
+        }
+    }
+
+    void ToggleGlider(InputState type)
+    {
+        switch (type)
+        {
+            case InputState.KEYDOWN:
+                if ((!(IsGrounded() || GRAPPLECheck() || grapple.hook.enabled) || glider.enabled) && distanceFromGround > 3.0f)
+                    glider.Toggle();               
+                break;
+            case InputState.KEYHELD:
+                break;
+            case InputState.KEYUP:
+                break;
+            default:
+                break;
+        }
+    }
+    public float distanceFromGround;
+
     private void Update()
     {
         SetAnimations();
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        RaycastHit rh;
+        if (Physics.SphereCast(transform.position, CheckRadius, -transform.up, out rh, 1000.0f, GroundLayers.value))
         {
-            if (!(IsGrounded() || GRAPPLECheck()) || glider.enabled)
-                glider.Toggle();
-
-            if (GRAPPLECheck())
-                grapple.FireHook();
+            distanceFromGround = Vector3.Distance(rh.point, transform.position);
         }
 
         if (!enabled)
             return;
 
-        Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
-        rot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
 
-        if ((inputAxis.magnitude > 0.1f && !glider.enabled) || Input.GetKey(KeyCode.O))
+
+        //Move in dir of cam on input
+        if ((inputAxis.magnitude > 0.1f && !glider.enabled))
         {
+            Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
+            Quaternion rot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
+
             transform.Rotate(rot.eulerAngles, Space.World);
         }
 
-        Debug.DrawRay(transform.position, camForwardRelativeToPlayerRot, Color.black);
+        HandleRotation();
     }
 
-    public Quaternion rot;
 
-    public Transform cam;
     public Vector3 inputAxis = Vector3.zero;
     void FixedUpdate()
     {
@@ -129,18 +170,28 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         HandleMovement();
+
+        groundContactNormal = climbContactNormal = Vector3.zero;
     }
 
     float minGroundDotProduct;
-    float minClimbDotProduct;
     private void OnValidate()
     {
         minGroundDotProduct = Mathf.Cos(maxGroundAngle * Mathf.Deg2Rad);
-        minClimbDotProduct = Mathf.Cos(maxClimbAngle * Mathf.Deg2Rad);
     }
 
     void SetCurrentPlayerState()
     {
+        if (CLIMBINGCheck())
+        {
+            if (PlayerState == PlayerStates.MOVING || PlayerState == PlayerStates.IDLE)
+            {
+                RB.velocity = Vector3.zero;
+            }
+
+            PlayerState = PlayerStates.CLIMBING;
+        }
+
         if (MOVINGCheck())
         {
             PlayerState = PlayerStates.MOVING;
@@ -168,11 +219,12 @@ public class PlayerMovement : MonoBehaviour
             PlayerState = PlayerStates.GLIDING;
 
         }
-        if (CLIMBINGCheck())
-        {
-            PlayerState = PlayerStates.CLIMBING;
-        }
-        RB.useGravity = !(GRAPPLECheck()|| GLIDINGCheck());
+
+        //Don't use gravity if grappling or gliding or climbing
+        RB.useGravity = !(PlayerState == PlayerStates.GRAPPLE 
+                            || PlayerState == PlayerStates.GLIDING
+                                || PlayerState == PlayerStates.CLIMBING);
+
     }
 
     #region PlayerStateChecks
@@ -205,7 +257,7 @@ public class PlayerMovement : MonoBehaviour
         return currenty < 0.0f && !IsGrounded() && !IsClimbing();
     }
 
-    bool GLIDINGCheck()
+    public bool GLIDINGCheck()
     {
         return (glider != null && glider.enabled && !IsGrounded() &&
                 PlayerState != PlayerStates.CLIMBING && PlayerState != PlayerStates.GRAPPLE);
@@ -213,25 +265,50 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
 
-    void HandleMovement()
+    void HandleRotation()
     {
-        if (inputAxis == Vector3.zero)
-        {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, 0, maxWalkAcceleration * Time.deltaTime);
-        }
-        else
-        {
-            currentSpeed = Mathf.MoveTowards(currentSpeed, setSpeed, maxWalkAcceleration * Time.deltaTime);
-        }
-
         switch (PlayerState)
         {
             case PlayerStates.IDLE:
             case PlayerStates.MOVING:
-                MoveOnXZ(currentSpeed, setAccel);
+                transform.rotation = (Quaternion.LookRotation(transform.forward, Vector3.up));
+                break;
+            case PlayerStates.JUMPING:
+            case PlayerStates.FALLING:
+                RB.MoveRotation(Quaternion.LookRotation(transform.forward, Vector3.up));
+                break;
+            case PlayerStates.CLIMBING:
+                Vector3 rotateTo = (climbContactNormal != Vector3.zero) ? (-climbContactNormal) : (transform.forward);
+                transform.rotation = (Quaternion.LookRotation(rotateTo, transform.up));
+                break;
+            case PlayerStates.GRAPPLE:
+                break;
+            case PlayerStates.GLIDING:
+                break;
+            default:
+                break;
+        }
+    }
+    public float multi = 0.1f;
+    void HandleMovement()
+    {
+        switch (PlayerState)
+        {
+            case PlayerStates.IDLE:
+            case PlayerStates.MOVING:
+                MoveOnXZ(setSpeed, setAccel);
                 if (inputAxis.y > 0)
                 {
                     Jump(groundContactNormal + Vector3.up, groundjumpHeight);
+                    /*if (IsClimbing())
+                    {
+                        //Jump(groundContactNormal + Vector3.up, groundjumpHeight* multi);
+                        RB.MovePosition(transform.position + (groundContactNormal.normalized * multi));
+                    }
+                    else
+                    {
+                        Jump(groundContactNormal + Vector3.up, groundjumpHeight);
+                    }*/
                 }
                 break;
             case PlayerStates.GRAPPLE:
@@ -239,9 +316,10 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case PlayerStates.CLIMBING:
+                MoveOnXY(climbSpeed, maxClimbAcceleration);
                 if (inputAxis.y > 0)
                 {
-                    Jump(climbContactNormal + Vector3.up, wallJumpHeight);
+                    //Jump(climbContactNormal + Vector3.up, wallJumpHeight);
                 }
                 break;
             case PlayerStates.GLIDING:
@@ -251,6 +329,7 @@ public class PlayerMovement : MonoBehaviour
             case PlayerStates.JUMPING:
             case PlayerStates.FALLING:
                 MoveOnXZ(inAirSpeed, maxAirAcceleration);
+
                 break;
             default:
                 break;
@@ -264,24 +343,19 @@ public class PlayerMovement : MonoBehaviour
         xAxis *= inputAxis.x;
         zAxis *= inputAxis.z;
 
+        float xzMag = (new Vector2(inputAxis.x, inputAxis.z)).normalized.magnitude;
+        currentSpeed = Mathf.MoveTowards(currentSpeed, speed * xzMag, accel * Time.deltaTime);
+
         inputAxis = Vector3.Normalize(inputAxis);
-
-        float currentX = Vector3.Dot(RB.velocity, xAxis);
-        float currentZ = Vector3.Dot(RB.velocity, zAxis);
-
-        float acceleration = accel;
-        float maxSpeedChange = acceleration * Time.fixedDeltaTime;
 
         Vector3 desiredVel = xAxis + zAxis;
         desiredVel.y = 0;
-        desiredVel *= speed;
-
-        float newX =
-            Mathf.MoveTowards(currentX, desiredVel.x, maxSpeedChange);
-        float newZ =
-            Mathf.MoveTowards(currentZ, desiredVel.z, maxSpeedChange);
+        desiredVel *= currentSpeed;
 
         RB.MovePosition(transform.position + desiredVel * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
+
+        //Vector3 rotateTo = (groundContactNormal != Vector3.zero) ? (groundContactNormal) : (Vector3.up);
+        
     }
     void MoveOnXY(float speed, float accel)
     {
@@ -292,32 +366,25 @@ public class PlayerMovement : MonoBehaviour
 
         inputAxis = Vector3.Normalize(inputAxis);
 
-        float currentX = Vector3.Dot(RB.velocity, xAxis);
-        float currentZ = Vector3.Dot(RB.velocity, zAxis);
 
-        float acceleration = accel;
-        float maxSpeedChange = acceleration * Time.fixedDeltaTime;
+
+        float xzMag = (new Vector2(inputAxis.x, inputAxis.z)).normalized.magnitude;
+        currentSpeed = Mathf.MoveTowards(currentSpeed, speed * xzMag, accel * Time.deltaTime);
 
         Vector3 desiredVel = xAxis + zAxis;
-        desiredVel.y = 0;
         desiredVel *= speed;
 
-       float newX =
-            Mathf.MoveTowards(currentX, desiredVel.x, maxSpeedChange);
-        float newZ =
-            Mathf.MoveTowards(currentZ, desiredVel.z, maxSpeedChange);
+        RB.MovePosition(transform.position + (desiredVel * Time.deltaTime * TimeSlowDown.instance.timeScale));
 
-        
-        RB.MovePosition(transform.position + (desiredVel * Time.deltaTime));
-
+        //RB.AddForce(-Physics.gravity, ForceMode.Acceleration);
         if (climbContactNormal != Vector3.zero)
         {
-            RB.AddForce(-climbContactNormal.normalized * ((climbGripForce * 0.9f) * Time.deltaTime));
-            transform.forward = -climbContactNormal;
+            RB.AddForce(-climbContactNormal.normalized * ((climbGripForce * 0.9f) ));
+            //transform.forward = -climbContactNormal;
         }
         else
         {
-            RB.AddForce(transform.forward * ((climbGripForce * 0.9f) * Time.deltaTime));
+            RB.AddForce(transform.forward * ((climbGripForce * 0.9f)));
         }
     }
     // check this
@@ -325,6 +392,8 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!enabled)
             return;
+
+        anims.SetBool("Jump", true);
 
         float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
         Vector3 jumpDirection = jumpVec.normalized;
@@ -337,9 +406,13 @@ public class PlayerMovement : MonoBehaviour
         if (!enabled)
             return;
 
+        if (RB.velocity.y <= 0)
+           anims.SetBool("Jump", false);
+
         switch (PlayerState)
         {
             case PlayerStates.IDLE:
+                anims.SetFloat("MovementSpeed", currentSpeed);
                 break;
             case PlayerStates.MOVING:
 
@@ -525,8 +598,8 @@ public class PlayerMovement : MonoBehaviour
             glider.Toggle();
         }
 
-        RB.velocity = Vector3.zero;
-        RB.angularVelocity = Vector3.zero;
+        //RB.velocity = Vector3.zero;
+        //RB.angularVelocity = Vector3.zero;
 
         EvalCollision(collision);
     }
@@ -553,18 +626,12 @@ public class PlayerMovement : MonoBehaviour
             climbContactNormal = normal;
         }
 
-
         float upDot = Vector3.Dot(transform.up, normal);
 
         if (upDot >= minGroundDotProduct)
         {
             groundContactNormal = normal;
-
         }
-
-
-
-
 
     }
 
@@ -573,27 +640,30 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Vector3 offsetPos = transform.position + GroundCheckStartOffset;
+        //Vector3 offsetPos = transform.position + GroundCheckStartOffset;
 
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawSphere(offsetPos, 0.1f);
+        //Gizmos.color = Color.cyan;
+        //Gizmos.DrawSphere(offsetPos, 0.1f);
 
-        Gizmos.DrawLine(offsetPos, offsetPos + (Vector3.down * GroundCheckDistance));
+        //Gizmos.DrawLine(offsetPos, offsetPos + (Vector3.down * GroundCheckDistance));
 
-        Gizmos.color = Color.red;
-        offsetPos = transform.position + ClimbCheckStartOffset;
-        Gizmos.DrawSphere(offsetPos, 0.1f);
-        Gizmos.DrawLine(offsetPos, offsetPos + (transform.forward * ClimbCheckDistance));
+        //Gizmos.color = Color.red;
+        //offsetPos = transform.position + ClimbCheckStartOffset;
+        //Gizmos.DrawSphere(offsetPos, 0.1f);
+        //Gizmos.DrawLine(offsetPos, offsetPos + (transform.forward * ClimbCheckDistance));
 
-        Gizmos.color = Color.green;
-        Vector3 dir = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
-        Vector3 origin = transform.position;
-        origin.y -= transform.localScale.y / 2;
-        Gizmos.DrawLine(origin, origin + dir);
+        //Gizmos.color = Color.green;
+        //Vector3 dir = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
+        //Vector3 origin = transform.position;
+        //origin.y -= transform.localScale.y / 2;
+        //Gizmos.DrawLine(origin, origin + dir);
 
-        Gizmos.color = Color.white;
-        Vector3 xAxis = Vector3.ProjectOnPlane(transform.up, climbContactNormal);
-        Gizmos.DrawLine(origin, origin + xAxis);
+        //Gizmos.color = Color.white;
+        //Vector3 xAxis = Vector3.ProjectOnPlane(transform.up, climbContactNormal);
+
+        //Gizmos.DrawLine(origin, origin + xAxis);
+
+
     }
 
     #endregion

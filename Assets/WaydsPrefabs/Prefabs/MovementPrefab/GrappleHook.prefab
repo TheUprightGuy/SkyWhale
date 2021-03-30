@@ -12,8 +12,6 @@ GameObject:
   - component: {fileID: 4983379942550152162}
   - component: {fileID: 4983379942550152163}
   - component: {fileID: 4983379942550152173}
-  - component: {fileID: 4983379942550152167}
-  - component: {fileID: 4983379942550152160}
   - component: {fileID: 4983379942550152166}
   m_Layer: 15
   m_Name: GrappleHook
@@ -30,9 +28,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4983379942550152174}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -31.83027, y: 2.939, z: 26.789923}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.15392853, y: 0.15392849, z: 0.15392853}
-  m_Children: []
+  m_Children:
+  - {fileID: 450074440318562913}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -64,7 +63,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 1.09}
 --- !u!120 &4983379942550152173
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -162,13 +161,79 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
---- !u!23 &4983379942550152167
-MeshRenderer:
+--- !u!114 &4983379942550152166
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4983379942550152174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e71edb74dc45a8f4e8056d8a3eacbc1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  retractSpeed: 48
+  shootSpeed: 10
+  smokePrefab: {fileID: 5703808025242366775, guid: ae62032292cc48f47bf8e11b3871151f,
+    type: 3}
+  enabled: 0
+  connected: 0
+  manualRetract: 0
+  retracting: 0
+  flightTime: 0
+  grappleableLayers:
+    serializedVersion: 2
+    m_Bits: 8192
+  pc: {fileID: 0}
+  hookModel: {fileID: 0}
+--- !u!1 &8401076630468820528
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 450074440318562913}
+  - component: {fileID: 6991877030282939762}
+  - component: {fileID: 4474304996595431849}
+  m_Layer: 15
+  m_Name: HookModel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &450074440318562913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8401076630468820528}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4983379942550152161}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!33 &6991877030282939762
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8401076630468820528}
+  m_Mesh: {fileID: 8473930003380522784, guid: 2e941d20269b5e74f9957ae6e16aa145, type: 3}
+--- !u!23 &4474304996595431849
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8401076630468820528}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -180,7 +245,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: b54560b3c1de94f4185951eb33b252fa, type: 2}
+  - {fileID: 2100000, guid: 9c44abc6d3fe51f46bdb7675874b04ee, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -201,33 +266,3 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!33 &4983379942550152160
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4983379942550152174}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &4983379942550152166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4983379942550152174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e71edb74dc45a8f4e8056d8a3eacbc1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forceDir: {x: 0, y: 0, z: 0}
-  enabled: 0
-  retracting: 0
-  flightTime: 0
-  grappleableLayers:
-    serializedVersion: 2
-    m_Bits: 8192
-  pc: {fileID: 0}
-  connected: 0
-  manualRetract: 0

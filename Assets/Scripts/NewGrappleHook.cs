@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class NewGrappleHook : MonoBehaviour
 {
+    [Header("Setup Fields")]
+    public float retractSpeed = 24.0f;
+    public float shootSpeed = 24.0f;
+    public GameObject smokePrefab;
+
     [Header("Debug Fields")]
     new public bool enabled;
     public bool connected;
@@ -19,15 +24,18 @@ public class NewGrappleHook : MonoBehaviour
     Rigidbody rb;
     MeshRenderer mr;
     LineRenderer lr;
-    [HideInInspector] public Transform pc;
+    //[HideInInspector]
+    public Transform pc;
     SphereCollider sc;
     Vector3 cachedPos;
     Vector3 forceDir;
 
+    public Transform hookModel;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        mr = GetComponent<MeshRenderer>();
+        mr = GetComponentInChildren<MeshRenderer>();
         lr = GetComponent<LineRenderer>();
         sc = GetComponent<SphereCollider>();
     }
@@ -37,9 +45,17 @@ public class NewGrappleHook : MonoBehaviour
     {
         pc = _player;
         transform.position = _player.position;
-        forceDir = _dir * 24.0f;
+
+        GameObject temp = Instantiate(smokePrefab, pc);
+        Destroy(temp, 2.0f);
+
+        sc.enabled = true;
+
+        transform.LookAt(transform.position + _dir);
+        forceDir = _dir * shootSpeed;
         enabled = true;
         flightTime = 0.0f;
+        rb.velocity = Vector3.zero;
         TimeSlowDown.instance.SpeedUp();
     }
 
@@ -64,7 +80,7 @@ public class NewGrappleHook : MonoBehaviour
             return;
 
         lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, pc.position);
+        lr.SetPosition(1, pc.position);//.GetComponent<GrappleScript>().shootPoint.position);
     }
 
     private void FixedUpdate()
@@ -75,13 +91,10 @@ public class NewGrappleHook : MonoBehaviour
             {
                 sc.enabled = true;
                 flightTime += Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
-                if (flightTime > 2.0f)
-                {
-                    forceDir += (transform.up * -Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
-                }
-                rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
 
-                if (flightTime > 4.0f)
+                rb.AddForce((forceDir / flightTime) * 10.0f * Time.fixedDeltaTime, ForceMode.Acceleration);
+
+                if (flightTime > 2.0f)
                 {
                     enabled = false;
                     retracting = true;
@@ -91,14 +104,16 @@ public class NewGrappleHook : MonoBehaviour
         }
         if (retracting)
         {
+            rb.velocity = Vector3.zero;
+
             connectedObj = null;
             sc.enabled = false;
             flightTime = 0.0f;
             
-            forceDir = Vector3.Normalize(pc.position - transform.position) * (manualRetract ? 48.0f : 24.0f);
-            rb.MovePosition(transform.position + forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
+            forceDir = Vector3.Normalize(pc.position - transform.position) * (manualRetract ? retractSpeed * 2 : retractSpeed * 2);
+            rb.MovePosition(transform.position + (manualRetract ? forceDir * Time.fixedDeltaTime : forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale));
 
-            if (Vector3.Distance(transform.position, pc.position) < (forceDir.magnitude * Time.fixedDeltaTime))
+            if (Vector3.Distance(transform.position, pc.position) < Mathf.Max((forceDir.magnitude * Time.fixedDeltaTime), 0.3f))
             {
                 ResetHook();
             }
@@ -109,10 +124,11 @@ public class NewGrappleHook : MonoBehaviour
 
         if (Vector3.Distance(transform.position, pc.position) < 0.3f && connected)
         {
-            YeetPlayer(pc);
             retracting = true;
             manualRetract = false;
             connectedObj = null;
+            if (!pc || !pc.GetComponent<PlayerMovement>()) return;
+            YeetPlayer(pc.GetComponentInParent<PlayerMovement>());
         }
     }
 
@@ -120,38 +136,48 @@ public class NewGrappleHook : MonoBehaviour
     {
         enabled = false;
         retracting = false;
-        sc.enabled = false;
         connected = false;
         manualRetract = false;
         connectedObj = null;
     }
 
-    public void YeetPlayer(Transform _player)
+    public void YeetPlayer(PlayerMovement _player)
     {
-        if (enabled || retracting)
+        if (enabled)// || retracting)
             return;
-
-        pc = _player;
-        if(!pc.GetComponent<Rigidbody>()) return;
-        Rigidbody temp = pc.GetComponent<Rigidbody>();
-        temp.AddForce(temp.velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up)), ForceMode.Impulse);
+        Rigidbody temp = _player.GetComponent<Rigidbody>();
+        temp.AddForce(temp.velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up * 2.0f)) * 3.0f, ForceMode.Impulse);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        Collider[] grappleables = Physics.OverlapSphere(transform.position, sc.radius * 2.0f, grappleableLayers);
         enabled = false;
-        if (GrappleAbleCheck(collision.gameObject.layer))
+        if (grappleables.Length != 0)
         {
             connected = true;
             connectedObj = collision.gameObject;
             cachedPos = connectedObj.transform.position;
-        }   
+        }
         else
         {
             if (collision.gameObject.layer == 10) return;
             connectedObj = null;
             retracting = true;
         }
+
+
+        GameObject temp = Instantiate(smokePrefab, transform.position, Quaternion.identity);
+        Destroy(temp, 2.0f);
+
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        sc.enabled = false;
+    }
+
+    public bool InUse()
+    {
+        return (enabled || retracting || connected || manualRetract);
     }
 
     public bool GrappleAbleCheck(int layer)

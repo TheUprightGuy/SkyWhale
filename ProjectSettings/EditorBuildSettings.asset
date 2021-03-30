@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/WaydsWorkingScene.unity
-    guid: a1629340a63a8664fb4e0a2f9f4dab7c
+    path: Assets/Scenes/PreloadScene.unity
+    guid: c3aea74be8ba35f4a8fddc5678a18f6c
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 99a54ce109532a547b7e4b612e40dc4f
+  - enabled: 1
+    path: Assets/Scenes/Jake-WaydsWorkingScene 1.unity
+    guid: 8439ef853e11c204ea15b56fd5f7ee10
   m_configObjects: {}

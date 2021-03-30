@@ -15,10 +15,10 @@ MonoBehaviour:
   dialogue:
   - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
     left: 1
-    name: Whale
+    name: BlackSmith
     dialogue:
-    - Line 1
-    - Line 2
+    - I am a blacksmith
+    - yolo
     dialogueIndex: 0
   - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
     left: 0
