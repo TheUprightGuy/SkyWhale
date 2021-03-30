@@ -6,9 +6,10 @@ public class NPCScript : MonoBehaviour
 {
     PlayerMovement pm;
 
-    private void Start()
+    public virtual void Start()
     {
         dialogue.StartUp();
+        currentDialogue = dialogue;
     }
 
     private void Update()
@@ -19,7 +20,7 @@ public class NPCScript : MonoBehaviour
             Quaternion rot = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime);
 
-            if (Input.GetKeyDown(KeyCode.E) && !dialogue.inUse)
+            if (Input.GetKeyDown(KeyCode.E) && !currentDialogue.inUse)
             {
                 Interact();
             }
@@ -27,10 +28,11 @@ public class NPCScript : MonoBehaviour
     }
 
     public Dialogue dialogue;
+    public Dialogue currentDialogue;
 
     void Interact()
     {
-        CallbackHandler.instance.SetDialogue(dialogue);
+        CallbackHandler.instance.SetDialogue(currentDialogue);
     }
 
 

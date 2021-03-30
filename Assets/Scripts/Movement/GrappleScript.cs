@@ -17,6 +17,8 @@ public class GrappleScript : MonoBehaviour
     public GunMeshSwitch shootPoint;
 
 
+    public bool enabled;
+
     #region Setup
     // Local Variables
     Camera camToShootFrom;
@@ -50,11 +52,21 @@ public class GrappleScript : MonoBehaviour
 
         VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").MethodToCall.AddListener(GrappleAim);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(Grapple);
+
+        EventManager.StartListening("EnableGrapple", EnableGrapple);
     }
     #endregion Setup
 
+    void EnableGrapple()
+    {
+        enabled = true;
+    }
+
     void Grapple(InputState type)
     {
+        if (!enabled)
+            return;
+
         switch (type)
         {
             case InputState.KEYDOWN:
@@ -73,6 +85,9 @@ public class GrappleScript : MonoBehaviour
     bool aim;
     void GrappleAim(InputState type)
     {
+        if (!enabled)
+            return;
+
         switch (type)
         {
             case InputState.KEYDOWN:
@@ -94,6 +109,9 @@ public class GrappleScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!enabled)
+            return;
+
         pm.enabled = !hook.connected;
 
         if (hook.connected)
@@ -142,6 +160,9 @@ public class GrappleScript : MonoBehaviour
     float floatTimer;
     private void Update()
     {
+        if (!enabled)
+            return;
+
         // NOT SURE IF THIS IS BETTER OR WORSE
         //
         if (hook.connected)
@@ -241,6 +262,9 @@ public class GrappleScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (!enabled)
+            return;
+
         if (hook.connected && shotGrapple)
         {
             hook.connected = false;

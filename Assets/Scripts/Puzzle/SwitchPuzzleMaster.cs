@@ -93,6 +93,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
         inUse = !inUse;
         ToggleCam(inUse);
         Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
+        EventManager.TriggerEvent("SwitchPuzzleCompletion");
         return true;
     }
 
