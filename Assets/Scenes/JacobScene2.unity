@@ -3948,7 +3948,7 @@ PrefabInstance:
     - target: {fileID: 6709987937421228236, guid: 1b3987150f1e46843beb873c6b2da9d0,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.08178451
+      value: -0.081784494
       objectReference: {fileID: 0}
     - target: {fileID: 6709987937421228236, guid: 1b3987150f1e46843beb873c6b2da9d0,
         type: 3}
@@ -4146,11 +4146,6 @@ PrefabInstance:
         type: 3}
       propertyPath: raycastTargets.m_Bits
       value: 16183
-      objectReference: {fileID: 0}
-    - target: {fileID: 4595815212693617171, guid: 1cb8a66b21256ed4abe9d5d047860c3f,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5529914626202603379, guid: 1cb8a66b21256ed4abe9d5d047860c3f,
         type: 3}

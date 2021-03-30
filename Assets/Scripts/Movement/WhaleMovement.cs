@@ -16,7 +16,6 @@ public class WhaleMovement : MonoBehaviour
     public float minimumDistance = 15.0f;
     [Header("Dismount")]
     private Transform dismountPosition; 
-    private Transform grapplePos; 
 
     #region Local Variables
     //[HideInInspector] 
@@ -50,7 +49,6 @@ public class WhaleMovement : MonoBehaviour
         pickUp = GetComponent<PickUp>();
         cc = GetComponentInChildren<NewCharacter>();
         dismountPosition = GameObject.Find("DismountPos").transform;
-        grapplePos = GameObject.Find("GrapplePos").transform; 
     }
 
     // Start is called before the first frame update
@@ -65,7 +63,6 @@ public class WhaleMovement : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.WHALE, "PitchUp").MethodToCall.AddListener(PitchUp);
         VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").MethodToCall.AddListener(Thrust);
         VirtualInputs.GetInputListener(InputType.WHALE, "Dismount").MethodToCall.AddListener(Dismount);
-        VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").MethodToCall.AddListener(GrappleAim);
         CallbackHandler.instance.grappleHitFromWhale += transform1 => control = false; 
 
         Invoke("AddIsland", 0.1f);
@@ -75,12 +72,6 @@ public class WhaleMovement : MonoBehaviour
     void AddIsland()
     {
         CallbackHandler.instance.SpawnCollectableIsland();
-    }
-    
-    private void GrappleAim(InputState arg0) 
-    {
-        if (!control) return; 
-        CallbackHandler.instance.GrappleAim(grapplePos); 
     }
     
     private void Dismount(InputState arg0)

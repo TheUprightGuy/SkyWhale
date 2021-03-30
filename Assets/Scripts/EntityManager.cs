@@ -37,9 +37,8 @@ public class EntityManager : MonoBehaviour
 
     private void OngrappleFromWhale(Transform grapplePos)
     {
-        bool shouldStartGrappling = !playerOnWhale.GetComponent<GrappleScript>().isActiveAndEnabled && playerOnWhale.GetComponent<GrappleScript>().enabled;
+        bool shouldStartGrappling = playerOnWhale.GetComponent<GrappleScript>().enabled;
         grappleHook.gameObject.layer = shouldStartGrappling?16:15;
-            playerOnWhale.GetComponentInChildren<GrappleScript>().enabled = shouldStartGrappling;
             _whaleGrappleUIElement.SetActive(shouldStartGrappling);
             CameraManager.instance.SwitchCamera(shouldStartGrappling? CameraType.WhaleGrappleCamera:CameraType.WhaleCamera);
     }

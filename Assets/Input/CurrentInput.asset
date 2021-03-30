@@ -134,7 +134,7 @@ MonoBehaviour:
     MethodToCall:
       m_PersistentCalls:
         m_Calls: []
-  - NameForInput: Grapple
+  - NameForInput: GrappleAim
     KeyToListen: 324
     CallOnKeyDown: 1
     CallOnKeyHeld: 0
@@ -142,7 +142,7 @@ MonoBehaviour:
     MethodToCall:
       m_PersistentCalls:
         m_Calls: []
-  - NameForInput: GrappleFire
+  - NameForInput: Grapple
     KeyToListen: 323
     CallOnKeyDown: 1
     CallOnKeyHeld: 0

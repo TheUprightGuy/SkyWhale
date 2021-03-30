@@ -19,7 +19,6 @@ public class GrappleScript : MonoBehaviour
     public Transform gunContainer;
     public GunMeshSwitch shootPoint;
 
-
     #region Setup
     // Local Variables
     public Transform camToShootFrom;
@@ -28,6 +27,7 @@ public class GrappleScript : MonoBehaviour
     UnityEngine.UI.Image grapplePoint;
     PlayerMovement pm;
     Rigidbody rb;
+    private Transform whaleGrapplePos;
 
     private void Awake()
     {
@@ -42,6 +42,8 @@ public class GrappleScript : MonoBehaviour
         //grapplePoint = GetComponentInChildren<UnityEngine.UI.Image>();
 
         grappleReticule = grapplePoint.gameObject;
+        
+        whaleGrapplePos = GameObject.Find("GrapplePos").transform;
     }
 
     private void OnEnable()
@@ -59,13 +61,27 @@ public class GrappleScript : MonoBehaviour
         {
             VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").MethodToCall.AddListener(GrappleAim);
             VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(Grapple);
-            return;
+            EventManager.StartListening("EnableGrapple", EnableGrapple);
+        }
+        else
+        {
+            VirtualInputs.GetInputListener(InputType.WHALE, "GrappleAim").MethodToCall.AddListener(GrappleAim);
+            VirtualInputs.GetInputListener(InputType.WHALE, "Grapple").MethodToCall.AddListener(Grapple);
         }
     }
     #endregion Setup
 
+    void EnableGrapple()
+    {
+        enabled = true;
+    }
+
     void Grapple(InputState type)
     {
+        if(!gameObject.activeInHierarchy) return;
+        if (!enabled)
+            return;
+
         switch (type)
         {
             case InputState.KEYDOWN:
@@ -84,6 +100,15 @@ public class GrappleScript : MonoBehaviour
     bool aim;
     void GrappleAim(InputState type)
     {
+        if(!gameObject.activeInHierarchy) return;
+        if (grapplingFromWhale)
+        {
+            CallbackHandler.instance.GrappleAim(whaleGrapplePos);
+            enabled = type == InputState.KEYDOWN;
+        }
+        if (!enabled)
+            return;
+
         switch (type)
         {
             case InputState.KEYDOWN:
@@ -105,6 +130,8 @@ public class GrappleScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (!enabled)
+            return;
         if (!grapplingFromWhale)
         {
             pm.enabled = !hook.connected;
@@ -160,6 +187,9 @@ public class GrappleScript : MonoBehaviour
     float floatTimer;
     private void Update()
     {
+        if (!enabled)
+            return;
+
         // NOT SURE IF THIS IS BETTER OR WORSE
         //
         if (hook.connected)
@@ -265,6 +295,9 @@ public class GrappleScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (!enabled)
+            return;
+
         if (hook.connected && shotGrapple)
         {
             hook.connected = false;

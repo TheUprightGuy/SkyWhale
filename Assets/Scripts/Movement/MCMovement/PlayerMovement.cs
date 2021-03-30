@@ -149,7 +149,7 @@ public class PlayerMovement : MonoBehaviour
 
 
         //Move in dir of cam on input
-        if ((inputAxis.magnitude > 0.1f && !glider.enabled))
+        if ((inputAxis.magnitude > 0.1f && !glider.enabled) && (PlayerState != PlayerStates.FALLING && PlayerState != PlayerStates.JUMPING && PlayerState != PlayerStates.CLIMBING))
         {
             Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
             Quaternion rot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
@@ -184,9 +184,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (CLIMBINGCheck())
         {
-            if (PlayerState == PlayerStates.MOVING || PlayerState == PlayerStates.IDLE)
+            if (PlayerState == PlayerStates.MOVING || PlayerState == PlayerStates.IDLE || PlayerState == PlayerStates.FALLING || PlayerState == PlayerStates.JUMPING)
             {
                 RB.velocity = Vector3.zero;
+                inputAxis.y = 0;
             }
 
             PlayerState = PlayerStates.CLIMBING;
@@ -274,6 +275,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.rotation = (Quaternion.LookRotation(transform.forward, Vector3.up));
                 break;
             case PlayerStates.JUMPING:
+                break;
             case PlayerStates.FALLING:
                 RB.MoveRotation(Quaternion.LookRotation(transform.forward, Vector3.up));
                 break;
@@ -300,6 +302,7 @@ public class PlayerMovement : MonoBehaviour
                 if (inputAxis.y > 0)
                 {
                     Jump(groundContactNormal + Vector3.up, groundjumpHeight);
+                    inputAxis.y = 0;
                     /*if (IsClimbing())
                     {
                         //Jump(groundContactNormal + Vector3.up, groundjumpHeight* multi);
@@ -319,6 +322,7 @@ public class PlayerMovement : MonoBehaviour
                 MoveOnXY(climbSpeed, maxClimbAcceleration);
                 if (inputAxis.y > 0)
                 {
+                    JumpFromWall();
                     //Jump(climbContactNormal + Vector3.up, wallJumpHeight);
                 }
                 break;
@@ -392,13 +396,21 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!enabled)
             return;
-
+        RB.AddForce((transform.forward * 0.1f + transform.up) * 15.0f, ForceMode.Impulse);
         anims.SetBool("Jump", true);
 
-        float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
+        /*float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
         Vector3 jumpDirection = jumpVec.normalized;
 
-        RB.velocity += jumpDirection * jumpSpeed + (Physics.gravity * Time.deltaTime);
+        RB.velocity += jumpDirection * jumpSpeed + (Physics.gravity * Time.deltaTime);*/
+    }
+
+    void JumpFromWall()
+    {
+        RB.AddForce((-transform.forward + transform.up) * 12.0f, ForceMode.Impulse);
+        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180.0f, transform.rotation.eulerAngles.z);
+//        RB.MoveRotation(Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180.0f, transform.rotation.eulerAngles.z));
+        inputAxis.y = 0;
     }
 
     void SetAnimations()
