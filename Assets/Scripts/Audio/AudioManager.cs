@@ -63,6 +63,13 @@ namespace Audio
                 AddAudioSourceToDictionary(audioSource);
             }
 
+            var initiallyDisabledAudioSources =
+                ObjectFinder.FindAllObjectsWithTag("InitiallyDisabledAudioSources");
+            foreach (var initiallyDisabledAudioSource in initiallyDisabledAudioSources)
+            {
+                AddAudioSourceToDictionary(initiallyDisabledAudioSource.GetComponent<AudioSource>());
+            }
+
             _soundsUnrestricted = new List<string> { "Click", "Click_Progress" };
 
             if (!randomlyCycleMusic) return;
@@ -85,8 +92,13 @@ namespace Audio
             _musicDefaultVolume = _musicSource.volume;
         }
 
-        private void AddAudioSourceToDictionary(AudioSource audioSource)
+        public void AddAudioSourceToDictionary(AudioSource audioSource)
         {
+            if (soundDictionary.ContainsKey(audioSource.name))
+            {
+                Debug.Log("Sound dictionary already contains an audio source with key: " + audioSource.name);
+                return;
+            }
             var soundName = audioSource.name;
             var soundInfo = new SoundInfo();
             soundInfo.InitialiseSound(soundName);

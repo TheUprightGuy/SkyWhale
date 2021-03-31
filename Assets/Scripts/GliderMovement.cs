@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GliderMovement : MonoBehaviour
 {
@@ -32,12 +34,19 @@ public class GliderMovement : MonoBehaviour
     public float moveSpeed = 1;
     public float baseSpeed = 5.0f;
     float gravScale = 1.0f;
+
+    private float defaultVolume;
+    private float defaultPitch;
+    private AudioMixer _audioMixer;
     #endregion Local Variables
 
     private void Awake()
     {
         rb = GetComponentInChildren<Rigidbody>();
         dc = glideCam.GetComponent<DumbCamera>();
+        defaultVolume = gameObject.GetComponentInChildren<AudioSource>().volume;
+        defaultPitch = gameObject.GetComponentInChildren<AudioSource>().pitch;
+        _audioMixer = gameObject.GetComponentInChildren<AudioSource>().outputAudioMixerGroup.audioMixer;
     }
 
     // Start is called before the first frame update
@@ -53,6 +62,9 @@ public class GliderMovement : MonoBehaviour
         moveSpeed = baseSpeed;
         currentSpeed = 0.0f;
         EventManager.StartListening("EnableGlider", EnableGlider);
+        
+        //Testing + temporary remove immediately
+        unlocked = true;
     }
 
     void EnableGlider()
@@ -79,7 +91,20 @@ public class GliderMovement : MonoBehaviour
         mainCam.GetComponent<ThirdPersonCamera>().SetRotation(glideCam.transform);
         rb.angularVelocity = Vector3.zero;
 
+        PlayAudioOnToggle();
+        
         //transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+    }
+
+    private void PlayAudioOnToggle()
+    {
+        if (enabled)
+        {
+            AudioManager.instance.PlaySound("GliderWind");
+            return;
+        }
+        AudioManager.instance.StopSound("GliderWind");
+        AudioManager.instance.PlaySound("GliderClose");
     }
 
 
@@ -195,6 +220,12 @@ public class GliderMovement : MonoBehaviour
         desiredVec = new Vector3(myPitch, base.transform.eulerAngles.y + myTurn, myRoll);
 
         base.transform.rotation = Quaternion.Slerp(base.transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);
+        
+        //Play sound
+        float currentVolume = defaultVolume * (1 + Mathf.Clamp01((currentSpeed / maxSpeed)));
+        float currentPitch = defaultPitch * (1 + Mathf.Clamp01((currentSpeed / maxSpeed)));
+        _audioMixer.SetFloat("GliderWindVolume", currentVolume);
+        _audioMixer.SetFloat("GliderWindPitch", currentPitch);
     }
 
     public void RotatePlayer()

@@ -9,8 +9,9 @@ namespace Audio
         public float VolumeDefault;
         public void InitialiseSound(string name)
         {
-            this.AudioSource = GameObject.Find(name)
-                .GetComponent<AudioSource>();
+            this.AudioSource = ObjectFinder.FindObject(name)
+                    .GetComponent<AudioSource>();
+            
             this.PitchDefault = this.AudioSource.pitch;
             this.VolumeDefault = this.AudioSource.volume;
         }

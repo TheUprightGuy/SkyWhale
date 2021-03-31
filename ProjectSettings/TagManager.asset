@@ -8,6 +8,7 @@ TagManager:
   - GEZone
   - IslandMesh
   - Circle
+  - InitiallyDisabledAudioSources
   layers:
   - Default
   - TransparentFX

@@ -68,7 +68,6 @@ MonoBehaviour:
   - {fileID: 5102500168541330513}
   - {fileID: 4014376754064703141}
   audioMixer: {fileID: 24100000, guid: dbf9485d6ef14a342bb868c49599feec, type: 2}
-  volumeSlider: {fileID: 0}
 --- !u!82 &178910286826226476
 AudioSource:
   m_ObjectHideFlags: 0

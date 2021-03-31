@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -121,8 +122,11 @@ public class PlayerMovement : MonoBehaviour
         switch (type)
         {
             case InputState.KEYDOWN:
-                if ((!(IsGrounded() || GRAPPLECheck() || grapple.hook.enabled) || glider.enabled) && distanceFromGround > 3.0f)
-                    glider.Toggle();               
+                if ((!(IsGrounded() || GRAPPLECheck() || grapple.hook.enabled) || glider.enabled) &&
+                    distanceFromGround > 3.0f)
+                {
+                    glider.Toggle();
+                }               
                 break;
             case InputState.KEYHELD:
                 break;
@@ -604,8 +608,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (glider.enabled)      
-            glider.Toggle();     
+        if (glider.enabled)
+        {
+            glider.Toggle();
+            AudioManager.instance.PlaySound("Crash");
+        }     
 
         // Change Collisions Back - This isn't perfect, requires the player touches something and doesn't try to reconnect to whale after jumping off.
         if (!collision.gameObject.GetComponent<WhaleMovement>() && this.gameObject.layer == LayerMask.NameToLayer("PlayerFromWhale"))
