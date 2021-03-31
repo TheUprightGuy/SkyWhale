@@ -146,17 +146,6 @@ public class PlayerMovement : MonoBehaviour
         if (!enabled)
             return;
 
-
-
-        //Move in dir of cam on input
-        if ((inputAxis.magnitude > 0.1f && !glider.enabled) && (PlayerState != PlayerStates.FALLING && PlayerState != PlayerStates.JUMPING && PlayerState != PlayerStates.CLIMBING))
-        {
-            Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
-            Quaternion rot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
-
-            transform.Rotate(rot.eulerAngles, Space.World);
-        }
-
         HandleRotation();
     }
 
@@ -265,13 +254,35 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion
 
-
+    Quaternion prev = Quaternion.identity;
+    Quaternion cachedRot = Quaternion.identity;
     void HandleRotation()
     {
         switch (PlayerState)
         {
             case PlayerStates.IDLE:
             case PlayerStates.MOVING:
+                if (inputAxis.magnitude > 0.1f)
+                {
+                    if (cachedRot == Quaternion.identity)
+                    {
+
+                        Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
+                        cachedRot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
+                        prev = Quaternion.identity;
+                    }
+
+                    if (prev == cachedRot)
+                    {
+                        break;
+                    }
+                    prev = Quaternion.RotateTowards(prev, cachedRot, 0.1f);
+                    transform.Rotate(prev.eulerAngles, Space.World);
+                }
+                else
+                {
+                    cachedRot = Quaternion.identity;
+                }
                 transform.rotation = (Quaternion.LookRotation(transform.forward, Vector3.up));
                 break;
             case PlayerStates.JUMPING:
