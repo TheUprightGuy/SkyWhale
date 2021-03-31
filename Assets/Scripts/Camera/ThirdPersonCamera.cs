@@ -46,6 +46,8 @@ public class ThirdPersonCamera : MonoBehaviour
     Vector3 storedPos = Vector3.zero;
     bool waitingToReturn = false;
 
+    bool pause;
+
     void Start()
     {
         offset = startOffset; // targetTrans.position - transform.position;
@@ -57,15 +59,27 @@ public class ThirdPersonCamera : MonoBehaviour
         lastCalculatedPos = transform.position;
 
         CameraManager.instance.switchCam += SwitchCam;
+        CallbackHandler.instance.pause += Pause;
     }
 
     private void OnDestroy()
     {
         CameraManager.instance.switchCam -= SwitchCam;
+        CallbackHandler.instance.pause -= Pause;
     }
+
+
+    void Pause(bool _pause)
+    {
+        pause = _pause;
+    }
+
 
     private void LateUpdate()
     {
+        if (pause)
+            return;
+
         if (PlayerTrans.GetComponent<GliderMovement>() && PlayerTrans.GetComponent<GliderMovement>().enabled)
             return;
 

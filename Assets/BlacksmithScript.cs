@@ -14,6 +14,8 @@ public class BlacksmithScript : NPCScript
         currentDialogue = dialogue;
 
         EventManager.StartListening("SwitchPuzzleCompletion", SwitchDialogue);
+
+        CallbackHandler.instance.pause += Pause;
     }
     
     public void SwitchDialogue()

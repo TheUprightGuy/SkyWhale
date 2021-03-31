@@ -15,6 +15,7 @@ public class ElevatorScript : MonoBehaviour
 {
     #region Setup
     Rigidbody rb;
+    bool pause;
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -23,11 +24,18 @@ public class ElevatorScript : MonoBehaviour
     private void Start()
     {
         EventManager.StartListening("TalkedToBlacksmith", StartElevator);
+        CallbackHandler.instance.pause += Pause;
+    }
+
+    void Pause(bool _pause)
+    {
+        pause = _pause;
     }
 
     private void OnDestroy()
     {
         EventManager.StopListening("TalkedToBlacksmith", StartElevator);
+        CallbackHandler.instance.pause -= Pause;
     }
 
     #endregion Setup
@@ -49,14 +57,14 @@ public class ElevatorScript : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!inUse)
+        if (!inUse || pause)
             return;
 
         switch (ec)
         {
             case ElevatorControl.STATIONARYDOWN:
             {
-                timer -= Time.fixedDeltaTime;
+                timer -= Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
                 if (timer <= 0)
                 {
                     SwitchEC(ElevatorControl.UP);
@@ -66,7 +74,7 @@ public class ElevatorScript : MonoBehaviour
             }
             case ElevatorControl.STATIONARYUP:
             {
-                timer -= Time.fixedDeltaTime;
+                timer -= Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
                 if (timer <= 0)
                 {
                     SwitchEC(ElevatorControl.DOWN);
@@ -81,7 +89,7 @@ public class ElevatorScript : MonoBehaviour
                     SwitchEC(ElevatorControl.STATIONARYUP);
                     break;
                 }
-                rb.MovePosition(transform.position + transform.up * Time.fixedDeltaTime);
+                rb.MovePosition(transform.position + transform.up * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
                 break;
             }
             case ElevatorControl.DOWN:
@@ -91,7 +99,7 @@ public class ElevatorScript : MonoBehaviour
                     SwitchEC(ElevatorControl.STATIONARYDOWN);
                     break;
                 }
-                rb.MovePosition(transform.position - transform.up * Time.fixedDeltaTime);
+                rb.MovePosition(transform.position - transform.up * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
                 break;
             }
         }
