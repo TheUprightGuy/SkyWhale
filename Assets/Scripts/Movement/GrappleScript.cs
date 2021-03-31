@@ -243,8 +243,8 @@ public class GrappleScript : MonoBehaviour
         else if (AbleToRetract())
         {
             // Start retracting
-            if(!grapplingFromWhale) 
-                hook.YeetPlayer(this.GetComponent<PlayerMovement>());
+            //if(!grapplingFromWhale) 
+                //hook.YeetPlayer(this.GetComponent<PlayerMovement>());
 
             hook.retracting = true;
             hook.connected = false;

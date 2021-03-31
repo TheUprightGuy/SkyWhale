@@ -36,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float currentSpeed;
 
+    public float rotationSpeed = 0.1f;
     [Space(20.0f)]
     private float setSpeed;
     private float setAccel;
@@ -270,7 +271,6 @@ public class PlayerMovement : MonoBehaviour
                 PlayerState != PlayerStates.CLIMBING && PlayerState != PlayerStates.GRAPPLE);
     }
     #endregion
-    public float rotationSpeed = 0.1f;
     void HandleRotation()
     {
         switch (PlayerState)
