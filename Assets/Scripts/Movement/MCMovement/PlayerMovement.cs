@@ -270,9 +270,7 @@ public class PlayerMovement : MonoBehaviour
                 PlayerState != PlayerStates.CLIMBING && PlayerState != PlayerStates.GRAPPLE);
     }
     #endregion
-
-    Quaternion prev = Quaternion.identity;
-    Quaternion cachedRot = Quaternion.identity;
+    public float rotationSpeed = 0.1f;
     void HandleRotation()
     {
         switch (PlayerState)
@@ -281,24 +279,24 @@ public class PlayerMovement : MonoBehaviour
             case PlayerStates.MOVING:
                 if (inputAxis.magnitude > 0.1f)
                 {
-                    if (cachedRot == Quaternion.identity)
-                    {
 
-                        Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
-                        cachedRot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
-                        prev = Quaternion.identity;
-                    }
+                    Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
+                    //cachedRot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
+                    //if (cachedRot == Quaternion.identity)
+                    //{
 
-                    if (prev == cachedRot)
-                    {
-                        break;
-                    }
-                    prev = Quaternion.RotateTowards(prev, cachedRot, 0.1f);
-                    transform.Rotate(prev.eulerAngles, Space.World);
-                }
-                else
-                {
-                    cachedRot = Quaternion.identity;
+                    //    prev = Quaternion.identity;
+                    //}
+
+                    //if (prev == cachedRot)
+                    //{
+                    //    break;
+                    //}
+                    //prev = Quaternion.RotateTowards(prev, cachedRot, 0.1f);
+                    
+                    float singleStep = rotationSpeed * Time.deltaTime * TimeSlowDown.instance.timeScale;
+                    //transform.forward = camForwardRelativeToPlayerRot;
+                    transform.forward = Vector3.RotateTowards(transform.forward, camForwardRelativeToPlayerRot, singleStep, 0.0f);
                 }
                 transform.rotation = (Quaternion.LookRotation(transform.forward, Vector3.up));
                 break;

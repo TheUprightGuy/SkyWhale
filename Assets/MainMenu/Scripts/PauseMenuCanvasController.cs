@@ -88,7 +88,9 @@ public class PauseMenuCanvasController : MonoBehaviour
             }
             case MenuOptions.Continue:
             {
-                toggle.SetActive(false);
+                toggle.SetActive(false); 
+                Cursor.lockState = CursorLockMode.Locked;
+                TimeSlowDown.instance.SpeedUp();
                 break;
             }
             case MenuOptions.QuitToMenu:
