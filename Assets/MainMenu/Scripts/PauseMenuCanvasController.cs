@@ -63,6 +63,16 @@ public class PauseMenuCanvasController : MonoBehaviour
     public void Pause(InputState type)
     {
         toggle.SetActive(!toggle.activeSelf);
+        CallbackHandler.instance.Pause(toggle.activeSelf);
+
+        if (toggle.activeSelf)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            TimeSlowDown.instance.SlowDown();
+            return;
+        }
+        Cursor.lockState = CursorLockMode.Locked;
+        TimeSlowDown.instance.SpeedUp();
     }
 
     public Action<MenuOptions> toggleMenuOption;

@@ -37,7 +37,7 @@ public class NewGrappleHook : MonoBehaviour
     SphereCollider sc;
     Vector3 cachedPos;
     Vector3 forceDir;
-
+    bool pause;
     public Transform hookModel;
 
     private void Awake()
@@ -46,6 +46,22 @@ public class NewGrappleHook : MonoBehaviour
         mr = GetComponentInChildren<MeshRenderer>();
         lr = GetComponent<LineRenderer>();
         sc = GetComponent<SphereCollider>();
+    }
+
+
+    private void Start()
+    {
+        CallbackHandler.instance.pause += Pause;
+    }
+    private void OnDestroy()
+    {
+        CallbackHandler.instance.pause -= Pause;
+    }
+
+
+    void Pause(bool _pause)
+    {
+        pause = _pause;
     }
     #endregion Setup
 
@@ -69,6 +85,9 @@ public class NewGrappleHook : MonoBehaviour
 
     private void Update()
     {
+        if (pause)
+            return;
+
         mr.enabled = enabled || retracting || connected;
 
         if (connectedObj)
@@ -93,6 +112,9 @@ public class NewGrappleHook : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (pause)
+            return;
+
         if (enabled)
         {
             if (!retracting)

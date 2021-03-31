@@ -5,15 +5,30 @@ using UnityEngine;
 public class NPCScript : MonoBehaviour
 {
     PlayerMovement pm;
+    bool pause;
+
 
     public virtual void Start()
     {
         dialogue.StartUp();
         currentDialogue = dialogue;
+        CallbackHandler.instance.pause += Pause;
+    }
+    private void OnDestroy()
+    {
+        CallbackHandler.instance.pause -= Pause;
+    }
+
+    public void Pause(bool _pause)
+    {
+        pause = _pause;
     }
 
     private void Update()
     {
+        if (pause)
+            return;
+
         if (pm)
         {
             Vector3 dir = pm.transform.position - transform.position;

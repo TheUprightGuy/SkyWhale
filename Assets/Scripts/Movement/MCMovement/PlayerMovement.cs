@@ -95,6 +95,17 @@ public class PlayerMovement : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(CancelGrappleGlide);
 
         OnValidate();
+        CallbackHandler.instance.pause += Pause;
+    }
+    private void OnDestroy()
+    {
+        CallbackHandler.instance.pause -= Pause;
+    }
+
+    bool pause;
+    void Pause(bool _pause)
+    {
+        pause = _pause;
     }
 
     void CancelGrappleGlide(InputState type)
@@ -136,6 +147,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (pause)
+            return;
+
         SetAnimations();
         RaycastHit rh;
         if (Physics.SphereCast(transform.position, CheckRadius, -transform.up, out rh, 1000.0f, GroundLayers.value))
@@ -153,6 +167,9 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 inputAxis = Vector3.zero;
     void FixedUpdate()
     {
+        if (pause)
+            return;
+
         SetCurrentPlayerState();
 
         if (!enabled)
@@ -405,8 +422,9 @@ public class PlayerMovement : MonoBehaviour
     // check this
     void Jump(Vector3 jumpVec, float jumpHeight)
     {
-        if (!enabled)
+        if (!enabled || pause)
             return;
+
         RB.AddForce((transform.forward * 0.1f + transform.up) * 15.0f, ForceMode.Impulse);
         anims.SetBool("Jump", true);
 
