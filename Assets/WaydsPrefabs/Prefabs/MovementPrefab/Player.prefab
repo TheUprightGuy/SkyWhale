@@ -1183,6 +1183,7 @@ MonoBehaviour:
   runSpeed: 5
   maxRunAcceleration: 15
   currentSpeed: 0
+  rotationSpeed: 10
   inAirSpeed: 2
   maxAirAcceleration: 5
   climbSpeed: 1
@@ -1205,6 +1206,7 @@ MonoBehaviour:
   enabled: 1
   distanceFromGround: 0
   inputAxis: {x: 0, y: 0, z: 0}
+  multi: 0.1
 --- !u!114 &3471998379395172067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1262,12 +1264,14 @@ MonoBehaviour:
     m_Bits: 8192
   pullSpeed: 16
   grapplingFromWhale: 0
-  shotGrapple: 0
   gunContainer: {fileID: 715781394116979298}
   shootPoint: {fileID: 0}
+  enabled: 0
+  camToShootFrom: {fileID: 0}
   raycastTargets:
     serializedVersion: 2
     m_Bits: 16183
+  active: 0
 --- !u!1 &3577484720783235353
 GameObject:
   m_ObjectHideFlags: 0
