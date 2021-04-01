@@ -120,6 +120,12 @@ PrefabInstance:
       propertyPath: PlayerTrans
       value: 
       objectReference: {fileID: 1518757650989197844}
+    - target: {fileID: 8009420483058086641, guid: 322a1d509c204d94d8353a2b81a6052d,
+        type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: b55c45dbe74b8f84093cf66fa160beac,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 322a1d509c204d94d8353a2b81a6052d, type: 3}
 --- !u!4 &4913185220026473846 stripped
