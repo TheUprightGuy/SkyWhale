@@ -25,6 +25,7 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Audio/SoundInfo.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Movement/MCMovement/PlayerMovement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GliderMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
       </list>
     </option>
   </component>
@@ -83,6 +84,8 @@
       <workItem from="1615849405036" duration="11071000" />
       <workItem from="1617146240230" duration="3453000" />
       <workItem from="1617176626451" duration="4908000" />
+      <workItem from="1617409131677" duration="816000" />
+      <workItem from="1617583343764" duration="1086000" />
     </task>
     <servers />
   </component>

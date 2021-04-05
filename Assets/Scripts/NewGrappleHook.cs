@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public enum CurrentLayer
@@ -65,6 +66,7 @@ public class NewGrappleHook : MonoBehaviour
         flightTime = 0.0f;
         rb.velocity = Vector3.zero;
         TimeSlowDown.instance.SpeedUp();
+        AudioManager.instance.PlaySound("fireGrapple");
     }
 
     private void Update()
@@ -156,6 +158,7 @@ public class NewGrappleHook : MonoBehaviour
 
         Rigidbody temp = _player.GetComponent<Rigidbody>();
         temp.AddForce(temp.velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up * 2.0f)) * 3.0f, ForceMode.Impulse);
+        AudioManager.instance.PlaySound("GrappleFail");
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -176,6 +179,8 @@ public class NewGrappleHook : MonoBehaviour
         Collider[] grappleables = Physics.OverlapSphere(transform.position, sc.radius * 2.0f, grappleableLayers);
         enabled = false;
 
+        AudioManager.instance.PlaySound("GrappleHit");
+        
         if (grappleables.Length != 0)
         {
             connected = true;
@@ -184,6 +189,7 @@ public class NewGrappleHook : MonoBehaviour
         }
         else
         {
+            AudioManager.instance.PlaySound("GrappleFail");
             connectedObj = null;
             retracting = true;
         }
