@@ -21,7 +21,7 @@ public class PlayerMovement : MonoBehaviour
     GliderMovement glider;
     GrappleScript grapple;
     // Character State
-    PlayerStates playerState;
+    public PlayerStates playerState;
     [HideInInspector] public bool haveControl;
     bool gamePaused;
 
@@ -147,6 +147,7 @@ public class PlayerMovement : MonoBehaviour
         anims.SetBool("Climbing", playerState == PlayerStates.CLIMBING);
         anims.SetBool("Grappling", playerState == PlayerStates.GRAPPLE);
         anims.SetFloat("MovementSpeed", currentSpeed / runSpeed);
+        //anims.SetBool("Jump", !(inputAxis.y <= 0));
 
         // Individual state Animation checks
         switch (playerState)
@@ -309,7 +310,7 @@ public class PlayerMovement : MonoBehaviour
                 MoveOnXZ(setSpeed, setAccel);
                 if (inputAxis.y > 0)
                 {
-                    Jump(groundContactNormal + Vector3.up, groundjumpHeight);
+                    JumpFromGround(groundContactNormal + Vector3.up, groundjumpHeight);
                     inputAxis.y = 0;
                     /*if (IsClimbing())
                     {
@@ -399,7 +400,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }  
     // Currently bugged with slowtime due to use of impulse
-    void Jump(Vector3 jumpVec, float jumpHeight)
+    void JumpFromGround(Vector3 jumpVec, float jumpHeight)
     {
         if (!haveControl || gamePaused)
             return;
@@ -412,6 +413,7 @@ public class PlayerMovement : MonoBehaviour
 
         RB.velocity += jumpDirection * jumpSpeed + (Physics.gravity * Time.deltaTime);*/
     }
+
     /// <summary>
     /// Description: Jumps from the wall and rotates player.
     /// Author: Wayd Barton-Redgrave
@@ -540,9 +542,9 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     /// <summary>
-    /// Description: Cancels grappling or gliding with press of jump key.
-    /// Author: Wayd Barton-Redgrave
-    /// Last Updated: 06/04/2021
+    /// <br>Description: Cancels grappling or gliding with press of jump key.</br>
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 06/04/2021</br>
     /// </summary>
     void CancelGrappleGlide(InputState type)
     {
@@ -564,8 +566,8 @@ public class PlayerMovement : MonoBehaviour
     }
     /// <summary>
     /// Description: Toggles Glider on and off.
-    /// Author: Wayd Barton-Redgrave
-    /// Last Updated: 06/04/2021
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 06/04/2021</br>
     /// </summary>
     void ToggleGlider(InputState type)
     {
@@ -616,9 +618,9 @@ public class PlayerMovement : MonoBehaviour
         return false;
     }
     /// <summary>
-    /// Description: Gets distance to ground - used to check if glider can be enabled.
-    /// Author: Wayd Barton-Redgrave
-    /// Last Updated: 06/04/2021
+    /// <br>Description: Gets distance to ground - used to check if glider can be enabled.</br>
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 06/04/2021</br>
     /// </summary>
     void GetDistanceToGround()
     {
@@ -671,7 +673,7 @@ public class PlayerMovement : MonoBehaviour
             climbContactNormal = normal;
         }
 
-        float upDot = Vector3.Dot(transform.up, normal);
+        float upDot = Vector3.Dot(Vector3.up, normal);
 
         if (upDot >= minGroundDotProduct)
         {
@@ -679,4 +681,23 @@ public class PlayerMovement : MonoBehaviour
         }
     }
     #endregion Collisions
+
+
+    #region Debug
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Vector3 groundStartPos = transform.position + GroundCheckStartOffset;
+        Vector3 groundEndPos = groundStartPos + ((-Vector3.up) * GroundCheckDistance);
+        Gizmos.DrawLine(groundStartPos, groundEndPos);
+        Gizmos.DrawSphere(groundEndPos, CheckRadius);
+
+        Gizmos.color = Color.blue;
+        Vector3 climbStartPos = transform.position + ClimbCheckStartOffset;
+        Vector3 climbEndPos = climbStartPos + ((transform.forward) * ClimbCheckDistance);
+        Gizmos.DrawLine(climbStartPos, climbEndPos);
+        Gizmos.DrawSphere(climbEndPos, CheckRadius);
+    }
+    #endregion
 }
