@@ -238,6 +238,16 @@ PrefabInstance:
       propertyPath: enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3471998379395172067, guid: 34a05d3f0592b9645b8d45d5a897a37c,
+        type: 3}
+      propertyPath: playerRot
+      value: 
+      objectReference: {fileID: 774425216229858666}
+    - target: {fileID: 3471998379395172067, guid: 34a05d3f0592b9645b8d45d5a897a37c,
+        type: 3}
+      propertyPath: unlocked
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3598670350658017394, guid: 34a05d3f0592b9645b8d45d5a897a37c,
         type: 3}
       propertyPath: m_IsActive
@@ -376,6 +386,12 @@ Transform:
 --- !u!4 &4913185220883193007 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7416749029428007675, guid: 34a05d3f0592b9645b8d45d5a897a37c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2504764587186228820}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &774425216229858666 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2917762730314879806, guid: 34a05d3f0592b9645b8d45d5a897a37c,
     type: 3}
   m_PrefabInstance: {fileID: 2504764587186228820}
   m_PrefabAsset: {fileID: 0}
