@@ -146,6 +146,7 @@ public class PlayerMovement : MonoBehaviour
         anims.SetBool("Grounded", IsGrounded());
         anims.SetBool("Climbing", playerState == PlayerStates.CLIMBING);
         anims.SetBool("Grappling", playerState == PlayerStates.GRAPPLE);
+        anims.SetBool("Gliding", playerState == PlayerStates.GLIDING);
         anims.SetFloat("MovementSpeed", currentSpeed / runSpeed);
 
         // Individual state Animation checks
@@ -400,8 +401,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!haveControl || gamePaused)
             return;
+
         anims.ResetTrigger("Jump");
         anims.SetTrigger("Jump");
+        inputAxis.y = 0;
 
         RB.AddForce(transform.up * 15.0f, ForceMode.Impulse);
 
