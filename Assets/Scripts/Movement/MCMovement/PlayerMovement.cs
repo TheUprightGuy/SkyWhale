@@ -199,6 +199,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 RB.velocity = Vector3.zero;
                 inputAxis.y = 0;
+                AudioManager.instance.PlaySound("WallHit");
             }
 
             PlayerState = PlayerStates.CLIMBING;
@@ -427,8 +428,9 @@ public class PlayerMovement : MonoBehaviour
         if (!enabled || pause)
             return;
 
-        RB.AddForce((transform.forward * 0.1f + transform.up) * 15.0f, ForceMode.Impulse);
+        RB.AddForce((transform.up) * 15.0f, ForceMode.Impulse);
         anims.SetBool("Jump", true);
+        AudioManager.instance.PlaySound("Jump");
 
         /*float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
         Vector3 jumpDirection = jumpVec.normalized;
@@ -442,6 +444,7 @@ public class PlayerMovement : MonoBehaviour
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180.0f, transform.rotation.eulerAngles.z);
 //        RB.MoveRotation(Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180.0f, transform.rotation.eulerAngles.z));
         inputAxis.y = 0;
+        AudioManager.instance.PlaySound("Jump");
     }
 
     void SetAnimations()
