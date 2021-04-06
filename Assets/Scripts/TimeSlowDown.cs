@@ -30,6 +30,7 @@ public class TimeSlowDown : MonoBehaviour
     private void Start()
     {
         SaveManager.instance.load += GetCamReference;
+        SaveManager.instance.load += SpeedUp;
 
         GetCamReference();
         
@@ -37,6 +38,7 @@ public class TimeSlowDown : MonoBehaviour
     private void OnDestroy()
     {
         SaveManager.instance.load -= GetCamReference;
+        SaveManager.instance.load -= SpeedUp;
     }
 
     public void GetCamReference()
