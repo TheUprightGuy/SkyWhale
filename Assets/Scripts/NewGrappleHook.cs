@@ -124,7 +124,14 @@ public class NewGrappleHook : MonoBehaviour
                 sc.enabled = true;
                 flightTime += Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
 
-                rb.AddForce((forceDir / flightTime) * 10.0f * Time.fixedDeltaTime, ForceMode.Acceleration);
+                if (!Application.isEditor)
+                {
+                    rb.AddForce((forceDir / flightTime) * 0.02f, ForceMode.Acceleration);
+                }
+                else
+                {
+                    rb.AddForce((forceDir / flightTime) * 0.2f, ForceMode.Acceleration);
+                }
 
                 if (flightTime > 2.0f)
                 {

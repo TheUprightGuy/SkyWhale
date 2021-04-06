@@ -37,14 +37,14 @@ public class SaveManager : MonoBehaviour
     {
         saveToUse = _save;
 
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
 
     public void ReturnToMain()
     {
         saveToUse = 4;
 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 
     private void OnEnable()
