@@ -28,6 +28,17 @@ public class TimeSlowDown : MonoBehaviour
 
     private void Start()
     {
+        SaveManager.instance.load += GetCamReference;
+
+        GetCamReference();
+    }
+    private void OnDestroy()
+    {
+        SaveManager.instance.load -= GetCamReference;
+    }
+
+    public void GetCamReference()
+    {
         Camera.main.GetComponent<UnityEngine.Rendering.Volume>().sharedProfile.TryGet<UnityEngine.Rendering.Universal.ColorAdjustments>(out adjustments);
     }
 
@@ -54,6 +65,9 @@ public class TimeSlowDown : MonoBehaviour
             timeScale = Mathf.Lerp(timeScale, 1.0f, Time.deltaTime * 5.0f);
             Physics.gravity = grav * timeScale;
         }
+
+        if (!Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>())
+            return;
 
         Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = ((timeScale / 2) * 100.0f) + 50.0f;
         adjustments.saturation.value = timeScale * 100.0f - 100.0f;

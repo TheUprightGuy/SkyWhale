@@ -71,6 +71,7 @@ public class PauseMenuCanvasController : MonoBehaviour
             TimeSlowDown.instance.SlowDown();
             return;
         }
+
         Cursor.lockState = CursorLockMode.Locked;
         TimeSlowDown.instance.SpeedUp();
     }
