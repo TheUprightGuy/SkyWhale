@@ -41,6 +41,9 @@ public class TimeSlowDown : MonoBehaviour
 
     public void GetCamReference()
     {
+        if (!Camera.main.GetComponent<UnityEngine.Rendering.Volume>())
+            return;
+
         Camera.main.GetComponent<UnityEngine.Rendering.Volume>().sharedProfile.TryGet<UnityEngine.Rendering.Universal.ColorAdjustments>(out adjustments);
     }
 

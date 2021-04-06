@@ -27,7 +27,7 @@ public class SaveManager : MonoBehaviour
 
     private void Start()
     {
-        //ReturnToMain();
+        ReturnToMain();
     }
 
     public int saveToUse = 4;
@@ -37,14 +37,14 @@ public class SaveManager : MonoBehaviour
     {
         saveToUse = _save;
 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     public void ReturnToMain()
     {
         saveToUse = 4;
 
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     private void OnEnable()

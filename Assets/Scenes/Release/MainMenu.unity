@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -158,7 +158,7 @@ PrefabInstance:
     - target: {fileID: 2884179543958615842, guid: 0dfc6884d44db054dbd647f1fe012f7e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2884179543958615843, guid: 0dfc6884d44db054dbd647f1fe012f7e,
         type: 3}
@@ -244,6 +244,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: AudioManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 178910286826226467, guid: be004ee62b6d0234bb9a514a93a20bef,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 178910286826226477, guid: be004ee62b6d0234bb9a514a93a20bef,
         type: 3}

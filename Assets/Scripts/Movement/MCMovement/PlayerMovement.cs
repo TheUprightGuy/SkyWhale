@@ -148,6 +148,7 @@ public class PlayerMovement : MonoBehaviour
         anims.SetBool("Grappling", playerState == PlayerStates.GRAPPLE);
         anims.SetBool("Gliding", playerState == PlayerStates.GLIDING);
         anims.SetFloat("MovementSpeed", currentSpeed / runSpeed);
+        anims.speed = 1.0f;
         //anims.SetBool("Jump", !(inputAxis.y <= 0));
 
         // Individual state Animation checks
