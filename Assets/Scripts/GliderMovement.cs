@@ -184,8 +184,6 @@ public class GliderMovement : MonoBehaviour
         if (!enabled || pause) 
             return;
 
-        dc.SetDistance(currentSpeed / maxSpeed);
-
         if (base.transform.forward.y < 0)
         {
             moveSpeed += (base.transform.forward.y * -(maxSpeed / 1.5f)) * Time.fixedDeltaTime;
