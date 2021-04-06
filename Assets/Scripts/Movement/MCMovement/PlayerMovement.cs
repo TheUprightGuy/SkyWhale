@@ -146,6 +146,7 @@ public class PlayerMovement : MonoBehaviour
         anims.SetBool("Grounded", IsGrounded());
         anims.SetBool("Climbing", playerState == PlayerStates.CLIMBING);
         anims.SetBool("Grappling", playerState == PlayerStates.GRAPPLE);
+        anims.SetBool("Gliding", playerState == PlayerStates.GLIDING);
         anims.SetFloat("MovementSpeed", currentSpeed / runSpeed);
         //anims.SetBool("Jump", !(inputAxis.y <= 0));
 
@@ -311,7 +312,6 @@ public class PlayerMovement : MonoBehaviour
                 if (inputAxis.y > 0)
                 {
                     JumpFromGround(groundContactNormal + Vector3.up, groundjumpHeight);
-                    inputAxis.y = 0;
                     /*if (IsClimbing())
                     {
                         //Jump(groundContactNormal + Vector3.up, groundjumpHeight* multi);
@@ -378,8 +378,6 @@ public class PlayerMovement : MonoBehaviour
 
         inputAxis = Vector3.Normalize(inputAxis);
 
-
-
         float xzMag = (new Vector2(inputAxis.x, inputAxis.z)).normalized.magnitude;
         currentSpeed = Mathf.MoveTowards(currentSpeed, speed * xzMag, accel * Time.deltaTime);
 
@@ -405,8 +403,11 @@ public class PlayerMovement : MonoBehaviour
         if (!haveControl || gamePaused)
             return;
 
+        anims.ResetTrigger("Jump");
+        anims.SetTrigger("Jump");
+        inputAxis.y = 0;
+
         RB.AddForce(transform.up * 15.0f, ForceMode.Impulse);
-        anims.SetBool("Jump", true);
 
         /*float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
         Vector3 jumpDirection = jumpVec.normalized;
@@ -421,6 +422,9 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     void JumpFromWall()
     {
+        anims.ResetTrigger("Jump");
+        anims.SetTrigger("Jump");
+
         RB.AddForce((-transform.forward + transform.up) * 12.0f, ForceMode.Impulse);
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180.0f, transform.rotation.eulerAngles.z);
         inputAxis.y = 0;
@@ -518,7 +522,6 @@ public class PlayerMovement : MonoBehaviour
                 inputAxis.y = 1;
                 break;
             case InputState.KEYUP:
-                anims.SetBool("Jump", false);
                 inputAxis.y = 0;
                 break;
             default:
