@@ -62,9 +62,17 @@ public class GliderMovement : MonoBehaviour
         moveSpeed = baseSpeed;
         currentSpeed = 0.0f;
         EventManager.StartListening("EnableGlider", EnableGlider);
-        
-        //Testing + temporary remove immediately
-        unlocked = true;
+        CallbackHandler.instance.pause += Pause;
+    }
+    private void OnDestroy()
+    {
+        CallbackHandler.instance.pause -= Pause;
+    }
+
+    bool pause;
+    void Pause(bool _pause)
+    {
+        pause = _pause;
     }
 
     void EnableGlider()
@@ -195,7 +203,7 @@ public class GliderMovement : MonoBehaviour
             Toggle();
         }*/
 
-        if (!enabled) 
+        if (!enabled || pause) 
             return;
 
         dc.SetDistance(currentSpeed / maxSpeed);
@@ -237,7 +245,7 @@ public class GliderMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!enabled)
+        if (!enabled || pause)
             return;
 
        /* // Rot

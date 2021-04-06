@@ -41,7 +41,7 @@ public class WhaleMovement : MonoBehaviour
 
     GameObject cachedHeightRef;
     GrappleScript gs;
-
+    bool pause;
 
     private void Awake()
     {
@@ -67,6 +67,18 @@ public class WhaleMovement : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.WHALE, "Dismount").MethodToCall.AddListener(Dismount);
 
         EntityManager.instance.toggleControl += ToggleControl;
+        CallbackHandler.instance.pause += Pause;
+    }
+    private void OnDestroy()
+    {
+        EntityManager.instance.toggleControl -= ToggleControl;
+        CallbackHandler.instance.pause -= Pause;
+    }
+
+
+    void Pause(bool _pause)
+    {
+        pause = _pause;
     }
 
     public void ToggleControl(bool _toggle)
@@ -197,12 +209,15 @@ public class WhaleMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (pause)
+            return;
+
         float movement = currentSpeed / 2;
         float f = body.transform.rotation.eulerAngles.z;
         f = (f > 180) ? f - 360 : f;
         animator.SetFloat("Turning", f / 10.0f);
         animator.SetFloat("Movement", movement);
-        currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime * accelSpeed);
+        currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime * accelSpeed * TimeSlowDown.instance.timeScale);
 
         if (control)
         {
@@ -242,10 +257,13 @@ public class WhaleMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (pause)
+            return;
+
         if (tooClose)
         {
-            rb.MovePosition(transform.position - transform.forward * maxSpeed * Time.deltaTime);
-            buckTimer -= Time.deltaTime;
+            rb.MovePosition(transform.position - transform.forward * maxSpeed * Time.deltaTime * TimeSlowDown.instance.timeScale);
+            buckTimer -= Time.deltaTime * TimeSlowDown.instance.timeScale;
             CatapultPlayer();
 
             if (buckTimer <= 0)

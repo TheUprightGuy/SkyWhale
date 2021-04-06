@@ -1500,6 +1500,7 @@ MonoBehaviour:
   runSpeed: 5
   maxRunAcceleration: 15
   currentSpeed: 0
+  rotationSpeed: 10
   inAirSpeed: 2
   maxAirAcceleration: 5
   climbSpeed: 1

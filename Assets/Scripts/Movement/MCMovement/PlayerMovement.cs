@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float currentSpeed;
 
+    public float rotationSpeed = 0.1f;
     [Space(20.0f)]
     private float setSpeed;
     private float setAccel;
@@ -96,6 +97,17 @@ public class PlayerMovement : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(CancelGrappleGlide);
 
         OnValidate();
+        CallbackHandler.instance.pause += Pause;
+    }
+    private void OnDestroy()
+    {
+        CallbackHandler.instance.pause -= Pause;
+    }
+
+    bool pause;
+    void Pause(bool _pause)
+    {
+        pause = _pause;
     }
 
     void CancelGrappleGlide(InputState type)
@@ -140,6 +152,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (pause)
+            return;
+
         SetAnimations();
         RaycastHit rh;
         if (Physics.SphereCast(transform.position, CheckRadius, -transform.up, out rh, 1000.0f, GroundLayers.value))
@@ -150,17 +165,6 @@ public class PlayerMovement : MonoBehaviour
         if (!enabled)
             return;
 
-
-
-        //Move in dir of cam on input
-        if ((inputAxis.magnitude > 0.1f && !glider.enabled) && (PlayerState != PlayerStates.FALLING && PlayerState != PlayerStates.JUMPING && PlayerState != PlayerStates.CLIMBING))
-        {
-            Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
-            Quaternion rot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
-
-            transform.Rotate(rot.eulerAngles, Space.World);
-        }
-
         HandleRotation();
     }
 
@@ -168,6 +172,9 @@ public class PlayerMovement : MonoBehaviour
     public Vector3 inputAxis = Vector3.zero;
     void FixedUpdate()
     {
+        if (pause)
+            return;
+
         SetCurrentPlayerState();
 
         if (!enabled)
@@ -268,14 +275,33 @@ public class PlayerMovement : MonoBehaviour
                 PlayerState != PlayerStates.CLIMBING && PlayerState != PlayerStates.GRAPPLE);
     }
     #endregion
-
-
     void HandleRotation()
     {
         switch (PlayerState)
         {
             case PlayerStates.IDLE:
             case PlayerStates.MOVING:
+                if (inputAxis.magnitude > 0.1f)
+                {
+
+                    Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
+                    //cachedRot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
+                    //if (cachedRot == Quaternion.identity)
+                    //{
+
+                    //    prev = Quaternion.identity;
+                    //}
+
+                    //if (prev == cachedRot)
+                    //{
+                    //    break;
+                    //}
+                    //prev = Quaternion.RotateTowards(prev, cachedRot, 0.1f);
+                    
+                    float singleStep = rotationSpeed * Time.deltaTime * TimeSlowDown.instance.timeScale;
+                    //transform.forward = camForwardRelativeToPlayerRot;
+                    transform.forward = Vector3.RotateTowards(transform.forward, camForwardRelativeToPlayerRot, singleStep, 0.0f);
+                }
                 transform.rotation = (Quaternion.LookRotation(transform.forward, Vector3.up));
                 break;
             case PlayerStates.JUMPING:
@@ -398,8 +424,9 @@ public class PlayerMovement : MonoBehaviour
     // check this
     void Jump(Vector3 jumpVec, float jumpHeight)
     {
-        if (!enabled)
+        if (!enabled || pause)
             return;
+
         RB.AddForce((transform.forward * 0.1f + transform.up) * 15.0f, ForceMode.Impulse);
         anims.SetBool("Jump", true);
 

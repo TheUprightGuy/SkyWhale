@@ -16,6 +16,26 @@ public class CallbackHandler : MonoBehaviour
         instance = this;
     }
 
+    private void Update()
+    {
+        // temp - restart scene
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    public event Action<bool> pause;
+    public void Pause(bool _pause)
+    {
+        if (pause != null)
+        {
+            pause(_pause);
+        }
+    }
+
+
+
     public Action<GameObject> setDestination;
     public void SetDestination(GameObject _destination)
     {
@@ -43,14 +63,6 @@ public class CallbackHandler : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        // temp - restart scene
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-        }       
-    }
 
     public event Action<Dialogue> setDialogue;
     public void SetDialogue(Dialogue _dialogue)

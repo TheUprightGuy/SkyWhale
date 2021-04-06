@@ -17,6 +17,7 @@ public class GrappleScript : MonoBehaviour
     public Transform gunContainer;
     public GunMeshSwitch shootPoint;
     new public bool enabled;
+    bool pause;
 
     #region Setup
     // Local Variables
@@ -57,16 +58,25 @@ public class GrappleScript : MonoBehaviour
 
         // Callback to swap between Whale and Player
         EntityManager.instance.toggleControl += ToggleGrapple;
+        CallbackHandler.instance.pause += Pause;
     }
 
     private void OnDestroy()
     {
         // End Callback
         EntityManager.instance.toggleControl -= ToggleGrapple;
+        CallbackHandler.instance.pause -= Pause;
+    }
+
+    void Pause(bool _pause)
+    {
+        pause = _pause;
     }
     #endregion Setup
 
-    // Function to run on trigger
+
+
+// Function to run on trigger
     void EnableGrapple()
     {
         enabled = true;
@@ -74,7 +84,7 @@ public class GrappleScript : MonoBehaviour
 
     void Grapple(InputState type)
     {
-        if (!enabled)
+        if (!enabled || pause)
             return;
 
         switch (type)
@@ -95,7 +105,7 @@ public class GrappleScript : MonoBehaviour
     bool aim;
     void GrappleAim(InputState type)
     {
-        if (!enabled)
+        if (!enabled || pause)
             return;
 
         switch (type)
@@ -118,7 +128,7 @@ public class GrappleScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (!enabled)
+        if (!enabled || pause)
             return;
 
         if (pm)       
@@ -166,7 +176,7 @@ public class GrappleScript : MonoBehaviour
     float floatTimer;
     private void Update()
     {
-        if (!enabled)
+        if (!enabled || pause)
             return;
 
         if (hook.connected)
@@ -211,7 +221,7 @@ public class GrappleScript : MonoBehaviour
     bool cachedShoot = false;
     public void FireHook()
     {
-        if (!active)
+        if (!active || pause)
             return;
 
         if (!HookInUse() && (pm ? !pm.GLIDINGCheck() : grapplingFromWhale))
@@ -233,8 +243,8 @@ public class GrappleScript : MonoBehaviour
         else if (AbleToRetract())
         {
             // Start retracting
-            if(!grapplingFromWhale) 
-                hook.YeetPlayer(this.GetComponent<PlayerMovement>());
+            //if(!grapplingFromWhale) 
+                //hook.YeetPlayer(this.GetComponent<PlayerMovement>());
 
             hook.retracting = true;
             hook.connected = false;
@@ -281,7 +291,7 @@ public class GrappleScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (!enabled)
+        if (!enabled || pause)
             return;
 
         if (hook.connected)
