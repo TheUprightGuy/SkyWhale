@@ -132,7 +132,7 @@ public class GrappleScript : MonoBehaviour
             return;
 
         if (pm)       
-            pm.enabled = !hook.connected;
+            pm.haveControl = !hook.connected;
 
         if (hook.connected)
         {

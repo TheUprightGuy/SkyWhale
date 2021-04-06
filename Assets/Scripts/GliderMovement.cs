@@ -71,7 +71,7 @@ public class GliderMovement : MonoBehaviour
         unlocked = true;
     }
 
-    bool unlocked;
+    public bool unlocked;
 
     public void Toggle()
     {

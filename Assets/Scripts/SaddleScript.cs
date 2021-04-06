@@ -26,7 +26,7 @@ public class SaddleScript : MonoBehaviour
                 parent.GiveControl();
                 player.depth = 0;
                 whale.depth = 10;
-                other.GetComponent<PlayerMovement>().enabled = false;
+                other.GetComponent<PlayerMovement>().haveControl = false;
             }
         }
     }
