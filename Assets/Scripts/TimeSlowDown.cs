@@ -8,6 +8,7 @@ public class TimeSlowDown : MonoBehaviour
     [Header("Debug")]
     public float timeScale = 1.0f;
     // Local Variables
+    float defaultGrayScale = 0.0f;
     float slowMo = 0.01f;
     bool slowDown;
     Vector3 grav;
@@ -31,6 +32,7 @@ public class TimeSlowDown : MonoBehaviour
         SaveManager.instance.load += GetCamReference;
 
         GetCamReference();
+        
     }
     private void OnDestroy()
     {
@@ -71,5 +73,10 @@ public class TimeSlowDown : MonoBehaviour
 
         Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = ((timeScale / 2) * 100.0f) + 50.0f;
         adjustments.saturation.value = timeScale * 100.0f - 100.0f;
+    }
+
+    void OnApplicationQuit()
+    {
+         adjustments.saturation.value = defaultGrayScale;
     }
 }
