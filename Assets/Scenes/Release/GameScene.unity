@@ -35052,6 +35052,76 @@ PrefabInstance:
       propertyPath: m_LocalRotation.y
       value: -0.9903101
       objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: GroundCheckDistance
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: GroundCheckRadius
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: haveControl
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: GroundLayers.m_Bits
+      value: 180023
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: ClimbLayers.m_Bits
+      value: 262144
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: maxWalkAcceleration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: walkSpeed
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: maxRunAcceleration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: maxClimbAcceleration
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: maxAirAcceleration
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: inAirSpeed
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: runSpeed
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: setAccel
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: climbSpeed
+      value: 0.07
+      objectReference: {fileID: 0}
     - target: {fileID: 4913185221069897576, guid: 1b3987150f1e46843beb873c6b2da9d0,
         type: 3}
       propertyPath: m_Name
