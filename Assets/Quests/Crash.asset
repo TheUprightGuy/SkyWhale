@@ -15,10 +15,10 @@ MonoBehaviour:
   objectives:
   - eventName: Crash
     quant: 1
-    dialogueText: yo
+    dialogueText: You have successfully crashed.
   - eventName: ItemPickup
     quant: 2
-    dialogueText: yo
+    dialogueText: You have picked up one of the items you need.
   - eventName: BuyItem
     quant: 1
-    dialogueText: yo
+    dialogueText: You bought the item.
