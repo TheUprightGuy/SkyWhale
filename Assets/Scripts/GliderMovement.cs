@@ -117,36 +117,36 @@ public class GliderMovement : MonoBehaviour
     bool yawChange = false;
     void YawRight(InputState type)
     {
-        if (myTurn + Time.deltaTime * turnSpeed < 40)
+        if (myTurn + Time.deltaTime * turnSpeed * TimeSlowDown.instance.timeScale < 40)
         {
-            if (myTurn + Time.deltaTime * turnSpeed < 0)
+            if (myTurn + Time.deltaTime * turnSpeed * TimeSlowDown.instance.timeScale < 0)
             {
-                myTurn += Time.deltaTime * turnSpeed;
+                myTurn += Time.deltaTime * turnSpeed * TimeSlowDown.instance.timeScale;
             }
-            myTurn += Time.deltaTime * turnSpeed;
+            myTurn += Time.deltaTime * turnSpeed * TimeSlowDown.instance.timeScale;
         }
 
-        if (myRoll - Time.deltaTime * rollSpeed > -20)
+        if (myRoll - Time.deltaTime * rollSpeed * TimeSlowDown.instance.timeScale > -20)
         {
-            myRoll -= Time.deltaTime * rollSpeed;
+            myRoll -= Time.deltaTime * rollSpeed * TimeSlowDown.instance.timeScale;
         }
         yawChange = true;
         parabolLerp = 0.0f;
     }
     void YawLeft(InputState type)
     {
-        if (myTurn - Time.deltaTime * turnSpeed > -40)
+        if (myTurn - Time.deltaTime * turnSpeed * TimeSlowDown.instance.timeScale > -40)
         {
-            if (myTurn - Time.deltaTime * turnSpeed > 0)
+            if (myTurn - Time.deltaTime * turnSpeed * TimeSlowDown.instance.timeScale > 0)
             {
-                myTurn -= Time.deltaTime * turnSpeed;
+                myTurn -= Time.deltaTime * turnSpeed * TimeSlowDown.instance.timeScale;
             }
-            myTurn -= Time.deltaTime * turnSpeed;
+            myTurn -= Time.deltaTime * turnSpeed * TimeSlowDown.instance.timeScale;
         }
 
-        if (myRoll + Time.deltaTime * rollSpeed < 20)
+        if (myRoll + Time.deltaTime * rollSpeed * TimeSlowDown.instance.timeScale < 20)
         {
-            myRoll += Time.deltaTime * rollSpeed;
+            myRoll += Time.deltaTime * rollSpeed * TimeSlowDown.instance.timeScale;
         }
         yawChange = true;
         parabolLerp = 0.0f;
@@ -155,18 +155,18 @@ public class GliderMovement : MonoBehaviour
     bool pitchChange = false;
     void PitchDown(InputState type)
     {
-        if (myPitch + Time.deltaTime * liftSpeed < 45)
+        if (myPitch + Time.deltaTime * liftSpeed * TimeSlowDown.instance.timeScale < 45)
         {
-            myPitch += Time.deltaTime * liftSpeed;
+            myPitch += Time.deltaTime * liftSpeed * TimeSlowDown.instance.timeScale;
         }
         pitchChange = true;
         parabolLerp = 0.0f;
     }
     void PitchUp(InputState type)
     {
-        if (myPitch - Time.deltaTime * liftSpeed > -45)
+        if (myPitch - Time.deltaTime * liftSpeed * TimeSlowDown.instance.timeScale > -45)
         {
-            myPitch -= Time.deltaTime * liftSpeed;
+            myPitch -= Time.deltaTime * liftSpeed * TimeSlowDown.instance.timeScale;
         }
         pitchChange = true;
         parabolLerp = 0.0f;
@@ -175,18 +175,18 @@ public class GliderMovement : MonoBehaviour
 
     public void MovementCorrections()
     {
-        parabolLerp += Time.deltaTime * Time.deltaTime * recenterFactor;
+        parabolLerp += Time.deltaTime * Time.deltaTime * recenterFactor * TimeSlowDown.instance.timeScale;
         parabolLerp = Mathf.Clamp01(parabolLerp);
 
         if (!yawChange)
         {              
-            myTurn = Mathf.Lerp(myTurn, 0, Time.deltaTime * turnSpeed * parabolLerp);
-            myRoll = Mathf.Lerp(myRoll, 0, Time.deltaTime * rollSpeed * 5 * parabolLerp);            
+            myTurn = Mathf.Lerp(myTurn, 0, Time.deltaTime * turnSpeed * parabolLerp * TimeSlowDown.instance.timeScale);
+            myRoll = Mathf.Lerp(myRoll, 0, Time.deltaTime * rollSpeed * 5 * parabolLerp * TimeSlowDown.instance.timeScale);            
         }
         if (!pitchChange)
         {      
-            myPitch = Mathf.Lerp(myPitch, 0.0f, Time.deltaTime * parabolLerp);
-            moveSpeed = Mathf.Lerp(moveSpeed, baseSpeed, Time.deltaTime * 0.5f);                     
+            myPitch = Mathf.Lerp(myPitch, 0.0f, Time.deltaTime * parabolLerp * TimeSlowDown.instance.timeScale);
+            moveSpeed = Mathf.Lerp(moveSpeed, baseSpeed, Time.deltaTime * 0.5f * TimeSlowDown.instance.timeScale);                     
         }
 
         yawChange = false;
@@ -206,16 +206,16 @@ public class GliderMovement : MonoBehaviour
 
         if (base.transform.forward.y < 0)
         {
-            moveSpeed += (base.transform.forward.y * -(maxSpeed / 1.5f)) * Time.fixedDeltaTime;
+            moveSpeed += (base.transform.forward.y * -(maxSpeed / 1.5f)) * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
         }
         else
         {
-            moveSpeed += (base.transform.forward.y * -(maxSpeed / 3.0f)) * Time.fixedDeltaTime;
+            moveSpeed += (base.transform.forward.y * -(maxSpeed / 3.0f)) * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
         }
 
         moveSpeed = Mathf.Clamp(moveSpeed, 1.0f, maxSpeed);
 
-        currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime);
+        currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime * TimeSlowDown.instance.timeScale);
         MovementCorrections();
 
         RotatePlayer();
@@ -223,7 +223,7 @@ public class GliderMovement : MonoBehaviour
         // Rot
         desiredVec = new Vector3(myPitch, base.transform.eulerAngles.y + myTurn, myRoll);
 
-        base.transform.rotation = Quaternion.Slerp(base.transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);
+        base.transform.rotation = Quaternion.Slerp(base.transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed * TimeSlowDown.instance.timeScale);
 
         //Play sound
         float currentVolume = defaultVolume * (1 + Mathf.Clamp01((currentSpeed / maxSpeed)));
@@ -250,7 +250,7 @@ public class GliderMovement : MonoBehaviour
         base.transform.rotation = Quaternion.Slerp(base.transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);*/
         
         gravScale = Mathf.Clamp01(0.7f - currentSpeed / maxSpeed) * 40.0f;
-         Vector3 movementGrav = base.transform.forward * currentSpeed + gravScale * Physics.gravity * Time.deltaTime;
+         Vector3 movementGrav = base.transform.forward * currentSpeed + gravScale * Physics.gravity * Time.deltaTime * TimeSlowDown.instance.timeScale;
 
         rb.velocity = movementGrav; 
     }
