@@ -77,7 +77,6 @@ public class GliderMovement : MonoBehaviour
     void EnableGlider()
     {
         unlocked = true;
-        PlayAudioOnToggle();
     }
 
     private void PlayAudioOnToggle()
@@ -111,6 +110,7 @@ public class GliderMovement : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
 
         //transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+        PlayAudioOnToggle();
     }
 
 
