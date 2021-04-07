@@ -425,37 +425,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bc15495c0cb45b47bf1f93955d3a070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerState: 0
+  playerState: 0
+  haveControl: 1
   cam: {fileID: 0}
-  walkSpeed: 1
-  maxWalkAcceleration: 10
-  runSpeed: 5
-  maxRunAcceleration: 15
-  currentSpeed: 0
-  rotationSpeed: 10
-  inAirSpeed: 2
-  maxAirAcceleration: 5
-  climbSpeed: 1
-  maxClimbAcceleration: 10
+  walkSpeed: 0.03
+  maxWalkAcceleration: 0.5
+  runSpeed: 0.08
+  maxRunAcceleration: 0.5
+  rotationSpeed: 17
+  setAccel: 0.5
+  inAirSpeed: 0.05
+  maxAirAcceleration: 0.25
+  climbSpeed: 0.02
+  maxClimbAcceleration: 0.1
   climbGripForce: 1
   groundjumpHeight: 0.1
   wallJumpHeight: 0.1
   GroundLayers:
     serializedVersion: 2
-    m_Bits: 48951
+    m_Bits: 180023
+  GroundCheckDistance: 0.4
+  GroundCheckRadius: 0.2
+  GroundCheckStartOffset: {x: 0, y: 0, z: 0}
   ClimbLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
-  GroundCheckDistance: 0.46
+    m_Bits: 262144
   ClimbCheckDistance: 1
-  CheckRadius: 0.1
-  GroundCheckStartOffset: {x: 0, y: 0, z: 0}
+  ClimbCheckRadius: 0.1
   ClimbCheckStartOffset: {x: 0, y: -0.25, z: 0}
-  LocalToGround: 1
-  enabled: 1
-  distanceFromGround: 0
-  inputAxis: {x: 0, y: 0, z: 0}
-  multi: 0.1
 --- !u!114 &3471998379395172067
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,6 +478,7 @@ MonoBehaviour:
   myPitch: 0
   moveSpeed: 1
   baseSpeed: 5
+  unlocked: 0
 --- !u!65 &2547422257388001877
 BoxCollider:
   m_ObjectHideFlags: 0
