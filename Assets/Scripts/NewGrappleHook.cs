@@ -89,6 +89,8 @@ public class NewGrappleHook : MonoBehaviour
     {
         if (pause)
             return;
+        
+        //Debug.Log(rb.velocity.magnitude);
 
         mr.enabled = enabled || retracting || connected;
 
@@ -126,11 +128,11 @@ public class NewGrappleHook : MonoBehaviour
 
                 if (!Application.isEditor)
                 {
-                    rb.AddForce((forceDir / flightTime) * 0.02f, ForceMode.Acceleration);
+                    rb.AddForce(forceDir * TimeSlowDown.instance.timeScale/ flightTime * 0.2f, ForceMode.Acceleration);
                 }
                 else
                 {
-                    rb.AddForce((forceDir / flightTime) * 0.2f, ForceMode.Acceleration);
+                    rb.AddForce(forceDir * TimeSlowDown.instance.timeScale / flightTime * 2f, ForceMode.Acceleration);
                 }
 
                 if (flightTime > 2.0f)

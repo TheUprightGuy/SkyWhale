@@ -18,11 +18,12 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/CameraManager.cs" />
       <option value="$PROJECT_DIR$/Assets/EntityManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Camera/ThirdPersonCamera.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/EntityManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GliderMovement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
