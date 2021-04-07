@@ -34,11 +34,11 @@ public class PlayerMovement : MonoBehaviour
     [Space(20.0f)]
     public float runSpeed = 6.0f;
     public float maxRunAcceleration = 20f;
-    public float currentSpeed;
+    public float currentVelMag;
     public float rotationSpeed = 0.1f;
     [Space(20.0f)]
     private float setSpeed;
-    private float setAccel;
+    public float setAccel;
     [Space(20.0f)]
     public float inAirSpeed = 1.0f;
     public float maxAirAcceleration = 10.0f;
@@ -49,17 +49,22 @@ public class PlayerMovement : MonoBehaviour
     [Space(20.0f)]
     public float groundjumpHeight = 5.0f;
     public float wallJumpHeight = 5.0f;
-    float maxGroundAngle = 40.0f;
+    float maxGroundAngle = 60.0f;
     float maxClimbAngle = 60.0f;
 
-    [Header("GroundChecks")]
+    [Header("Check Settings")]
+
     public LayerMask GroundLayers;
-    public LayerMask ClimbLayers;
     public float GroundCheckDistance = 1.0f;
-    public float ClimbCheckDistance = 1.0f;
-    public float CheckRadius = 0.1f;
+    public float GroundCheckRadius = 0.1f;
     public Vector3 GroundCheckStartOffset = Vector3.zero;
+
+    [Space(20.0f)]
+    public LayerMask ClimbLayers;
+    public float ClimbCheckDistance = 1.0f;
+    public float ClimbCheckRadius = 0.1f;
     public Vector3 ClimbCheckStartOffset = Vector3.zero;
+
     float minGroundDotProduct;
     Vector3 groundContactNormal;
     Vector3 climbContactNormal;
@@ -147,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
         anims.SetBool("Climbing", playerState == PlayerStates.CLIMBING);
         anims.SetBool("Grappling", playerState == PlayerStates.GRAPPLE);
         anims.SetBool("Gliding", playerState == PlayerStates.GLIDING);
-        anims.SetFloat("MovementSpeed", currentSpeed / runSpeed);
+        anims.SetFloat("MovementSpeed", currentVelMag / runSpeed);
         //anims.SetBool("Jump", !(inputAxis.y <= 0));
 
         // Individual state Animation checks
@@ -348,26 +353,29 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
+
+    Vector3 currentVel = Vector3.zero;
     void MoveOnXZ(float speed, float accel)
     {
         Vector3 xAxis = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
         Vector3 zAxis = Vector3.ProjectOnPlane(-transform.right, groundContactNormal);
-        xAxis *= inputAxis.x;
-        zAxis *= inputAxis.z;
+        xAxis *= inputAxis.x; //Forward/Back key is pressed
+        zAxis *= inputAxis.z; //Left/Right key is pressed
 
-        float xzMag = (new Vector2(inputAxis.x, inputAxis.z)).normalized.magnitude;
-        currentSpeed = Mathf.MoveTowards(currentSpeed, speed * xzMag, accel * Time.deltaTime);
+        Vector3 desiredVel = Vector3.zero;
+        desiredVel = (xAxis + zAxis).normalized; //Input direction
+        desiredVel *= speed; //Amount to move in said direction
 
-        inputAxis = Vector3.Normalize(inputAxis);
+        //Vector to actually move by
+        Vector3 actualVel = currentVel =  Vector3.MoveTowards(currentVel, //Current moving velocity
+                                                                desiredVel,
+                                                                    accel * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale); //Amount to change by
 
-        Vector3 desiredVel = xAxis + zAxis;
-        desiredVel.y = 0;
-        desiredVel *= currentSpeed;
+        //animation walk speeds
+        currentVelMag = currentVel.magnitude;
 
-        RB.MovePosition(transform.position + desiredVel * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
+        RB.MovePosition(transform.position + actualVel);
 
-        //Vector3 rotateTo = (groundContactNormal != Vector3.zero) ? (groundContactNormal) : (Vector3.up);
-        
     }
     void MoveOnXY(float speed, float accel)
     {
@@ -376,21 +384,20 @@ public class PlayerMovement : MonoBehaviour
         xAxis *= inputAxis.x;
         zAxis *= inputAxis.z;
 
-        inputAxis = Vector3.Normalize(inputAxis);
+        Vector3 desiredVel = Vector3.zero;
+        desiredVel = (xAxis + zAxis).normalized; //Input direction
+        desiredVel *= speed; //Amount to move in said direction
 
-        float xzMag = (new Vector2(inputAxis.x, inputAxis.z)).normalized.magnitude;
-        currentSpeed = Mathf.MoveTowards(currentSpeed, speed * xzMag, accel * Time.deltaTime);
+        Vector3 actualVel = currentVel = Vector3.MoveTowards(currentVel, //Current moving velocity
+                                                               desiredVel,
+                                                                   accel * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale); //Amount to change by
 
-        Vector3 desiredVel = xAxis + zAxis;
-        desiredVel *= speed;
+        RB.MovePosition(transform.position + actualVel);
+        currentVelMag = currentVel.magnitude;
 
-        RB.MovePosition(transform.position + (desiredVel * Time.deltaTime * TimeSlowDown.instance.timeScale));
-
-        //RB.AddForce(-Physics.gravity, ForceMode.Acceleration);
         if (climbContactNormal != Vector3.zero)
         {
             RB.AddForce(-climbContactNormal.normalized * ((climbGripForce * 0.9f) ));
-            //transform.forward = -climbContactNormal;
         }
         else
         {
@@ -590,25 +597,52 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion InputMethods
     #region Utility
+    //public bool IsGrounded()
+    //{
+    //    RaycastHit rh;
+    //    if (Physics.SphereCast(transform.position + GroundCheckStartOffset, GroundCheckRadius,
+    //        -transform.up, out rh,
+    //        GroundCheckDistance, GroundLayers.value))
+    //    {
+    //        float upDot = Vector3.Dot(transform.up, rh.normal);
+    //        if (upDot >= minGroundDotProduct)
+    //        {
+    //            return true;
+    //        }
+    //    }
+    //    return false;
+    //}
+
     public bool IsGrounded()
     {
-        RaycastHit rh;
-        if (Physics.SphereCast(transform.position + GroundCheckStartOffset, CheckRadius,
-            -transform.up, out rh,
-            GroundCheckDistance, GroundLayers.value))
-        {
-            float upDot = Vector3.Dot(transform.up, rh.normal);
-            if (upDot >= minGroundDotProduct)
-            {
-                return true;
-            }
+        RaycastHit[] hits = Physics.SphereCastAll(transform.position + GroundCheckStartOffset, GroundCheckRadius,
+            -transform.up,
+            GroundCheckDistance, GroundLayers.value);
+
+
+        //If this returns no hits and collisions returns no hits
+        if (hits.Length < 0 || groundContactNormal == Vector3.zero)
+        { 
+            return false;
         }
-        return false;
+
+        
+        Vector3 totaledNormal = Vector3.zero;
+        foreach (RaycastHit item in hits)
+        {
+            totaledNormal += item.normal;
+        }
+        totaledNormal = totaledNormal.normalized;
+
+        Debug.DrawLine(transform.position, transform.position + totaledNormal);
+        Debug.DrawLine(transform.position, transform.position + groundContactNormal, Color.red);
+        float upDot = Vector3.Dot(transform.up, totaledNormal);
+        return upDot >= minGroundDotProduct;
     }
     public bool IsClimbing()
     {
         RaycastHit rh;
-        if (Physics.SphereCast(transform.position + ClimbCheckStartOffset, CheckRadius,
+        if (Physics.SphereCast(transform.position + ClimbCheckStartOffset, ClimbCheckRadius,
             transform.forward, out rh,
             ClimbCheckDistance, ClimbLayers.value))
         {
@@ -620,6 +654,27 @@ public class PlayerMovement : MonoBehaviour
         }
         return false;
     }
+
+    //This doesn't work ¯\_(ツ)_/¯
+    //public bool IsClimbing()
+    //{
+    //    RaycastHit[] hits = Physics.SphereCastAll(transform.position + ClimbCheckStartOffset, ClimbCheckRadius,
+    //            transform.forward,
+    //            ClimbCheckDistance, ClimbLayers.value);
+
+    //    if (hits.Length < 0) { return false; }
+
+    //    Vector3 totaledNormal = Vector3.zero;
+    //    foreach (RaycastHit item in hits)
+    //    {
+    //        totaledNormal += item.normal;
+    //    }
+    //    totaledNormal = totaledNormal.normalized;
+
+    //    float degreeCheck = Vector3.Angle(transform.forward, totaledNormal);
+    //    return degreeCheck <= maxClimbAngle;
+    //}
+
     /// <summary>
     /// <br>Description: Gets distance to ground - used to check if glider can be enabled.</br>
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -628,7 +683,7 @@ public class PlayerMovement : MonoBehaviour
     void GetDistanceToGround()
     {
         RaycastHit rh;
-        if (Physics.SphereCast(transform.position, CheckRadius, -transform.up, out rh, 1000.0f, GroundLayers.value))
+        if (Physics.SphereCast(transform.position, GroundCheckRadius, -transform.up, out rh, 1000.0f, GroundLayers.value))
         {
             distanceFromGround = Vector3.Distance(rh.point, transform.position);
             return;
@@ -694,13 +749,13 @@ public class PlayerMovement : MonoBehaviour
         Vector3 groundStartPos = transform.position + GroundCheckStartOffset;
         Vector3 groundEndPos = groundStartPos + ((-Vector3.up) * GroundCheckDistance);
         Gizmos.DrawLine(groundStartPos, groundEndPos);
-        Gizmos.DrawSphere(groundEndPos, CheckRadius);
+        Gizmos.DrawSphere(groundEndPos, GroundCheckRadius);
 
         Gizmos.color = Color.blue;
         Vector3 climbStartPos = transform.position + ClimbCheckStartOffset;
         Vector3 climbEndPos = climbStartPos + ((transform.forward) * ClimbCheckDistance);
         Gizmos.DrawLine(climbStartPos, climbEndPos);
-        Gizmos.DrawSphere(climbEndPos, CheckRadius);
+        Gizmos.DrawSphere(climbEndPos, ClimbCheckRadius);
     }
     #endregion
 }
