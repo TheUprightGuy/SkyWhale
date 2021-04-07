@@ -60,7 +60,11 @@ public class ThirdPersonCamera : MonoBehaviour
 
         CameraManager.instance.switchCam += SwitchCam;
         CallbackHandler.instance.pause += Pause;
+
+        VirtualInputs.GetInputListener(InputType.PLAYER, "CameraSnap").MethodToCall.AddListener(CameraSnap);
+
     }
+
 
     private void OnDestroy()
     {
@@ -118,10 +122,10 @@ public class ThirdPersonCamera : MonoBehaviour
 
             storedPos.x += horizontal;
 
-            if (Input.GetKeyUp(KeyCode.LeftAlt))//If rightclick released, snap back to position
-            {
-                waitingToReturn = true;
-            }
+            //if (Input.GetKeyUp(KeyCode.LeftAlt))//If rightclick released, snap back to position
+            //{
+            //    waitingToReturn = true;
+            //}
             if (waitingToReturn)
             {
                 if (storedPos.x != targetTrans.eulerAngles.y)
@@ -188,6 +192,11 @@ public class ThirdPersonCamera : MonoBehaviour
     }
 
     Vector3 velocity = Vector3.zero;
+
+    void CameraSnap(InputState inputState)
+    {
+        waitingToReturn = true;
+    }
 
     private void OnDrawGizmos()
     {

@@ -1358,23 +1358,8 @@ PrefabInstance:
       objectReference: {fileID: 4913185220026473846}
     - target: {fileID: 7416749029238927893, guid: 34a05d3f0592b9645b8d45d5a897a37c,
         type: 3}
-      propertyPath: ClimbLayers.m_Bits
-      value: 393216
-      objectReference: {fileID: 0}
-    - target: {fileID: 7416749029238927893, guid: 34a05d3f0592b9645b8d45d5a897a37c,
-        type: 3}
-      propertyPath: GroundLayers.m_Bits
-      value: 442167
-      objectReference: {fileID: 0}
-    - target: {fileID: 7416749029238927893, guid: 34a05d3f0592b9645b8d45d5a897a37c,
-        type: 3}
       propertyPath: ClimbCheckDistance
       value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7416749029238927893, guid: 34a05d3f0592b9645b8d45d5a897a37c,
-        type: 3}
-      propertyPath: runSpeed
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 7416749029238927893, guid: 34a05d3f0592b9645b8d45d5a897a37c,
         type: 3}

@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     [Space(20.0f)]
     public float runSpeed = 6.0f;
     public float maxRunAcceleration = 20f;
-    public float currentVelMag;
+    private float currentVelMag;
     public float rotationSpeed = 0.1f;
     [Space(20.0f)]
     private float setSpeed;
@@ -77,8 +77,8 @@ public class PlayerMovement : MonoBehaviour
     #region Setup
     private void Awake()
     {
-        setSpeed = walkSpeed;
-        setAccel = maxWalkAcceleration;
+        setSpeed = runSpeed;
+        setAccel = maxRunAcceleration;
         playerState = PlayerStates.IDLE;
 
         RB = GetComponent<Rigidbody>();
@@ -146,6 +146,12 @@ public class PlayerMovement : MonoBehaviour
     }
 
     #region Animations
+
+    /// <summary>
+    /// Description: Sets appropriate animation for current player state.
+    /// <b>Author: Wayd Barton-Redgrave</b>
+    /// <b>Last Updated: 06/04/2021</b>
+    /// </summary>
     void SetAnimations()
     {
         // Animation State Checks
@@ -178,6 +184,12 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion Animations
     #region PlayerStateChecks
+
+    /// <summary>
+    /// Description: Changes the current player state based on the functions below this
+    /// <br>Author: Jack Belton</br>
+    /// <br>Last Updated: 6/04/21</br>
+    /// </summary>
     void SetCurrentPlayerState()
     {
         if (CLIMBINGCheck())
@@ -225,11 +237,7 @@ public class PlayerMovement : MonoBehaviour
                             || playerState == PlayerStates.GLIDING
                                 || playerState == PlayerStates.CLIMBING);
 
-    }    /// <summary>
-         /// Description: Sets appropriate animation for current player state.
-         /// Author: Wayd Barton-Redgrave
-         /// Last Updated: 06/04/2021
-         /// </summary>
+    }    
     bool IDLECheck()
     {
         return (IsGrounded() && inputAxis.magnitude <= 0.0f);
@@ -262,39 +270,35 @@ public class PlayerMovement : MonoBehaviour
                 playerState != PlayerStates.CLIMBING && playerState != PlayerStates.GRAPPLE);
     }
     #endregion
+
     #region Movement & Rotation
+
+    /// <summary>
+    /// Description: Handles rotation of the player based on state
+    /// <br>Author: Jack Belton</br>
+    /// <br>Last Updated: 7/04/21</br>
+    /// </summary>
     void HandleRotation()
     {
         switch (playerState)
         {
             case PlayerStates.IDLE:
             case PlayerStates.MOVING:
+
                 if (inputAxis.magnitude > 0.1f)
                 {
-
-                    Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
-                    //cachedRot = Quaternion.FromToRotation(transform.forward, camForwardRelativeToPlayerRot);
-                    //if (cachedRot == Quaternion.identity)
-                    //{
-
-                    //    prev = Quaternion.identity;
-                    //}
-
-                    //if (prev == cachedRot)
-                    //{
-                    //    break;
-                    //}
-                    //prev = Quaternion.RotateTowards(prev, cachedRot, 0.1f);
-                    
-                    float singleStep = rotationSpeed * Time.deltaTime * TimeSlowDown.instance.timeScale;
-                    //transform.forward = camForwardRelativeToPlayerRot;
-                    transform.forward = Vector3.RotateTowards(transform.forward, camForwardRelativeToPlayerRot, singleStep, 0.0f);
+                    RotateTowardInput();
                 }
+
+                //Setting the up position without changing the forward
                 transform.rotation = (Quaternion.LookRotation(transform.forward, Vector3.up));
                 break;
             case PlayerStates.JUMPING:
-                break;
             case PlayerStates.FALLING:
+                if (inputAxis.magnitude > 0.1f)
+                {
+                    RotateTowardInput();
+                }
                 RB.MoveRotation(Quaternion.LookRotation(transform.forward, Vector3.up));
                 break;
             case PlayerStates.CLIMBING:
@@ -309,25 +313,46 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
+
+    /// <summary>
+    /// Description: Rotates player towards direction of input
+    /// <br>Author: Jack Belton</br>
+    /// <br>Last Updated: 7/04/21</br>
+    /// </summary>
+    void RotateTowardInput()
+    {
+
+        float singleStep = rotationSpeed * Time.deltaTime * TimeSlowDown.instance.timeScale;
+
+        //Forward Vector relative to the camera direction
+        Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
+        //Vector perpendicular to the above
+        Vector3 left = Vector3.Cross(camForwardRelativeToPlayerRot, Vector3.up).normalized;
+
+        //Direction currently represented by the keys pressed relative to the camera forward direction
+        Vector3 heading = ((camForwardRelativeToPlayerRot * inputAxis.z) + (left * inputAxis.x)).normalized;
+        //Debug.DrawLine(transform.position, transform.position + heading, Color.blue);
+
+        //Rotate from the current forward towards the given heading over singlestep time
+        transform.forward = Vector3.RotateTowards(transform.forward, heading, singleStep, 0.0f);
+    }
+
+    /// <summary>
+    /// Description: Handles movement of the player based on state
+    /// <br>Author: Jack Belton</br>
+    /// <br>Last Updated: 7/04/21</br>
+    /// </summary>
     void HandleMovement()
     {
         switch (playerState)
         {
             case PlayerStates.IDLE:
             case PlayerStates.MOVING:
-                MoveOnXZ(setSpeed, setAccel);
+                GroundMovement(setSpeed, setAccel);
                 if (inputAxis.y > 0)
                 {
                     JumpFromGround(groundContactNormal + Vector3.up, groundjumpHeight);
-                    /*if (IsClimbing())
-                    {
-                        //Jump(groundContactNormal + Vector3.up, groundjumpHeight* multi);
-                        RB.MovePosition(transform.position + (groundContactNormal.normalized * multi));
-                    }
-                    else
-                    {
-                        Jump(groundContactNormal + Vector3.up, groundjumpHeight);
-                    }*/
+
                 }
                 break;
             case PlayerStates.GRAPPLE:
@@ -335,7 +360,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             case PlayerStates.CLIMBING:
-                MoveOnXY(climbSpeed, maxClimbAcceleration);
+                ClimbMovement(climbSpeed, maxClimbAcceleration);
                 if (inputAxis.y > 0)
                 {
                     JumpFromWall();
@@ -348,7 +373,7 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PlayerStates.JUMPING:
             case PlayerStates.FALLING:
-                MoveOnXZ(inAirSpeed, maxAirAcceleration);
+                GroundMovement(inAirSpeed, maxAirAcceleration);
 
                 break;
             default:
@@ -357,32 +382,47 @@ public class PlayerMovement : MonoBehaviour
     }
 
     Vector3 currentVel = Vector3.zero;
-    void MoveOnXZ(float speed, float accel)
+
+    /// <summary>
+    /// <br>Description: Moves the position of the player using MovePosition based on speed and accel</br>
+    /// <br>Author: Jack Belton</br>
+    /// <br>Last Updated: 7/04/21</br>
+    /// </summary>
+    /// <param name="speed">The desired speed to accelerate towards</param>
+    /// <param name="accel">The rate to move towards speed</param>
+    void GroundMovement(float speed, float accel)
     {
-        Vector3 xAxis = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
-        Vector3 zAxis = Vector3.ProjectOnPlane(-transform.right, groundContactNormal);
-        xAxis *= inputAxis.x; //Forward/Back key is pressed
-        zAxis *= inputAxis.z; //Left/Right key is pressed
+        Vector3 projectedForward = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
+        float xzMag = new Vector2(inputAxis.x, inputAxis.z).magnitude;//Key is pressed
+        projectedForward *= xzMag; 
 
         Vector3 desiredVel = Vector3.zero;
-        desiredVel = (xAxis + zAxis).normalized; //Input direction
+        desiredVel = (projectedForward).normalized; //Input direction
         desiredVel *= speed; //Amount to move in said direction
 
         //Vector to actually move by
         Vector3 actualVel = currentVel =  Vector3.MoveTowards(currentVel, //Current moving velocity
                                                                 desiredVel,
-                                                                    accel * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale); //Amount to change by
+                                                                    accel * Time.fixedDeltaTime ); //Amount to change by
 
         //animation walk speeds
         currentVelMag = currentVel.magnitude;
 
-        RB.MovePosition(transform.position + actualVel);
+        RB.MovePosition(transform.position + actualVel * TimeSlowDown.instance.timeScale);
 
     }
-    void MoveOnXY(float speed, float accel)
+
+    /// <summary>
+    /// <br>Description: Moves the position of the player based on inputaxis, projected on the right and up axis</br>
+    /// <br>Author: Jack Belton</br>
+    /// <br>Last Updated: 6/04/20</br>
+    /// </summary>
+    /// <param name="speed"></param>
+    /// <param name="accel"></param>
+    void ClimbMovement(float speed, float accel)
     {
-        Vector3 xAxis = Vector3.ProjectOnPlane(transform.up, climbContactNormal);
-        Vector3 zAxis = Vector3.ProjectOnPlane(-transform.right, climbContactNormal);
+        Vector3 xAxis = Vector3.ProjectOnPlane(-transform.right, climbContactNormal);
+        Vector3 zAxis = Vector3.ProjectOnPlane(transform.up, climbContactNormal);
         xAxis *= inputAxis.x;
         zAxis *= inputAxis.z;
 
@@ -405,8 +445,15 @@ public class PlayerMovement : MonoBehaviour
         {
             RB.AddForce(transform.forward * ((climbGripForce * 0.9f)));
         }
-    }  
+    }
     // Currently bugged with slowtime due to use of impulse
+    /// <summary>
+    /// <br>Description: Apply an impulse force upwards</br>
+    /// <br>Author: Jack Belton, Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: </br>
+    /// </summary>
+    /// <param name="jumpVec"></param>
+    /// <param name="jumpHeight"></param>
     void JumpFromGround(Vector3 jumpVec, float jumpHeight)
     {
         if (!haveControl || gamePaused)
@@ -425,9 +472,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Description: Jumps from the wall and rotates player.
-    /// Author: Wayd Barton-Redgrave
-    /// Last Updated: 06/04/2021
+    /// <br>Description: Jumps from the wall and rotates player.</br>
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 06/04/2021</br>
     /// </summary>
     void JumpFromWall()
     {
@@ -440,6 +487,12 @@ public class PlayerMovement : MonoBehaviour
         AudioManager.instance.PlaySound("Jump");
     }
     #endregion Movement & Rotation
+
+    /// <summary>
+    /// <br>Description: All of the functions within this region are used by the Virtual Inputs class to handle player inputs</br>
+    ///<br>Author: Jack Belton</br>
+    ///<br>Last Updated: void Jump(InputState type): 7/04/20 </br>    
+    /// </summary>
     #region InputMethods
     void Forward(InputState type)
     {
@@ -447,15 +500,15 @@ public class PlayerMovement : MonoBehaviour
         {
             case InputState.KEYDOWN:
 
-                inputAxis.x = 1;
+                inputAxis.z = 1;
                 break;
             case InputState.KEYHELD:
 
-                inputAxis.x = 1;
+                inputAxis.z = 1;
                 break;
             case InputState.KEYUP:
 
-                inputAxis.x = 0;
+                inputAxis.z = 0;
                 break;
             default:
                 break;
@@ -467,15 +520,15 @@ public class PlayerMovement : MonoBehaviour
         {
             case InputState.KEYDOWN:
 
-                inputAxis.x = -1;
+                inputAxis.z = -1;
                 break;
             case InputState.KEYHELD:
 
-                inputAxis.x = -1;
+                inputAxis.z = -1;
                 break;
             case InputState.KEYUP:
 
-                inputAxis.x = 0;
+                inputAxis.z = 0;
                 break;
             default:
                 break;
@@ -487,15 +540,15 @@ public class PlayerMovement : MonoBehaviour
         {
             case InputState.KEYDOWN:
 
-                inputAxis.z = 1;
+                inputAxis.x = 1;
                 break;
             case InputState.KEYHELD:
 
-                inputAxis.z = 1;
+                inputAxis.x = 1;
                 break;
             case InputState.KEYUP:
 
-                inputAxis.z = 0;
+                inputAxis.x = 0;
                 break;
             default:
                 break;
@@ -507,15 +560,15 @@ public class PlayerMovement : MonoBehaviour
         {
             case InputState.KEYDOWN:
 
-                inputAxis.z = -1;
+                inputAxis.x = -1;
                 break;
             case InputState.KEYHELD:
 
-                inputAxis.z = -1;
+                inputAxis.x = -1;
                 break;
             case InputState.KEYUP:
 
-                inputAxis.z = 0;
+                inputAxis.x = 0;
                 break;
             default:
                 break;
@@ -540,19 +593,9 @@ public class PlayerMovement : MonoBehaviour
     }
     void Run(InputState type)
     {
-        switch (type)
-        {
-            case InputState.KEYDOWN:
-                setSpeed = runSpeed;
-                setAccel = maxRunAcceleration;
-                break;
-            case InputState.KEYUP:
-                setSpeed = walkSpeed;
-                setAccel = maxWalkAcceleration;
-                break;
-            default:
-                break;
-        }
+
+        setSpeed =  (setSpeed != runSpeed) ? (runSpeed) : (walkSpeed);
+        setAccel = (setAccel != maxRunAcceleration) ? (maxRunAcceleration) : (maxWalkAcceleration);
     }
     /// <summary>
     /// <br>Description: Cancels grappling or gliding with press of jump key.</br>
@@ -616,6 +659,11 @@ public class PlayerMovement : MonoBehaviour
     //    return false;
     //}
 
+    /// <summary>
+    /// Description: Checks for a ground below the player, uses a spherecast and double checks with groundcontactnormal
+    /// <br>Author: Jack Belton</br>
+    /// <br>Last Updated: 7/04/21</br>
+    /// </summary>
     public bool IsGrounded()
     {
         RaycastHit[] hits = Physics.SphereCastAll(transform.position + GroundCheckStartOffset, GroundCheckRadius,
@@ -637,8 +685,8 @@ public class PlayerMovement : MonoBehaviour
         }
         totaledNormal = totaledNormal.normalized;
 
-        Debug.DrawLine(transform.position, transform.position + totaledNormal);
-        Debug.DrawLine(transform.position, transform.position + groundContactNormal, Color.red);
+        //Debug.DrawLine(transform.position, transform.position + totaledNormal);
+        //Debug.DrawLine(transform.position, transform.position + groundContactNormal, Color.red);
         float upDot = Vector3.Dot(transform.up, totaledNormal);
         return upDot >= minGroundDotProduct;
     }
