@@ -124,7 +124,6 @@ public class GrappleScript : MonoBehaviour
         switch (type)
         {
             case InputState.KEYDOWN:
-                if (AbleToRetract() || aim)
                     FireHook();
                 break;
             case InputState.KEYHELD:
@@ -298,6 +297,19 @@ public class GrappleScript : MonoBehaviour
         if (!active || pause)
             return;
 
+        if (IsConnected() && !aim)
+        {
+            hook.retracting = false;
+            hook.connected = false;
+            hook.manualRetract = false;
+            hook.Fire(shootPoint.shootPoint, Vector3.Normalize(RaycastToTarget() - transform.position));
+            cachedShoot = false;
+            floatTimer = 1.0f;
+            return;
+        }
+        
+        if(!AbleToRetract() && !aim) return;
+        
         // Available To Use
         if (!HookInUse() && (pm ? !pm.GLIDINGCheck() : grapplingFromWhale))
         {

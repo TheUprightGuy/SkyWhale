@@ -133,6 +133,8 @@ public class NewGrappleHook : MonoBehaviour
         // If paused, do not continue
         if (pause)
             return;
+        
+        //Debug.Log(rb.velocity.magnitude);
 
         // Renderer enabled as long as grapple is in use
         mr.enabled = enabled || retracting || connected;
@@ -187,11 +189,11 @@ public class NewGrappleHook : MonoBehaviour
                 // Physics update occurs more rapidly in build
                 if (!Application.isEditor)
                 {
-                    rb.AddForce((forceDir / flightTime) * 0.02f, ForceMode.Acceleration);
+                    rb.AddForce(forceDir * TimeSlowDown.instance.timeScale/ flightTime * 0.2f, ForceMode.Acceleration);
                 }
                 else
                 {
-                    rb.AddForce((forceDir / flightTime) * 0.2f, ForceMode.Acceleration);
+                    rb.AddForce(forceDir * TimeSlowDown.instance.timeScale / flightTime * 2f, ForceMode.Acceleration);
                 }
 
                 // If reached max Flight Time - Retract
