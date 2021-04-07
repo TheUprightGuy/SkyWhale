@@ -1,4 +1,17 @@
-﻿using System.Collections;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   Quest.cs
+  Description :   Quest SO with objectives to complete. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -19,6 +32,11 @@ public class Quest : ScriptableObject
     int index;
     int tracking;
 
+    /// <summary>
+    /// Description: Notifies the eventmanager to start listening for objectives within the quest.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>  
+    /// </summary>
     public void Setup()
     {
         //CallbackHandler.instance.CreateQuestTracker(this);
@@ -30,11 +48,21 @@ public class Quest : ScriptableObject
         //CallbackHandler.instance.SetDialogueText(objectives[index].dialogueText, 3.0f);
     }
 
+    /// <summary>
+    /// Description: Notifies the eventmanager to stop listening .
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>  
+    /// </summary>
     private void OnDisable()
     {
         EventManager.StopListening(objectives[index].eventName, questListener);
     }
 
+    /// <summary>
+    /// Description: Progresses the quest to next stage, notifying the eventmanager to start listening for next objective.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>  
+    /// </summary>
     public void ProgressQuest()
     {
         Debug.Log("QuestProgress!");

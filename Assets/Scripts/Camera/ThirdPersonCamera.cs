@@ -213,6 +213,12 @@ public class ThirdPersonCamera : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
+    /// <summary>
+    /// Description: Handles camera transition through camera manager.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="_cam">Camera Type to Use</param>
     public void SwitchCam(CameraType _cam)
     {
         if (_cam == cameraType)

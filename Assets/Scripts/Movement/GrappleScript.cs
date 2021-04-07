@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   GrappleScript.cs
+  Description :   Handles the character movement side of the grapple hook. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -27,8 +40,12 @@ public class GrappleScript : MonoBehaviour
     UnityEngine.UI.Image grapplePoint;
     PlayerMovement pm;
     Rigidbody rb;
-    private Transform whaleGrapplePos;
 
+    /// <summary>
+    /// Description: Get Component References.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -42,7 +59,11 @@ public class GrappleScript : MonoBehaviour
         grappleReticule = grapplePoint.gameObject;
     }
 
-    // Start is called before the first frame update
+    /// <summary>
+    /// Description: Sets inputs and Callbacks.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     void Start()
     {
         // Setup Hook
@@ -60,7 +81,6 @@ public class GrappleScript : MonoBehaviour
         EntityManager.instance.toggleControl += ToggleGrapple;
         CallbackHandler.instance.pause += Pause;
     }
-
     private void OnDestroy()
     {
         // End Callback
@@ -68,20 +88,34 @@ public class GrappleScript : MonoBehaviour
         CallbackHandler.instance.pause -= Pause;
     }
 
+    /// <summary>
+    /// Description: Pause callback.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="_pause">Pause State</param>
     void Pause(bool _pause)
     {
         pause = _pause;
     }
     #endregion Setup
 
-
-
-// Function to run on trigger
+    /// <summary>
+    /// Description: Event Trigger to enable grapple hook.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     void EnableGrapple()
     {
         enabled = true;
     }
 
+    /// <summary>
+    /// Description: Handles Grapple Shoot/Retract.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="type">Input Type (Down/Held/Release)</param>
     void Grapple(InputState type)
     {
         if (!enabled || pause)
@@ -102,7 +136,14 @@ public class GrappleScript : MonoBehaviour
         }
     }
 
+
     bool aim;
+    /// <summary>
+    /// Description: Toggles ADS with the Grapple.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="type">Input Type (Down/Held/Release)</param>
     void GrappleAim(InputState type)
     {
         if (!enabled || pause)
@@ -125,17 +166,24 @@ public class GrappleScript : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// Description: Handles forces applied to player while grappling.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     void FixedUpdate()
     {
+        // Check if in use
         if (!enabled || pause)
             return;
 
+        // Ensure a player is referenced (safety check)
         if (pm)       
             pm.haveControl = !hook.connected;
 
         if (hook.connected)
         {
+            // Check as used by both mc and whale grapple
             if (!grapplingFromWhale)
             {
                 Vector3 moveDir = Vector3.Normalize(hook.transform.position - transform.position) * pullSpeed;
@@ -145,6 +193,7 @@ public class GrappleScript : MonoBehaviour
             }
         }
 
+        // Safety check before applying rotation
         if (!pm || pm.GLIDINGCheck())
             return;
 
@@ -152,6 +201,12 @@ public class GrappleScript : MonoBehaviour
     }
 
     public LayerMask raycastTargets;
+    /// <summary>
+    /// Description: Checks if target is grappleable.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <returns>Reference for Reticule</returns>
     Vector3 RaycastToTarget()
     {
         RaycastHit hit;
@@ -174,14 +229,21 @@ public class GrappleScript : MonoBehaviour
     }
 
     float floatTimer;
+    /// <summary>
+    /// Description: Handles grapple gun rotation, gravity and loaded mesh states.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Update()
     {
+        // Check available to use
         if (!enabled || pause)
             return;
 
         if (hook.connected)
             floatTimer = 0.0f;
 
+        // Safety check as script is used for mc and whale grapple hook
         if (floatTimer > 0 && !grapplingFromWhale)
         {
             floatTimer -= Time.deltaTime;
@@ -191,18 +253,24 @@ public class GrappleScript : MonoBehaviour
             rb.useGravity = floatTimer > 0;
         }
 
+        // Set mesh based on loaded state
         shootPoint.Loaded(!hook.InUse());
+
+        // Grapple Loaded
         if (!hook.InUse())
         {
+            // Rotate Gun to face aim direction while ADS
             if (aim)
             {
                 gunContainer.rotation = RaycastToTarget() == Vector3.zero ? Quaternion.LookRotation(camToShootFrom.transform.forward, camToShootFrom.transform.up) : Quaternion.LookRotation(RaycastToTarget() - transform.position);
             }
+            // Rotate Gun to MCs forward direcction
             else
             {
                 gunContainer.rotation = Quaternion.Lerp(gunContainer.rotation, Quaternion.LookRotation(transform.forward, transform.up), Time.deltaTime);
             }
         }
+        // In flight
         else
         {
             gunContainer.LookAt(hook.transform);
@@ -211,6 +279,7 @@ public class GrappleScript : MonoBehaviour
         if (!aim)
             return;
 
+        // Firehook if player clicked while already attached
         if (cachedShoot)
             FireHook();
 
@@ -219,11 +288,17 @@ public class GrappleScript : MonoBehaviour
 
 
     bool cachedShoot = false;
+    /// <summary>
+    /// Description: Fires/Retracts the Grapple Hook.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     public void FireHook()
     {
         if (!active || pause)
             return;
 
+        // Available To Use
         if (!HookInUse() && (pm ? !pm.GLIDINGCheck() : grapplingFromWhale))
         {
             if (RaycastToTarget() != Vector3.zero)
@@ -239,7 +314,7 @@ public class GrappleScript : MonoBehaviour
             cachedShoot = false;
             ToggleAim(false);
         }
-        // This can probably be cleaned up
+        // Availabe to Retract
         else if (AbleToRetract())
         {
             // Start retracting
@@ -266,12 +341,23 @@ public class GrappleScript : MonoBehaviour
     }
 
     public bool active;
+    /// <summary>
+    /// Description: Toggles whether Grapple is able to be used or not.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="_toggle">Toggle Grapple On/Off</param>
     public void ToggleGrapple(bool _toggle)
     {
         active = grapplingFromWhale ? !_toggle : _toggle;
     }
 
-
+    /// <summary>
+    /// Description: Toggles Aim Reticule.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="_startAim">ADS</param>
     void ToggleAim(bool _startAim)
     {
         // Toggle Reticule
@@ -289,6 +375,12 @@ public class GrappleScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Description: Retracts hook upon player collision.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="collision">Colliding Object</param>
     private void OnCollisionEnter(Collision collision)
     {
         if (!enabled || pause)

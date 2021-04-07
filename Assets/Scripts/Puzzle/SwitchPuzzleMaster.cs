@@ -1,7 +1,21 @@
-﻿using System.Collections;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   SwitchPuzzleMaster.cs
+  Description :   Handles puzzle layout and checks for completion upon switch change. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+
 public class SwitchPuzzleMaster : MonoBehaviour
 {
     #region Singleton
@@ -50,6 +64,11 @@ public class SwitchPuzzleMaster : MonoBehaviour
     bool inUse;
 
 
+    /// <summary>
+    /// Description: Switches camera upon keypress when player is in trigger area.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Update()
     {
         if (complete)
@@ -61,13 +80,14 @@ public class SwitchPuzzleMaster : MonoBehaviour
             ToggleCam(inUse);
             Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
         }
-
-        if (CheckComplete())
-        {
-            Debug.Log("COMPLETE");
-        }
     }
 
+    /// <summary>
+    /// Description: Switches camera if matching type.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="_toggle">Puzzle/Player Camera</param>
     public void ToggleCam(bool _toggle)
     {
         inUse = _toggle;
@@ -79,6 +99,12 @@ public class SwitchPuzzleMaster : MonoBehaviour
         CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
     }
 
+    /// <summary>
+    /// Description: Checks if puzzle is complete, if so triggers event.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <returns></returns>
     public bool CheckComplete()
     {
         foreach(PuzzleSwitch n in switches)
@@ -97,6 +123,13 @@ public class SwitchPuzzleMaster : MonoBehaviour
         return true;
     }
 
+    #region Triggers
+    /// <summary>
+    /// Description: Gets reference to player to check if in range.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="other">Triggering Object</param>
     private void OnTriggerEnter(Collider other)
     {
         PlayerMovement player = other.GetComponent<PlayerMovement>();
@@ -115,4 +148,5 @@ public class SwitchPuzzleMaster : MonoBehaviour
             pm = null;
         }
     }
+    #endregion Triggers
 }

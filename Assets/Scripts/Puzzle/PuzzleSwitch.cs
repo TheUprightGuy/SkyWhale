@@ -1,4 +1,18 @@
-﻿using System.Collections;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   PuzzleSwitch.cs
+  Description :   Handles individual switches in the switch puzzle. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +29,11 @@ public class PuzzleSwitch : MonoBehaviour
     public List<MeshRenderer> highlightMeshes;
     public bool highlight;
 
+    /// <summary>
+    /// Description: Switches self and adjacent switches.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     public void Use()
     {
         Switch();
@@ -23,13 +42,13 @@ public class PuzzleSwitch : MonoBehaviour
         {
             n.Switch();
         }
-
-        if (SwitchPuzzleMaster.instance.CheckComplete())
-        {
-            Debug.Log("Complete!");
-        }
     }
 
+    /// <summary>
+    /// Description: Switches this on/off.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     public void Switch()
     {
         if (!SwitchPuzzleMaster.instance.complete)
@@ -40,10 +59,5 @@ public class PuzzleSwitch : MonoBehaviour
                 n.material = active ? on : off;
             }
         }
-    }
-
-    private void Update()
-    {
-
     }
 }

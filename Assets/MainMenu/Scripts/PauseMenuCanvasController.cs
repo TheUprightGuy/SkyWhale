@@ -1,4 +1,17 @@
-﻿using System.Collections;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   PauseMenuCanvasController.cs
+  Description :   Handles PauseUI elements. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -23,6 +36,11 @@ public enum MenuOptions
 public class PauseMenuCanvasController : MonoBehaviour
 {
     #region Singleton
+    /// <summary>
+    /// Description: Singleton Setup.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     public static PauseMenuCanvasController instance;
     private void Awake()
     {
@@ -36,6 +54,11 @@ public class PauseMenuCanvasController : MonoBehaviour
     }
     #endregion Singleton
     #region Setup
+    /// <summary>
+    /// Description: Setup Inputs.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Start()
     {
         prevMenu = menu;
@@ -60,6 +83,12 @@ public class PauseMenuCanvasController : MonoBehaviour
     public GameSettings gameSettings;
     public GameSettings defaultSettings;
 
+    /// <summary>
+    /// Description: Toggles pause on or off.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="type">InputState (Down/Held/Up)</param>
     public void Pause(InputState type)
     {
         toggle.SetActive(!toggle.activeSelf);
@@ -77,6 +106,12 @@ public class PauseMenuCanvasController : MonoBehaviour
     }
 
     public Action<MenuOptions> toggleMenuOption;
+    /// <summary>
+    /// Description: Toggles which menu to show.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="_option">Menu to Display</param>
     public void ToggleMenuOption(MenuOptions _option)
     {
         switch (_option)
@@ -127,6 +162,11 @@ public class PauseMenuCanvasController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Description: Sets game settings to saved settings.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     public Action setSettings;
     public void SetSettings()
     {

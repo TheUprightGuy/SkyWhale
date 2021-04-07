@@ -1,4 +1,17 @@
-﻿using System.Collections;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   InputData.cs
+  Description :   SO that contains custom inputs. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +25,13 @@ public class InputData : ScriptableObject
     [Header("MENU CONTROLS")]
     public List<InputListener> menuInput;
 
+    /// <summary>
+    /// Description: Sets listeners for particular input types.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>  
+    /// </summary>
+    /// <param name="_type">Input Types</param>
+    /// <param name="_inputs">Set of Listeners</param>
     public void SetInputs(InputType _type, List<InputListener> _inputs)
     {
         switch (_type)
@@ -46,6 +66,12 @@ public class InputData : ScriptableObject
         }
     }
 
+    /// <summary>
+    /// Description: Copy one set of inputs to another - used for rest to defaults.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>  
+    /// </summary>
+    /// <param name="_data">Inputs to copy from</param>
     public void CopyInputs(InputData _data)
     {
         // Done in this fashion to not lose listeners.

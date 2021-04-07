@@ -1,4 +1,17 @@
-﻿using System.Collections;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   FlightChallengeMaster.cs
+  Description :   Checks if player has reached the end of the flight challenge. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +20,11 @@ public class FlightChallengeMaster : MonoBehaviour
     #region Setup
     ParticleSystem ps;
     List<FlightChallengeRing> rings;
+    /// <summary>
+    /// Description: Setup local components.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Awake()
     {
         rings = new List<FlightChallengeRing>();
@@ -22,6 +40,11 @@ public class FlightChallengeMaster : MonoBehaviour
 
     float timeOut;
 
+    /// <summary>
+    /// Description: Check if challenge was completed.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     public void CheckRings()
     {
         foreach(FlightChallengeRing n in rings)
@@ -42,6 +65,11 @@ public class FlightChallengeMaster : MonoBehaviour
         rings.Clear();
     }
 
+    /// <summary>
+    /// Description: Reset Challenge.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     void ResetRings()
     {
         foreach (FlightChallengeRing n in rings)
@@ -50,8 +78,11 @@ public class FlightChallengeMaster : MonoBehaviour
         }
     }
 
-
-    // Update is called once per frame
+    /// <summary>
+    /// Description: Resets rings after timer.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     void Update()
     {
         if (timeOut <= 0)

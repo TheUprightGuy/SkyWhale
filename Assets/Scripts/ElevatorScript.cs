@@ -1,4 +1,17 @@
-﻿using System.Collections;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   ElevatorScript.cs
+  Description :   A very basic elevator that cycles between up and down. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,36 +23,48 @@ public enum ElevatorControl
     UP
 }
 
-
 public class ElevatorScript : MonoBehaviour
 {
     #region Setup
     Rigidbody rb;
     bool pause;
+    /// <summary>
+    /// Description: Setup local components.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
+    /// <summary>
+    /// Description: Setup Callbacks.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Start()
     {
         EventManager.StartListening("TalkedToBlacksmith", StartElevator);
         CallbackHandler.instance.pause += Pause;
     }
-
-    void Pause(bool _pause)
-    {
-        pause = _pause;
-    }
-
     private void OnDestroy()
     {
         EventManager.StopListening("TalkedToBlacksmith", StartElevator);
         CallbackHandler.instance.pause -= Pause;
     }
+    void Pause(bool _pause)
+    {
+        pause = _pause;
+    }
 
     #endregion Setup
 
+    /// <summary>
+    /// Description: Turns the elevator on.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     void StartElevator()
     {
         inUse = true;
@@ -54,7 +79,11 @@ public class ElevatorScript : MonoBehaviour
     public Vector3 botPos;
     public float timer;
 
-
+    /// <summary>
+    /// Description: Handles movement up and down.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void FixedUpdate()
     {
         if (!inUse || pause)
@@ -105,6 +134,12 @@ public class ElevatorScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Description: Switches Elevator State.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="_ec">State</param>
     void SwitchEC(ElevatorControl _ec)
     {
         ec = _ec;

@@ -1,4 +1,17 @@
-﻿using System.Collections;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   OrbitScript.cs
+  Description :   Handles movement and rotation for the Whale. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,12 +30,23 @@ public class OrbitScript : MonoBehaviour
     Rigidbody rb;
     [HideInInspector] public float currentDistance;
 
+    #region Setup
+    /// <summary>
+    /// Description: Get Component References.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
-
+    #endregion Setup
     #region Callbacks
+    /// <summary>
+    /// Description: Setup Callbacks.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Start()
     {
         CallbackHandler.instance.setOrbit += SetOrbit;
@@ -39,7 +63,11 @@ public class OrbitScript : MonoBehaviour
     }
     #endregion Callbacks
 
-    // Update is called once per frame
+    /// <summary>    
+    /// Description: Handles path and rotation when in orbit (no control).
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     void FixedUpdate()
     {
         if (enabled)
@@ -81,6 +109,12 @@ public class OrbitScript : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Description: Gets island reference to orbit.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="_orbit">Object to Orbit</param>
     public void SetOrbit(GameObject _orbit)
     {
         //if (!enabled)

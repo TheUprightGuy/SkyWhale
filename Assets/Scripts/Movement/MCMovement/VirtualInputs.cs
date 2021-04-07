@@ -1,4 +1,17 @@
-﻿using System;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   VirtualInputs.cs
+  Description :   Custom input controller with support for SOs. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave & Jack Belton
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -43,8 +56,13 @@ public class InputEvent : UnityEvent<InputState> {}
 
 public class VirtualInputs : MonoBehaviour
 {
-
+    #region Singleton
     private static VirtualInputs virtualInputs;
+    /// <summary>
+    /// Description: Setup Singleton.
+    /// <br>Author: Jack Belton</br>
+    /// <br>Last Updated: 04/07/2021</br> 
+    /// </summary>
     public static VirtualInputs instance
     {
         get
@@ -60,6 +78,7 @@ public class VirtualInputs : MonoBehaviour
             return virtualInputs;
         }
     }
+    #endregion Singleton
 
     [Header("Saved Inputs")]
     public InputData currentInput;
@@ -132,6 +151,14 @@ public class VirtualInputs : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Description: Gets listener for particular key.
+    /// <br>Author: Wayd Barton-Redgrave & Jack Belton</br>
+    /// <br>Last Updated: 04/07/2021</br> 
+    /// </summary>
+    /// <param name="_type">Player/Whale/Menu</param>
+    /// <param name="_ILName">Name for Input</param>
+    /// <returns></returns>
     public static InputListener GetInputListener(InputType _type, string _ILName)
     {
         switch(_type)
@@ -175,6 +202,14 @@ public class VirtualInputs : MonoBehaviour
         return null;
     }
 
+    /// <summary>
+    /// Description: Sets key based on input type passed from custominput prefab.
+    /// <br>Author: Wayd Barton-Redgrave & Jack Belton</br>
+    /// <br>Last Updated: 04/07/2021</br> 
+    /// </summary>
+    /// <param name="_type">Player/Whale/Menu</param>
+    /// <param name="_ILName">Name for Input</param>
+    /// <param name="_key">Key to Set</param>
     public static void SetKey(InputType _type, string _ILName, KeyCode _key)
     {
         switch (_type)
@@ -216,6 +251,11 @@ public class VirtualInputs : MonoBehaviour
     }
 
     public event Action resetToDefaults;
+    /// <summary>
+    /// Description: Copies default settings to current.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br> 
+    /// </summary>
     public static void ResetToDefaults()
     {
         instance.currentInput.CopyInputs(instance.defaultInput);
