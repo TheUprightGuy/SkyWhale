@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Audio;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -181,6 +182,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 RB.velocity = Vector3.zero;
                 inputAxis.y = 0;
+                AudioManager.instance.PlaySound("WallHit");
             }
 
             playerState = PlayerStates.CLIMBING;
@@ -429,6 +431,7 @@ public class PlayerMovement : MonoBehaviour
         RB.AddForce((-transform.forward + transform.up) * 12.0f, ForceMode.Impulse);
         transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180.0f, transform.rotation.eulerAngles.z);
         inputAxis.y = 0;
+        AudioManager.instance.PlaySound("Jump");
     }
     #endregion Movement & Rotation
     #region InputMethods
@@ -648,8 +651,11 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // Turn off glider upon hitting an object
-        if (glider.enabled)      
-            glider.Toggle();     
+        if (glider.enabled)
+        {
+            glider.Toggle();
+            AudioManager.instance.PlaySound("Crash");
+        }
 
         // Change Collisions Back (so player can now collider with whale) - This isn't perfect, requires the player touches something and doesn't try to reconnect to whale after jumping off.
         if (!collision.gameObject.GetComponent<WhaleMovement>() && this.gameObject.layer == LayerMask.NameToLayer("PlayerFromWhale"))

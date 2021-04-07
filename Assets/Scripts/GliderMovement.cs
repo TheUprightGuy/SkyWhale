@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Audio;
+using UnityEngine.Audio;
 
 public class GliderMovement : MonoBehaviour
 {
@@ -13,7 +15,10 @@ public class GliderMovement : MonoBehaviour
 
     public Cinemachine.CinemachineVirtualCamera mainCam;
     public Cinemachine.CinemachineVirtualCamera glideCam;
-    DumbCamera dc;
+
+    private float defaultVolume;
+    private float defaultPitch;
+    private AudioMixer _audioMixer;
 
     #region Local Variables
     public float currentSpeed = 0.0f;
@@ -37,7 +42,10 @@ public class GliderMovement : MonoBehaviour
     private void Awake()
     {
         rb = GetComponentInChildren<Rigidbody>();
-        dc = glideCam.GetComponent<DumbCamera>();
+
+        defaultVolume = gameObject.GetComponentInChildren<AudioSource>().volume;
+        defaultPitch = gameObject.GetComponentInChildren<AudioSource>().pitch;
+        _audioMixer = gameObject.GetComponentInChildren<AudioSource>().outputAudioMixerGroup.audioMixer;
     }
 
     // Start is called before the first frame update
@@ -69,6 +77,18 @@ public class GliderMovement : MonoBehaviour
     void EnableGlider()
     {
         unlocked = true;
+        PlayAudioOnToggle();
+    }
+
+    private void PlayAudioOnToggle()
+    {
+        if (enabled)
+        {
+            AudioManager.instance.PlaySound("GliderWind");
+            return;
+        }
+        AudioManager.instance.StopSound("GliderWind");
+        AudioManager.instance.PlaySound("GliderClose");
     }
 
     public bool unlocked;
@@ -204,6 +224,12 @@ public class GliderMovement : MonoBehaviour
         desiredVec = new Vector3(myPitch, base.transform.eulerAngles.y + myTurn, myRoll);
 
         base.transform.rotation = Quaternion.Slerp(base.transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);
+
+        //Play sound
+        float currentVolume = defaultVolume * (1 + Mathf.Clamp01((currentSpeed / maxSpeed)));
+        float currentPitch = defaultPitch * (1 + Mathf.Clamp01((currentSpeed / maxSpeed)));
+        _audioMixer.SetFloat("GliderWindVolume", currentVolume);
+        _audioMixer.SetFloat("GliderWindPitch", currentPitch);
     }
 
     public void RotatePlayer()

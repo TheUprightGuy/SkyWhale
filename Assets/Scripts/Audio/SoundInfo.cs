@@ -1,38 +1,50 @@
-﻿using UnityEngine;
+﻿//Script owner: Jacob Gallagher
+//Description: This script stores the audio source and the default pitch and volume values for a specific sound in
+//the audio managers sound dictionary.
+//It handles resetting the audio source's volume and pitch to their default volumes
+
+using UnityEngine;
 
 namespace Audio
 {
     public class SoundInfo
     {
-        public AudioSource AudioSource;
-        public float PitchDefault;
-        public float VolumeDefault;
-        public void InitialiseSound(string name)
+        //Public variables
+        #region Public variables
+        public AudioSource audioSource;
+        public float pitchDefault;
+        public float volumeDefault;
+        #endregion
+
+        //Public functions
+        #region Public functions
+        public void InitialiseSound(string name, AudioSource _source)
         {
-            this.AudioSource = GameObject.Find(name)
-                .GetComponent<AudioSource>();
-            this.PitchDefault = this.AudioSource.pitch;
-            this.VolumeDefault = this.AudioSource.volume;
+            audioSource = _source;// ObjectFinder.FindObject(name).GetComponent<AudioSource>();
+
+            pitchDefault = audioSource.pitch;
+            volumeDefault = audioSource.volume;
         }
-        
+
         public void InitialiseSound()
         {
-            this.PitchDefault = this.AudioSource.pitch;
-            this.VolumeDefault = this.AudioSource.volume;
+            pitchDefault = audioSource.pitch;
+            volumeDefault = audioSource.volume;
         }
 
         public void Reset()
         {
             //Reset altered pitch and volume to defaults
-            this.AudioSource.pitch = this.PitchDefault;
-            this.AudioSource.volume = this.VolumeDefault;
+            audioSource.pitch = pitchDefault;
+            audioSource.volume = volumeDefault;
         }
-        
+
         public void Reset(float newVolume)    //Resets audio source to default before adjusting it by the new volume
         {
             //Reset altered pitch and volume to defaults
-            this.AudioSource.pitch = this.PitchDefault;
-            this.AudioSource.volume = this.VolumeDefault * newVolume;
+            audioSource.pitch = pitchDefault;
+            audioSource.volume = volumeDefault * newVolume;
         }
-    }   
+        #endregion
+    }
 }
