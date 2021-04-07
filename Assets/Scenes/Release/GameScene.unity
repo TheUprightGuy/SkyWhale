@@ -35095,7 +35095,7 @@ PrefabInstance:
     - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
         type: 3}
       propertyPath: maxClimbAcceleration
-      value: 0.25
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
         type: 3}
@@ -35110,7 +35110,7 @@ PrefabInstance:
     - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
         type: 3}
       propertyPath: runSpeed
-      value: 0.1
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
         type: 3}
@@ -35121,6 +35121,21 @@ PrefabInstance:
         type: 3}
       propertyPath: climbSpeed
       value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: heading.x
+      value: 0.03178854
+      objectReference: {fileID: 0}
+    - target: {fileID: 4913185220459822145, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: heading.z
+      value: 0.9994946
       objectReference: {fileID: 0}
     - target: {fileID: 4913185221069897576, guid: 1b3987150f1e46843beb873c6b2da9d0,
         type: 3}
