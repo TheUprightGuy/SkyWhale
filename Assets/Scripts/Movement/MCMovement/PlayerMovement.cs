@@ -350,15 +350,7 @@ public class PlayerMovement : MonoBehaviour
                 if (inputAxis.y > 0)
                 {
                     JumpFromGround(groundContactNormal + Vector3.up, groundjumpHeight);
-                    /*if (IsClimbing())
-                    {
-                        //Jump(groundContactNormal + Vector3.up, groundjumpHeight* multi);
-                        RB.MovePosition(transform.position + (groundContactNormal.normalized * multi));
-                    }
-                    else
-                    {
-                        Jump(groundContactNormal + Vector3.up, groundjumpHeight);
-                    }*/
+
                 }
                 break;
             case PlayerStates.GRAPPLE:
@@ -409,12 +401,12 @@ public class PlayerMovement : MonoBehaviour
         //Vector to actually move by
         Vector3 actualVel = currentVel =  Vector3.MoveTowards(currentVel, //Current moving velocity
                                                                 desiredVel,
-                                                                    accel * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale); //Amount to change by
+                                                                    accel * Time.fixedDeltaTime ); //Amount to change by
 
         //animation walk speeds
         currentVelMag = currentVel.magnitude;
 
-        RB.MovePosition(transform.position + actualVel);
+        RB.MovePosition(transform.position + actualVel * TimeSlowDown.instance.timeScale);
 
     }
 
@@ -454,8 +446,9 @@ public class PlayerMovement : MonoBehaviour
     }
     // Currently bugged with slowtime due to use of impulse
     /// <summary>
-    /// Description: Apply an impulse force upwards
-    /// Author: Jack Belton, Wayd Barton-Redgrave
+    /// <br>Description: Apply an impulse force upwards</br>
+    /// <br>Author: Jack Belton, Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: </br>
     /// </summary>
     /// <param name="jumpVec"></param>
     /// <param name="jumpHeight"></param>
@@ -477,9 +470,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Description: Jumps from the wall and rotates player.
-    /// Author: Wayd Barton-Redgrave
-    /// Last Updated: 06/04/2021
+    /// <br>Description: Jumps from the wall and rotates player.</br>
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 06/04/2021</br>
     /// </summary>
     void JumpFromWall()
     {
@@ -491,6 +484,12 @@ public class PlayerMovement : MonoBehaviour
         inputAxis.y = 0;
     }
     #endregion Movement & Rotation
+
+    /// <summary>
+    /// <br>Description: All of the functions within this region are used by the Virtual Inputs class to handle player inputs</br>
+    ///<br>Author: Jack Belton</br>
+    ///<br>Last Updated: void Jump(InputState type): 7/04/20 </br>    
+    /// </summary>
     #region InputMethods
     void Forward(InputState type)
     {
@@ -657,6 +656,11 @@ public class PlayerMovement : MonoBehaviour
     //    return false;
     //}
 
+    /// <summary>
+    /// Description: Checks for a ground below the player, uses a spherecast and double checks with groundcontactnormal
+    /// <br>Author: Jack Belton</br>
+    /// <br>Last Updated: 7/04/21</br>
+    /// </summary>
     public bool IsGrounded()
     {
         RaycastHit[] hits = Physics.SphereCastAll(transform.position + GroundCheckStartOffset, GroundCheckRadius,
