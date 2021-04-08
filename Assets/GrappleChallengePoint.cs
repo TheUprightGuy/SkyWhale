@@ -8,13 +8,13 @@ public class GrappleChallengePoint : MonoBehaviour
     // Local Variables
     bool collided;
     float lifeTime = 3.0f;
-    BoxCollider bc;
+    MeshCollider bc;
     MeshRenderer mr;
     new bool enabled = true;
 
     private void Awake()
     {
-        bc = GetComponent<BoxCollider>();
+        bc = GetComponent<MeshCollider>();
         mr = GetComponent<MeshRenderer>();
     }
     #endregion Setup
