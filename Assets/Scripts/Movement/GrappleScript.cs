@@ -126,7 +126,8 @@ public class GrappleScript : MonoBehaviour
         switch (type)
         {
             case InputState.KEYDOWN:
-                    FireHook();
+                    if (AbleToRetract() || aim)
+                        FireHook();
                 break;
             case InputState.KEYHELD:
                 break;
@@ -300,7 +301,7 @@ public class GrappleScript : MonoBehaviour
             return;
 
         //Fire hook without aiming while currently grappling (Author: Jacob Gallagher) (Also removed a few lines to enable fire hook to be called in this case)
-        if (IsConnected() && !aim)
+        /*if (IsConnected() && !aim)
         {
             hook.retracting = false;
             hook.connected = false;
@@ -309,7 +310,7 @@ public class GrappleScript : MonoBehaviour
             cachedShoot = false;
             floatTimer = 1.0f;
             return;
-        }
+        }*/
         
         if(!AbleToRetract() && !aim) return;
         
