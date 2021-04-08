@@ -99,7 +99,6 @@ namespace Island.CollectableIsland
         /// <summary>
         /// Causes the island to rotate towards its follow point
         /// </summary>
-        /// <returns>Lean tween descriptor so the update function can tell when the tweening is complete</returns>
         private void RotateTowardsIsland()
         {
             //Calculate euler angle rotation required to rotate to face follow point
