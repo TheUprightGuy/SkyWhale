@@ -162,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
         anims.SetFloat("MovementSpeed", currentVelMag / runSpeed);
         //anims.SetBool("Jump", !(inputAxis.y <= 0));
 
+        anims.speed = 1;
         // Individual state Animation checks
         switch (playerState)
         {
@@ -181,6 +182,8 @@ public class PlayerMovement : MonoBehaviour
             default:
                 break;
         }
+
+
     }
     #endregion Animations
     #region PlayerStateChecks

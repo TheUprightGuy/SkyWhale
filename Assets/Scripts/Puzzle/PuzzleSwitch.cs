@@ -42,6 +42,9 @@ public class PuzzleSwitch : MonoBehaviour
         {
             n.Switch();
         }
+
+        SwitchPuzzleMaster.instance.CheckComplete();
+
     }
 
     /// <summary>
