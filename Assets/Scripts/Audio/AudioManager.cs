@@ -173,9 +173,11 @@ namespace Audio
 
         private void AddInitiallyDisabledAudioSources()
         {
-            var initiallyDisabledAudioSources = ObjectFinder.FindAllObjectsWithTag("InitiallyDisabledAudioSources");
+            //Object finder only works in editor
+            //Need to use replacement functionality if needed
+            /*var initiallyDisabledAudioSources = ObjectFinder.FindAllObjectsWithTag("InitiallyDisabledAudioSources");
             foreach (var initiallyDisabledAudioSource in initiallyDisabledAudioSources)
-                AddAudioSourceToDictionary(initiallyDisabledAudioSource.GetComponent<AudioSource>());
+                AddAudioSourceToDictionary(initiallyDisabledAudioSource.GetComponent<AudioSource>());*/
         }
 
         private IEnumerator PlayRandomMusicTracks()
