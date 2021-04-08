@@ -14,17 +14,11 @@
     <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.4.2f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Layout/CanvasScaler.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
-    <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/CameraManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/EntityManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Camera/ThirdPersonCamera.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/EntityManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/GliderMovement.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
-    </changedPaths>
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
+      </list>
+    </option>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
   <component name="ProjectViewState">
@@ -55,7 +49,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -64,7 +58,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>

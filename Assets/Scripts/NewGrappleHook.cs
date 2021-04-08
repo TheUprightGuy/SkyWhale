@@ -189,7 +189,7 @@ public class NewGrappleHook : MonoBehaviour
                 // Physics update occurs more rapidly in build
                 if (!Application.isEditor)
                 {
-                    rb.AddForce(forceDir * TimeSlowDown.instance.timeScale/ flightTime * 0.2f, ForceMode.Acceleration);
+                    rb.AddForce(forceDir * TimeSlowDown.instance.timeScale/ flightTime * 2f, ForceMode.Acceleration);
                 }
                 else
                 {
