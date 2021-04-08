@@ -1,9 +1,15 @@
-﻿//not using template for header comment
-//Script owner: Jacob Gallagher
-//Description: This mono behaviour script stores a list of ambient sounds that are faded in and out by
-//the audio manager to create a looping ambient track. It also stores the name of the corresponding
-//audio mixer exposed parameter (which enables the audio manager to alter the volume).
-//It also handles creating/storing the corresponding sound info
+﻿// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+// (c) 2020 Media Design School
+// File Name   :   AmbientLayer.cs
+// Description :   Contains ambient sound list for a specific ambient sound layer.
+//                 Contains string for audio mixers exposed volume parameter name.
+//                 (This is used to fade in and out each sound before choosing another random sound).
+// Date        :   XX/XX/2020
+// Author      :   Jacob Gallagher
+// Mail        :   Jacob.Gallagher1.@mds.ac.nz
 
 using System.Collections.Generic;
 using UnityEngine;

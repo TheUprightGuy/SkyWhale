@@ -13,9 +13,9 @@ public class InactiveAudiosource : MonoBehaviour
     {
         Debug.Log("Registering audio source");
         var audioSource = this.GetComponent<AudioSource>();
-        if(!AudioManager.instance.soundDictionary.ContainsKey(audioSource.name))
+        if(!AudioManager.instance.SoundDictionary.ContainsKey(audioSource.name))
         {
-            AudioManager.instance.Register(audioSource);
+            AudioManager.instance.AddAudioSourceToDictionary(audioSource);
         }
     }
 }
