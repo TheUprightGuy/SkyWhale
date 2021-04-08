@@ -1,4 +1,16 @@
-﻿using System;
+﻿// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+// (c) 2020 Media Design School
+// File Name   :   EntityManager.cs
+// Description :   Singleton that handles enabling and disabling objects appropriately on different events.
+//                 Mainly when mounting/dismounting the whale.
+// Author      :   Jacob Gallagher
+// Mail        :   Jacob.Gallagher1.@mds.ac.nz
+
+//This was also worked on by Wayd when he helped clean up/fix/simplify dismount functionality after merging broke dismount by grapple
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;

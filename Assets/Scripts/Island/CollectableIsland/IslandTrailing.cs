@@ -1,4 +1,13 @@
-﻿using System.Collections;
+﻿// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+// (c) 2020 Media Design School
+// File Name   :   IslandTrailing.cs
+// Description :   Mono behaviour that handles island trailing, island flocking and island bobbing behaviours. 
+// Author      :   Jacob Gallagher
+// Mail        :   Jacob.Gallagher1.@mds.ac.nz
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;

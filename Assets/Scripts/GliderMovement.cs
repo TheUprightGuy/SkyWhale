@@ -1,4 +1,7 @@
-﻿using System.Collections;
+﻿
+
+//This was also worked on by Jacob Gallagher for glider audio functionality
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Audio;
@@ -226,6 +229,7 @@ public class GliderMovement : MonoBehaviour
         base.transform.rotation = Quaternion.Slerp(base.transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed * TimeSlowDown.instance.timeScale);
 
         //Play sound
+        //Code section Author: Jacob Gallagher
         float currentVolume = defaultVolume * (1 + Mathf.Clamp01((currentSpeed / maxSpeed)));
         float currentPitch = defaultPitch * (1 + Mathf.Clamp01((currentSpeed / maxSpeed)));
         _audioMixer.SetFloat("GliderWindVolume", currentVolume);

@@ -9,6 +9,8 @@
   Date        :   07/04/2021
   Author      :   Wayd Barton-Redgrave
   Mail        :   wayd.bartonregrave@mds.ac.nz
+  
+  Also slightly worked on by Jacob Gallagher when first working on dismount by grapple.
 */
 
 using System;
@@ -297,6 +299,7 @@ public class GrappleScript : MonoBehaviour
         if (!active || pause)
             return;
 
+        //Fire hook without aiming while currently grappling (Author: Jacob Gallagher) (Also removed a few lines to enable fire hook to be called in this case)
         if (IsConnected() && !aim)
         {
             hook.retracting = false;

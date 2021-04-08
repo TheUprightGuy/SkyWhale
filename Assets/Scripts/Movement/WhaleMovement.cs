@@ -9,6 +9,8 @@
   Date        :   07/04/2021
   Author      :   Wayd Barton-Redgrave
   Mail        :   wayd.bartonregrave@mds.ac.nz
+  
+  Also slightly worked on by Jacob Gallagher when first working on dismount by glide and grapple.
 */
 
 using System.Collections;

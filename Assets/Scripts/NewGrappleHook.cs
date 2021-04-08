@@ -9,6 +9,9 @@
   Date        :   07/04/2021
   Author      :   Wayd Barton-Redgrave
   Mail        :   wayd.bartonregrave@mds.ac.nz
+  
+  This was also worked on by Jacob Gallagher when working on grapple dismount from whale/mount to whale as well as
+  firing grapple without aim while grappling.
 */
 
 using System.Collections;
@@ -189,7 +192,7 @@ public class NewGrappleHook : MonoBehaviour
                 // Physics update occurs more rapidly in build
                 if (!Application.isEditor)
                 {
-                    rb.AddForce(forceDir * TimeSlowDown.instance.timeScale/ flightTime * 0.2f, ForceMode.Acceleration);
+                    rb.AddForce(forceDir * TimeSlowDown.instance.timeScale/ flightTime * 2f, ForceMode.Acceleration);
                 }
                 else
                 {
