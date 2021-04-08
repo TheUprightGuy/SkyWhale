@@ -1,13 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using Audio;
+﻿// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+// (c) 2020 Media Design School
+// File Name   :   AudioSourceInit.cs
+// Description :   Registers the audio source on the game object with the audio manager on start
+// Author      :   Jacob Gallagher
+// Mail        :   Jacob.Gallagher1.@mds.ac.nz
 
-public class AudioSourceInit : MonoBehaviour
+using UnityEngine;
+
+namespace Audio
 {
-    // Start is called before the first frame update
-    void Start()
+    public class AudioSourceInit : MonoBehaviour
     {
-        AudioManager.instance.AddAudioSourceToDictionary(gameObject.GetComponent<AudioSource>());
+        // Start is called before the first frame update
+        private void Start()
+        {
+            AudioManager.instance.AddAudioSourceToDictionary(gameObject.GetComponent<AudioSource>());
+        }
     }
 }

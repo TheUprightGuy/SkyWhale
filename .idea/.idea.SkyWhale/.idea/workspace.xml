@@ -16,6 +16,18 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
+        <option value="$PROJECT_DIR$/Assets/Scripts/Audio/AudioSourceInit.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Audio/FadeMixerGroup.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Audio/InactiveAudiosource.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Audio/SoundInfo.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/ChainController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandChain.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandSpawner.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Island/CollectableIsland/IslandTrailing.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/EntityManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GliderMovement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
       </list>
     </option>

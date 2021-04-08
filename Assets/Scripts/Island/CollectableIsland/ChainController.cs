@@ -1,4 +1,14 @@
-﻿using System;
+﻿// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+// (c) 2020 Media Design School
+// File Name   :   ChainController.cs
+// Description :   Singleton that stores and updates the previous island position in the chain which is used by the
+//                 island chain script when a new island spawns so it knows which points to render the chain to.
+// Author      :   Jacob Gallagher
+// Mail        :   Jacob.Gallagher1.@mds.ac.nz
+using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -64,15 +74,6 @@ namespace Island.CollectableIsland
                     previousIslandPosition2 = position;
                     break;
             }
-        }
-
-        private void Update()
-        {
-           /*if (Input.GetKeyDown(KeyCode.I))
-            {
-                //CallbackHandler.instance.SpawnCollectableIsland();
-                NewCallbackHandler.instance.SpawnCollectableIsland();
-            }*/
         }
     }
 }

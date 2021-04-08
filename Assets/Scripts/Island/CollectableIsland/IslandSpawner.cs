@@ -1,4 +1,14 @@
-﻿using System;
+﻿// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+// (c) 2020 Media Design School
+// File Name   :   IslandSpawner.cs
+// Description :   Mono behaviour that handles spawning new islands behind the whale or the last island that is trailing.
+//                 It also updates the flocking behaviour in each island. 
+// Author      :   Jacob Gallagher
+// Mail        :   Jacob.Gallagher1.@mds.ac.nz
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +24,9 @@ public class IslandSpawner : MonoBehaviour
     private float _spawnHeightDifference = 2.0f;
     public GameObject whale;
     
-    // Start is called before the first frame update
+    /// <summary>
+    /// Add callback and initialise trailing islands with the whale
+    /// </summary>
     void Start()
     {
         //CallbackHandler.instance.spawnCollectableIsland += SpawnIsland;
@@ -22,11 +34,17 @@ public class IslandSpawner : MonoBehaviour
         trailingIslands.Add(whale);
     }
 
+    /// <summary>
+    /// Cleanup callback when destroyed
+    /// </summary>
     private void OnDestroy()
     {
         CallbackHandler.instance.spawnCollectableIsland -= SpawnIsland;
     }
 
+    /// <summary>
+    /// Update flocking in each island
+    /// </summary>
     private void Update()
     {
         foreach (var trailingIsland in trailingIslands.Where(trailingIsland => trailingIsland.GetComponent<IslandTrailing>() != null))
@@ -35,6 +53,9 @@ public class IslandSpawner : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Spawns an island behind the last island in the island chain and set it's transform and rotation, also sets up it's follow point
+    /// </summary>
     public void SpawnIsland()
     {
         //Calculate spawn position/rotation

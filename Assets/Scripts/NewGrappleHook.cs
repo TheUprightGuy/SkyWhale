@@ -9,6 +9,9 @@
   Date        :   07/04/2021
   Author      :   Wayd Barton-Redgrave
   Mail        :   wayd.bartonregrave@mds.ac.nz
+  
+  This was also worked on by Jacob Gallagher when working on grapple dismount from whale/mount to whale as well as
+  firing grapple without aim while grappling.
 */
 
 using System.Collections;

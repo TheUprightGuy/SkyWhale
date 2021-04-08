@@ -47,7 +47,7 @@ namespace Audio
         /// </summary>
         private void Awake()
         {
-            soundInfo = new SoundInfo { audioSource = GetComponent<AudioSource>() };
+            soundInfo = new SoundInfo { AudioSource = GetComponent<AudioSource>() };
             soundInfo.InitialiseSound();
         }
         #endregion
