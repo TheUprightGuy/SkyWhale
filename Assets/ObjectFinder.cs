@@ -7,7 +7,7 @@ public static class ObjectFinder
 {
     private static List<GameObject> actors;
 
-    public static GameObject FindObject(string name)
+    /*public static GameObject FindObject(string name)
     {
         return GetAllObjectsOnlyInScene().FirstOrDefault(go => go.name == name);
     }
@@ -57,5 +57,5 @@ public static class ObjectFinder
                 GetChildrenObjectsWithTag(child, tag);
             }
         }
-    }
+    }*/
 }

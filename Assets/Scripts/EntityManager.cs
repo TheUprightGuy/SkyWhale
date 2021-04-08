@@ -18,7 +18,7 @@ public class EntityManager : MonoBehaviour
     {
         if (instance != null)
         {
-            Debug.LogError("EntityManager already exists!");
+            Debug.Log("EntityManager already exists!");
             Destroy(this.gameObject);
         }
         instance = this;
