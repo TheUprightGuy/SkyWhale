@@ -21,7 +21,7 @@ public class GrappleChallengePoint : MonoBehaviour
 
     private void Update()
     {
-        if (!enabled)
+        /*if (!enabled)
         {
             lifeTime -= Time.deltaTime * TimeSlowDown.instance.timeScale;
             if (lifeTime <= 0)
@@ -37,7 +37,7 @@ public class GrappleChallengePoint : MonoBehaviour
         if (lifeTime <= 0)
         {
             Toggle(false);
-        }
+        }*/
     }
 
     void Toggle(bool _toggle)
