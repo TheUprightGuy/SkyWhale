@@ -26,8 +26,10 @@ public class EntityManager : MonoBehaviour
         {
             Debug.Log("EntityManager already exists!");
             Destroy(this.gameObject);
+            return;
         }
         instance = this;
+        DontDestroyOnLoad(gameObject);
     }
     #endregion Singleton
     #region Inspector Variables

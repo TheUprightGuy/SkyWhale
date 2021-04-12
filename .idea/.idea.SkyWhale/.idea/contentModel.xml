@@ -141,6 +141,7 @@
             <e p="ParticleSpeedScript.cs" t="Include" />
             <e p="RingPFX.cs" t="Include" />
           </e>
+          <e p="PreLoadSceneLoader.cs" t="Include" />
           <e p="Puzzle" t="Include">
             <e p="CirclePuzzle.cs" t="Include" />
             <e p="CirclePuzzleMaster.cs" t="Include" />
