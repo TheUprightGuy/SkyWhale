@@ -467,6 +467,8 @@ public class PlayerMovement : MonoBehaviour
         inputAxis.y = 0;
 
         RB.AddForce(transform.up * 15.0f, ForceMode.Impulse);
+        
+        AudioManager.instance.PlaySound("Jump");
 
         /*float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
         Vector3 jumpDirection = jumpVec.normalized;
