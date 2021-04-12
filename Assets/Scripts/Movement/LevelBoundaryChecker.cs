@@ -1,0 +1,36 @@
+﻿// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+// (c) 2020 Media Design School
+// File Name   :   LevelBoundaryChecker.cs
+// Description :   Mono behaviour that checks if player is outside level boundaries and triggers callback to mount whale when this happens. 
+// Author      :   Jacob Gallagher
+// Mail        :   Jacob.Gallagher1.@mds.ac.nz
+
+using UnityEngine;
+
+namespace Movement
+{
+    public class LevelBoundaryChecker : MonoBehaviour
+    {
+        #region Inspector Variables
+            public int yLowestBoundary; //When player y position is lower than this, they are teleported to the whale
+
+        #endregion
+        
+        // Update is called once per frame
+        private void Update()
+        {
+            if (!(transform.position.y < yLowestBoundary)) return;
+            //Ensure whale is not also below this boundary
+            if (EntityManager.instance.whale.transform.position.y < yLowestBoundary)
+            {
+                //Respawn player and move the whale above boundary
+                EntityManager.instance.MoveWhaleAboveBoundary(yLowestBoundary);
+            }
+            //Respawn player by moving them to the whale
+            EntityManager.instance.TogglePlayer(false);
+        }
+    }
+}

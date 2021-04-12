@@ -117,6 +117,7 @@
           <e p="Movement" t="Include">
             <e p="FishingLineScript.cs" t="Include" />
             <e p="GrappleScript.cs" t="Include" />
+            <e p="LevelBoundaryChecker.cs" t="Include" />
             <e p="MCMovement" t="Include">
               <e p="PlayerMovement.cs" t="Include" />
               <e p="VirtualInputs.cs" t="Include" />

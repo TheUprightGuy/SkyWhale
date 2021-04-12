@@ -18,12 +18,6 @@ using UnityEngine;
 
 public class EntityManager : MonoBehaviour
 {
-    #region Local Variables
-    public GameObject player;
-    public GameObject playerOnWhale;
-    public GameObject _whaleGrappleUIElement;
-    public NewGrappleHook grappleHook;
-    #endregion
     #region Singleton
     public static EntityManager instance;
     private void Awake()
@@ -36,6 +30,19 @@ public class EntityManager : MonoBehaviour
         instance = this;
     }
     #endregion Singleton
+    #region Inspector Variables
+    public GameObject player;
+    public GameObject playerOnWhale;
+    public GameObject _whaleGrappleUIElement;
+    public NewGrappleHook grappleHook;
+    public GameObject whale;
+    #endregion
+
+    #region Local Variables
+
+    private const float BoundaryWhaleOffset = 20f; //Value whale is moved by when it is outside level boundaries
+
+    #endregion
 
     private void Start()
     {
@@ -73,5 +80,17 @@ public class EntityManager : MonoBehaviour
 
         player.transform.position = dismountPosition.position;
         player.transform.rotation = Quaternion.identity;
+    }
+    
+    /// <summary>
+    /// Description: Moves the whale up if they are below the level boundary.
+    /// <br>Author: Jacob Gallagher</br>
+    /// <br>Last Updated: 04/12/2021</br>
+    /// </summary>
+    public void MoveWhaleAboveBoundary(int yLowestBoundary)
+    {
+        var newWhaleTransform = whale.transform.position;
+        newWhaleTransform.y = yLowestBoundary + BoundaryWhaleOffset;
+        whale.transform.position = newWhaleTransform;
     }
 } 
