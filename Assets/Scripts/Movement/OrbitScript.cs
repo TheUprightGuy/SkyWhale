@@ -82,15 +82,13 @@ public class OrbitScript : MonoBehaviour
 
             objToIsland *= orbitDistance / currentDistance;
 
-            Vector3 desiredPos = orbit.transform.position + islandToObj * orbitDistance / currentDistance;
+            Vector3 desiredPos = orbit.transform.position + islandToObj * (orbitDistance / currentDistance);
             Vector3 vecToDesired = desiredPos - transform.position;
 
             vecToDesired = Vector3.Normalize(vecToDesired);
 
             float distanceToDesired = Vector3.Distance(transform.position, desiredPos);
             dist = distanceToDesired / orbitDistance;
-
-
 
             vecToDesired *= dist;
 

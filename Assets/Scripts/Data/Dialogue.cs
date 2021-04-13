@@ -109,6 +109,8 @@ public class Dialogue : ScriptableObject
     {
         if (triggerEvent != "")
             EventManager.TriggerEvent(triggerEvent);
+
+        CallbackHandler.instance.Pause(false);
     }
 
     /// <summary>

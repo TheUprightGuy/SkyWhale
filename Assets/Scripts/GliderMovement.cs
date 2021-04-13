@@ -94,12 +94,17 @@ public class GliderMovement : MonoBehaviour
     }
 
     public bool unlocked;
+    public float delayInput;
 
     public void Toggle()
     {
         if (!unlocked)
             return;
 
+        if (delayInput > 0.0f)
+            return;
+
+        delayInput = 1.0f;
         enabled = !enabled;
         glider.SetActive(enabled);
         myRoll = 0.0f;
@@ -204,6 +209,8 @@ public class GliderMovement : MonoBehaviour
             Toggle();
         }*/
 
+        delayInput -= Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
+
         if (!enabled || pause) 
             return;
 
@@ -221,7 +228,7 @@ public class GliderMovement : MonoBehaviour
         currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime * TimeSlowDown.instance.timeScale);
         MovementCorrections();
 
-        RotatePlayer();
+        //RotatePlayer();
 
         // Rot
         desiredVec = new Vector3(myPitch, base.transform.eulerAngles.y + myTurn, myRoll);
@@ -236,6 +243,11 @@ public class GliderMovement : MonoBehaviour
         _audioMixer.SetFloat("GliderWindPitch", currentPitch);
     }
 
+    /// <summary>
+    /// Description: Rotates player based on current glider rotation - removed for now due to climbing check issues.
+    /// Author: Wayd Barton-Redgrave
+    /// Last Updated: 06/04/2021
+    /// </summary>
     public void RotatePlayer()
     {
         float absAngle = Mathf.Abs(base.transform.forward.y) * 90.0f;

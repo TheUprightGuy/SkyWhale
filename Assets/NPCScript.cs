@@ -31,6 +31,7 @@ public class NPCScript : MonoBehaviour
         dialogue.StartUp();
         currentDialogue = dialogue;
         CallbackHandler.instance.pause += Pause;
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(Interact);
     }
     private void OnDestroy()
     {
@@ -64,11 +65,6 @@ public class NPCScript : MonoBehaviour
             Vector3 dir = pm.transform.position - transform.position;
             Quaternion rot = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime);
-
-            if (Input.GetKeyDown(KeyCode.E) && !currentDialogue.inUse)
-            {
-                Interact();
-            }
         }
     }
 
@@ -80,9 +76,13 @@ public class NPCScript : MonoBehaviour
     /// <br>Author: Wayd Barton-Redgrave</br>
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
-    void Interact()
+    void Interact(InputState type)
     {
+        if (currentDialogue.inUse || !pm)
+            return;
+
         CallbackHandler.instance.SetDialogue(currentDialogue);
+        CallbackHandler.instance.Pause(true);
     }
 
     #region Triggers

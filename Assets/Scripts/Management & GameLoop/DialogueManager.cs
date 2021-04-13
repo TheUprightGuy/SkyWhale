@@ -56,6 +56,7 @@ public class DialogueManager : MonoBehaviour
 
         CallbackHandler.instance.setDialogue += SetDialogue;
         CallbackHandler.instance.stopDialogue += StopDialogue;
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(ProgressDialogue);
     }
     private void OnDestroy()
     {
@@ -69,6 +70,8 @@ public class DialogueManager : MonoBehaviour
     float timer;
     new bool enabled;
 
+    private Coroutine myCoroutine;
+
     /// <summary>
     /// Description: Progresses dialogue over time or on E press.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -79,10 +82,8 @@ public class DialogueManager : MonoBehaviour
         if (enabled)
         {
             timer -= Time.deltaTime;
-            if (timer <= 0 || Input.GetKeyDown(KeyCode.E))
-            {
-                ProgressDialogue();
-            }
+            if (timer <= 0)            
+                ProgressDialogue(InputState.KEYDOWN);          
         }
     }
 
@@ -146,7 +147,7 @@ public class DialogueManager : MonoBehaviour
 
         speaker.SetText(temp.name);
 
-        StartCoroutine(WriteDialogue(temp.dialogue[temp.dialogueIndex]));        
+        myCoroutine = StartCoroutine(WriteDialogue(temp.dialogue[temp.dialogueIndex]));
     }
 
     /// <summary>
@@ -154,16 +155,20 @@ public class DialogueManager : MonoBehaviour
     /// <br>Author: Wayd Barton-Redgrave</br>
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
-    public void ProgressDialogue()
+    public void ProgressDialogue(InputState type)
     {
         timer = dialogueTime;
 
         if (typing)
-            return;
+        {
+            dialogue.SetText("");
+            dialogue.text = "";
+            StopCoroutine(myCoroutine);
+        }
         
         if (currentDialogue.Progress() != null)
         {
-                ShowDialogue();
+            ShowDialogue();
         }
         else
         {

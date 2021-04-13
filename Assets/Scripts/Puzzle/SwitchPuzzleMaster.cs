@@ -35,7 +35,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
         switches = new List<PuzzleSwitch>();
     }
     #endregion Singleton
-    #region Singleton
+    #region Setup
     private void Start()
     {
         foreach (Transform n in transform)
@@ -43,15 +43,23 @@ public class SwitchPuzzleMaster : MonoBehaviour
             switches.Add(n.GetComponent<PuzzleSwitch>());
         }
 
+        int numOff = 0;
+
         foreach (PuzzleSwitch n in switches)
         {
-            n.active = Random.value > 0.5f;
+            if (numOff < 5)
+                n.active = Random.value > 0.5f;
+            if (!n.active)
+                numOff++;
+
             n.on = on;
             n.off = off;
             n.Switch();
         }
+
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(Interact);
     }
-    #endregion Singleton
+    #endregion Setup
 
     [Header("Setup Fields")]
     public Material on;
@@ -64,22 +72,14 @@ public class SwitchPuzzleMaster : MonoBehaviour
     bool inUse;
 
 
-    /// <summary>
-    /// Description: Switches camera upon keypress when player is in trigger area.
-    /// <br>Author: Wayd Barton-Redgrave</br>
-    /// <br>Last Updated: 04/07/2021</br>
-    /// </summary>
-    private void Update()
+    public void Interact(InputState type)
     {
-        if (complete)
+        if (!pm || complete)
             return;
 
-        if (pm && Input.GetKeyDown(KeyCode.E))
-        {
-            inUse = !inUse;
-            ToggleCam(inUse);
-            Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
-        }
+        inUse = !inUse;
+        ToggleCam(inUse);
+        Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     /// <summary>

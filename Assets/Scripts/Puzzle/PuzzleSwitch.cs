@@ -21,7 +21,7 @@ public class PuzzleSwitch : MonoBehaviour
     public List<PuzzleSwitch> adjacentSwitches;
 
     //[HideInInspector] 
-    public bool active;
+    public bool active = true;
     [HideInInspector] public Material on;
     [HideInInspector] public Material off;
 
