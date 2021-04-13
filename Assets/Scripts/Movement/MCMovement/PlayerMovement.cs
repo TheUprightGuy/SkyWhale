@@ -383,9 +383,9 @@ public class PlayerMovement : MonoBehaviour
             default:
                 break;
         }
-    }
 
-    Vector3 cachedVel;
+        Physics.gravity = RB.velocity.y >= -0.8f ? Vector3.up * -9.8f : Vector3.up * -9.8f * TimeSlowDown.instance.timeScale;
+    }
 
 
     Vector3 currentVel = Vector3.zero;
@@ -486,7 +486,7 @@ public class PlayerMovement : MonoBehaviour
         float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
         Vector3 jumpDirection = jumpVec.normalized;
 
-        RB.velocity += (jumpDirection * jumpSpeed + (Physics.gravity * Time.fixedDeltaTime)) / TimeSlowDown.instance.timeScale;
+        RB.velocity += (jumpDirection * jumpSpeed + (Physics.gravity * Time.fixedDeltaTime));
     }
 
     /// <summary>
