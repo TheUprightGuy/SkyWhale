@@ -217,8 +217,8 @@ MonoBehaviour:
   climbSpeed: 0.02
   maxClimbAcceleration: 0.1
   climbGripForce: 1
-  groundjumpHeight: 0.1
-  wallJumpHeight: 0.1
+  groundjumpHeight: 1.5
+  wallJumpHeight: 0.5
   GroundLayers:
     serializedVersion: 2
     m_Bits: 180023
