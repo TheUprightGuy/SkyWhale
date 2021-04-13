@@ -351,12 +351,11 @@ public class PlayerMovement : MonoBehaviour
         {
             case PlayerStates.IDLE:
             case PlayerStates.MOVING:
-                GroundMovement(setSpeed, setAccel);
                 if (inputAxis.y > 0)
                 {
                     JumpFromGround(groundContactNormal + Vector3.up, groundjumpHeight);
-
                 }
+                GroundMovement(setSpeed, setAccel);
                 break;
             case PlayerStates.GRAPPLE:
                 {
@@ -403,15 +402,24 @@ public class PlayerMovement : MonoBehaviour
         desiredVel = (projectedForward).normalized; //Input direction
         desiredVel *= speed; //Amount to move in said direction
 
+        
         //Vector to actually move by
         Vector3 actualVel = currentVel =  Vector3.MoveTowards(currentVel, //Current moving velocity
                                                                 desiredVel,
                                                                     accel * Time.fixedDeltaTime ); //Amount to change by
 
+        //Against a wall in the front dir
+        if (climbContactNormal != Vector3.zero)
+        {
+            float currentForwardVel = Vector3.Dot(currentVel, climbContactNormal);
+            Vector3 negateforce = currentForwardVel * climbContactNormal;
+            currentVel -= negateforce;
+        }
+
         //animation walk speeds
         currentVelMag = currentVel.magnitude;
 
-        RB.MovePosition(transform.position + actualVel * TimeSlowDown.instance.timeScale);
+        RB.MovePosition(transform.position + currentVel * TimeSlowDown.instance.timeScale);
 
     }
 
@@ -466,14 +474,15 @@ public class PlayerMovement : MonoBehaviour
         anims.SetTrigger("Jump");
         inputAxis.y = 0;
 
-        RB.AddForce(transform.up * 15.0f, ForceMode.Impulse);
-        
+        //RB.AddForce(transform.up * 15.0f, ForceMode.Impulse);
         AudioManager.instance.PlaySound("Jump");
 
-        /*float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
+        
+
+        float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
         Vector3 jumpDirection = jumpVec.normalized;
 
-        RB.velocity += jumpDirection * jumpSpeed + (Physics.gravity * Time.deltaTime);*/
+        RB.velocity += jumpDirection * jumpSpeed + (Physics.gravity * Time.deltaTime);
     }
 
     /// <summary>
@@ -486,8 +495,14 @@ public class PlayerMovement : MonoBehaviour
         anims.ResetTrigger("Jump");
         anims.SetTrigger("Jump");
 
-        RB.AddForce((-transform.forward + transform.up) * 12.0f, ForceMode.Impulse);
-        transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180.0f, transform.rotation.eulerAngles.z);
+        //RB.AddForce((-transform.forward + transform.up) * 12.0f, ForceMode.Impulse);
+        //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y + 180.0f, transform.rotation.eulerAngles.z);
+
+        float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * wallJumpHeight);
+        Vector3 jumpDirection = (-transform.forward + transform.up).normalized;
+
+        RB.velocity += jumpDirection * jumpSpeed + (Physics.gravity * Time.deltaTime);
+
         inputAxis.y = 0;
         AudioManager.instance.PlaySound("Jump");
     }
@@ -598,9 +613,21 @@ public class PlayerMovement : MonoBehaviour
     }
     void Run(InputState type)
     {
-
-        setSpeed =  (setSpeed != runSpeed) ? (runSpeed) : (walkSpeed);
-        setAccel = (setAccel != maxRunAcceleration) ? (maxRunAcceleration) : (maxWalkAcceleration);
+        switch (type)
+        {
+            case InputState.KEYDOWN:
+                setSpeed = walkSpeed;
+                setAccel = maxWalkAcceleration;
+                break;
+            case InputState.KEYUP:
+                setSpeed = runSpeed;
+                setAccel = maxRunAcceleration;
+                break;
+            default:
+                break;
+        }
+        //setSpeed =  (setSpeed != runSpeed) ? (runSpeed) : (walkSpeed);
+        //setAccel = (setAccel != maxRunAcceleration) ? (maxRunAcceleration) : (maxWalkAcceleration);
     }
     /// <summary>
     /// <br>Description: Cancels grappling or gliding with press of jump key.</br>
