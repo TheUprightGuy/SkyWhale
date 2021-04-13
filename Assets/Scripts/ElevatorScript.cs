@@ -93,7 +93,7 @@ public class ElevatorScript : MonoBehaviour
         {
             case ElevatorControl.STATIONARYDOWN:
             {
-                timer -= Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
+                    timer -= Time.fixedDeltaTime;// * TimeSlowDown.instance.timeScale;
                 if (timer <= 0)
                 {
                     SwitchEC(ElevatorControl.UP);
@@ -103,7 +103,7 @@ public class ElevatorScript : MonoBehaviour
             }
             case ElevatorControl.STATIONARYUP:
             {
-                timer -= Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
+                    timer -= Time.fixedDeltaTime;// * TimeSlowDown.instance.timeScale;
                 if (timer <= 0)
                 {
                     SwitchEC(ElevatorControl.DOWN);
@@ -118,7 +118,7 @@ public class ElevatorScript : MonoBehaviour
                     SwitchEC(ElevatorControl.STATIONARYUP);
                     break;
                 }
-                rb.MovePosition(transform.position + transform.up * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
+                    rb.MovePosition(transform.position + transform.up * Time.fixedDeltaTime);// * TimeSlowDown.instance.timeScale);
                 break;
             }
             case ElevatorControl.DOWN:
@@ -128,7 +128,7 @@ public class ElevatorScript : MonoBehaviour
                     SwitchEC(ElevatorControl.STATIONARYDOWN);
                     break;
                 }
-                rb.MovePosition(transform.position - transform.up * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale);
+                    rb.MovePosition(transform.position - transform.up * Time.fixedDeltaTime);// * TimeSlowDown.instance.timeScale);
                 break;
             }
         }

@@ -189,7 +189,7 @@ public class GrappleScript : MonoBehaviour
             if (!grapplingFromWhale)
             {
                 Vector3 moveDir = Vector3.Normalize(hook.transform.position - transform.position) * pullSpeed;
-                rb.AddForce(moveDir * TimeSlowDown.instance.timeScale, ForceMode.Acceleration);
+                rb.AddForce(moveDir, ForceMode.Acceleration);
                 transform.LookAt(hook.transform);
                 return;
             }

@@ -325,7 +325,7 @@ public class PlayerMovement : MonoBehaviour
     void RotateTowardInput()
     {
 
-        float singleStep = rotationSpeed * Time.deltaTime * TimeSlowDown.instance.timeScale;
+        float singleStep = rotationSpeed * Time.deltaTime;// * TimeSlowDown.instance.timeScale;
 
         //Forward Vector relative to the camera direction
         Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
@@ -424,7 +424,7 @@ public class PlayerMovement : MonoBehaviour
         //animation walk speeds
         currentVelMag = currentVel.magnitude;
 
-        RB.MovePosition(transform.position + currentVel * TimeSlowDown.instance.timeScale);
+        RB.MovePosition(transform.position + currentVel);// * TimeSlowDown.instance.timeScale);
 
     }
 
@@ -448,7 +448,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 actualVel = currentVel = Vector3.MoveTowards(currentVel, //Current moving velocity
                                                                desiredVel,
-                                                                   accel * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale); //Amount to change by
+                                                                   accel * Time.fixedDeltaTime);// * TimeSlowDown.instance.timeScale); //Amount to change by
 
         RB.MovePosition(transform.position + actualVel);
         currentVelMag = currentVel.magnitude;
