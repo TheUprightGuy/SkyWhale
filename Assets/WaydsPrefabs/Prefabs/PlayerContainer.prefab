@@ -6565,6 +6565,16 @@ PrefabInstance:
       propertyPath: PlayerTrans
       value: 
       objectReference: {fileID: 1518757650989197844}
+    - target: {fileID: 4838435617739099571, guid: 322a1d509c204d94d8353a2b81a6052d,
+        type: 3}
+      propertyPath: minYAngle
+      value: -65
+      objectReference: {fileID: 0}
+    - target: {fileID: 4838435617739099571, guid: 322a1d509c204d94d8353a2b81a6052d,
+        type: 3}
+      propertyPath: maxYAngle
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 8009420483058086641, guid: 322a1d509c204d94d8353a2b81a6052d,
         type: 3}
       propertyPath: sharedProfile

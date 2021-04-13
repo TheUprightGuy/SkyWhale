@@ -612,9 +612,21 @@ public class PlayerMovement : MonoBehaviour
     }
     void Run(InputState type)
     {
-
-        setSpeed =  (setSpeed != runSpeed) ? (runSpeed) : (walkSpeed);
-        setAccel = (setAccel != maxRunAcceleration) ? (maxRunAcceleration) : (maxWalkAcceleration);
+        switch (type)
+        {
+            case InputState.KEYDOWN:
+                setSpeed = walkSpeed;
+                setAccel = maxWalkAcceleration;
+                break;
+            case InputState.KEYUP:
+                setSpeed = runSpeed;
+                setAccel = maxRunAcceleration;
+                break;
+            default:
+                break;
+        }
+        //setSpeed =  (setSpeed != runSpeed) ? (runSpeed) : (walkSpeed);
+        //setAccel = (setAccel != maxRunAcceleration) ? (maxRunAcceleration) : (maxWalkAcceleration);
     }
     /// <summary>
     /// <br>Description: Cancels grappling or gliding with press of jump key.</br>
