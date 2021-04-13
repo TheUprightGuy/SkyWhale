@@ -19,10 +19,14 @@
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/MCMovement/PlayerMovement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/LevelBoundaryChecker.cs" />
       <option value="$PROJECT_DIR$/Assets/MainMenu/Scripts/PauseMenuCanvasController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
+      <option value="$PROJECT_DIR$/Assets/Editor/ClearConsole.cs" />
+      <option value="$PROJECT_DIR$/Assets/TestConsoleFunctions.cs" />
+      <option value="$PROJECT_DIR$/Assets/Editor/ConsoleFunctions.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/PreLoadSceneLoader.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/LevelBoundaryChecker.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/EntityManager.cs" />
     </changedPaths>
   </component>

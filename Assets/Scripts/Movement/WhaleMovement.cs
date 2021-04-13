@@ -420,11 +420,16 @@ public class WhaleMovement : MonoBehaviour
             //pc.gameObject.SetActive(false);
             EntityManager.instance.TogglePlayer(false);
 
-            // Stop the whale and give control
-            ComeToHalt();
-            //control = true;
-            gs.active = true;
+            OnPlayerMountWhale();
         }
+    }
+
+    public void OnPlayerMountWhale()
+    {
+        // Stop the whale and give control
+        ComeToHalt();
+        //control = true;
+        gs.active = true;
     }
 
     /// <summary>

@@ -95,4 +95,9 @@ public class EntityManager : MonoBehaviour
         newWhaleTransform.y = yLowestBoundary + BoundaryWhaleOffset;
         whale.transform.position = newWhaleTransform;
     }
+    
+    public void OnPlayerLowerThanBoundary()
+    {
+        whale.GetComponent<WhaleMovement>().OnPlayerMountWhale();
+    }
 } 
