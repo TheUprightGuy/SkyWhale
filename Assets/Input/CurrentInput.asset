@@ -57,7 +57,7 @@ MonoBehaviour:
     KeyToListen: 304
     CallOnKeyDown: 1
     CallOnKeyHeld: 0
-    CallOnKeyUp: 0
+    CallOnKeyUp: 1
     MethodToCall:
       m_PersistentCalls:
         m_Calls: []
