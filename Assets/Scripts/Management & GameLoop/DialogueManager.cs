@@ -157,6 +157,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void ProgressDialogue(InputState type)
     {
+        //if(!currentDialogue) return;
         timer = dialogueTime;
 
         if (typing)
