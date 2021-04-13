@@ -55,6 +55,7 @@ public class EntityManager : MonoBehaviour
     public event Action<bool> toggleControl;
     public void TogglePlayer(bool _toggle)
     {
+        whale.GetComponent<OrbitScript>().enabled = _toggle;
         player.SetActive(_toggle);
         playerOnWhale.SetActive(!_toggle);
         grappleHook.pc = player.GetComponent<GrappleScript>().shootPoint.transform;

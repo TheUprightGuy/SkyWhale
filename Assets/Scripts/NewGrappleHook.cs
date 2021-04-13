@@ -44,6 +44,7 @@ public class NewGrappleHook : MonoBehaviour
     public bool retracting;
     public float flightTime;
     public GameObject connectedObj;
+    public float yeetForceStrength = 2.5f;
 
     [HideInInspector] public LayerMask grappleableLayers;
 
@@ -273,7 +274,7 @@ public class NewGrappleHook : MonoBehaviour
 
         // Otherwise add force.
         Rigidbody temp = _player.GetComponent<Rigidbody>();
-        temp.AddForce(temp.velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up * 2.0f)) * 3.0f, ForceMode.Impulse);
+        temp.AddForce(temp.velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up * 2.0f)) * yeetForceStrength, ForceMode.Impulse);
         // Play grapple disconnect audio
         AudioManager.instance.PlaySound("GrappleFail");
     }
