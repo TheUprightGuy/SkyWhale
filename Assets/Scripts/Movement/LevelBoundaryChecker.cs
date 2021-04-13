@@ -30,7 +30,9 @@ namespace Movement
                 EntityManager.instance.MoveWhaleAboveBoundary(yLowestBoundary);
             }
             //Respawn player by moving them to the whale
+            EntityManager.instance.player.layer = LayerMask.NameToLayer("PlayerFromWhale");
             EntityManager.instance.TogglePlayer(false);
+            EntityManager.instance.OnPlayerLowerThanBoundary();
         }
     }
 }
