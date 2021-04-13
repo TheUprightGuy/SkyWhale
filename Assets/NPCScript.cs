@@ -76,7 +76,7 @@ public class NPCScript : MonoBehaviour
     /// <br>Author: Wayd Barton-Redgrave</br>
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
-    void Interact(InputState type)
+    public void Interact(InputState type)
     {
         if (currentDialogue.inUse || !pm)
             return;

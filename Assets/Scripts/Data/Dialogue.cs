@@ -41,7 +41,8 @@ public class Dialogue : ScriptableObject
     public Sprite rightCharacter;
 
     [HideInInspector] public int dialogueIndex = 0;
-    [HideInInspector] public bool inUse;
+    //[HideInInspector] 
+    public bool inUse;
 
     [Header("Trigger Callbacks")]
     public string triggerEvent;
