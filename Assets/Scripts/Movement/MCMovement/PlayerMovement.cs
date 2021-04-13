@@ -355,6 +355,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     JumpFromGround(groundContactNormal + Vector3.up, groundjumpHeight);
                 }
+
                 GroundMovement(setSpeed, setAccel);
                 break;
             case PlayerStates.GRAPPLE:
@@ -375,13 +376,17 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PlayerStates.JUMPING:
             case PlayerStates.FALLING:
-                GroundMovement(inAirSpeed, maxAirAcceleration);
-
+                {
+                    GroundMovement(inAirSpeed, maxAirAcceleration);
+                }
                 break;
             default:
                 break;
         }
     }
+
+    Vector3 cachedVel;
+
 
     Vector3 currentVel = Vector3.zero;
 
@@ -457,6 +462,7 @@ public class PlayerMovement : MonoBehaviour
             RB.AddForce(transform.forward * ((climbGripForce * 0.9f)));
         }
     }
+
     // Currently bugged with slowtime due to use of impulse
     /// <summary>
     /// <br>Description: Apply an impulse force upwards</br>
@@ -476,13 +482,11 @@ public class PlayerMovement : MonoBehaviour
 
         //RB.AddForce(transform.up * 15.0f, ForceMode.Impulse);
         AudioManager.instance.PlaySound("Jump");
-
         
-
         float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
         Vector3 jumpDirection = jumpVec.normalized;
 
-        RB.velocity += jumpDirection * jumpSpeed + (Physics.gravity * Time.deltaTime);
+        RB.velocity += (jumpDirection * jumpSpeed + (Physics.gravity * Time.fixedDeltaTime)) / TimeSlowDown.instance.timeScale;
     }
 
     /// <summary>

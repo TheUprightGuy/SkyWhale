@@ -32,7 +32,7 @@ public class BlacksmithScript : NPCScript
         currentDialogue = dialogue;
 
         EventManager.StartListening("SwitchPuzzleCompletion", SwitchDialogue);
-
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(Interact);
         CallbackHandler.instance.pause += Pause;
     }
 
