@@ -274,7 +274,7 @@ public class NewGrappleHook : MonoBehaviour
 
         // Otherwise add force.
         Rigidbody temp = _player.GetComponent<Rigidbody>();
-        temp.AddForce(temp.velocity.magnitude * Vector3.Normalize((Vector3.Normalize(forceDir) + transform.up * 2.0f)) * yeetForceStrength, ForceMode.Impulse);
+        temp.AddForce(Vector3.Normalize((Vector3.Normalize(forceDir) + Vector3.up * 2.0f)) * (temp.velocity.magnitude * yeetForceStrength), ForceMode.Impulse);
         // Play grapple disconnect audio
         AudioManager.instance.PlaySound("GrappleFail");
     }

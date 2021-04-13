@@ -16,6 +16,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using Cinemachine;
 using UnityEngine;
 
@@ -38,6 +39,7 @@ public class GrappleScript : MonoBehaviour
     // Local Variables
     public Transform camToShootFrom;
     GameObject grappleReticule;
+    private const float MinimumDistanceToGrappleableTarget = 1.5f;
 
     UnityEngine.UI.Image grapplePoint;
     PlayerMovement pm;
@@ -264,7 +266,15 @@ public class GrappleScript : MonoBehaviour
             // Rotate Gun to face aim direction while ADS
             if (aim)
             {
-                gunContainer.rotation = RaycastToTarget() == Vector3.zero ? Quaternion.LookRotation(camToShootFrom.transform.forward, camToShootFrom.transform.up) : Quaternion.LookRotation(RaycastToTarget() - transform.position);
+                if (Vector3.Distance(RaycastToTarget(), transform.position) < MinimumDistanceToGrappleableTarget)
+                {
+                    Debug.Log("Too close to wall");
+                    gunContainer.rotation = Quaternion.LookRotation(camToShootFrom.transform.forward, camToShootFrom.transform.up);
+                }
+                else
+                {
+                    gunContainer.rotation = RaycastToTarget() == Vector3.zero ? Quaternion.LookRotation(camToShootFrom.transform.forward, camToShootFrom.transform.up) : Quaternion.LookRotation(RaycastToTarget() - transform.position);   
+                }
             }
             // Rotate Gun to MCs forward direcction
             else
@@ -319,6 +329,11 @@ public class GrappleScript : MonoBehaviour
         {
             if (RaycastToTarget() != Vector3.zero)
             {
+                if (Vector3.Distance(RaycastToTarget(), transform.position) < MinimumDistanceToGrappleableTarget)
+                {
+                    AudioManager.instance.PlaySound("GrappleFail");
+                    return;
+                }
                 hook.Fire(shootPoint.shootPoint, Vector3.Normalize(RaycastToTarget() - transform.position));
                 cachedShoot = false;
                 ToggleAim(false);
