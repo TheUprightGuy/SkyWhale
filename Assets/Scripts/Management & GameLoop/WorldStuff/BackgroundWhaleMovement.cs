@@ -50,7 +50,7 @@ public class BackgroundWhaleMovement : MonoBehaviour
         {
             case MovementDirection.SlightRotation:
             {
-                transform.Rotate(Vector3.up * Time.deltaTime * Time.deltaTime * TimeSlowDown.instance.timeScale);
+                    transform.Rotate(Vector3.up * Time.deltaTime * Time.deltaTime);// * TimeSlowDown.instance.timeScale);
                 break;
             }
             case MovementDirection.Forward:
@@ -59,11 +59,11 @@ public class BackgroundWhaleMovement : MonoBehaviour
             }
             case MovementDirection.Circle:
             {
-                transform.Rotate(Vector3.up * Time.deltaTime * TimeSlowDown.instance.timeScale);
+                    transform.Rotate(Vector3.up * Time.deltaTime);// * TimeSlowDown.instance.timeScale);
                 break;
             }
         }
-       
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * TimeSlowDown.instance.timeScale);
+
+        transform.Translate(Vector3.forward * Time.deltaTime * speed);// * TimeSlowDown.instance.timeScale);
     }
 }

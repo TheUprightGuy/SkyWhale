@@ -188,16 +188,16 @@ public class NewGrappleHook : MonoBehaviour
             if (!retracting)
             {
                 sc.enabled = true;
-                flightTime += Time.fixedDeltaTime * TimeSlowDown.instance.timeScale;
+                flightTime += Time.fixedDeltaTime;// * TimeSlowDown.instance.timeScale;
 
                 // Physics update occurs more rapidly in build
                 if (!Application.isEditor)
                 {
-                    rb.AddForce(forceDir * TimeSlowDown.instance.timeScale/ flightTime * 2f, ForceMode.Acceleration);
+                    rb.AddForce(forceDir / flightTime * 2f, ForceMode.Acceleration);
                 }
                 else
                 {
-                    rb.AddForce(forceDir * TimeSlowDown.instance.timeScale / flightTime * 2f, ForceMode.Acceleration);
+                    rb.AddForce(forceDir / flightTime * 2f, ForceMode.Acceleration);
                 }
 
                 // If reached max Flight Time - Retract
@@ -219,7 +219,7 @@ public class NewGrappleHook : MonoBehaviour
             flightTime = 0.0f;
             
             forceDir = Vector3.Normalize(pc.position - transform.position) * (manualRetract ? retractSpeed * 2 : retractSpeed * 2);
-            rb.MovePosition(transform.position + (manualRetract ? forceDir * Time.fixedDeltaTime : forceDir * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale));
+            rb.MovePosition(transform.position + (manualRetract ? forceDir * Time.fixedDeltaTime : forceDir * Time.fixedDeltaTime));// * TimeSlowDown.instance.timeScale));
 
             // Check for distance to player - reset once close
             if (Vector3.Distance(transform.position, pc.position) < Mathf.Max((forceDir.magnitude * Time.fixedDeltaTime), 0.3f))

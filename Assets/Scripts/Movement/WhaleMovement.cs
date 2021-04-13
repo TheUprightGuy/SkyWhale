@@ -276,7 +276,7 @@ public class WhaleMovement : MonoBehaviour
         f = (f > 180) ? f - 360 : f;
         animator.SetFloat("Turning", f / 10.0f);
         animator.SetFloat("Movement", movement);
-        currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime * accelSpeed * TimeSlowDown.instance.timeScale);
+        currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime * accelSpeed);// * TimeSlowDown.instance.timeScale);
 
         if (control)
         {
@@ -338,8 +338,8 @@ public class WhaleMovement : MonoBehaviour
         // Reached minimum distance threshold to island
         if (tooClose)
         {
-            rb.MovePosition(transform.position - transform.forward * maxSpeed * Time.deltaTime * TimeSlowDown.instance.timeScale);
-            buckTimer -= Time.deltaTime * TimeSlowDown.instance.timeScale;
+            rb.MovePosition(transform.position - transform.forward * maxSpeed * Time.deltaTime);// * TimeSlowDown.instance.timeScale);
+            buckTimer -= Time.deltaTime;// * TimeSlowDown.instance.timeScale;
             CatapultPlayer();
 
             // Finished backing off to a safe distance
@@ -352,14 +352,14 @@ public class WhaleMovement : MonoBehaviour
         }
         else
         {
-            rb.MovePosition(transform.position + transform.forward * currentSpeed * Time.deltaTime * TimeSlowDown.instance.timeScale);
+            rb.MovePosition(transform.position + transform.forward * currentSpeed * Time.deltaTime);// * TimeSlowDown.instance.timeScale);
         }
 
         if (!control)
             return;
 
         // Slerps current rotation to make movement seem more organic
-        Quaternion temp = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed * TimeSlowDown.instance.timeScale);
+        Quaternion temp = Quaternion.Slerp(transform.rotation, Quaternion.Euler(desiredVec), Time.deltaTime * rotationSpeed);// * TimeSlowDown.instance.timeScale);
         rb.MoveRotation(temp);
     }
 
@@ -374,7 +374,7 @@ public class WhaleMovement : MonoBehaviour
             return;
 
         desiredRoll = new Vector3(body.transform.eulerAngles.x, body.transform.eulerAngles.y, myRoll);
-        body.transform.rotation = Quaternion.Slerp(body.transform.rotation, Quaternion.Euler(desiredRoll), Time.deltaTime * rotationSpeed * TimeSlowDown.instance.timeScale);
+        body.transform.rotation = Quaternion.Slerp(body.transform.rotation, Quaternion.Euler(desiredRoll), Time.deltaTime * rotationSpeed);// * TimeSlowDown.instance.timeScale);
         // Rot
         desiredVec = new Vector3(myPitch, transform.eulerAngles.y + myTurn, 0);
     }

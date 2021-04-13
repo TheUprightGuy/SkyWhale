@@ -325,7 +325,7 @@ public class PlayerMovement : MonoBehaviour
     void RotateTowardInput()
     {
 
-        float singleStep = rotationSpeed * Time.deltaTime * TimeSlowDown.instance.timeScale;
+        float singleStep = rotationSpeed * Time.deltaTime;// * TimeSlowDown.instance.timeScale;
 
         //Forward Vector relative to the camera direction
         Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
@@ -383,9 +383,9 @@ public class PlayerMovement : MonoBehaviour
             default:
                 break;
         }
-    }
 
-    Vector3 cachedVel;
+        Physics.gravity = RB.velocity.y >= -0.8f ? Vector3.up * -9.8f : Vector3.up * -9.8f * TimeSlowDown.instance.timeScale;
+    }
 
 
     Vector3 currentVel = Vector3.zero;
@@ -424,7 +424,7 @@ public class PlayerMovement : MonoBehaviour
         //animation walk speeds
         currentVelMag = currentVel.magnitude;
 
-        RB.MovePosition(transform.position + currentVel * TimeSlowDown.instance.timeScale);
+        RB.MovePosition(transform.position + currentVel);// * TimeSlowDown.instance.timeScale);
 
     }
 
@@ -448,7 +448,7 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 actualVel = currentVel = Vector3.MoveTowards(currentVel, //Current moving velocity
                                                                desiredVel,
-                                                                   accel * Time.fixedDeltaTime * TimeSlowDown.instance.timeScale); //Amount to change by
+                                                                   accel * Time.fixedDeltaTime);// * TimeSlowDown.instance.timeScale); //Amount to change by
 
         RB.MovePosition(transform.position + actualVel);
         currentVelMag = currentVel.magnitude;
@@ -486,7 +486,7 @@ public class PlayerMovement : MonoBehaviour
         float jumpSpeed = Mathf.Sqrt(-2f * Physics.gravity.y * jumpHeight);
         Vector3 jumpDirection = jumpVec.normalized;
 
-        RB.velocity += (jumpDirection * jumpSpeed + (Physics.gravity * Time.fixedDeltaTime)) / TimeSlowDown.instance.timeScale;
+        RB.velocity += (jumpDirection * jumpSpeed + (Physics.gravity * Time.fixedDeltaTime));
     }
 
     /// <summary>

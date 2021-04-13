@@ -104,12 +104,12 @@ public class TimeSlowDown : MonoBehaviour
         if (slowDown)
         {
             timeScale = Mathf.Lerp(timeScale, slowMo, Time.deltaTime * 15.0f);
-            Physics.gravity = grav * timeScale;
+            //Physics.gravity = grav * timeScale;
         }
         else
         {
             timeScale = Mathf.Lerp(timeScale, 1.0f, Time.deltaTime * 5.0f);
-            Physics.gravity = grav * timeScale;
+            //Physics.gravity = grav * timeScale;
         }
 
         if (!Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>())
