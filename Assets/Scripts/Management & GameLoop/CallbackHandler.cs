@@ -133,4 +133,22 @@ public class CallbackHandler : MonoBehaviour
             stopDialogue();
         }
     }
+
+    public event Action<Transform> speechInRange;
+    public void SpeechInRange(Transform _dialogueTransform)
+    {
+        if (speechInRange != null)
+        {
+            speechInRange(_dialogueTransform);
+        }
+    }
+
+    public event Action speechOutOfRange;
+    public void SpeechOutOfRange()
+    {
+        if (speechOutOfRange != null)
+        {
+            speechOutOfRange();
+        }
+    }
 }

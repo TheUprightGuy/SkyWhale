@@ -19,6 +19,7 @@ public class NPCScript : MonoBehaviour
 {
     PlayerMovement pm;
     bool pause;
+    public Transform dialogueTransform;
 
     #region Callbacks
     /// <summary>
@@ -97,6 +98,8 @@ public class NPCScript : MonoBehaviour
         if (other.GetComponent<PlayerMovement>())
         {
             pm = other.GetComponent<PlayerMovement>();
+
+            CallbackHandler.instance.SpeechInRange(dialogueTransform);
         }
     }
 
@@ -106,6 +109,8 @@ public class NPCScript : MonoBehaviour
         {
             pm = null;
             CallbackHandler.instance.StopDialogue();
+
+            CallbackHandler.instance.SpeechOutOfRange();
         }
     }
     #endregion Triggers
