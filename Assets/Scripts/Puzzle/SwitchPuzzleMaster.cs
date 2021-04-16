@@ -40,7 +40,8 @@ public class SwitchPuzzleMaster : MonoBehaviour
     {
         foreach (Transform n in transform)
         {
-            switches.Add(n.GetComponent<PuzzleSwitch>());
+            if (n.GetComponent<PuzzleSwitch>())
+                switches.Add(n.GetComponent<PuzzleSwitch>());
         }
 
         int numOff = 0;
@@ -64,6 +65,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
     [Header("Setup Fields")]
     public Material on;
     public Material off;
+    public Transform promptPosition;
 
     //Local Variables
     List<PuzzleSwitch> switches;
@@ -80,6 +82,9 @@ public class SwitchPuzzleMaster : MonoBehaviour
         inUse = !inUse;
         ToggleCam(inUse);
         Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
+
+        if (inUse)
+            CallbackHandler.instance.PuzzleOutOfRange();
     }
 
     /// <summary>
@@ -120,6 +125,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
         ToggleCam(inUse);
         Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
         EventManager.TriggerEvent("SwitchPuzzleCompletion");
+        CallbackHandler.instance.PuzzleOutOfRange();
         return true;
     }
 
@@ -136,6 +142,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
         if (player && !complete)
         {
             pm = player;
+            CallbackHandler.instance.PuzzleInRange(promptPosition);
         }
     }
 
@@ -146,6 +153,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
         {
             ToggleCam(false);
             pm = null;
+            CallbackHandler.instance.PuzzleOutOfRange();
         }
     }
     #endregion Triggers

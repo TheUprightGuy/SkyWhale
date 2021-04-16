@@ -69,6 +69,8 @@ public class DialogueManager : MonoBehaviour
     public float dialogueTime;
     float timer;
     new bool enabled;
+    // Prevents Double Input of Interact Key
+    float startTimer;
 
     private Coroutine myCoroutine;
 
@@ -82,6 +84,7 @@ public class DialogueManager : MonoBehaviour
         if (enabled)
         {
             timer -= Time.deltaTime;
+            startTimer -= Time.deltaTime;
             if (timer <= 0)            
                 ProgressDialogue(InputState.KEYDOWN);          
         }
@@ -101,6 +104,8 @@ public class DialogueManager : MonoBehaviour
         currentDialogue = _dialogue;
         leftCharacter.sprite = _dialogue.leftCharacter;
         rightCharacter.sprite = _dialogue.rightCharacter;
+
+        startTimer = 0.1f;
         
         ShowDialogue();
     }
@@ -157,16 +162,14 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void ProgressDialogue(InputState type)
     {
-        if (!currentDialogue)
+        if (type != InputState.KEYDOWN || !currentDialogue || startTimer > 0)
             return;
 
         timer = dialogueTime;
 
         if (typing)
         {
-            dialogue.SetText("");
-            dialogue.text = "";
-            StopCoroutine(myCoroutine);
+            StopWriting();
         }
         
         if (currentDialogue.Progress() != null)
@@ -175,9 +178,17 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            HideText();
+            StopDialogue();
+            StopCoroutine(myCoroutine);
             currentDialogue = null;
         }
+    }
+
+    void StopWriting()
+    {
+        dialogue.SetText("");
+        dialogue.text = "";
+        StopCoroutine(myCoroutine);
     }
 
     /// <summary>
@@ -202,7 +213,18 @@ public class DialogueManager : MonoBehaviour
     public void ResetDialogue()
     {
         if (currentDialogue)
-            currentDialogue.StartUp();
+        {
+            cachedDialogue = currentDialogue;
+            Invoke("RestartDialogue", 1.0f);
+        }
+            //currentDialogue.Restart();
+    }
+
+    Dialogue cachedDialogue;
+    void RestartDialogue()
+    {
+        cachedDialogue.StartUp();
+        cachedDialogue = null;
     }
 
     /// <summary>

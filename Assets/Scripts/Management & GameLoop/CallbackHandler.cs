@@ -117,6 +117,7 @@ public class CallbackHandler : MonoBehaviour
         if (setDialogue != null)
         {
             setDialogue(_dialogue);
+            SpeechOutOfRange();
         }
     }
 
@@ -135,6 +136,12 @@ public class CallbackHandler : MonoBehaviour
     }
 
     public event Action<Transform> speechInRange;
+    /// <summary>
+    /// Description: Prompts the speech ui element to show.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 16/04/2021</br>
+    /// </summary>
+    /// <param name="_dialogueTransform"></param>
     public void SpeechInRange(Transform _dialogueTransform)
     {
         if (speechInRange != null)
@@ -144,11 +151,63 @@ public class CallbackHandler : MonoBehaviour
     }
 
     public event Action speechOutOfRange;
+    /// <summary>
+    /// Description: Prompts the speech ui element to hide.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 16/04/2021</br>
+    /// </summary>
     public void SpeechOutOfRange()
     {
         if (speechOutOfRange != null)
         {
             speechOutOfRange();
+        }
+    }
+
+    public event Action<Transform> puzzleInRange;
+    /// <summary>
+    /// Description: Prompts the speech ui element to show.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 16/04/2021</br>
+    /// </summary>
+    /// <param name="_position"></param>
+    public void PuzzleInRange(Transform _position)
+    {
+        if (puzzleInRange != null)
+        {
+            puzzleInRange(_position);
+        }
+    }
+
+    public event Action puzzleOutOfRange;
+    /// <summary>
+    /// Description: Prompts the speech ui element to hide.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 16/04/2021</br>
+    /// </summary>
+    public void PuzzleOutOfRange()
+    {
+        if (puzzleOutOfRange != null)
+        {
+            puzzleOutOfRange();
+        }
+    }
+
+    public event Action<InputType,string> displayHotkey;
+    public void DisplayHotkey(InputType _type, string _action)
+    {
+        if (displayHotkey != null)
+        {
+            displayHotkey(_type, _action);
+        }
+    }
+
+    public event Action<string> hideHotkey;
+    public void HideHotkey(string _action)
+    {
+        if (hideHotkey != null)
+        {
+            hideHotkey(_action);
         }
     }
 }

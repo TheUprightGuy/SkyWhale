@@ -19,7 +19,12 @@ public class NPCScript : MonoBehaviour
 {
     PlayerMovement pm;
     bool pause;
-    public Transform dialogueTransform;
+    Transform dialogueTransform;
+
+    private void Awake()
+    {
+        dialogueTransform = this.transform.GetChild(0);
+    }
 
     #region Callbacks
     /// <summary>

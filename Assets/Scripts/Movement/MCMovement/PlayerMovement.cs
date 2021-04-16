@@ -220,6 +220,11 @@ public class PlayerMovement : MonoBehaviour
         {
             playerState = PlayerStates.FALLING;
         }
+        else
+        {
+            // temp
+            CallbackHandler.instance.HideHotkey("Glide");
+        }
 
         if (JUMPINGCheck())
         {
@@ -232,7 +237,6 @@ public class PlayerMovement : MonoBehaviour
         if (GLIDINGCheck())
         {
             playerState = PlayerStates.GLIDING;
-
         }
 
         //Don't use gravity if grappling or gliding or climbing
@@ -324,7 +328,6 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     void RotateTowardInput()
     {
-
         float singleStep = rotationSpeed * Time.deltaTime;// * TimeSlowDown.instance.timeScale;
 
         //Forward Vector relative to the camera direction
@@ -773,6 +776,12 @@ public class PlayerMovement : MonoBehaviour
         if (Physics.SphereCast(transform.position, GroundCheckRadius, -transform.up, out rh, 1000.0f, GroundLayers.value))
         {
             distanceFromGround = Vector3.Distance(rh.point, transform.position);
+
+            // temp testing
+            if (distanceFromGround > 3.0f)
+            {
+                CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Glide");
+            }
             return;
         }
 
