@@ -35,6 +35,7 @@ public class ObjData
     [ExecuteAlways]
     public class ObjDistribuition : MonoBehaviour
     {
+    public float debugValue = 5.0f;
 
     public GameObject prefabTemplate;
 
@@ -42,6 +43,7 @@ public class ObjData
     public int Seed = 69;
     public float minScale = 1.0f;
     public float maxScale = 1.0f;
+
 
     public enum RandomiserType
     {
@@ -78,11 +80,22 @@ public class ObjData
 
     private List<Mesh> MeshCells;
     [HideInInspector]
-    public Bounds BoundingBox;
+    public Bounds BoundingBox; //TODO: Change to brush
+
+
+
+    /// <summary>
+    /// Size of each mesh chunk in world units
+    /// </summary>
+    const float ChunkSize = 8.0f;
+
+    //List<Vector3> PointList = new List<Vector3>();
 
 
     private void Awake()
     {
+
+        //TODO: Remove IF public arraying success 
         switch (RenderType)
         {
             case RenderingMode.BATCHED:
@@ -117,18 +130,12 @@ public class ObjData
         
     }
 
-    public void RedrawGPUI()
-    {
-        if (batches != null)
-        {
-            foreach (var batch in batches)
-            {
-                Graphics.DrawMeshInstanced(prefabTemplate.GetComponentInChildren<MeshFilter>().sharedMesh, 0, prefabTemplate.GetComponentInChildren<MeshRenderer>().sharedMaterial, batch.Select((a) => a.matrix).ToList());
-            }
-        }
-        
-    }
+    
 
+    /// <summary>
+    /// Draws each mesh in <see cref="MeshCells"/> using <see cref="Graphics.DrawMesh(Mesh, Vector3, Quaternion, Material, int)"/>
+    /// <br>Author:Jack Belton</br>
+    /// </summary>
     public void RedrawMesh()
     {
         foreach (var item in MeshCells)
@@ -137,6 +144,10 @@ public class ObjData
         }
     }
 
+    /// <summary>
+    /// Places the grass and processes the mesh depending on the <see cref="RenderType"/>
+    /// <br>Author:Jack Belton</br>
+    /// </summary>
     public void PlaceObjMesh()
     {
 
@@ -149,7 +160,7 @@ public class ObjData
 
         List<Vector3> PointList = new List<Vector3>();
         Debug.Log("Randomising Positions...");
-        switch (Randomiser)
+        switch (Randomiser) //Todo: expose the pointlist as public so these random points can be set by a brush from editor
         {
             case RandomiserType.CELLED:
                 PointList = ReRollCelled();
@@ -220,6 +231,16 @@ public class ObjData
             MeshCells.Clear();
         }
 
+        //Todo: Rework this, MOSTLY
+        //1: Get chunk position of each point
+        //2: Check if chunk position already in array
+            //IF CHUNK FOUND: 
+                //Option A: Apply chunk mesh to front of CombineInstance Array at TRS 0 0 0 //PREFERRED
+                //Option B: Apply positions within chunk to front of Positions Array
+            //IF NOT:
+                //Add new mesh to MeshCells array with the identifier of the chunk position and the mesh of the output mesh
+
+
         int numOfColumns = Mathf.CeilToInt(transform.localScale.x / CellSize);
         int numOfRows = Mathf.CeilToInt(transform.localScale.z / CellSize);
         Vector2 startPos = new Vector2(transform.position.x - (transform.localScale.x / 2), transform.position.z - (transform.localScale.z / 2));
@@ -241,13 +262,15 @@ public class ObjData
             float yLocal = PointList[i].z - startPos.y;
             int row = Mathf.FloorToInt(yLocal / CellSize);
 
-            int iIndex = row * numOfColumns + col;
+            int iIndex = row * numOfColumns + col; //Get the current grid index
 
-            float randScale = Random.Range(minScale, maxScale);
-            foreach (Transform item in prefabTemplate.transform)
+            float randScale = Random.Range(minScale, maxScale); //Apply a random scale to said prefab
+
+            //Todo: Combine the prefab mesh before loop //LOW PRIORITY
+            foreach (Transform item in prefabTemplate.transform) //combine all mesh in the prefab
             {
                 CombineInstance newInstance = new CombineInstance();
-                newInstance.mesh = item.GetComponent<MeshFilter>().sharedMesh;
+                newInstance.mesh = item.GetComponent<MeshFilter>().sharedMesh; //Change rotation to collision normal of point + Vector3.up
                 newInstance.transform = Matrix4x4.TRS(PointList[i] + prefabTemplate.transform.position + item.transform.position, item.rotation, item.localScale * randScale);
                 MeshCellInstances[iIndex].Add(newInstance);
             }
@@ -267,6 +290,11 @@ public class ObjData
         }
     }
 
+    /// <summary>
+    /// Randomises a random position within a cell in a grid, for a more even distribution
+    /// <br>Author:Jack Belton</br>
+    /// </summary>
+    /// <returns>List of points for each foliage prefab to be placed</returns>
     public List<Vector3> ReRollCelled()
     {
         List<Vector3> PointList = new List<Vector3>();
@@ -294,6 +322,12 @@ public class ObjData
         return PointList;
     }
 
+
+    /// <summary>
+    /// Randomises a random position within the bounding box
+    /// <br>Author:Jack Belton</br>
+    /// </summary>
+    /// <returns>List of points for each foliage prefab to be placed</returns>
     public List<Vector3> ReRollPure()
     {
         List<Vector3> PointList = new List<Vector3>();
@@ -321,39 +355,12 @@ public class ObjData
         return PointList;
     }
 
-    public List<Vector3> ReRoll()
-    {
-        List<Vector3> PointList = new List<Vector3>();
 
-        float stepSizeX = transform.localScale.x / density;
-        float stepSizeZ = transform.localScale.z / density;
 
-        Random.InitState(Seed);
-        for (float i = -(density / 2); i < density / 2; i++) //have inital position been in center, rather than up and left
-        {
-            for (float j = -(density / 2); j < density / 2; j++)
-            {
-                //Get random point in cell.
-                float randX = Random.Range(i * stepSizeX, (i + 1) * stepSizeX);
-                float randZ = Random.Range(j * stepSizeZ, (j + 1) * stepSizeZ);
-
-                Vector3 point = new Vector3(randX, 0, randZ);
-                
-                //Apply local position
-                PointList.Add(transform.position  + point);
-
-            }
-        }
-
-        return PointList;
-    }
-
+    //Todo: Attempt to reuse this by inputing a normal list as well as a position so can raycast to any surface
     public List<Vector3> RaycastPositions(List<Vector3> posList)
     {
 
-        //This chunk doesn't work
-        //It is a COPY PASTE of the docs
-        //Nice job unity. Single threaded it is
 
 
         //// Perform a single raycast using RaycastCommand and wait for it to complete
@@ -414,33 +421,33 @@ public class ObjData
             }
         }
 
-        //Debug.Log("Scheduling Raycasts...");
-        //for (int i = 0; i < posList.Count; i++)
-        //{
-        //    RaycastHit hit;
-        //    if (Physics.Raycast(posList[i], Vector3.down, out hit, Mathf.Infinity, RayCastToHit.value,
-        //        (CastFortriggers) ? (QueryTriggerInteraction.Collide) : (QueryTriggerInteraction.Ignore)))
-        //    {
-        //        if (hit.collider.gameObject.tag != GrassExclusionTag)
-        //        {
-        //            returnList.Add(hit.point);
-        //        }
-        //    }
-        //}
-        //Debug.Log("RayCasts Complete");
-
         results.Dispose();
         commands.Dispose();
 
         return returnList;
     }
 
+    /// <summary>
+    /// Calculates the chunk of size <see cref="ChunkSize"/> of some position.
+    /// </summary>
+    /// <param name="_pos">The position inside the chunk</param>
+    /// <returns>The chunk index</returns>
+    public Vector3Int GetChunk(Vector3 _pos)
+    {
+        //Vector3Int returnVec = -Vector3Int.one;
+        Vector3Int returnVec = new Vector3Int(
+            Mathf.FloorToInt(_pos.x / ChunkSize),
+            Mathf.FloorToInt(_pos.y / ChunkSize),
+            Mathf.FloorToInt(_pos.z / ChunkSize));
+        return returnVec;
+    }
 
     //DEFUNCT PLS NO USE TY
+    #region DEFUNCT
     public void PlaceObjsGPUI()
     {
 
-        
+
 
         if (batches == null)
         {
@@ -460,10 +467,10 @@ public class ObjData
 
         PointList = RaycastPositions(PointList);
 
-        
+
         List<ObjData> currBatch = new List<ObjData>();
 
-        
+
         int batchIndexNum = 0;
         for (int i = 0; i < PointList.Count; i++)
         {
@@ -473,7 +480,7 @@ public class ObjData
             {
 
                 //Apply prefabs positions AFTER raycast for offset
-                currBatch.Add(new ObjData( PointList[i] + prefabTemplate.transform.position, item.localScale * randScale, item.rotation)); ;
+                currBatch.Add(new ObjData(PointList[i] + prefabTemplate.transform.position, item.localScale * randScale, item.rotation)); ;
                 batchIndexNum++;
             }
 
@@ -493,6 +500,56 @@ public class ObjData
 
         RedrawGPUI();
     }
+
+    public List<Vector3> ReRoll()
+    {
+        List<Vector3> PointList = new List<Vector3>();
+
+        float stepSizeX = transform.localScale.x / density;
+        float stepSizeZ = transform.localScale.z / density;
+
+        Random.InitState(Seed);
+        for (float i = -(density / 2); i < density / 2; i++) //have inital position been in center, rather than up and left
+        {
+            for (float j = -(density / 2); j < density / 2; j++)
+            {
+                //Get random point in cell.
+                float randX = Random.Range(i * stepSizeX, (i + 1) * stepSizeX);
+                float randZ = Random.Range(j * stepSizeZ, (j + 1) * stepSizeZ);
+
+                Vector3 point = new Vector3(randX, 0, randZ);
+
+                //Apply local position
+                PointList.Add(transform.position + point);
+
+            }
+        }
+
+        return PointList;
+    }
+
+    /// <summary>
+    /// Utilises GPU instancing in shader, for all mesh with the same 
+    /// <br>DEFUNCT</br>
+    /// <br><see cref="RedrawMesh()">RedrawMesh()</see> is up to date.</br>
+    /// <br>Author:Jack Belton</br>
+    /// </summary>
+    public void RedrawGPUI()
+    {
+        if (batches != null)
+        {
+            foreach (var batch in batches)
+            {
+                Graphics.DrawMeshInstanced(prefabTemplate.GetComponentInChildren<MeshFilter>().sharedMesh, 0, prefabTemplate.GetComponentInChildren<MeshRenderer>().sharedMaterial, batch.Select((a) => a.matrix).ToList());
+            }
+        }
+
+    }
+
+    #endregion
+
+
+    public RaycastHit gizmoRayHit;
     private void OnDrawGizmos()
     {
        

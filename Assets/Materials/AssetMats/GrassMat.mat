@@ -10,7 +10,7 @@ Material:
   m_Name: GrassMat
   m_Shader: {fileID: -6465566751694194690, guid: bbb7e3f77c2bea5418408324612c9fb0,
     type: 3}
-  m_ShaderKeywords: _ALPHATEST_ON
+  m_ShaderKeywords: _ALPHATEST_ON  _ZWRITE_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -69,9 +69,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_2048D9BE: 0.1
-    - Vector1_658A6D95: 0.6
-    - Vector1_9A6A109D: 0.24
+    - Vector1_2048D9BE: 1
+    - Vector1_3B4A4946: 2
+    - Vector1_658A6D95: 10
+    - Vector1_7EDA4F3D: 0.1
+    - Vector1_860A75CE: 0
+    - Vector1_9A6A109D: 1
+    - Vector1_A003BE28: 0.1
+    - Vector1_D4B335B9: 0
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -89,7 +94,10 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - Vector2_FAB078FD: {r: 6, g: 0, b: 0, a: 0}
+    - Color_ADCD5AB2: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_FAB078FD: {r: 1, g: 1.3, b: 1.78, a: 0}
+    - Vector3_4105E72E: {r: 1, g: 0, b: 0, a: 0}
+    - Vector3_67E76D2C: {r: 6.02, g: 0, b: 3.14, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
