@@ -647,7 +647,10 @@ public class PlayerMovement : MonoBehaviour
         {
             case InputState.KEYDOWN:
                 if (GRAPPLECheck())
+                {
                     grapple.FireHook();
+                    grapple.YeetPlayer();
+                }
                 if (glider.enabled)
                     glider.Toggle();
                 break;

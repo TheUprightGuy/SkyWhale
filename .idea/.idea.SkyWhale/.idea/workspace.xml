@@ -11,26 +11,15 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/PreLoadSceneLoader.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.4.2f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Layout/CanvasScaler.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Movement/LevelBoundaryChecker.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
-    <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/MCMovement/PlayerMovement.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
-      <option value="$PROJECT_DIR$/Assets/MainMenu/Scripts/PauseMenuCanvasController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Editor/ClearConsole.cs" />
-      <option value="$PROJECT_DIR$/Assets/TestConsoleFunctions.cs" />
-      <option value="$PROJECT_DIR$/Assets/Editor/ConsoleFunctions.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/PreLoadSceneLoader.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/LevelBoundaryChecker.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/DialogueManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/EntityManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
-    </changedPaths>
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/MCMovement/PlayerMovement.cs" />
+      </list>
+    </option>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
   <component name="ProjectViewState">
@@ -61,7 +50,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -70,7 +59,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -85,6 +74,7 @@
       <updated>1615764464940</updated>
       <workItem from="1615764470332" duration="1964000" />
       <workItem from="1615849405036" duration="11071000" />
+      <workItem from="1618792006559" duration="772000" />
     </task>
     <servers />
   </component>

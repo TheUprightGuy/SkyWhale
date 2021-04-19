@@ -349,8 +349,6 @@ public class GrappleScript : MonoBehaviour
         else if (AbleToRetract())
         {
             // Start retracting
-            if(!grapplingFromWhale) 
-                hook.YeetPlayer(this.GetComponent<PlayerMovement>());
 
             hook.retracting = true;
             hook.connected = false;
@@ -369,6 +367,12 @@ public class GrappleScript : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void YeetPlayer()
+    {
+        if (!grapplingFromWhale)
+            hook.YeetPlayer(this.GetComponent<PlayerMovement>());
     }
 
     public bool active;
