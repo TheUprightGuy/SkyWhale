@@ -62,7 +62,6 @@ public class Dialogue : ScriptableObject
         }
     }
 
-
     /// <summary>
     /// Description: Gets dialogue from next index.
     /// <br>Author: Wayd Barton-Redgrave</br>
