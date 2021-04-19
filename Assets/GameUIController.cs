@@ -48,10 +48,10 @@ public class GameUIController : MonoBehaviour
     }
     #endregion Callbacks
 
-    public void DisplayButtonPrompt(InputType _type, string _action)
+    public void DisplayButtonPrompt(InputType _type, string _action, string _subName)
     {
         if (VirtualInputs.GetInputListener(_type, _action) != null)
-            buttonPrompt.Show(true, VirtualInputs.GetInputListener(_type, _action).KeyToListen, _action);
+            buttonPrompt.Show(true, VirtualInputs.GetInputListener(_type, _action).KeyToListen, _action, _subName);
     }
 
     public void HideButtonPrompt(string _action)
@@ -62,7 +62,7 @@ public class GameUIController : MonoBehaviour
     public void DisplaySpeechPrompt(Transform _position)
     {
         speechPrompt.InRange(_position);
-        buttonPrompt.Show(true, VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").KeyToListen, "Interact");
+        buttonPrompt.Show(true, VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").KeyToListen, "Interact", "");
     }
 
     public void HideSpeechPrompt()
@@ -74,7 +74,7 @@ public class GameUIController : MonoBehaviour
     public void DisplayPuzzlePrompt(Transform _position)
     {
         puzzlePrompt.InRange(_position);
-        buttonPrompt.Show(true, VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").KeyToListen, "Interact");
+        buttonPrompt.Show(true, VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").KeyToListen, "Interact", "");
     }
 
     public void HidePuzzlePrompt()
