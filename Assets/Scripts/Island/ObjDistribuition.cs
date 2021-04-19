@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.Jobs;
 using Unity.Collections;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class ObjData
 {
@@ -87,8 +88,8 @@ public class ObjData
     /// <summary>
     /// Size of each mesh chunk in world units
     /// </summary>
-    const float ChunkSize = 8.0f;
-
+    public float ChunkSize = 8.0f;
+    public GrassContainer grassContainer;
     //List<Vector3> PointList = new List<Vector3>();
 
 
@@ -99,7 +100,7 @@ public class ObjData
         switch (RenderType)
         {
             case RenderingMode.BATCHED:
-                PlaceObjMesh();
+                //PlaceObjMesh();
                 break;
             case RenderingMode.INDIVIDUAL:
                 break;
@@ -138,9 +139,15 @@ public class ObjData
     /// </summary>
     public void RedrawMesh()
     {
-        foreach (var item in MeshCells)
+        //foreach (var item in MeshCells)
+        //{
+        //    Graphics.DrawMesh(item, Vector3.zero, Quaternion.identity, prefabTemplate.GetComponentInChildren<MeshRenderer>().sharedMaterial, 0);
+        //}
+
+        
+        foreach (var item in grassContainer.GrassChunks)
         {
-            Graphics.DrawMesh(item, Vector3.zero, Quaternion.identity, prefabTemplate.GetComponentInChildren<MeshRenderer>().sharedMaterial, 0);
+            Graphics.DrawMesh(item.mesh, Vector3.zero, Quaternion.identity, prefabTemplate.GetComponentInChildren<MeshRenderer>().sharedMaterial, 0);
         }
     }
 
@@ -174,7 +181,7 @@ public class ObjData
 
         Debug.Log("Randomising Positions Done");
 
-        PointList = RaycastPositions(PointList);
+        //PointList = RaycastPositions(PointList);
 
 
         switch (RenderType)
@@ -219,75 +226,141 @@ public class ObjData
 
     public void BatchMesh(List<Vector3> PointList)
     {
-        if (MeshCells == null)
+        //if (MeshCells == null)
+        //{
+        //    Debug.Log("Making Array");
+        //    MeshCells = new List<Mesh>();
+        //}
+
+        //if (MeshCells.Count > 0)
+        //{
+        //    Debug.Log("Clearing Array");
+        //    MeshCells.Clear();
+        //}
+
+        //If the grass container doesn't exist yet, add one
+        if (grassContainer == null)
         {
-            Debug.Log("Making Array");
-            MeshCells = new List<Mesh>();
+            string fp = "Assets/" + transform.name + "GrassInstance.asset"; // Probs want to make this a public at some point
+            GrassContainer newContainer = ScriptableObject.CreateInstance<GrassContainer>();
+
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(newContainer);
+#endif
+
+
+            AssetDatabase.CreateAsset(newContainer, fp);
+            AssetDatabase.SaveAssets();
+            grassContainer = (GrassContainer)AssetDatabase.LoadAssetAtPath(fp, typeof(GrassContainer)); //Retrieve the new container 
+
+ 
         }
 
-        if (MeshCells.Count > 0)
+        if (grassContainer.GrassChunks == null)
         {
-            Debug.Log("Clearing Array");
-            MeshCells.Clear();
+            grassContainer.GrassChunks = new List<MeshChunk>();
         }
+
+
 
         //Todo: Rework this, MOSTLY
         //1: Get chunk position of each point
         //2: Check if chunk position already in array
-            //IF CHUNK FOUND: 
-                //Option A: Apply chunk mesh to front of CombineInstance Array at TRS 0 0 0 //PREFERRED
-                //Option B: Apply positions within chunk to front of Positions Array
-            //IF NOT:
-                //Add new mesh to MeshCells array with the identifier of the chunk position and the mesh of the output mesh
+        //IF CHUNK FOUND: 
+        //Option A: Apply chunk mesh to front of CombineInstance Array at TRS 0 0 0 //PREFERRED
+        //Option B: Apply positions within chunk to front of Positions Array
+        //IF NOT:
+        //Add new mesh to MeshCells array with the identifier of the chunk position and the mesh of the output mesh
 
-
-        int numOfColumns = Mathf.CeilToInt(transform.localScale.x / CellSize);
-        int numOfRows = Mathf.CeilToInt(transform.localScale.z / CellSize);
-        Vector2 startPos = new Vector2(transform.position.x - (transform.localScale.x / 2), transform.position.z - (transform.localScale.z / 2));
-
-
-        List<List<CombineInstance>> MeshCellInstances = new List<List<CombineInstance>>();
-        for (int i = 0; i < numOfColumns * numOfRows; i++)
+        Dictionary<Vector3Int, List<Vector3>> chunkPoints = new Dictionary<Vector3Int, List<Vector3>>(); //batch together each point
+        foreach (var item in PointList) //Get the chunk for each point
         {
-            List<CombineInstance> temp = new List<CombineInstance>();
-            MeshCellInstances.Add(temp);
+
+            Vector3Int ChunkIndex = GetChunk(item); //Get chunk index
+
+            List <Vector3> thisChunk;
+            if (!chunkPoints.TryGetValue(ChunkIndex, out thisChunk)) //If the chunk point list has not been made yet
+            {
+                thisChunk = new List<Vector3>(); //Init the point list
+
+                MeshChunk chunk;
+                if (grassContainer.GrassChunkAtIndex(ChunkIndex, out chunk)) //If the chunk already exists
+                {
+                    foreach (var point in chunk.pointList)
+                    {
+                        thisChunk.Add(point); //Apply the pre exising points
+                    }
+                }
+
+                chunkPoints.Add(ChunkIndex, thisChunk); //Add the point list
+            }
+
+            chunkPoints[ChunkIndex].Add(item); //Add this point
         }
 
         Debug.Log("Batching Mesh...");
-        for (int i = 0; i < PointList.Count; i++)
+        
+        //Create a combine instance array for each chunk
+        Dictionary<Vector3Int, List<CombineInstance>> instanceChunks = new Dictionary<Vector3Int, List<CombineInstance>>();
+        foreach (KeyValuePair<Vector3Int, List<Vector3>> kvp in chunkPoints)
         {
-            float xLocal = PointList[i].x - startPos.x;
-            int col = Mathf.FloorToInt(xLocal / CellSize);
-
-            float yLocal = PointList[i].z - startPos.y;
-            int row = Mathf.FloorToInt(yLocal / CellSize);
-
-            int iIndex = row * numOfColumns + col; //Get the current grid index
-
-            float randScale = Random.Range(minScale, maxScale); //Apply a random scale to said prefab
-
-            //Todo: Combine the prefab mesh before loop //LOW PRIORITY
-            foreach (Transform item in prefabTemplate.transform) //combine all mesh in the prefab
+            foreach (var point in kvp.Value) //For each chunk
             {
-                CombineInstance newInstance = new CombineInstance();
-                newInstance.mesh = item.GetComponent<MeshFilter>().sharedMesh; //Change rotation to collision normal of point + Vector3.up
-                newInstance.transform = Matrix4x4.TRS(PointList[i] + prefabTemplate.transform.position + item.transform.position, item.rotation, item.localScale * randScale);
-                MeshCellInstances[iIndex].Add(newInstance);
+                List<CombineInstance> instanceList;
+                if (!instanceChunks.TryGetValue(kvp.Key, out instanceList)) //If no chunk found
+                {
+                    instanceList = new List<CombineInstance>();
+                    instanceChunks.Add(kvp.Key, instanceList); //Add if none found
+                }
+
+                float randScale = Random.Range(minScale, maxScale); //Apply a random scale to said prefab
+
+
+                //Todo: Combine the prefab mesh before loop //LOW PRIORITY
+                foreach (Transform item in prefabTemplate.transform) //combine all mesh in the prefab
+                {
+                    CombineInstance newInstance = new CombineInstance();
+                    newInstance.mesh = item.GetComponent<MeshFilter>().sharedMesh; //Change rotation to collision normal of point + Vector3.up
+                    newInstance.transform = Matrix4x4.TRS(point + prefabTemplate.transform.position + item.transform.position, item.rotation, item.localScale * randScale);
+                    instanceChunks[kvp.Key].Add(newInstance); //Apply mesh to the chunk list
+                }
             }
+            
         }
+        
         Debug.Log("Batching Mesh Done");
 
-        foreach (var item in MeshCellInstances)
+        foreach (KeyValuePair<Vector3Int, List<CombineInstance>> kvp in instanceChunks)
         {
-            if (item.Count < 1)
+            MeshChunk thisChunk;
+            if (!grassContainer.GrassChunkAtIndex(kvp.Key, out thisChunk)) //If the chunk already does not exist
             {
-                continue;
+                thisChunk = new MeshChunk();
+                thisChunk.index = kvp.Key;
+                thisChunk.pointList = new List<Vector3>();
+                grassContainer.GrassChunks.Add(thisChunk); //Add new
             }
 
             Mesh newMesh = new Mesh();
-            newMesh.CombineMeshes(item.ToArray());
-            MeshCells.Add(newMesh);
+            newMesh.CombineMeshes(kvp.Value.ToArray()); //Apply the new meshs
+            thisChunk.mesh = newMesh;
+
+            thisChunk.pointList = chunkPoints[kvp.Key];
+
+            grassContainer.GrassChunks[grassContainer.GrassChunkAtIndex(kvp.Key)] = thisChunk; //Apply changes
         }
+
+        //foreach (var item in MeshCellInstances)
+        //{
+        //    if (item.Count < 1)
+        //    {
+        //        continue;
+        //    }
+
+        //    Mesh newMesh = new Mesh();
+        //    newMesh.CombineMeshes(item.ToArray());
+        //    MeshCells.Add(newMesh);
+        //}
     }
 
     /// <summary>
@@ -412,7 +485,7 @@ public class ObjData
 
                 if (hitIncline > MaxTerrainIncline) //If this hit point is greater than the maximum possible incline set by user
                 {
-                    break;
+                    //break;
                 }
 
                 returnList.Add(results[i + j].point);

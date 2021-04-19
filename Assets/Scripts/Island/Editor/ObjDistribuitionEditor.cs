@@ -32,8 +32,14 @@ public class ObjDistribuitionEditor : Editor
             HandleUtility.AddDefaultControl(id);
             Tools.hidden = true;
             */
+            Vector3Int chunk = myObj.GetChunk(hit.point);
+            Handles.Label(hit.point, chunk.ToString());
 
-            Handles.Label(hit.point, myObj.GetChunk(hit.point).ToString());
+            float cs = myObj.ChunkSize;
+            float halfSize = cs * 0.5f;
+            Handles.DrawWireCube(new Vector3(chunk.x * cs + halfSize, chunk.y * cs + halfSize, chunk.z * cs + halfSize), 
+                                    new Vector3(myObj.ChunkSize, myObj.ChunkSize, myObj.ChunkSize));
+
             Handles.Disc(Quaternion.identity, hit.point, hit.normal, 5, false, 1);
             //SHandles.Disc(Quaternion.identity, t.transform.position, new Vector3(1, 1, 0), 5, false, 1);
         }
