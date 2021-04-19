@@ -775,6 +775,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainMenuCanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 3097865665195943737, guid: 7a92efd0db511904d89774535310cdf9,
+        type: 3}
+      propertyPath: m_TagString
+      value: MainMenuCanvas
+      objectReference: {fileID: 0}
     - target: {fileID: 3097865665195943738, guid: 7a92efd0db511904d89774535310cdf9,
         type: 3}
       propertyPath: m_BlockingMask.m_Bits
