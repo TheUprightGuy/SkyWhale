@@ -214,21 +214,27 @@ public class GrappleScript : MonoBehaviour
     Vector3 RaycastToTarget()
     {
         RaycastHit hit;
-        if (Physics.Raycast(camToShootFrom.transform.position, camToShootFrom.transform.forward, out hit, Mathf.Infinity, raycastTargets))
+        if (Physics.Raycast(camToShootFrom.transform.position, camToShootFrom.transform.forward, out hit, Mathf.Infinity, raycastTargets, QueryTriggerInteraction.Ignore))
         {
             Debug.DrawRay(camToShootFrom.transform.position, camToShootFrom.transform.forward * hit.distance, Color.yellow);
 
             if (grappleableLayers == (grappleableLayers | (1 << hit.transform.gameObject.layer)))
             {
                 grapplePoint.color = Color.red;
+
+                if (pm && pm.playerState == PlayerMovement.PlayerStates.IDLE)
+                    CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Grapple", "");
+
                 return hit.point;
             }
 
             grapplePoint.color = Color.white;
+            CallbackHandler.instance.HideHotkey("Grapple");
             return hit.point;
         }
 
         grapplePoint.color = Color.white;
+        CallbackHandler.instance.HideHotkey("Grapple");
         return Vector3.zero;
     }
 
@@ -323,7 +329,9 @@ public class GrappleScript : MonoBehaviour
         }*/
         
         if(!AbleToRetract() && !aim) return;
-        
+
+        CallbackHandler.instance.HideHotkey("Grapple");
+
         // Available To Use
         if (!HookInUse() && (pm ? !pm.GLIDINGCheck() : grapplingFromWhale))
         {
@@ -395,6 +403,8 @@ public class GrappleScript : MonoBehaviour
     /// <param name="_startAim">ADS</param>
     void ToggleAim(bool _startAim)
     {
+        CallbackHandler.instance.HideHotkey("GrappleAim");
+
         // Toggle Reticule
         aim = _startAim;
         if (grappleReticule != null)

@@ -129,6 +129,8 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         HandleRotation();
+
+        PromptCheck();
     }
     void FixedUpdate()
     {
@@ -219,11 +221,6 @@ public class PlayerMovement : MonoBehaviour
         if (FALLINGCheck())
         {
             playerState = PlayerStates.FALLING;
-        }
-        else
-        {
-            // temp
-            CallbackHandler.instance.HideHotkey("Glide");
         }
 
         if (JUMPINGCheck())
@@ -779,17 +776,34 @@ public class PlayerMovement : MonoBehaviour
         if (Physics.SphereCast(transform.position, GroundCheckRadius, -transform.up, out rh, 1000.0f, GroundLayers.value))
         {
             distanceFromGround = Vector3.Distance(rh.point, transform.position);
-
-            // temp testing
-            if (distanceFromGround > 3.0f)
-            {
-                CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Glide");
-            }
             return;
         }
 
         distanceFromGround = Mathf.Infinity;
     }
+
+    void PromptCheck()
+    {
+        // temp testing
+        if (distanceFromGround > 3.0f && GetComponent<GliderMovement>().unlocked && playerState == PlayerStates.FALLING)
+        {
+            CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Glide", "");
+        }
+        else
+        {
+            CallbackHandler.instance.HideHotkey("Glide");
+        }
+
+        if (IsClimbing() && IsGrounded())
+        {
+            CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Jump", "Climb");
+        }
+        else
+        {
+            CallbackHandler.instance.HideHotkey("Jump");
+        }
+    }
+
     #endregion Utility
     #region Collisions
     /// <summary>

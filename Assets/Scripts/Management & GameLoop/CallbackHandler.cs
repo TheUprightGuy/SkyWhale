@@ -193,12 +193,12 @@ public class CallbackHandler : MonoBehaviour
         }
     }
 
-    public event Action<InputType,string> displayHotkey;
-    public void DisplayHotkey(InputType _type, string _action)
+    public event Action<InputType,string, string> displayHotkey;
+    public void DisplayHotkey(InputType _type, string _action, string _subName)
     {
         if (displayHotkey != null)
         {
-            displayHotkey(_type, _action);
+            displayHotkey(_type, _action, _subName);
         }
     }
 

@@ -208,7 +208,7 @@ MonoBehaviour:
   cam: {fileID: 4913185220026473846}
   walkSpeed: 0.03
   maxWalkAcceleration: 0.5
-  runSpeed: 0.08
+  runSpeed: 0.075
   maxRunAcceleration: 0.5
   rotationSpeed: 17
   setAccel: 0.5
@@ -228,8 +228,8 @@ MonoBehaviour:
   ClimbLayers:
     serializedVersion: 2
     m_Bits: 262144
-  ClimbCheckDistance: 0.1
-  ClimbCheckRadius: 0.1
+  ClimbCheckDistance: 0.2
+  ClimbCheckRadius: 0.15
   ClimbCheckStartOffset: {x: 0, y: -0.25, z: 0}
 --- !u!114 &1363942243561523383
 MonoBehaviour:
@@ -257,6 +257,7 @@ MonoBehaviour:
   moveSpeed: 1
   baseSpeed: 5
   unlocked: 1
+  delayInput: 0
 --- !u!65 &115111260265092097
 BoxCollider:
   m_ObjectHideFlags: 0
