@@ -8,12 +8,17 @@ public class GameUIController : MonoBehaviour
     ButtonPrompt buttonPrompt;
     SpeechPrompt speechPrompt;
     PuzzlePrompt puzzlePrompt;
+    GlidePrompt glidePrompt;
+    GrapplePrompt grapplePrompt;
 
     private void Awake()
     {
         buttonPrompt = GetComponentInChildren<ButtonPrompt>();
         speechPrompt = GetComponentInChildren<SpeechPrompt>();
         puzzlePrompt = GetComponentInChildren<PuzzlePrompt>();
+        glidePrompt = GetComponentInChildren<GlidePrompt>();
+        grapplePrompt = GetComponentInChildren<GrapplePrompt>();
+
     }
     #endregion Setup
 
@@ -33,6 +38,12 @@ public class GameUIController : MonoBehaviour
 
         CallbackHandler.instance.displayHotkey += DisplayButtonPrompt;
         CallbackHandler.instance.hideHotkey += HideButtonPrompt;
+
+        CallbackHandler.instance.showGlide += DisplayGlidePrompt;
+        CallbackHandler.instance.hideGlide += HideGlidePrompt;
+
+        CallbackHandler.instance.showGrapple += DisplayGrapplePrompt;
+        CallbackHandler.instance.hideGrapple += HideGrapplePrompt;
     }
 
     private void OnDestroy()
@@ -45,6 +56,12 @@ public class GameUIController : MonoBehaviour
 
         CallbackHandler.instance.displayHotkey -= DisplayButtonPrompt;
         CallbackHandler.instance.hideHotkey -= HideButtonPrompt;
+
+        CallbackHandler.instance.showGlide -= DisplayGlidePrompt;
+        CallbackHandler.instance.hideGlide -= HideGlidePrompt;
+
+        CallbackHandler.instance.showGrapple -= DisplayGrapplePrompt;
+        CallbackHandler.instance.hideGrapple -= HideGrapplePrompt;
     }
     #endregion Callbacks
 
@@ -81,5 +98,25 @@ public class GameUIController : MonoBehaviour
     {
         puzzlePrompt.OutOfRange();
         buttonPrompt.Hide("Interact");
+    }
+
+    public void DisplayGlidePrompt()
+    {
+        glidePrompt.Show();
+    }
+
+    public void HideGlidePrompt()
+    {
+        glidePrompt.Hide();
+    }
+
+    public void DisplayGrapplePrompt()
+    {
+        grapplePrompt.Show();
+    }
+
+    public void HideGrapplePrompt()
+    {
+        grapplePrompt.Hide();
     }
 }

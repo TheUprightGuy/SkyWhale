@@ -210,4 +210,40 @@ public class CallbackHandler : MonoBehaviour
             hideHotkey(_action);
         }
     }
+
+    public event Action showGlide;
+    public void ShowGlide()
+    {
+        if (showGlide != null)
+        {
+            showGlide();
+        }
+    }
+
+    public event Action hideGlide;
+    public void HideGlide()
+    {
+        if (hideGlide != null)
+        {
+            hideGlide();
+        }
+    }
+
+    public event Action showGrapple;
+    public void ShowGrapple()
+    {
+        if (showGrapple != null)
+        {
+            showGrapple();
+        }
+    }
+
+    public event Action hideGrapple;
+    public void HideGrapple()
+    {
+        if (hideGrapple != null)
+        {
+            hideGrapple();
+        }
+    }
 }
