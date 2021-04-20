@@ -34,7 +34,7 @@ public class DebugTool : MonoBehaviour
     public void ToggleDebugToolMenu()
     {
         _debugToolsActive = !_debugToolsActive;
-        Cursor.lockState = _debugToolsActive ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.lockState = _debugToolsActive ? CursorLockMode.Locked : CursorLockMode.None;
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(_debugToolsActive);
