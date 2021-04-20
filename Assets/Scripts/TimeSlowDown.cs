@@ -115,8 +115,8 @@ public class TimeSlowDown : MonoBehaviour
         if (!Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>())
             return;
 
-        Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = ((timeScale / 2) * 100.0f) + 50.0f;
-        adjustments.saturation.value = timeScale * 100.0f - 100.0f;
+        Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = ((timeScale / 4) * 100.0f) + 75.0f;
+        adjustments.saturation.value = Mathf.Clamp(timeScale * 100.0f - 50.0f, -50.0f, 0.0f);
     }
 
     // Safety

@@ -82,6 +82,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
         inUse = !inUse;
         ToggleCam(inUse);
         Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
+        CallbackHandler.instance.HideSpeech();
 
         if (inUse)
             CallbackHandler.instance.PuzzleOutOfRange();
@@ -102,6 +103,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
             return;
         }
         CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
+        CallbackHandler.instance.HideSpeech();
     }
 
     /// <summary>
@@ -143,6 +145,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
         {
             pm = player;
             CallbackHandler.instance.PuzzleInRange(promptPosition);
+            CallbackHandler.instance.ShowSpeech();
         }
     }
 
@@ -154,6 +157,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
             ToggleCam(false);
             pm = null;
             CallbackHandler.instance.PuzzleOutOfRange();
+            CallbackHandler.instance.HideSpeech();
         }
     }
     #endregion Triggers

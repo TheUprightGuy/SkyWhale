@@ -13,7 +13,8 @@ public class PromptGrapple : MonoBehaviour
             pm = other.GetComponent<PlayerMovement>();
 
             if (pm.GetComponent<GrappleScript>().enabled)
-                CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "GrappleAim", "Aim");
+                CallbackHandler.instance.ShowGrapple();
+                //CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "GrappleAim", "Aim");
         }
     }
 
@@ -21,7 +22,8 @@ public class PromptGrapple : MonoBehaviour
     {
         if (other.GetComponent<PlayerMovement>() == pm)
         {
-            CallbackHandler.instance.HideHotkey("GrappleAim");
+            //CallbackHandler.instance.HideHotkey("GrappleAim");
+            CallbackHandler.instance.HideGrapple();
         }
     }
 }

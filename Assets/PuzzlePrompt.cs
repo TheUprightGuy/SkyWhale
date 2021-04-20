@@ -19,6 +19,7 @@ using UnityEngine;
 public class PuzzlePrompt : MonoBehaviour
 {
     #region Setup
+
     Transform dialogueTransform;
     GameObject image;
     Animator animator;

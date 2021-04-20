@@ -787,11 +787,13 @@ public class PlayerMovement : MonoBehaviour
         // temp testing
         if (distanceFromGround > 3.0f && GetComponent<GliderMovement>().unlocked && playerState == PlayerStates.FALLING)
         {
-            CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Glide", "");
+            //CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Glide", "");
+            CallbackHandler.instance.ShowGlide();
         }
         else
         {
-            CallbackHandler.instance.HideHotkey("Glide");
+            //CallbackHandler.instance.HideHotkey("Glide");
+            CallbackHandler.instance.HideGlide();
         }
 
         if (IsClimbing() && IsGrounded())
