@@ -12,6 +12,8 @@ public struct MeshChunk
         mesh = null;
         mat = null;
         Rebuild = false;
+
+
     }
 
     public Vector3Int index;

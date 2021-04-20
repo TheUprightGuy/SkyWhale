@@ -40,6 +40,8 @@ public class ObjData
 
     public GameObject prefabTemplate;
 
+    public GrassContainer grassContainer;
+
     [Header("Randomiser")]
     public int Seed = 69;
     public float minScale = 1.0f;
@@ -54,14 +56,22 @@ public class ObjData
 
     public RandomiserType Randomiser = RandomiserType.CELLED;
 
+    [Header("Distribuition Control")]
     //Defines size of radius
-    [Tooltip("The ammount of objects will be density squared")][Header("Distribuition Control")]
+    public float BrushRadius = 5.0f;
+    public float RefreshRateInMs = 10.0f;
+    [Tooltip("The ammount of objects will be density squared")]
     public float density = 10;
     [Tooltip("The size in world units of each mesh square in Batched Render Mode")]
     public float CellSize = 5.0f;
     public int MaxPointsInChunk = 10000;
     [Tooltip("The maximum angle possible from the Transform up to the hit.normal")]
     public float MaxTerrainIncline = 20.0f;
+
+    /// <summary>
+    /// Size of each mesh chunk in world units
+    /// </summary>
+    public float ChunkSize = 12.0f;
 
     public enum RenderingMode
     {
@@ -84,15 +94,9 @@ public class ObjData
     [HideInInspector]
     public Bounds BoundingBox; //TODO: Change to brush
 
-
-
-    /// <summary>
-    /// Size of each mesh chunk in world units
-    /// </summary>
-    public float ChunkSize = 12.0f;
-    public GrassContainer grassContainer;
-    //List<Vector3> PointList = new List<Vector3>();
-
+    [Header("Debug")]
+    public bool DrawBrush = false;
+    public bool ShowChunkBorders = false;
 
     private void Awake()
     {
@@ -101,7 +105,8 @@ public class ObjData
         switch (RenderType)
         {
             case RenderingMode.BATCHED:
-                BuildMesh();
+                VerifyVariables();
+                BuildMesh(true);
                 //PlaceObjMesh();
                 break;
             case RenderingMode.INDIVIDUAL:
@@ -146,7 +151,10 @@ public class ObjData
         //    Graphics.DrawMesh(item, Vector3.zero, Quaternion.identity, prefabTemplate.GetComponentInChildren<MeshRenderer>().sharedMaterial, 0);
         //}
 
-        
+        if (grassContainer == null)
+        {
+            return;
+        }
         foreach (var item in grassContainer.GrassChunks)
         {
             Graphics.DrawMesh(item.mesh, Vector3.zero, Quaternion.identity, prefabTemplate.GetComponentInChildren<MeshRenderer>().sharedMaterial, 0);
@@ -247,6 +255,19 @@ public class ObjData
         }
     }
 
+    public void PointGen(Vector3 point, float radius)
+    {
+        List<Vector3> newPoints = new List<Vector3>();
+
+        for (int i = 0; i < density * radius; i++)
+        {
+            Vector2 randomPointxz = Random.insideUnitCircle * radius;
+            Vector3 randomPoint = new Vector3(randomPointxz.x, transform.position.y/*point.y*/, randomPointxz.y);
+            newPoints.Add(point + randomPoint);
+        }
+        newPoints = RaycastPositions(newPoints);
+        PointSet(newPoints);
+    }
     public void PointSet(List<Vector3> PointList)
     {
         foreach (var item in PointList) //Get the chunk for each point
@@ -272,7 +293,50 @@ public class ObjData
         
 
     }
-    public void BuildMesh()
+
+    public void PointDelete(Vector3 point, float radius)
+    {
+
+        int chunkSpan = Mathf.CeilToInt(radius / ChunkSize); //Give the ammount of chunks this delete could effect
+        Vector3Int hitChunk = GetChunk(point); //retrieve the confirm effected chunk
+
+        for (int i = 0; i < grassContainer.GrassChunks.Count; i++)
+        {
+            if(grassContainer.GrassChunks[i].pointList.Count <= 0) { continue; }
+            MeshChunk chunk = grassContainer.GrassChunks[i];
+            //If within the effected chunk span
+            List<int> indexDelete = new List<int>();
+            for (int j = chunk.pointList.Count - 1; j >= 0; j--) //work downwards
+            {
+                float pointDist = Vector3.Distance(point, chunk.pointList[j]);
+                if (pointDist <= radius) //check within radius
+                {
+                    indexDelete.Add(j);//Queue for deletion
+                    
+                }
+            }
+
+            if (indexDelete.Count == 0) //Don't bother with the rest
+            {
+                continue;
+            }
+
+            chunk.Rebuild = true; // Mark for next rebuild
+            foreach (int index in indexDelete) //Delete all points within radius
+            {
+                chunk.pointList.RemoveAt(index);
+                
+            }
+
+            chunk.mesh = null; //This is something to do with update refreshes and scriptable object memory. 
+
+
+            grassContainer.GrassChunks[i] = chunk;
+            //indexDelete.Clear(); //Clear memory
+        }
+
+    }
+    public void BuildMesh(bool ForceFullRebuild = false)
     {
         //Todo: Rework this, MOSTLY
         //1: Get chunk position of each point
@@ -299,7 +363,7 @@ public class ObjData
         {
             CombineInstance newInstance = new CombineInstance();
             newInstance.mesh = item.GetComponent<MeshFilter>().sharedMesh; //Change rotation to collision normal of point + Vector3.up
-            newInstance.transform = Matrix4x4.TRS(/*point +*/ prefabTemplate.transform.position + item.transform.position, item.rotation, item.localScale);
+            newInstance.transform = Matrix4x4.TRS(/*point +*/ /*prefabTemplate.transform.position +*/ item.transform.position, item.rotation, item.localScale);
             prefabList.Add(newInstance); //Apply mesh to the chunk instance mesh list
         }
 
@@ -309,6 +373,11 @@ public class ObjData
         Dictionary<Vector3Int, List<CombineInstance>> instanceChunks = new Dictionary<Vector3Int, List<CombineInstance>>();
         foreach (var chunk in grassContainer.GrassChunks)
         {
+            //If not marked for rebuild or the mesh already exists
+            if (!chunk.Rebuild && !ForceFullRebuild)
+            {
+                continue;
+            }
             foreach (var point in chunk.pointList) //For each chunks points
             {
                 List<CombineInstance> instanceList;
@@ -344,12 +413,12 @@ public class ObjData
             MeshChunk thisChunk;
             if (!grassContainer.GrassChunkAtIndex(kvp.Key, out thisChunk)) //The chunk should be pre made in the point adding, but double check
             {
-                return;
+                continue;
             }
-           
-
+            thisChunk.mesh = null;
             Mesh newMesh = new Mesh();
             newMesh.CombineMeshes(kvp.Value.ToArray()); //Apply the new meshs
+            
             thisChunk.mesh = newMesh;
 
             grassContainer.GrassChunks[grassContainer.GrassChunkAtIndex(kvp.Key)] = thisChunk; //Apply changes
@@ -442,7 +511,8 @@ public class ObjData
 
         //// Perform a single raycast using RaycastCommand and wait for it to complete
         //// Setup the command and result buffers
-        int maxHits = 4;
+        
+        int maxHits = 1;
         var results = new NativeArray<RaycastHit>(posList.Count * maxHits, Allocator.TempJob);
         var commands = new NativeArray<RaycastCommand>(posList.Count, Allocator.TempJob);
 
@@ -451,7 +521,9 @@ public class ObjData
 
         for (int i = 0; i < posList.Count; i++)
         {
-            commands[i] = new RaycastCommand(posList[i], Vector3.down,Mathf.Infinity , RayCastToHit.value);
+            Vector3 normal = Vector3.down;
+            Vector3 point = posList[i] + ((-normal) * 0.1f);
+            commands[i] = new RaycastCommand(point, normal, Mathf.Infinity , RayCastToHit.value);
         }
 
         //Debug.Log("Scheduling Raycasts...");
@@ -461,12 +533,13 @@ public class ObjData
         //// Wait for the batch processing job to complete
         handle.Complete();
         //Debug.Log("RayCasts Complete");
-
+        
         List<Vector3> returnList = new List<Vector3>();
 
         
         for (int i = 0; i < commands.Length; i++)
         {
+
             for (int j = 0; j < maxHits; j++)
             {
                 if (results[i + j].collider == null) //Any null in the group should break the loop cause the later nulls will not be null
@@ -500,7 +573,8 @@ public class ObjData
 
         results.Dispose();
         commands.Dispose();
-
+        
+        
         return returnList;
     }
 
