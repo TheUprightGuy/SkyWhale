@@ -30,7 +30,7 @@ public class PreLoadSceneLoader : MonoBehaviour
     private void OnStart()
     {
         Debug.Log("Test preload scene logs");
-        ClearLog();
+        //ClearLog();
         SceneManager.LoadScene("PreloadScene");
     }
     
@@ -47,11 +47,11 @@ public class PreLoadSceneLoader : MonoBehaviour
         GameObject.FindGameObjectWithTag("MainMenuCanvas").BroadcastMessage("ToggleMenuOption", MenuOptions.NewGame);
     }
     
-    public void ClearLog()
+    /*public void ClearLog()
     {
         var assembly = Assembly.GetAssembly(typeof(UnityEditor.Editor));
         var type = assembly.GetType("UnityEditor.LogEntries");
         var method = type.GetMethod("Clear");
         method.Invoke(new object(), null);
-    }
+    }*/
 }

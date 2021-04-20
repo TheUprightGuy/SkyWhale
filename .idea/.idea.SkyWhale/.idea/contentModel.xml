@@ -9,10 +9,11 @@
       <e p="Assets" t="Include">
         <e p="BlacksmithScript.cs" t="Include" />
         <e p="ButtonPrompt.cs" t="Include" />
+        <e p="DebugTeleportButton.cs" t="Include" />
+        <e p="DebugTool.cs" t="Include" />
         <e p="Editor" t="Include">
           <e p="ConditionalHidePropertyDrawer.cs" t="Include" />
           <e p="MaterialInstancer.cs" t="Include" />
-          <e p="ObjDistributionEditor.cs" t="Include" />
           <e p="TexturePainterControllerEditor.cs" t="Include" />
         </e>
         <e p="GameUIController.cs" t="Include" />
@@ -59,6 +60,7 @@
           </e>
         </e>
         <e p="NPCScript.cs" t="Include" />
+        <e p="PromptGrapple.cs" t="Include" />
         <e p="PuzzlePrompt.cs" t="Include" />
         <e p="Scripts" t="Include">
           <e p="Audio" t="Include">
@@ -98,6 +100,9 @@
               <e p="IslandChain.cs" t="Include" />
               <e p="IslandSpawner.cs" t="Include" />
               <e p="IslandTrailing.cs" t="Include" />
+            </e>
+            <e p="Editor" t="Include">
+              <e p="ObjDistribuitionEditor.cs" t="Include" />
             </e>
             <e p="NewIslandScript.cs" t="Include" />
             <e p="ObjDistribuition.cs" t="Include" />

@@ -43,6 +43,7 @@ public class NewGrappleHook : MonoBehaviour
     public bool manualRetract;
     public bool retracting;
     public float flightTime;
+    public float maxFlightTime;
     public GameObject connectedObj;
     public float yeetForceStrength = 2.5f;
 
@@ -201,7 +202,7 @@ public class NewGrappleHook : MonoBehaviour
                 }
 
                 // If reached max Flight Time - Retract
-                if (flightTime > 2.0f)
+                if (flightTime > maxFlightTime)
                 {
                     enabled = false;
                     retracting = true;
