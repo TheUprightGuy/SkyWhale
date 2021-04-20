@@ -22,9 +22,9 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Movement/MCMovement/PlayerMovement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/SaveManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
-        <option value="$PROJECT_DIR$/Assets/DebugTeleportButton.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PreLoadSceneLoader.cs" />
         <option value="$PROJECT_DIR$/Assets/DebugTool.cs" />
+        <option value="$PROJECT_DIR$/Assets/DebugTeleportButton.cs" />
       </list>
     </option>
   </component>
@@ -82,7 +82,7 @@
       <workItem from="1615764470332" duration="1964000" />
       <workItem from="1615849405036" duration="11071000" />
       <workItem from="1618792006559" duration="1802000" />
-      <workItem from="1618876375139" duration="769000" />
+      <workItem from="1618876375139" duration="2993000" />
     </task>
     <servers />
   </component>

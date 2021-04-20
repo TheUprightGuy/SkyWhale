@@ -9,8 +9,8 @@ public class DebugTeleportButton : MonoBehaviour
     {
         if(locationToTeleport == null) return;
         if (!EntityManager.instance.player) return;
-        EntityManager.instance.player.transform.position = locationToTeleport.position;
-        EntityManager.instance.player.transform.rotation = locationToTeleport.rotation;
+        EntityManager.instance.player.transform.parent.position = locationToTeleport.position;
+        EntityManager.instance.player.transform.parent.rotation = locationToTeleport.rotation;
         transform.parent.parent.BroadcastMessage("ToggleDebugToolMenu");
     }
 }
