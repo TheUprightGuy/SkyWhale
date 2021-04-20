@@ -241,12 +241,14 @@ public class ObjData
             string fp = "Assets/" + transform.name + "GrassInstance.asset"; // Probs want to make this a public at some point
             GrassContainer newContainer = ScriptableObject.CreateInstance<GrassContainer>();
 
-#if UNITY_EDITOR
-            UnityEditor.EditorUtility.SetDirty(newContainer);
-#endif
             AssetDatabase.CreateAsset(newContainer, fp);
             AssetDatabase.SaveAssets();
             grassContainer = (GrassContainer)AssetDatabase.LoadAssetAtPath(fp, typeof(GrassContainer)); //Retrieve the new container 
+
+
+#if UNITY_EDITOR
+            UnityEditor.EditorUtility.SetDirty(grassContainer);
+#endif
         }
 
         if (grassContainer.GrassChunks == null)
