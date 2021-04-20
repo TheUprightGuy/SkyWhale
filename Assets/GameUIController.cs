@@ -6,19 +6,22 @@ public class GameUIController : MonoBehaviour
 {
     #region Setup
     ButtonPrompt buttonPrompt;
-    SpeechPrompt speechPrompt;
     PuzzlePrompt puzzlePrompt;
     GlidePrompt glidePrompt;
     GrapplePrompt grapplePrompt;
+    SpeechPrompt speechPrompt;
+
+    SpeechUIElement speechUIElement;
 
     private void Awake()
     {
         buttonPrompt = GetComponentInChildren<ButtonPrompt>();
-        speechPrompt = GetComponentInChildren<SpeechPrompt>();
         puzzlePrompt = GetComponentInChildren<PuzzlePrompt>();
         glidePrompt = GetComponentInChildren<GlidePrompt>();
         grapplePrompt = GetComponentInChildren<GrapplePrompt>();
+        speechPrompt = GetComponentInChildren<SpeechPrompt>();
 
+        speechUIElement = GetComponentInChildren<SpeechUIElement>();
     }
     #endregion Setup
 
@@ -30,8 +33,8 @@ public class GameUIController : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        CallbackHandler.instance.speechInRange += DisplaySpeechPrompt;
-        CallbackHandler.instance.speechOutOfRange += HideSpeechPrompt;
+        CallbackHandler.instance.speechInRange += DisplaySpeechUIElement;
+        CallbackHandler.instance.speechOutOfRange += HideSpeechUIElement;
 
         CallbackHandler.instance.puzzleInRange += DisplayPuzzlePrompt;
         CallbackHandler.instance.puzzleOutOfRange += HidePuzzlePrompt;
@@ -44,12 +47,15 @@ public class GameUIController : MonoBehaviour
 
         CallbackHandler.instance.showGrapple += DisplayGrapplePrompt;
         CallbackHandler.instance.hideGrapple += HideGrapplePrompt;
+
+        CallbackHandler.instance.showSpeech += DisplaySpeechPrompt;
+        CallbackHandler.instance.hideSpeech += HideSpeechPrompt;
     }
 
     private void OnDestroy()
     {
-        CallbackHandler.instance.speechInRange -= DisplaySpeechPrompt;
-        CallbackHandler.instance.speechOutOfRange -= HideSpeechPrompt;
+        CallbackHandler.instance.speechInRange -= DisplaySpeechUIElement;
+        CallbackHandler.instance.speechOutOfRange -= HideSpeechUIElement;
 
         CallbackHandler.instance.puzzleInRange -= DisplayPuzzlePrompt;
         CallbackHandler.instance.puzzleOutOfRange -= HidePuzzlePrompt;
@@ -60,8 +66,8 @@ public class GameUIController : MonoBehaviour
         CallbackHandler.instance.showGlide -= DisplayGlidePrompt;
         CallbackHandler.instance.hideGlide -= HideGlidePrompt;
 
-        CallbackHandler.instance.showGrapple -= DisplayGrapplePrompt;
-        CallbackHandler.instance.hideGrapple -= HideGrapplePrompt;
+        CallbackHandler.instance.showSpeech -= DisplaySpeechPrompt;
+        CallbackHandler.instance.hideSpeech -= HideSpeechPrompt;
     }
     #endregion Callbacks
 
@@ -76,22 +82,22 @@ public class GameUIController : MonoBehaviour
         buttonPrompt.Hide(_action);
     }
 
-    public void DisplaySpeechPrompt(Transform _position)
+    public void DisplaySpeechUIElement(Transform _position)
     {
-        speechPrompt.InRange(_position);
-        buttonPrompt.Show(true, VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").KeyToListen, "Interact", "");
+        speechUIElement.InRange(_position);
+        //buttonPrompt.Show(true, VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").KeyToListen, "Interact", "");
     }
 
-    public void HideSpeechPrompt()
+    public void HideSpeechUIElement()
     {
-        speechPrompt.OutOfRange();
+        speechUIElement.OutOfRange();
         buttonPrompt.Hide("Interact");
     }
 
     public void DisplayPuzzlePrompt(Transform _position)
     {
         puzzlePrompt.InRange(_position);
-        buttonPrompt.Show(true, VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").KeyToListen, "Interact", "");
+        //buttonPrompt.Show(true, VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").KeyToListen, "Interact", "");
     }
 
     public void HidePuzzlePrompt()
@@ -118,5 +124,15 @@ public class GameUIController : MonoBehaviour
     public void HideGrapplePrompt()
     {
         grapplePrompt.Hide();
+    }
+
+    public void DisplaySpeechPrompt()
+    {
+        speechPrompt.Show();
+    }
+
+    public void HideSpeechPrompt()
+    {
+        speechPrompt.Hide();
     }
 }

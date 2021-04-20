@@ -246,4 +246,22 @@ public class CallbackHandler : MonoBehaviour
             hideGrapple();
         }
     }
+
+    public event Action showSpeech;
+    public void ShowSpeech()
+    {
+        if (showSpeech != null)
+        {
+            showSpeech();
+        }
+    }
+
+    public event Action hideSpeech;
+    public void HideSpeech()
+    {
+        if (hideSpeech != null)
+        {
+            hideSpeech();
+        }
+    }
 }

@@ -89,6 +89,8 @@ public class NPCScript : MonoBehaviour
 
         CallbackHandler.instance.SetDialogue(currentDialogue);
         CallbackHandler.instance.Pause(true);
+
+        CallbackHandler.instance.HideSpeech();
     }
 
     #region Triggers
@@ -105,6 +107,7 @@ public class NPCScript : MonoBehaviour
             pm = other.GetComponent<PlayerMovement>();
 
             CallbackHandler.instance.SpeechInRange(dialogueTransform);
+            CallbackHandler.instance.ShowSpeech();
         }
     }
 
@@ -116,6 +119,7 @@ public class NPCScript : MonoBehaviour
             CallbackHandler.instance.StopDialogue();
 
             CallbackHandler.instance.SpeechOutOfRange();
+            CallbackHandler.instance.HideSpeech();
         }
     }
     #endregion Triggers
