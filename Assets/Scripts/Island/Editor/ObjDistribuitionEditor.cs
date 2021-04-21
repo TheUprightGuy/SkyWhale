@@ -18,13 +18,16 @@ public class ObjDistribuitionEditor : Editor
 
         
         thisObj = target as ObjDistribuition;
-
+        if (RefreshTracker == null)
+        {
+            RefreshTracker = new Stopwatch();
+        }
 
 
         Handles.color = Color.blue;
         Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity) && !Event.current.control)
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity) && !Event.current.control && thisObj.grassContainer != null)
         {
             //Used to disable the tool
             int id = GUIUtility.GetControlID(FocusType.Passive);
@@ -33,7 +36,7 @@ public class ObjDistribuitionEditor : Editor
 
 
 
-
+            RefreshTracker.Start();
             DrawChunkBorders(hit.point);
 
 
@@ -41,13 +44,17 @@ public class ObjDistribuitionEditor : Editor
             switch (e.type)
             {
                 case EventType.MouseDown:
-                    BrushHandling(hit.point);
+                    if (e.button == 0) //left
+                    {
+                        BrushHandling(hit.point, hit.normal);
+                    }
                     break;
                 case EventType.MouseDrag:
-                    if (RefreshTracker.ElapsedMilliseconds > thisObj.RefreshRateInMs) //Can draw after elapsed refresh
+                    if (RefreshTracker.ElapsedMilliseconds > thisObj.RefreshRateInMs &&
+                        e.button == 0) //Can draw after elapsed refresh
                     {
                         RefreshTracker.Restart(); //Set vals back to 0
-                        BrushHandling(hit.point);
+                        BrushHandling(hit.point, hit.normal);
                     }
                     break;
                 case EventType.MouseUp:
@@ -70,19 +77,19 @@ public class ObjDistribuitionEditor : Editor
         //bHandles.color = Color.white;//Reset to default
     }
 
-    public void BrushHandling(Vector3 _point)
+    public void BrushHandling(Vector3 _point, Vector3 _normal)
     {
 
-        if (RefreshTracker == null)
+        if (!thisObj.VerifyVariables())
         {
-            RefreshTracker = new Stopwatch();
+            return;
         }
-        RefreshTracker.Start();
+        
 
-        thisObj.VerifyVariables();
+        
         if (thisObj.DrawBrush)
         {
-            thisObj.PointGen(_point, thisObj.BrushRadius);
+            thisObj.PointGen(_point, _normal , thisObj.BrushRadius);
         }
         else
         {
@@ -93,39 +100,24 @@ public class ObjDistribuitionEditor : Editor
     }
     public override void OnInspectorGUI()
     {
-        base.OnInspectorGUI();
-        ObjDistribuition t = target as ObjDistribuition;
-        if (GUILayout.Button("Reload"))
+        thisObj.grassContainer = (GrassContainer)EditorGUILayout.ObjectField( "Grass Container", thisObj.grassContainer, typeof(GrassContainer), false);
+
+        if (thisObj.grassContainer != null)
         {
+            base.OnInspectorGUI();
+        }
+        else
 
+        if (GUILayout.Button("New Grass Container"))
+        {
+            string fp = "Assets/" + thisObj.transform.name + "GrassInstance.asset"; // Probs want to make this a public at some point
+            GrassContainer newContainer = ScriptableObject.CreateInstance<GrassContainer>();
 
-            switch (t.RenderType)
-            {
-                case ObjDistribuition.RenderingMode.BATCHED:
-                    //t.PlaceObjMesh();
-                    thisObj.BuildMesh(true);
-                    break;
-                case ObjDistribuition.RenderingMode.INDIVIDUAL:
-                    if (t.density > 100 &&
-                        EditorUtility.DisplayDialog("Oh god consider what you are doing please",
-                                                    "Are you sure you want to place " + (t.density * t.density) +
-                                                    " individual objects?", "I know what I'm doing :)", "Oh god no take me back"))
-                    {
-                        //t.PlaceObjMesh();
-                    }
-                    else if (t.density > 100)
-                    {
-                        //t.RenderType = ObjDistribuition.RenderingMode.BATCHED;
-                        //t.PlaceObjMesh();
-                    }
-                    else
-                    {
-                        //t.PlaceObjMesh();
-                    }
-                    break;
-                default:
-                    break;
-            }
+            AssetDatabase.CreateAsset(newContainer, fp);
+            AssetDatabase.SaveAssets();
+            thisObj.grassContainer = (GrassContainer)AssetDatabase.LoadAssetAtPath(fp, typeof(GrassContainer)); //Retrieve the new container 
+
+            UnityEditor.EditorUtility.SetDirty(thisObj.grassContainer);
         }
     }
 
