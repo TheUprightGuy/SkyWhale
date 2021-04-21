@@ -384,9 +384,10 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
 
-        Physics.gravity = RB.velocity.y >= -0.8f ? Vector3.up * -9.8f : Vector3.up * -9.8f * TimeSlowDown.instance.timeScale;
+        Physics.gravity = RB.velocity.y >= -0.8f ? Vector3.up * -20.0f : Vector3.up * -20.0f * Mathf.Clamp((TimeSlowDown.instance.drainTimer / TimeSlowDown.instance.slowDuration), 0.5f, 1.0f);
+        debugGrav = Physics.gravity.y;
     }
-
+    public float debugGrav;
 
     Vector3 currentVel = Vector3.zero;
 
