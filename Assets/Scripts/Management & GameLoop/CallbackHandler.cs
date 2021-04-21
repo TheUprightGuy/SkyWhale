@@ -264,4 +264,13 @@ public class CallbackHandler : MonoBehaviour
             hideSpeech();
         }
     }
+
+    public event Action resetCamera;
+    public void ResetCamera()
+    {
+        if (resetCamera != null)
+        {
+            resetCamera();
+        }
+    }
 }

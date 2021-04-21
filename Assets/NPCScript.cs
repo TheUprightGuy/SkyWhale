@@ -20,10 +20,12 @@ public class NPCScript : MonoBehaviour
     PlayerMovement pm;
     bool pause;
     Transform dialogueTransform;
+    public Cinemachine.CinemachineVirtualCamera cam;
 
     private void Awake()
     {
         dialogueTransform = this.transform.GetChild(0);
+        cam = GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>();
     }
 
     #region Callbacks
@@ -37,11 +39,13 @@ public class NPCScript : MonoBehaviour
         dialogue.StartUp();
         currentDialogue = dialogue;
         CallbackHandler.instance.pause += Pause;
+        CallbackHandler.instance.resetCamera += ResetCamera;
         VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(Interact);
     }
     private void OnDestroy()
     {
         CallbackHandler.instance.pause -= Pause;
+        CallbackHandler.instance.resetCamera -= ResetCamera;
     }
     #endregion Callbacks
 
@@ -87,10 +91,17 @@ public class NPCScript : MonoBehaviour
         if (currentDialogue.inUse || !pm)
             return;
 
+        cam.m_Priority = 2;
+
         CallbackHandler.instance.SetDialogue(currentDialogue);
         CallbackHandler.instance.Pause(true);
 
         CallbackHandler.instance.HideSpeech();
+    }
+
+    public void ResetCamera()
+    {
+        cam.m_Priority = 0;
     }
 
     #region Triggers

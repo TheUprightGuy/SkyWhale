@@ -111,6 +111,7 @@ public class Dialogue : ScriptableObject
             EventManager.TriggerEvent(triggerEvent);
 
         CallbackHandler.instance.Pause(false);
+        CallbackHandler.instance.ResetCamera();
     }
 
     /// <summary>

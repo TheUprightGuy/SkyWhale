@@ -34,6 +34,7 @@ public class BlacksmithScript : NPCScript
         EventManager.StartListening("SwitchPuzzleCompletion", SwitchDialogue);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(Interact);
         CallbackHandler.instance.pause += Pause;
+        CallbackHandler.instance.resetCamera += ResetCamera;
     }
 
     /// <summary>
