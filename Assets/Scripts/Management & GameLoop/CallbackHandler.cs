@@ -273,4 +273,23 @@ public class CallbackHandler : MonoBehaviour
             resetCamera();
         }
     }
+
+
+    public event Action<Quest> startTrackingQuest;
+    public void StartTrackingQuest(Quest _quest)
+    {
+        if (startTrackingQuest != null)
+        {
+            startTrackingQuest(_quest);
+        }
+    }
+
+    public event Action updateObjectives;
+    public void UpdateObjectives()
+    {
+        if (updateObjectives != null)
+        {
+            updateObjectives();
+        }
+    }
 }

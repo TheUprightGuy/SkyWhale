@@ -20,17 +20,16 @@ using UnityEngine.Events;
 public struct QuestObjective
 {
     public string eventName;
-    public int quant;
-    public string dialogueText;
+    public string objDesc;
 }
 
 [CreateAssetMenu(fileName = "Quest", menuName = "Quests/Quest", order = 1)]
 public class Quest : ScriptableObject
 {
+    public string questName;
     public List<QuestObjective> objectives;
     UnityAction questListener;
-    int index;
-    int tracking;
+    public int index;
 
     /// <summary>
     /// Description: Notifies the eventmanager to start listening for objectives within the quest.
@@ -42,10 +41,14 @@ public class Quest : ScriptableObject
         //CallbackHandler.instance.CreateQuestTracker(this);
         questListener = new UnityAction(ProgressQuest);
         index = 0;
-        tracking = 0;
         EventManager.StartListening(objectives[index].eventName, questListener);
         //CallbackHandler.instance.SetQuestText(this, objectives[index].eventName + " " + tracking + "/" + objectives[index].quant);
         //CallbackHandler.instance.SetDialogueText(objectives[index].dialogueText, 3.0f);
+    }
+
+    public bool FinishedQuest()
+    {
+        return index >= objectives.Count;
     }
 
     /// <summary>
@@ -55,7 +58,8 @@ public class Quest : ScriptableObject
     /// </summary>
     private void OnDisable()
     {
-        EventManager.StopListening(objectives[index].eventName, questListener);
+        // This needs to be uncommented later - just giving errors in editor
+       // EventManager.StopListening(objectives[index].eventName, questListener);
     }
 
     /// <summary>
@@ -67,36 +71,29 @@ public class Quest : ScriptableObject
     {
         Debug.Log("QuestProgress!");
 
-        // Update Count
-        tracking++;
         // Check if ready to progress to next objective
-        if (tracking >= objectives[index].quant)
+        // stop listening for prev objective
+        EventManager.StopListening(objectives[index].eventName, questListener);
+
+        // Progress to next
+        index++;
+
+        // Check if at end of objectives
+        if (index >= objectives.Count)
         {
-            // stop listening for prev objective
-            EventManager.StopListening(objectives[index].eventName, questListener);
-
-            // Progress to next
-            tracking = 0;
-            index++;
-
-            // Check if at end of objectives
-            if (index >= objectives.Count)
-            {
-                // temp
-                //CallbackHandler.instance.SetQuestText(this, "");
-            }
-            // If not progress to next objective
-            else
-            {
-                EventManager.StartListening(objectives[index].eventName, questListener);
-                //CallbackHandler.instance.SetQuestText(this, objectives[index].eventName + " " + tracking + "/" + objectives[index].quant);
-                //CallbackHandler.instance.SetDialogueText(objectives[index].dialogueText, 3.0f);
-            }
+            // temp
+            //CallbackHandler.instance.SetQuestText(this, "");
+            Debug.Log("End of QuestChain");
         }
-        // Else just update quest text
+        // If not progress to next objective
         else
         {
+            EventManager.StartListening(objectives[index].eventName, questListener);
             //CallbackHandler.instance.SetQuestText(this, objectives[index].eventName + " " + tracking + "/" + objectives[index].quant);
+            //CallbackHandler.instance.SetDialogueText(objectives[index].dialogueText, 3.0f);
         }
+
+        CallbackHandler.instance.UpdateObjectives();
     }
+    
 }

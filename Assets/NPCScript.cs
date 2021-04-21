@@ -17,9 +17,9 @@ using UnityEngine;
 
 public class NPCScript : MonoBehaviour
 {
-    PlayerMovement pm;
+    protected PlayerMovement pm;
     bool pause;
-    Transform dialogueTransform;
+    protected Transform dialogueTransform;
     public Cinemachine.CinemachineVirtualCamera cam;
 
     private void Awake()
@@ -86,7 +86,7 @@ public class NPCScript : MonoBehaviour
     /// <br>Author: Wayd Barton-Redgrave</br>
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
-    public void Interact(InputState type)
+    public virtual void Interact(InputState type)
     {
         if (currentDialogue.inUse || !pm)
             return;
@@ -111,7 +111,7 @@ public class NPCScript : MonoBehaviour
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
     /// <param name="other">Triggering GameObject</param>
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<PlayerMovement>())
         {

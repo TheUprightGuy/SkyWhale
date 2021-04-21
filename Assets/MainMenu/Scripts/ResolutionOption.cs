@@ -31,6 +31,12 @@ public class ResolutionOption : MonoBehaviour
     {
         resolution = settings.resolution;
         UpdateText();
+        SetResolution(resolution);
+    }
+
+    public void ApplySettings()
+    {
+        PauseMenuCanvasController.instance.SetSettings();
     }
 
     public void IncreaseResolution()
@@ -51,6 +57,28 @@ public class ResolutionOption : MonoBehaviour
         }
         UpdateText();
         settings.resolution = resolution;
+    }
+
+    void SetResolution(Resolution _resolution)
+    {
+        switch (_resolution)
+        {
+            case Resolution.HD:
+            {
+                Screen.SetResolution(1280, 720, settings.fullScreen);
+                break;
+            }
+            case Resolution.FULLHD:
+            {
+                Screen.SetResolution(1920, 1080, settings.fullScreen);
+                break;
+            }
+            case Resolution.MASTERRACE:
+            {
+                Screen.SetResolution(2560, 1440, settings.fullScreen);
+                break;
+            }
+        }
     }
 
     public void UpdateText()

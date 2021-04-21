@@ -46,4 +46,37 @@ public class BlacksmithScript : NPCScript
     {
         currentDialogue = followUpDialogue;
     }
+
+    /// <summary>
+    /// Description: Passes dialogue to dialogue manager.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    public override void Interact(InputState type)
+    {
+        if (currentDialogue.inUse || !pm)
+            return;
+
+        cam.m_Priority = 2;
+
+        CallbackHandler.instance.SetDialogue(currentDialogue);
+        CallbackHandler.instance.Pause(true);
+
+        CallbackHandler.instance.HideSpeech();
+
+        EventManager.TriggerEvent((currentDialogue != followUpDialogue) ? "TalkBlacksmith" : "ReturnBlacksmith");
+    }
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        if (other.GetComponent<PlayerMovement>())
+        {
+            pm = other.GetComponent<PlayerMovement>();
+
+            CallbackHandler.instance.SpeechInRange(dialogueTransform);
+            CallbackHandler.instance.ShowSpeech();
+
+            EventManager.TriggerEvent("FindBlacksmith");
+        }
+    }
 }

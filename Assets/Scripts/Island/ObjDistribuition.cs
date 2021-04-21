@@ -5,8 +5,10 @@ using System.Linq;
 using Unity.Jobs;
 using Unity.Collections;
 using UnityEngine.UI;
-using UnityEditor;
 using System.Diagnostics;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class ObjData
 {
@@ -235,10 +237,10 @@ public class ObjData
 
 #if UNITY_EDITOR
             UnityEditor.EditorUtility.SetDirty(newContainer);
-#endif
             AssetDatabase.CreateAsset(newContainer, fp);
             AssetDatabase.SaveAssets();
             grassContainer = (GrassContainer)AssetDatabase.LoadAssetAtPath(fp, typeof(GrassContainer)); //Retrieve the new container 
+#endif
         }
 
         if (grassContainer.GrassChunks == null)

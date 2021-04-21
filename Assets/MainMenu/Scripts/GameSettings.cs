@@ -12,7 +12,6 @@ public class GameSettings : ScriptableObject
     public int masterVolume;
     public int soundVolume;
     public int musicVolume;
-    public bool subtitles;
     [Header("Video Settings")]
     public Resolution resolution;
     public bool fullScreen;

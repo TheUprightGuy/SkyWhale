@@ -127,6 +127,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
         ToggleCam(inUse);
         Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
         EventManager.TriggerEvent("SwitchPuzzleCompletion");
+        EventManager.TriggerEvent("SolvePuzzle");
         CallbackHandler.instance.PuzzleOutOfRange();
         return true;
     }

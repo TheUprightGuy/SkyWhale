@@ -41,7 +41,14 @@ public class QuestManager : MonoBehaviour
 
     private void Start()
     {
+        SaveManager.instance.load += Setup;
+
         Invoke("Setup", 0.1f);
+    }
+
+    private void OnDestroy()
+    {
+        SaveManager.instance.load -= Setup;
     }
 
     /// <summary>
@@ -54,8 +61,11 @@ public class QuestManager : MonoBehaviour
         foreach (Quest n in activeQuests)
         {
             n.Setup();
+            CallbackHandler.instance.StartTrackingQuest(n);
         }
     }
+
+
 
     /// <summary>
     /// Description: Tracks new quest.

@@ -143,6 +143,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: EventManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2884179543958615843, guid: 0dfc6884d44db054dbd647f1fe012f7e,
+        type: 3}
+      propertyPath: activeQuests.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1336a70f78f6c9440bf7652306dc70a5,
+        type: 2}
     - target: {fileID: 2884179543958615853, guid: 0dfc6884d44db054dbd647f1fe012f7e,
         type: 3}
       propertyPath: m_LocalPosition.x
