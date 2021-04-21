@@ -34,7 +34,7 @@ public class DebugTool : MonoBehaviour
     public void ToggleDebugToolMenu()
     {
         _debugToolsActive = !_debugToolsActive;
-        Cursor.lockState = _debugToolsActive ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.lockState = _debugToolsActive ? CursorLockMode.None : CursorLockMode.Locked;
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(_debugToolsActive);
@@ -45,11 +45,13 @@ public class DebugTool : MonoBehaviour
     {
         _grappleEnabled = !_grappleEnabled;
         EntityManager.instance.player.GetComponent<GrappleScript>().enabled = _grappleEnabled;
+        ToggleDebugToolMenu();
     }
     
     public void EnableGlider()
     {
         _gliderEnabled = !_gliderEnabled;
         EntityManager.instance.player.GetComponent<GliderMovement>().unlocked = _gliderEnabled;
+        ToggleDebugToolMenu();
     }
 }

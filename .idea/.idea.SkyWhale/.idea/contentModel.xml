@@ -7,7 +7,6 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="BlacksmithScript.cs" t="Include" />
         <e p="ButtonPrompt.cs" t="Include" />
         <e p="DebugTeleportButton.cs" t="Include" />
         <e p="DebugTool.cs" t="Include" />
@@ -17,9 +16,11 @@
           <e p="TexturePainterControllerEditor.cs" t="Include" />
         </e>
         <e p="GameUIController.cs" t="Include" />
+        <e p="GlidePrompt.cs" t="Include" />
         <e p="GrappleChallengeMaster.cs" t="Include" />
         <e p="GrappleChallengePoint.cs" t="Include" />
         <e p="GrappleEndPoint.cs" t="Include" />
+        <e p="GrapplePrompt.cs" t="Include" />
         <e p="GrappleStartPoint.cs" t="Include" />
         <e p="Lava.cs" t="Include" />
         <e p="LeanTween" t="Include">
@@ -59,6 +60,7 @@
             <e p="TexturePainterController.cs" t="Include" />
           </e>
         </e>
+        <e p="MatScript.cs" t="Include" />
         <e p="NPCScript.cs" t="Include" />
         <e p="PromptGrapple.cs" t="Include" />
         <e p="PuzzlePrompt.cs" t="Include" />
@@ -104,6 +106,7 @@
             <e p="Editor" t="Include">
               <e p="ObjDistribuitionEditor.cs" t="Include" />
             </e>
+            <e p="GrassContainer.cs" t="Include" />
             <e p="NewIslandScript.cs" t="Include" />
             <e p="ObjDistribuition.cs" t="Include" />
           </e>
@@ -210,6 +213,7 @@
           <e p="UnlitTransparent.shader" t="Include" />
         </e>
         <e p="SpeechPrompt.cs" t="Include" />
+        <e p="SpeechUIElement.cs" t="Include" />
         <e p="Stylized Water" t="Include">
           <e p="Shaders" t="Include">
             <e p="ShadowUtilities.cginc" t="Include" />
