@@ -21,12 +21,12 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Movement/MCMovement/PlayerMovement.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/SaveManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PreLoadSceneLoader.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Movement/LevelBoundaryChecker.cs" />
         <option value="$PROJECT_DIR$/Assets/DebugTool.cs" />
         <option value="$PROJECT_DIR$/Assets/DebugTeleportButton.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Camera/ThirdPersonCamera.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/EntityManager.cs" />
       </list>
     </option>
@@ -86,7 +86,7 @@
       <workItem from="1615849405036" duration="11071000" />
       <workItem from="1618792006559" duration="1802000" />
       <workItem from="1618876375139" duration="2993000" />
-      <workItem from="1619043334665" duration="5235000" />
+      <workItem from="1619043334665" duration="7859000" />
     </task>
     <servers />
   </component>

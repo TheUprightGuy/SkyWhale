@@ -300,6 +300,7 @@ public class NewGrappleHook : MonoBehaviour
             this.gameObject.layer = LayerMask.NameToLayer("Hook");
             // Start Moving Player
             EntityManager.instance.TogglePlayer(true);
+            EntityManager.instance.MovePlayerToPlayerOnWhale();
         }
         #endregion Switch Physics Layer
 
