@@ -1358,7 +1358,7 @@ MonoBehaviour:
   Seed: 69
   minScale: {x: 1, y: 0.2, z: 1}
   maxScale: {x: 1, y: 1, z: 1}
-  DrawBrush: 1
+  DrawBrush: 0
   BrushRadius: 2
   density: 1
   RefreshRateInMs: 1

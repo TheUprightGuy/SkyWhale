@@ -27,7 +27,9 @@ public class ObjDistribuitionEditor : Editor
         Handles.color = Color.blue;
         Ray ray = HandleUtility.GUIPointToWorldRay(Event.current.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity) && !Event.current.control && thisObj.grassContainer != null)
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity,thisObj.RayCastToHit.value, 
+            (thisObj.CastForTriggers) ? (QueryTriggerInteraction.Collide) : (QueryTriggerInteraction.Ignore)) && 
+            !Event.current.control && thisObj.grassContainer != null)
         {
             //Used to disable the tool
             int id = GUIUtility.GetControlID(FocusType.Passive);
