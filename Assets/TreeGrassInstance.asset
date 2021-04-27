@@ -1,0 +1,1009 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f689181933431b459e931c74f5c2eef, type: 3}
+  m_Name: TreeGrassInstance
+  m_EditorClassIdentifier: 
+  GrassChunks:
+  - index: {x: 0, y: 0, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 0, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 2, z: 2}
+    pointList:
+    - {x: -0.60742176, y: 34.98544, z: 33.60542}
+    - {x: -11.220219, y: 34.29218, z: 25.336924}
+    - {x: -5.3643937, y: 35.00191, z: 31.824375}
+    - {x: -5.2052765, y: 35.002285, z: 32.001778}
+    - {x: -11.583991, y: 34.781784, z: 28.198595}
+    normalList:
+    - {x: 0.0135765085, y: 0.99985385, z: -0.010390933}
+    - {x: 0.025674004, y: 0.97887695, z: -0.20283198}
+    - {x: 0.015095649, y: 0.9997639, z: -0.015630448}
+    - {x: 0.015095649, y: 0.9997639, z: -0.015630448}
+    - {x: 0.009473676, y: 0.9929013, z: -0.118562974}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 2, z: 2}
+    pointList:
+    - {x: -18.71475, y: 34.94833, z: 27.802608}
+    - {x: -16.297674, y: 35.036816, z: 29.754585}
+    - {x: -14.449263, y: 35.085968, z: 33.550808}
+    - {x: -12.540875, y: 34.390003, z: 25.557451}
+    - {x: -22.040854, y: 34.905815, z: 31.231558}
+    - {x: -15.6213045, y: 35.081467, z: 33.161736}
+    - {x: -19.876568, y: 35.00576, z: 30.16077}
+    - {x: -16.361864, y: 34.871796, z: 28.031246}
+    normalList:
+    - {x: 0.03770512, y: 0.9925444, z: -0.1159053}
+    - {x: -0.0047021, y: 0.9998986, z: -0.013444971}
+    - {x: 0.00010695042, y: 0.99992913, z: -0.011900803}
+    - {x: 0.050007183, y: 0.97781193, z: -0.2034287}
+    - {x: -0.0628821, y: 0.9978375, z: 0.019139808}
+    - {x: 0.00010695042, y: 0.99992913, z: -0.011900803}
+    - {x: -0.0283926, y: 0.9993292, z: -0.02312973}
+    - {x: 0.04309004, y: 0.99148065, z: -0.12292044}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 2, z: 3}
+    pointList:
+    - {x: -8.271062, y: 34.94254, z: 37.65992}
+    normalList:
+    - {x: 0.005809836, y: 0.99905556, z: 0.04306141}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 2, z: 3}
+    pointList:
+    - {x: -21.982758, y: 34.048134, z: 44.664604}
+    - {x: -23.493853, y: 33.379177, z: 47.750893}
+    - {x: -13.976541, y: 34.876118, z: 38.805237}
+    - {x: -19.46087, y: 34.670174, z: 40.19902}
+    normalList:
+    - {x: -0.11860822, y: 0.9808016, z: 0.15479134}
+    - {x: -0.10893719, y: 0.982512, z: 0.15100585}
+    - {x: -0.022741023, y: 0.9969453, z: 0.07471835}
+    - {x: -0.051910345, y: 0.9971838, z: 0.05412593}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 0, z: 2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 2, z: 2}
+    pointList:
+    - {x: -30.61977, y: 34.040886, z: 29.804302}
+    - {x: -31.46666, y: 33.90216, z: 28.394798}
+    - {x: -34.10706, y: 33.00733, z: 34.613586}
+    - {x: -30.02129, y: 34.08222, z: 25.012611}
+    - {x: -24.455927, y: 34.707912, z: 26.492428}
+    - {x: -24.897392, y: 34.71255, z: 31.848606}
+    normalList:
+    - {x: -0.19385713, y: 0.98082715, z: 0.0199406}
+    - {x: -0.19385713, y: 0.98082715, z: 0.0199406}
+    - {x: -0.2683613, y: 0.9576097, z: 0.10471828}
+    - {x: -0.14880547, y: 0.987631, z: -0.0494172}
+    - {x: -0.050117407, y: 0.99793637, z: -0.040141582}
+    - {x: -0.11709131, y: 0.99289846, z: 0.021033471}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 2, z: 1}
+    pointList:
+    - {x: -10.651883, y: 33.18586, z: 15.884903}
+    - {x: -9.737558, y: 33.180145, z: 19.595186}
+    - {x: -4.300586, y: 33.75113, z: 20.960163}
+    - {x: -8.810395, y: 33.285797, z: 20.407108}
+    - {x: -1.9487954, y: 34.15401, z: 22.077473}
+    - {x: -9.928588, y: 33.113327, z: 17.263453}
+    - {x: -8.074645, y: 33.522034, z: 21.652264}
+    - {x: -1.6270851, y: 34.44796, z: 13.450236}
+    - {x: -5.593916, y: 34.069324, z: 12.905131}
+    - {x: -4.133012, y: 33.66429, z: 19.158934}
+    normalList:
+    - {x: -0.0122284815, y: 0.98914, z: 0.14646679}
+    - {x: 0.030100336, y: 0.9950532, z: -0.094673745}
+    - {x: -0.13476913, y: 0.98904556, z: -0.060217638}
+    - {x: -0.051134337, y: 0.9944388, z: -0.0920695}
+    - {x: -0.1328496, y: 0.9860677, z: -0.100106955}
+    - {x: -0.0035421087, y: 0.9991648, z: 0.040708587}
+    - {x: -0.0478801, y: 0.976899, z: -0.2082682}
+    - {x: -0.11628334, y: 0.9857492, z: 0.12156017}
+    - {x: -0.09786188, y: 0.9775517, z: 0.18658951}
+    - {x: -0.13476913, y: 0.98904556, z: -0.060217638}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 2, z: 1}
+    pointList:
+    - {x: -18.877342, y: 33.930706, z: 20.69843}
+    - {x: -17.062399, y: 33.58443, z: 19.40477}
+    - {x: -12.036736, y: 33.673786, z: 12.684522}
+    normalList:
+    - {x: 0.081140056, y: 0.98493314, z: -0.15271853}
+    - {x: 0.06332655, y: 0.99418825, z: -0.087059915}
+    - {x: -0.015788306, y: 0.9777406, z: 0.20922253}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 2, z: 1}
+    pointList:
+    - {x: -27.416277, y: 34.031025, z: 20.369446}
+    - {x: -32.727222, y: 33.293472, z: 17.307339}
+    - {x: -28.125595, y: 33.424637, z: 15.127946}
+    - {x: -35.639225, y: 32.88953, z: 18.318172}
+    - {x: -24.66876, y: 34.08526, z: 19.67373}
+    normalList:
+    - {x: -0.07751623, y: 0.99276835, z: -0.09166381}
+    - {x: -0.09089854, y: 0.9941561, z: -0.05823273}
+    - {x: -0.03162664, y: 0.99350107, z: -0.10934103}
+    - {x: -0.19433586, y: 0.98008984, z: -0.040713094}
+    - {x: -0.06425376, y: 0.9914505, z: -0.113567024}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: 2, z: 2}
+    pointList:
+    - {x: -41.850082, y: 29.402153, z: 31.784073}
+    normalList:
+    - {x: -0.6447152, y: 0.75479126, z: 0.12096479}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 2, z: 3}
+    pointList:
+    - {x: -32.612717, y: 32.544056, z: 42.42717}
+    - {x: -30.3185, y: 32.9104, z: 43.93749}
+    - {x: -34.87597, y: 32.052788, z: 40.76529}
+    - {x: -30.540564, y: 33.73033, z: 37.141922}
+    normalList:
+    - {x: -0.31272292, y: 0.9285852, z: 0.19983491}
+    - {x: -0.27227128, y: 0.94281787, z: 0.1922573}
+    - {x: -0.36519784, y: 0.92122877, z: 0.1340453}
+    - {x: -0.2683613, y: 0.9576097, z: 0.10471828}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: 2, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 2, z: 0}
+    pointList:
+    - {x: -31.279446, y: 32.880997, z: 10.448999}
+    normalList:
+    - {x: -0.003664174, y: 0.998531, z: -0.05405919}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 0, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 0, z: 2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 0, z: 2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 2, z: 2}
+    pointList:
+    - {x: 6.5972347, y: 34.880093, z: 33.798325}
+    - {x: 3.0231345, y: 34.956474, z: 31.959377}
+    - {x: 10.396751, y: 34.86693, z: 30.332155}
+    normalList:
+    - {x: 0.02001201, y: 0.9989304, z: 0.04168425}
+    - {x: 0.0017255604, y: 0.9999745, z: 0.0069407187}
+    - {x: 0.024933904, y: 0.999447, z: 0.022003016}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 0, z: 2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 0, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: -4, z: 1}
+    pointList:
+    - {x: -26.899597, y: -46.02208, z: 12.843765}
+    - {x: -28.996601, y: -46.661797, z: 16.073986}
+    normalList:
+    - {x: 0, y: 0, z: -1}
+    - {x: -1, y: 0, z: 0}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 2, z: 3}
+    pointList:
+    - {x: 4.6417303, y: 34.502293, z: 41.435665}
+    normalList:
+    - {x: 0.02642573, y: 0.99684215, z: 0.07488346}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 2, z: 1}
+    pointList:
+    - {x: 5.9718556, y: 34.918285, z: 23.958302}
+    - {x: 0.11974408, y: 34.502995, z: 14.734648}
+    - {x: 2.564863, y: 34.7368, z: 15.228584}
+    - {x: 1.5405393, y: 34.508392, z: 20.575726}
+    - {x: 6.1516833, y: 34.891544, z: 20.303516}
+    normalList:
+    - {x: -0.03122802, y: 0.99946845, z: -0.009365581}
+    - {x: -0.12132035, y: 0.9853792, z: 0.11962085}
+    - {x: -0.09593333, y: 0.99374115, z: 0.057230413}
+    - {x: -0.118625976, y: 0.99229443, z: -0.03577497}
+    - {x: -0.016043756, y: 0.9997475, z: 0.015731376}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 2, z: 0}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 2, z: 0}
+    pointList:
+    - {x: -7.903685, y: 34.781536, z: 8.628011}
+    - {x: -3.8054175, y: 34.619755, z: 11.066761}
+    - {x: -8.160746, y: 34.679592, z: 9.059087}
+    normalList:
+    - {x: -0.06158155, y: 0.97886556, z: 0.19501312}
+    - {x: -0.07185964, y: 0.98335683, z: 0.16686977}
+    - {x: -0.05681379, y: 0.97876245, z: 0.19696808}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 2, z: 0}
+    pointList:
+    - {x: -15.538049, y: 34.688248, z: 6.233493}
+    - {x: -23.014421, y: 33.47534, z: 10.859325}
+    - {x: -12.385338, y: 33.861694, z: 11.68166}
+    normalList:
+    - {x: -0.07254314, y: 0.99253535, z: 0.09803526}
+    - {x: -0.112097524, y: 0.9935668, z: 0.016099313}
+    - {x: -0.030830884, y: 0.9819072, z: 0.18683636}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 2, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 2, z: 4}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 2, z: 4}
+    pointList:
+    - {x: -17.83024, y: 31.037619, z: 54.806602}
+    - {x: -14.686359, y: 33.653397, z: 48.59527}
+    - {x: -22.621197, y: 31.208614, z: 54.17892}
+    - {x: -22.364378, y: 32.45858, z: 51.588055}
+    - {x: -14.706197, y: 32.670387, z: 52.44644}
+    normalList:
+    - {x: 0.036363516, y: 0.85994345, z: 0.5090922}
+    - {x: -0.02503976, y: 0.97466695, z: 0.22225541}
+    - {x: -0.13915518, y: 0.74778795, z: 0.64919114}
+    - {x: -0.09772892, y: 0.94743365, z: 0.30466136}
+    - {x: -0.11800542, y: 0.80352116, z: 0.5834625}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 2, z: 4}
+    pointList:
+    - {x: -11.104895, y: 33.850548, z: 48.12311}
+    - {x: -0.087133944, y: 32.619366, z: 53.15687}
+    normalList:
+    - {x: 0.0063039567, y: 0.9736144, z: 0.2281124}
+    - {x: 0.007500923, y: 0.9692426, z: 0.24599305}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: -1, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 2, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 1, z: 0}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 2, z: 4}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 2, z: 3}
+    pointList:
+    - {x: 12.767376, y: 34.49863, z: 37.57259}
+    normalList:
+    - {x: 0.041184373, y: 0.9982067, z: 0.04344433}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 0, z: 3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 0, z: 3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 0, z: 3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: -2, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: 2, z: 0}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: 2, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 2, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: 2, z: -3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 2, z: -3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 2, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -5, y: 2, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: -3, z: 1}
+    pointList:
+    - {x: -16.914314, y: -28.44893, z: 12.843765}
+    - {x: -22.492567, y: -30.770971, z: 12.843765}
+    normalList:
+    - {x: 0, y: 0, z: -1}
+    - {x: 0, y: 0, z: -1}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 2, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 2, z: 2}
+    pointList:
+    - {x: 14.183319, y: 34.765686, z: 26.163746}
+    - {x: 14.902545, y: 34.637257, z: 32.37468}
+    normalList:
+    - {x: 0.043852717, y: 0.9990125, z: 0.0071354215}
+    - {x: 0.04265556, y: 0.9989318, z: 0.01776962}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 2, z: -3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 2, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 3, z: 0}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 3, z: 0}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 2, y: 3, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 2, z: 0}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -5, y: 2, z: 2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -6, y: 2, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: -1, z: 5}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 2, z: 4}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 1, z: 5}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 2, z: 5}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 2, z: 5}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 1, z: 5}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 2, z: 1}
+    pointList:
+    - {x: 13.153595, y: 34.82605, z: 23.132612}
+    normalList:
+    - {x: 0.03459588, y: 0.9994006, z: 0.0012555283}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 2, y: 2, z: 4}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: -5, z: 1}
+    pointList:
+    - {x: -28.996601, y: -48.32186, z: 20.840012}
+    normalList:
+    - {x: -1, y: 0, z: 0}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: 1, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 2, z: 5}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 0, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -5, y: 1, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 1, z: 5}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 0, z: 5}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 3, y: 2, z: 0}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 2, y: 2, z: 3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 3, y: 2, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 0, z: 5}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 3, y: 2, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: 1, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 2, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 2, y: 2, z: 0}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 2, z: -4}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 0, z: 3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 2, y: 2, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: 2, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 0, z: 4}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 2, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 2, y: 2, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 0, z: 3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 3, z: -4}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 2, z: -3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 3, z: -3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 3, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -6, y: 2, z: 0}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 1, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 2, y: 2, z: 2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 3, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 2, y: 2, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 1, z: 2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 0, z: 4}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: -2, z: 2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 3, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -5, y: 2, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 2, y: 3, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -5, y: 2, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 3, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 2, y: 3, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 2, z: -4}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 3, z: -3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 3, z: -4}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 2, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: 0, z: 4}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: 2, z: -3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 2, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -5, y: 1, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 3, y: 2, z: 2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: 0, z: -1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -5, y: 0, z: 2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: -1, z: 2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: -3, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: 2, z: 3}
+    pointList:
+    - {x: -39.058067, y: 30.199797, z: 38.72928}
+    normalList:
+    - {x: -0.5750743, y: 0.7856044, z: 0.22828773}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -3, y: -1, z: 3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -5, y: 2, z: 0}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -5, y: 2, z: 3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: -1, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: -4, z: 1}
+    pointList:
+    - {x: -23.866625, y: -40.62612, z: 12.843765}
+    normalList:
+    - {x: 0, y: 0, z: -1}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 0, y: -4, z: 1}
+    pointList:
+    - {x: 5.3400426, y: -39.17472, z: 12.843765}
+    normalList:
+    - {x: 0, y: 0, z: -1}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: -4, z: 1}
+    pointList:
+    - {x: -0.87070036, y: -47.513268, z: 12.843765}
+    normalList:
+    - {x: 0, y: 0, z: -1}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: 0, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: -2, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 0, z: 2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 1, y: 0, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: 1, z: 3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: 2, y: 1, z: 0}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -6, y: 2, z: 2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -1, y: 0, z: 5}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -2, y: 1, z: 5}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -7, y: 2, z: 1}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
