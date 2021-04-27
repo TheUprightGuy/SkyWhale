@@ -45,11 +45,13 @@ public class DebugTool : MonoBehaviour
     {
         _grappleEnabled = !_grappleEnabled;
         EntityManager.instance.player.GetComponent<GrappleScript>().enabled = _grappleEnabled;
+        ToggleDebugToolMenu();
     }
     
     public void EnableGlider()
     {
         _gliderEnabled = !_gliderEnabled;
         EntityManager.instance.player.GetComponent<GliderMovement>().unlocked = _gliderEnabled;
+        ToggleDebugToolMenu();
     }
 }

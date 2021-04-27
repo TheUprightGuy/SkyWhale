@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Release/GameScene.unity
     guid: 29401cd22cb270047a47a878fcf31337
   - enabled: 1
-    path: Assets/Scenes/Testing/Grapple_Island.unity
+    path: Assets/Scenes/Release/Grapple_Island.unity
     guid: d1698b97714dcd94aa42c031d5f81b5e
   m_configObjects: {}

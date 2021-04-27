@@ -87,18 +87,6 @@ public class ThirdPersonCamera : MonoBehaviour
         if (PlayerTrans.GetComponent<GliderMovement>() && PlayerTrans.GetComponent<GliderMovement>().enabled)
             return;
 
-        if (Input.GetKeyDown("`"))
-        {
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-        }
-
         if (Cursor.lockState == CursorLockMode.Locked)
         {
             //Get Mouse Axis

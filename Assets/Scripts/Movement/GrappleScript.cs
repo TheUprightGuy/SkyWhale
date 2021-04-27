@@ -85,6 +85,16 @@ public class GrappleScript : MonoBehaviour
         EntityManager.instance.toggleControl += ToggleGrapple;
         CallbackHandler.instance.pause += Pause;
     }
+
+    private void OnEnable()
+    {
+        if (grapplingFromWhale)
+        {
+            //Check if grapple on regular player is enabled
+            enabled = EntityManager.instance.player.GetComponent<GrappleScript>().enabled;
+        }
+    }
+
     private void OnDestroy()
     {
         // End Callback
