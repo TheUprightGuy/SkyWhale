@@ -15,7 +15,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GrappleStartPoint : MonoBehaviour
+public class GrappleCheckPoint : MonoBehaviour
 {
     #region Setup
     GrappleChallengeMaster gcm;
@@ -31,9 +31,9 @@ public class GrappleStartPoint : MonoBehaviour
     #endregion Setup
     #region Trigger
     /// <summary>
-    /// Description: Gets player reference for grapple challenge master.
-    /// <br>Author: Wayd Barton-Redgrave</br>
-    /// <br>Last Updated: 04/07/2021</br>
+    /// Description: Gets player reference for grapple challenge master and updates last checkpoint.
+    /// <br>Author: Jacob Gallagher</br>
+    /// <br>Last Updated: 04/27/2021</br>
     /// </summary>
     /// <param name="other">Triggering Object</param>
     private void OnTriggerEnter(Collider other)
@@ -41,7 +41,7 @@ public class GrappleStartPoint : MonoBehaviour
         if (other.GetComponent<PlayerMovement>())
         {
             gcm.pm = other.GetComponent<PlayerMovement>();
-            gcm.LastCheckPoint = null;
+            gcm.LastCheckPoint = this;
         }
     }
     #endregion Trigger

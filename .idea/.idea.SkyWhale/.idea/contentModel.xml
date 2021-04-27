@@ -7,6 +7,7 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="BlacksmithScript.cs" t="Include" />
         <e p="ButtonPrompt.cs" t="Include" />
         <e p="DebugTeleportButton.cs" t="Include" />
         <e p="DebugTool.cs" t="Include" />
@@ -15,10 +16,12 @@
           <e p="MaterialInstancer.cs" t="Include" />
           <e p="TexturePainterControllerEditor.cs" t="Include" />
         </e>
+        <e p="FullscreenToggle.cs" t="Include" />
         <e p="GameUIController.cs" t="Include" />
         <e p="GlidePrompt.cs" t="Include" />
         <e p="GrappleChallengeMaster.cs" t="Include" />
         <e p="GrappleChallengePoint.cs" t="Include" />
+        <e p="GrappleCheckPoint.cs" t="Include" />
         <e p="GrappleEndPoint.cs" t="Include" />
         <e p="GrapplePrompt.cs" t="Include" />
         <e p="GrappleStartPoint.cs" t="Include" />
@@ -51,7 +54,6 @@
             <e p="MenuButtonController.cs" t="Include" />
             <e p="PauseMenuCanvasController.cs" t="Include" />
             <e p="ResolutionOption.cs" t="Include" />
-            <e p="SubtitlesToggle.cs" t="Include" />
             <e p="ToggleButton.cs" t="Include" />
           </e>
         </e>
@@ -62,6 +64,8 @@
         </e>
         <e p="MatScript.cs" t="Include" />
         <e p="NPCScript.cs" t="Include" />
+        <e p="ObjectiveTrackingUI.cs" t="Include" />
+        <e p="ObjectiveUIElement.cs" t="Include" />
         <e p="PromptGrapple.cs" t="Include" />
         <e p="PuzzlePrompt.cs" t="Include" />
         <e p="Scripts" t="Include">
@@ -93,6 +97,7 @@
           <e p="EndScreen.cs" t="Include" />
           <e p="EntityManager.cs" t="Include" />
           <e p="FlightChallengeMaster.cs" t="Include" />
+          <e p="FlightChallengePlatform.cs" t="Include" />
           <e p="FlightChallengeRing.cs" t="Include" />
           <e p="GliderMovement.cs" t="Include" />
           <e p="GunMeshSwitch.cs" t="Include" />

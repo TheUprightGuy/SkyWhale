@@ -19,7 +19,7 @@ public class FlightChallengeMaster : MonoBehaviour
 {
     #region Setup
     ParticleSystem ps;
-    List<FlightChallengeRing> rings;
+    [HideInInspector] public List<FlightChallengeRing> rings;
     /// <summary>
     /// Description: Setup local components.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -33,6 +33,8 @@ public class FlightChallengeMaster : MonoBehaviour
             rings.Add(n);
             n.parent = this;
         }
+
+        GetComponentInChildren<FlightChallengePlatform>().parent = this;
 
         ps = GetComponentInChildren<ParticleSystem>();
     }
