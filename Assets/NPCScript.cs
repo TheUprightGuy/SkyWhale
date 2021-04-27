@@ -17,8 +17,16 @@ using UnityEngine;
 
 public class NPCScript : MonoBehaviour
 {
-    PlayerMovement pm;
+    protected PlayerMovement pm;
     bool pause;
+    protected Transform dialogueTransform;
+    public Cinemachine.CinemachineVirtualCamera cam;
+
+    private void Awake()
+    {
+        dialogueTransform = this.transform.GetChild(0);
+        cam = GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>();
+    }
 
     #region Callbacks
     /// <summary>
@@ -31,11 +39,13 @@ public class NPCScript : MonoBehaviour
         dialogue.StartUp();
         currentDialogue = dialogue;
         CallbackHandler.instance.pause += Pause;
+        CallbackHandler.instance.resetCamera += ResetCamera;
         VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(Interact);
     }
     private void OnDestroy()
     {
         CallbackHandler.instance.pause -= Pause;
+        CallbackHandler.instance.resetCamera -= ResetCamera;
     }
     #endregion Callbacks
 
@@ -76,13 +86,22 @@ public class NPCScript : MonoBehaviour
     /// <br>Author: Wayd Barton-Redgrave</br>
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
-    public void Interact(InputState type)
+    public virtual void Interact(InputState type)
     {
         if (currentDialogue.inUse || !pm)
             return;
 
+        cam.m_Priority = 2;
+
         CallbackHandler.instance.SetDialogue(currentDialogue);
         CallbackHandler.instance.Pause(true);
+
+        CallbackHandler.instance.HideSpeech();
+    }
+
+    public void ResetCamera()
+    {
+        cam.m_Priority = 0;
     }
 
     #region Triggers
@@ -92,11 +111,14 @@ public class NPCScript : MonoBehaviour
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
     /// <param name="other">Triggering GameObject</param>
-    private void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<PlayerMovement>())
         {
             pm = other.GetComponent<PlayerMovement>();
+
+            CallbackHandler.instance.SpeechInRange(dialogueTransform);
+            CallbackHandler.instance.ShowSpeech();
         }
     }
 
@@ -106,6 +128,9 @@ public class NPCScript : MonoBehaviour
         {
             pm = null;
             CallbackHandler.instance.StopDialogue();
+
+            CallbackHandler.instance.SpeechOutOfRange();
+            CallbackHandler.instance.HideSpeech();
         }
     }
     #endregion Triggers

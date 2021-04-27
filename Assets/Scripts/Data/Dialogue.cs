@@ -62,7 +62,6 @@ public class Dialogue : ScriptableObject
         }
     }
 
-
     /// <summary>
     /// Description: Gets dialogue from next index.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -112,6 +111,7 @@ public class Dialogue : ScriptableObject
             EventManager.TriggerEvent(triggerEvent);
 
         CallbackHandler.instance.Pause(false);
+        CallbackHandler.instance.ResetCamera();
     }
 
     /// <summary>

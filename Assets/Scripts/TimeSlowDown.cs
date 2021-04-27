@@ -88,12 +88,17 @@ public class TimeSlowDown : MonoBehaviour
     public void SlowDown()
     {
         slowDown = true;
+        floating = true;
     }
     public void SpeedUp()
     {
         slowDown = false;
+        floating = false;
     }
 
+    public float slowDuration = 0.3f;
+    public float drainTimer = 0.3f;
+    public bool floating = false;
     /// <summary>
     /// Description: Lerps time change, changes FOV and saturation on slowdown/speed up.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -103,20 +108,34 @@ public class TimeSlowDown : MonoBehaviour
     {
         if (slowDown)
         {
-            timeScale = Mathf.Lerp(timeScale, slowMo, Time.deltaTime * 15.0f);
+            timeScale = Mathf.Clamp(Mathf.Lerp(timeScale, slowMo, Time.deltaTime * 15.0f), 0.2f, 1.0f);
+            
             //Physics.gravity = grav * timeScale;
         }
         else
         {
             timeScale = Mathf.Lerp(timeScale, 1.0f, Time.deltaTime * 5.0f);
+
             //Physics.gravity = grav * timeScale;
+        }
+
+        if (floating)
+        {
+            drainTimer -= Time.deltaTime;
+
+            if (drainTimer <= 0)
+                floating = false;
+        }
+        else
+        {
+            drainTimer = Mathf.Clamp(drainTimer + Time.deltaTime, 0.0f, slowDuration);
         }
 
         if (!Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>())
             return;
 
-        Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = ((timeScale / 2) * 100.0f) + 50.0f;
-        adjustments.saturation.value = timeScale * 100.0f - 100.0f;
+        Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = ((timeScale / 5) * 100.0f) + 80.0f;
+        adjustments.saturation.value = Mathf.Clamp(timeScale * 100.0f - 50.0f, -50.0f, 0.0f);
     }
 
     // Safety

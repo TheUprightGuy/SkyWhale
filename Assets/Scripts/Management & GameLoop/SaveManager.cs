@@ -81,6 +81,7 @@ public class SaveManager : MonoBehaviour
         saveToUse = _save;
 
         SceneManager.LoadScene(2);
+        SceneManager.LoadScene(3, LoadSceneMode.Additive);
     }
 
     /// <summary>

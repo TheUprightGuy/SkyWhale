@@ -23,6 +23,7 @@ public enum CameraType
     GlideCamera,
     PuzzleCamera,
     WhaleGrappleCamera,
+    OtherCamera
 }
 
 

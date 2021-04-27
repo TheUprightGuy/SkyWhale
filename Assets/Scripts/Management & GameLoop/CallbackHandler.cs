@@ -117,6 +117,7 @@ public class CallbackHandler : MonoBehaviour
         if (setDialogue != null)
         {
             setDialogue(_dialogue);
+            SpeechOutOfRange();
         }
     }
 
@@ -131,6 +132,164 @@ public class CallbackHandler : MonoBehaviour
         if (stopDialogue != null)
         {
             stopDialogue();
+        }
+    }
+
+    public event Action<Transform> speechInRange;
+    /// <summary>
+    /// Description: Prompts the speech ui element to show.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 16/04/2021</br>
+    /// </summary>
+    /// <param name="_dialogueTransform"></param>
+    public void SpeechInRange(Transform _dialogueTransform)
+    {
+        if (speechInRange != null)
+        {
+            speechInRange(_dialogueTransform);
+        }
+    }
+
+    public event Action speechOutOfRange;
+    /// <summary>
+    /// Description: Prompts the speech ui element to hide.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 16/04/2021</br>
+    /// </summary>
+    public void SpeechOutOfRange()
+    {
+        if (speechOutOfRange != null)
+        {
+            speechOutOfRange();
+        }
+    }
+
+    public event Action<Transform> puzzleInRange;
+    /// <summary>
+    /// Description: Prompts the speech ui element to show.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 16/04/2021</br>
+    /// </summary>
+    /// <param name="_position"></param>
+    public void PuzzleInRange(Transform _position)
+    {
+        if (puzzleInRange != null)
+        {
+            puzzleInRange(_position);
+        }
+    }
+
+    public event Action puzzleOutOfRange;
+    /// <summary>
+    /// Description: Prompts the speech ui element to hide.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 16/04/2021</br>
+    /// </summary>
+    public void PuzzleOutOfRange()
+    {
+        if (puzzleOutOfRange != null)
+        {
+            puzzleOutOfRange();
+        }
+    }
+
+    public event Action<InputType,string, string> displayHotkey;
+    public void DisplayHotkey(InputType _type, string _action, string _subName)
+    {
+        if (displayHotkey != null)
+        {
+            displayHotkey(_type, _action, _subName);
+        }
+    }
+
+    public event Action<string> hideHotkey;
+    public void HideHotkey(string _action)
+    {
+        if (hideHotkey != null)
+        {
+            hideHotkey(_action);
+        }
+    }
+
+    public event Action showGlide;
+    public void ShowGlide()
+    {
+        if (showGlide != null)
+        {
+            showGlide();
+        }
+    }
+
+    public event Action hideGlide;
+    public void HideGlide()
+    {
+        if (hideGlide != null)
+        {
+            hideGlide();
+        }
+    }
+
+    public event Action showGrapple;
+    public void ShowGrapple()
+    {
+        if (showGrapple != null)
+        {
+            showGrapple();
+        }
+    }
+
+    public event Action hideGrapple;
+    public void HideGrapple()
+    {
+        if (hideGrapple != null)
+        {
+            hideGrapple();
+        }
+    }
+
+    public event Action showSpeech;
+    public void ShowSpeech()
+    {
+        if (showSpeech != null)
+        {
+            showSpeech();
+        }
+    }
+
+    public event Action hideSpeech;
+    public void HideSpeech()
+    {
+        if (hideSpeech != null)
+        {
+            hideSpeech();
+        }
+    }
+
+    public event Action resetCamera;
+    public void ResetCamera()
+    {
+        if (resetCamera != null)
+        {
+            resetCamera();
+        }
+    }
+
+
+    public event Action<Quest> startTrackingQuest;
+    public void StartTrackingQuest(Quest _quest)
+    {
+        if (startTrackingQuest != null)
+        {
+            startTrackingQuest(_quest);
+        }
+    }
+
+    public event Action updateObjectives;
+    public void UpdateObjectives()
+    {
+        if (updateObjectives != null)
+        {
+            updateObjectives();
         }
     }
 }

@@ -129,6 +129,8 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         HandleRotation();
+
+        PromptCheck();
     }
     void FixedUpdate()
     {
@@ -232,7 +234,6 @@ public class PlayerMovement : MonoBehaviour
         if (GLIDINGCheck())
         {
             playerState = PlayerStates.GLIDING;
-
         }
 
         //Don't use gravity if grappling or gliding or climbing
@@ -324,7 +325,6 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     void RotateTowardInput()
     {
-
         float singleStep = rotationSpeed * Time.deltaTime;// * TimeSlowDown.instance.timeScale;
 
         //Forward Vector relative to the camera direction
@@ -384,9 +384,10 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
 
-        Physics.gravity = RB.velocity.y >= -0.8f ? Vector3.up * -9.8f : Vector3.up * -9.8f * TimeSlowDown.instance.timeScale;
+        Physics.gravity = RB.velocity.y >= -0.8f ? Vector3.up * -20.0f : Vector3.up * -20.0f * Mathf.Clamp((TimeSlowDown.instance.drainTimer / TimeSlowDown.instance.slowDuration), 0.5f, 1.0f);
+        debugGrav = Physics.gravity.y;
     }
-
+    public float debugGrav;
 
     Vector3 currentVel = Vector3.zero;
 
@@ -644,7 +645,10 @@ public class PlayerMovement : MonoBehaviour
         {
             case InputState.KEYDOWN:
                 if (GRAPPLECheck())
+                {
                     grapple.FireHook();
+                    grapple.YeetPlayer();
+                }
                 if (glider.enabled)
                     glider.Toggle();
                 break;
@@ -778,6 +782,31 @@ public class PlayerMovement : MonoBehaviour
 
         distanceFromGround = Mathf.Infinity;
     }
+
+    void PromptCheck()
+    {
+        // temp testing
+        if (distanceFromGround > 3.0f && GetComponent<GliderMovement>().unlocked && playerState == PlayerStates.FALLING)
+        {
+            //CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Glide", "");
+            CallbackHandler.instance.ShowGlide();
+        }
+        else
+        {
+            //CallbackHandler.instance.HideHotkey("Glide");
+            CallbackHandler.instance.HideGlide();
+        }
+
+        if (IsClimbing() && IsGrounded())
+        {
+            CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Jump", "Climb");
+        }
+        else
+        {
+            CallbackHandler.instance.HideHotkey("Jump");
+        }
+    }
+
     #endregion Utility
     #region Collisions
     /// <summary>

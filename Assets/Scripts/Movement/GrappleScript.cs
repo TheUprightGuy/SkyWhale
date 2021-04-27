@@ -85,6 +85,16 @@ public class GrappleScript : MonoBehaviour
         EntityManager.instance.toggleControl += ToggleGrapple;
         CallbackHandler.instance.pause += Pause;
     }
+
+    private void OnEnable()
+    {
+        if (grapplingFromWhale)
+        {
+            //Check if grapple on regular player is enabled
+            enabled = EntityManager.instance.player.GetComponent<GrappleScript>().enabled;
+        }
+    }
+
     private void OnDestroy()
     {
         // End Callback
@@ -203,7 +213,7 @@ public class GrappleScript : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(new Vector3(0.0f, transform.rotation.eulerAngles.y, 0.0f));
     }
-
+    
     public LayerMask raycastTargets;
     /// <summary>
     /// Description: Checks if target is grappleable.
@@ -214,21 +224,33 @@ public class GrappleScript : MonoBehaviour
     Vector3 RaycastToTarget()
     {
         RaycastHit hit;
-        if (Physics.Raycast(camToShootFrom.transform.position, camToShootFrom.transform.forward, out hit, Mathf.Infinity, raycastTargets))
+        if (Physics.Raycast(camToShootFrom.transform.position, camToShootFrom.transform.forward, out hit, Mathf.Infinity, raycastTargets, QueryTriggerInteraction.Ignore))
         {
             Debug.DrawRay(camToShootFrom.transform.position, camToShootFrom.transform.forward * hit.distance, Color.yellow);
 
             if (grappleableLayers == (grappleableLayers | (1 << hit.transform.gameObject.layer)))
             {
                 grapplePoint.color = Color.red;
+
+                if (aim)
+                    CallbackHandler.instance.ShowGrapple();
+                //CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Grapple", "");
+
                 return hit.point;
             }
 
+            if (aim)
+                CallbackHandler.instance.HideGrapple();
+
             grapplePoint.color = Color.white;
+            //CallbackHandler.instance.HideGrapple();
+            //CallbackHandler.instance.HideHotkey("Grapple");
             return hit.point;
         }
 
         grapplePoint.color = Color.white;
+        //CallbackHandler.instance.HideGrapple();
+        //CallbackHandler.instance.HideHotkey("Grapple");
         return Vector3.zero;
     }
 
@@ -323,7 +345,10 @@ public class GrappleScript : MonoBehaviour
         }*/
         
         if(!AbleToRetract() && !aim) return;
-        
+
+        //CallbackHandler.instance.HideHotkey("Grapple");
+        CallbackHandler.instance.HideGrapple();
+
         // Available To Use
         if (!HookInUse() && (pm ? !pm.GLIDINGCheck() : grapplingFromWhale))
         {
@@ -349,8 +374,6 @@ public class GrappleScript : MonoBehaviour
         else if (AbleToRetract())
         {
             // Start retracting
-            if(!grapplingFromWhale) 
-                hook.YeetPlayer(this.GetComponent<PlayerMovement>());
 
             hook.retracting = true;
             hook.connected = false;
@@ -369,6 +392,12 @@ public class GrappleScript : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void YeetPlayer()
+    {
+        if (!grapplingFromWhale)
+            hook.YeetPlayer(this.GetComponent<PlayerMovement>());
     }
 
     public bool active;
@@ -391,6 +420,9 @@ public class GrappleScript : MonoBehaviour
     /// <param name="_startAim">ADS</param>
     void ToggleAim(bool _startAim)
     {
+        //CallbackHandler.instance.HideHotkey("GrappleAim");
+        CallbackHandler.instance.HideGrapple();
+
         // Toggle Reticule
         aim = _startAim;
         if (grappleReticule != null)

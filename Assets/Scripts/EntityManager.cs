@@ -35,7 +35,6 @@ public class EntityManager : MonoBehaviour
     #region Inspector Variables
     public GameObject player;
     public GameObject playerOnWhale;
-    public GameObject _whaleGrappleUIElement;
     public NewGrappleHook grappleHook;
     public GameObject whale;
     #endregion
@@ -56,20 +55,22 @@ public class EntityManager : MonoBehaviour
     public void TogglePlayer(bool _toggle)
     {
         whale.GetComponent<OrbitScript>().enabled = _toggle;
+        if(player.GetComponent<GliderMovement>().enabled && !_toggle) player.GetComponent<GliderMovement>().Toggle();
         player.SetActive(_toggle);
         playerOnWhale.SetActive(!_toggle);
         grappleHook.pc = player.GetComponent<GrappleScript>().shootPoint.transform;
 
-        if (!_toggle)
-        {
-            player.transform.position = playerOnWhale.transform.position;
-            player.transform.rotation = Quaternion.LookRotation(grappleHook.transform.position.normalized, Vector3.up);
-        }
-
-        CameraManager.instance.SwitchCamera(_toggle ? CameraType.PlayerCamera : CameraType.WhaleCamera);
+        if(!player.GetComponent<GliderMovement>().enabled) CameraManager.instance.SwitchCamera(_toggle ? CameraType.PlayerCamera : CameraType.WhaleCamera);
+        Cursor.lockState = CursorLockMode.Locked;
 
         if (toggleControl != null)
             toggleControl(_toggle);
+    }
+
+    public void MovePlayerToPlayerOnWhale()
+    {
+        player.transform.position = playerOnWhale.transform.position;
+        player.transform.rotation = Quaternion.LookRotation(grappleHook.transform.position.normalized, Vector3.up);
     }
 
     public void OnDismountPlayer(Transform dismountPosition)
