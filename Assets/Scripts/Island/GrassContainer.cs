@@ -9,14 +9,18 @@ public struct MeshChunk
     {
         index = _index;
         pointList = new List<Vector3>();
+        normalList = new List<Vector3>();
         mesh = null;
         mat = null;
         Rebuild = false;
+
+
     }
 
     public Vector3Int index;
 
     public List<Vector3> pointList; //Don't like this but gotta do for deleting grass
+    public List<Vector3> normalList;
     public Mesh mesh;
     public Material mat;
     public bool Rebuild;
