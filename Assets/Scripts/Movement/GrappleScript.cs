@@ -453,8 +453,8 @@ public class GrappleScript : MonoBehaviour
         {
             hook.connected = false;
             hook.retracting = true;
-
-            if(!grapplingFromWhale) 
+            
+            if(!grapplingFromWhale && collision.gameObject.layer != 13) 
                 hook.YeetPlayer(this.GetComponent<PlayerMovement>());
         }
     }

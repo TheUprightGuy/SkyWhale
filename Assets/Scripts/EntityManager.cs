@@ -67,6 +67,27 @@ public class EntityManager : MonoBehaviour
             toggleControl(_toggle);
     }
 
+    public bool TeleportPlayer(Transform locationToTeleport)
+    {
+        if(locationToTeleport == null) return false;
+        if (!player || !instance.player.activeSelf) return false;
+        for (int i = 0; i < 2; i++) //not sure why but this needs to be repeated twice in order for the offset to actually be removed
+        {
+            //Update player container position by calculating offset
+            var offset = player.transform.parent.position - player.transform.position;
+            player.transform.parent.position = locationToTeleport.position + offset;
+            
+            //Update rotation for both player and camera
+            var rotation = locationToTeleport.rotation;
+            player.transform.rotation = rotation;
+            var parent = player.transform.parent;
+            var cameraEulerAngles = parent.GetChild(1).rotation.eulerAngles;
+            parent.GetChild(1).rotation =  Quaternion.Euler(cameraEulerAngles.x, rotation.eulerAngles.y, cameraEulerAngles.z);
+        }
+
+        return true;
+    }
+
     public void MovePlayerToPlayerOnWhale()
     {
         player.transform.position = playerOnWhale.transform.position;
