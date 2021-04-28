@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 212929658}
   m_Layer: 0
-  m_Name: DebugTeleportLocation6
+  m_Name: SecondIslandGlidingChallengePlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,66 +28,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2829408532701323229}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &181844847526206503
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 267275132681347258}
-  m_Layer: 0
-  m_Name: DebugTeleportLocation2
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &267275132681347258
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 181844847526206503}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -27.2, y: 20.5, z: -22.3}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2829408532701323229}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2208978939243511987
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1305231739891969555}
-  m_Layer: 0
-  m_Name: DebugTeleportLocation3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1305231739891969555
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2208978939243511987}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -86.7, y: -18.7, z: 38.36}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2829408532701323229}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2391256865397628524
@@ -100,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3642080051757791794}
   m_Layer: 0
-  m_Name: DebugTeleportLocation5
+  m_Name: SecondIslandTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -114,11 +54,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2391256865397628524}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2282.2, y: -647.9, z: -66.93}
+  m_LocalPosition: {x: -2285.33, y: -655.9, z: 15.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2829408532701323229}
-  m_RootOrder: 6
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2829408531905114408
 GameObject:
@@ -355,9 +295,6 @@ RectTransform:
   m_Children:
   - {fileID: 2829408531905114415}
   - {fileID: 2829408532058890535}
-  - {fileID: 3038133428622185406}
-  - {fileID: 267275132681347258}
-  - {fileID: 1305231739891969555}
   - {fileID: 1483727138110707343}
   - {fileID: 3642080051757791794}
   - {fileID: 212929658}
@@ -442,9 +379,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teleportLocations:
-  - {fileID: 3038133428622185406}
-  - {fileID: 267275132681347258}
-  - {fileID: 1305231739891969555}
   - {fileID: 1483727138110707343}
   - {fileID: 3642080051757791794}
   - {fileID: 212929658}
@@ -798,7 +732,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1483727138110707343}
   m_Layer: 0
-  m_Name: DebugTeleportLocation4
+  m_Name: SecondIslandStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -812,39 +746,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4405015163969365692}
   m_LocalRotation: {x: 0, y: 0.99866897, z: 0, w: 0.051577806}
-  m_LocalPosition: {x: -2312.15, y: -698.52, z: -129.35}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2829408532701323229}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 174.087, z: 0}
---- !u!1 &5979690980168994740
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3038133428622185406}
-  m_Layer: 0
-  m_Name: DebugTeleportLocation1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3038133428622185406
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5979690980168994740}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -70.1, y: -28.04, z: -30.7}
+  m_LocalPosition: {x: -2243.3, y: -708.1, z: -75.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2829408532701323229}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 174.087, z: 0}

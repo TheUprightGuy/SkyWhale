@@ -11,19 +11,17 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/DebugTool.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/DebugTeleportButton.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Debug/DebugTeleportLocations.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.4.2f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Layout/CanvasScaler.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
-    <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/GrappleCheckPoint.cs" />
-      <option value="$PROJECT_DIR$/Assets/GrappleEndPoint.cs" />
-      <option value="$PROJECT_DIR$/Assets/GrappleStartPoint.cs" />
-      <option value="$PROJECT_DIR$/Assets/GrappleChallengeMaster.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/FlightChallengeMaster.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/FlightChallengePlatform.cs" />
-    </changedPaths>
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/DebugTeleportLocations.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Debug/DebugTeleportLocations.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Debug/DebugTool.cs" />
+      </list>
+    </option>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
   <component name="ProjectViewState">
@@ -54,7 +52,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -63,7 +61,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -81,6 +79,7 @@
       <workItem from="1618792006559" duration="1802000" />
       <workItem from="1618876375139" duration="2993000" />
       <workItem from="1619043334665" duration="8571000" />
+      <workItem from="1619583881243" duration="989000" />
     </task>
     <servers />
   </component>
