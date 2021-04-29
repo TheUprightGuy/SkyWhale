@@ -2768,7 +2768,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2578001727799734438}
   - component: {fileID: 2578001727799734437}
-  - component: {fileID: 2578001727799734436}
   - component: {fileID: 2578001727799734439}
   m_Layer: 5
   m_Name: Toggle
@@ -2845,40 +2844,16 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2578001727799734439}
         m_MethodName: PlaySound
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: f9aae3ba532cfba4f9ef73f7b3fc6c12,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2578001727799734436}
-        m_MethodName: ToggleSubtitles
-        m_Mode: 1
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Click
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 1
---- !u!114 &2578001727799734436
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2578001727799734433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e2a8a2dd3ab0946b6b5270afa13121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2578001727799734439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10155,14 +10130,13 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2578001729064254405}
         m_MethodName: PlaySound
-        m_Mode: 2
+        m_Mode: 5
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: f9aae3ba532cfba4f9ef73f7b3fc6c12,
-            type: 3}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: Click
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 1
@@ -10175,7 +10149,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2578001729064254407}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40e2a8a2dd3ab0946b6b5270afa13121, type: 3}
+  m_Script: {fileID: 11500000, guid: 03dfd76329919784ea0245397cb63c11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &2578001729064254405
