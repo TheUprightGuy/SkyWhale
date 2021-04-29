@@ -82,6 +82,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
         inUse = !inUse;
         ToggleCam(inUse);
         Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = inUse;
         CallbackHandler.instance.HideSpeech();
 
         if (inUse)
@@ -126,6 +127,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
         inUse = !inUse;
         ToggleCam(inUse);
         Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = inUse;
         EventManager.TriggerEvent("SwitchPuzzleCompletion");
         EventManager.TriggerEvent("SolvePuzzle");
         CallbackHandler.instance.PuzzleOutOfRange();

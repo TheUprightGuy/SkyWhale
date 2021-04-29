@@ -16,7 +16,18 @@ public class GrapplePrompt : MonoBehaviour
 
     private void SetText()
     {
-        text.SetText(VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").KeyToListen.ToString());
+        string temp;
+        KeyCode key = VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").KeyToListen;
+        if (key == KeyCode.Mouse0 || key == KeyCode.Mouse1)
+        {
+            temp = key == KeyCode.Mouse0 ? "LMB" : "RMB";
+        }
+        else
+        {
+            temp = VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").KeyToListen.ToString();
+        }
+
+        text.SetText(temp);
     }
 
     public void Show()
