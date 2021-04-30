@@ -75,6 +75,7 @@ public class QuestManager : MonoBehaviour
     /// <param name="n">Quest to start tracking</param>
     public void AddQuest(Quest n)
     {
+        if(activeQuests.Contains(n)) return;
         activeQuests.Add(n);
     }
 }

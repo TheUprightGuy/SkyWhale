@@ -64,6 +64,7 @@
         <e p="NPCScript.cs" t="Include" />
         <e p="ObjectiveTrackingUI.cs" t="Include" />
         <e p="ObjectiveUIElement.cs" t="Include" />
+        <e p="PilotQuestCollectable.cs" t="Include" />
         <e p="PromptGrapple.cs" t="Include" />
         <e p="PuzzlePrompt.cs" t="Include" />
         <e p="Scripts" t="Include">
@@ -160,6 +161,7 @@
             <e p="ParticleSpeedScript.cs" t="Include" />
             <e p="RingPFX.cs" t="Include" />
           </e>
+          <e p="PilotScript.cs" t="Include" />
           <e p="PreLoadSceneLoader.cs" t="Include" />
           <e p="Puzzle" t="Include">
             <e p="CirclePuzzle.cs" t="Include" />

@@ -1,65 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &212929657
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 212929658}
-  m_Layer: 0
-  m_Name: SecondIslandGlidingChallengePlatform
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &212929658
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 212929657}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2383.8, y: -611.4, z: 26.7}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2829408532701323229}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2391256865397628524
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 3642080051757791794}
-  m_Layer: 0
-  m_Name: SecondIslandTop
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &3642080051757791794
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2391256865397628524}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2285.33, y: -655.9, z: 15.4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2829408532701323229}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2829408531905114408
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,9 +235,6 @@ RectTransform:
   m_Children:
   - {fileID: 2829408531905114415}
   - {fileID: 2829408532058890535}
-  - {fileID: 1483727138110707343}
-  - {fileID: 3642080051757791794}
-  - {fileID: 212929658}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -378,10 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7987cc215b378c04f8f985ef6b9954c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportLocations:
-  - {fileID: 1483727138110707343}
-  - {fileID: 3642080051757791794}
-  - {fileID: 212929658}
+  teleportLocations: []
   genericButtonTemplate: {fileID: 6242267245896501931, guid: 7e1fb5f8fa0e2d44f861a00c1e7c05e6,
     type: 3}
 --- !u!1 &2829408532712369914
@@ -722,33 +656,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &4405015163969365692
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1483727138110707343}
-  m_Layer: 0
-  m_Name: SecondIslandStart
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1483727138110707343
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4405015163969365692}
-  m_LocalRotation: {x: 0, y: 0.99866897, z: 0, w: 0.051577806}
-  m_LocalPosition: {x: -2243.3, y: -708.1, z: -75.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2829408532701323229}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 174.087, z: 0}
