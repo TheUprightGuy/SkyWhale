@@ -111,6 +111,7 @@ public class GliderMovement : MonoBehaviour
         myPitch = 0.0f;
         myTurn = 0.0f;
         currentSpeed = baseSpeed;
+        moveSpeed = baseSpeed;
 
         CameraManager.instance.SwitchCamera((enabled) ? CameraType.GlideCamera : CameraType.PlayerCamera);
 

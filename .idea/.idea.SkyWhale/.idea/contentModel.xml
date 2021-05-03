@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="D:\Users\mds00001nb\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
-    <e p="D:\Users\mds00001nb\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_SkyWhale.-1814424878.00" t="ExcludeRecursive" />
-    <e p="D:\Users\mds00001nb\Desktop\Alpha Project\SkyWhale" t="IncludeRecursive">
+    <e p="C:\Users\jacob\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\jacob\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_SkyWhale.-1246438828.00" t="ExcludeRecursive" />
+    <e p="D:\Projects\SkyWhale" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="BlacksmithScript.cs" t="Include" />
         <e p="ButtonPrompt.cs" t="Include" />
-        <e p="DebugTeleportButton.cs" t="Include" />
-        <e p="DebugTool.cs" t="Include" />
         <e p="Editor" t="Include">
           <e p="ConditionalHidePropertyDrawer.cs" t="Include" />
           <e p="MaterialInstancer.cs" t="Include" />
           <e p="TexturePainterControllerEditor.cs" t="Include" />
         </e>
+        <e p="FullscreenToggle.cs" t="Include" />
         <e p="GameUIController.cs" t="Include" />
         <e p="GlidePrompt.cs" t="Include" />
         <e p="GrappleChallengeMaster.cs" t="Include" />
         <e p="GrappleChallengePoint.cs" t="Include" />
+        <e p="GrappleCheckPoint.cs" t="Include" />
         <e p="GrappleEndPoint.cs" t="Include" />
         <e p="GrapplePrompt.cs" t="Include" />
         <e p="GrappleStartPoint.cs" t="Include" />
@@ -51,7 +52,6 @@
             <e p="MenuButtonController.cs" t="Include" />
             <e p="PauseMenuCanvasController.cs" t="Include" />
             <e p="ResolutionOption.cs" t="Include" />
-            <e p="SubtitlesToggle.cs" t="Include" />
             <e p="ToggleButton.cs" t="Include" />
           </e>
         </e>
@@ -62,6 +62,9 @@
         </e>
         <e p="MatScript.cs" t="Include" />
         <e p="NPCScript.cs" t="Include" />
+        <e p="ObjectiveTrackingUI.cs" t="Include" />
+        <e p="ObjectiveUIElement.cs" t="Include" />
+        <e p="PilotQuestCollectable.cs" t="Include" />
         <e p="PromptGrapple.cs" t="Include" />
         <e p="PuzzlePrompt.cs" t="Include" />
         <e p="Scripts" t="Include">
@@ -89,10 +92,16 @@
             <e p="Quest.cs" t="Include" />
             <e p="SaveMe.cs" t="Include" />
           </e>
+          <e p="Debug" t="Include">
+            <e p="DebugTeleportButton.cs" t="Include" />
+            <e p="DebugTeleportLocations.cs" t="Include" />
+            <e p="DebugTool.cs" t="Include" />
+          </e>
           <e p="ElevatorScript.cs" t="Include" />
           <e p="EndScreen.cs" t="Include" />
           <e p="EntityManager.cs" t="Include" />
           <e p="FlightChallengeMaster.cs" t="Include" />
+          <e p="FlightChallengePlatform.cs" t="Include" />
           <e p="FlightChallengeRing.cs" t="Include" />
           <e p="GliderMovement.cs" t="Include" />
           <e p="GunMeshSwitch.cs" t="Include" />
@@ -152,6 +161,7 @@
             <e p="ParticleSpeedScript.cs" t="Include" />
             <e p="RingPFX.cs" t="Include" />
           </e>
+          <e p="PilotScript.cs" t="Include" />
           <e p="PreLoadSceneLoader.cs" t="Include" />
           <e p="Puzzle" t="Include">
             <e p="CirclePuzzle.cs" t="Include" />

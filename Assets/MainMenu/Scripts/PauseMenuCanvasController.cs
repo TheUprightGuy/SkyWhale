@@ -97,11 +97,13 @@ public class PauseMenuCanvasController : MonoBehaviour
         if (toggle.activeSelf)
         {
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             TimeSlowDown.instance.SlowDown();
             return;
         }
 
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         TimeSlowDown.instance.SpeedUp();
     }
 

@@ -41,6 +41,7 @@ public class GrappleStartPoint : MonoBehaviour
         if (other.GetComponent<PlayerMovement>())
         {
             gcm.pm = other.GetComponent<PlayerMovement>();
+            gcm.LastCheckPoint = null;
         }
     }
     #endregion Trigger

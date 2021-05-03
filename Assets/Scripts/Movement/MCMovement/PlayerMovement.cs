@@ -103,6 +103,9 @@ public class PlayerMovement : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.PLAYER, "Glide").MethodToCall.AddListener(ToggleGlider);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(CancelGrappleGlide);
 
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
         OnValidate();
         CallbackHandler.instance.pause += Pause;
     }

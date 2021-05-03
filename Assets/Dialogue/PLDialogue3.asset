@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9acc76f917637d6458e8e47e08610bdc, type: 3}
+  m_Name: PLDialogue3
+  m_EditorClassIdentifier: 
+  dialogue:
+  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+    left: 1
+    name: Pilot
+    dialogue:
+    - Woah....
+    - Can I see that bit of metal you have there?
+    - Hmm... this would you be perfect
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+    left: 0
+    name: MC
+    dialogue:
+    - What are you talking about?
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+    left: 1
+    name: Pilot
+    dialogue:
+    - This bit of metal is the last material I need to finish these gliders I've
+      been working on
+    - Did you find this here?
+    - On this island?
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+    left: 0
+    name: MC
+    dialogue:
+    - Yeah it was by this tile puzzle
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+    left: 1
+    name: Pilot
+    dialogue:
+    - I's pretty impressive that you managed to find this
+    - It's the only bit of metal on this island that's pure enough for me to be able
+      to finish my gliders
+    - Let's make a deal..
+    - If you give me this material, then I'll give you one of these gliders and the
+      location of a sweet island which is perfect for gliding
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+    left: 0
+    name: Mc
+    dialogue:
+    - That sounds good to me. It's a deal!
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+    left: 1
+    name: Pilot
+    dialogue:
+    - Perfect, here you are one finished glider as promised!
+    dialogueIndex: 0
+  leftCharacter: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+  rightCharacter: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+  dialogueIndex: 0
+  inUse: 0
+  triggerEvent: EnableGlider

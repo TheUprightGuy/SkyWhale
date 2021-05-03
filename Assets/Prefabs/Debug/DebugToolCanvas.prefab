@@ -53,12 +53,12 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 2
+  m_ChildAlignment: 0
   m_Spacing: 50
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
 --- !u!1 &2829408532058890528
@@ -315,9 +315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7987cc215b378c04f8f985ef6b9954c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  teleportLocations:
-  - {fileID: 0}
-  - {fileID: 0}
+  teleportLocations: []
   genericButtonTemplate: {fileID: 6242267245896501931, guid: 7e1fb5f8fa0e2d44f861a00c1e7c05e6,
     type: 3}
 --- !u!1 &2829408532712369914
