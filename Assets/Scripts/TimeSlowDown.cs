@@ -18,8 +18,11 @@ using UnityEngine.SceneManagement;
 
 public class TimeSlowDown : MonoBehaviour
 {
+    
+    
     [Header("Debug")]
     public float timeScale = 1.0f;
+
     // Local Variables
     float defaultGrayScale = 0.0f;
     float slowMo = 0.01f;
@@ -87,6 +90,7 @@ public class TimeSlowDown : MonoBehaviour
     /// </summary>
     public void SlowDown()
     {
+        //defaultFOV = Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView;
         slowDown = true;
         floating = true;
     }
@@ -96,6 +100,8 @@ public class TimeSlowDown : MonoBehaviour
         floating = false;
     }
 
+    float defaultFOV = -1;
+    public float FOVOffset = -20.0f;
     public float slowDuration = 0.3f;
     public float drainTimer = 0.3f;
     public bool floating = false;
@@ -106,6 +112,11 @@ public class TimeSlowDown : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>() && defaultFOV < 0 ) //If in the scen with the correct cam and marked for update
+        {
+            defaultFOV = Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView;
+        }
+
         if (slowDown)
         {
             timeScale = Mathf.Clamp(Mathf.Lerp(timeScale, slowMo, Time.deltaTime * 15.0f), 0.2f, 1.0f);
@@ -134,7 +145,7 @@ public class TimeSlowDown : MonoBehaviour
         if (!Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>())
             return;
 
-        Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = ((timeScale / 5) * 100.0f) + 80.0f;
+        Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = ((timeScale / 5) * defaultFOV) + (defaultFOV + FOVOffset);
         adjustments.saturation.value = Mathf.Clamp(timeScale * 100.0f - 50.0f, -50.0f, 0.0f);
     }
 
