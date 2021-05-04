@@ -66,6 +66,9 @@ public class GameUIController : MonoBehaviour
         CallbackHandler.instance.showGlide -= DisplayGlidePrompt;
         CallbackHandler.instance.hideGlide -= HideGlidePrompt;
 
+        CallbackHandler.instance.showGrapple -= DisplayGrapplePrompt;
+        CallbackHandler.instance.hideGrapple -= HideGrapplePrompt;
+
         CallbackHandler.instance.showSpeech -= DisplaySpeechPrompt;
         CallbackHandler.instance.hideSpeech -= HideSpeechPrompt;
     }

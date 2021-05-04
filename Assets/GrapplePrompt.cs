@@ -37,6 +37,11 @@ public class GrapplePrompt : MonoBehaviour
 
     public void Hide()
     {
+        if (!animator)
+        {
+            animator = GetComponent<Animator>();
+        }
+
         animator.SetBool("Show", false);
     }
 }
