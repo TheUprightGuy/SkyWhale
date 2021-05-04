@@ -29,6 +29,7 @@ public class GunMeshSwitch : MonoBehaviour
     {
         mf = GetComponent<MeshFilter>();
         mr = GetComponent<MeshRenderer>();
+        mr.enabled = false;
     }
     #endregion Setup
 
@@ -50,5 +51,10 @@ public class GunMeshSwitch : MonoBehaviour
     {
         mf.mesh = _toggle ? loadedMesh : emptyMesh;
         mr.material = _toggle ? loadedMat : emptyMat;
+    }
+
+    public void ToggleEnabled()
+    {
+        mr.enabled = true;
     }
 }

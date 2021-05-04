@@ -253,7 +253,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 4197877906759718972}
-        m_MethodName: ProgressDialogue
+        m_MethodName: Progress
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -294,7 +294,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a35eb984d02f28469405d4a13e89c72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  testDialogue: {fileID: 11400000, guid: 6c40f44d06102d84f9d31bbc80a227ce, type: 2}
   currentDialogue: {fileID: 0}
   dialogueTime: 5
 --- !u!1 &6238109381750355677

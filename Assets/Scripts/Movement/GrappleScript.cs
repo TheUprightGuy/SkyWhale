@@ -122,6 +122,7 @@ public class GrappleScript : MonoBehaviour
     void EnableGrapple()
     {
         enabled = true;
+        shootPoint.ToggleEnabled();
     }
 
     /// <summary>

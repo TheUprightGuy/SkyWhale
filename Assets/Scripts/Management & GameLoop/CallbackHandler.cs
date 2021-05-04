@@ -36,15 +36,6 @@ public class CallbackHandler : MonoBehaviour
     }
     #endregion Singleton
 
-    private void Update()
-    {
-        // temp - restart scene
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
-        }
-    }
-
     public event Action<bool> pause;
     /// <summary>
     /// Description: Pauses all movement based objects.
