@@ -18,6 +18,7 @@ using UnityEngine;
 public class BlacksmithScript : NPCScript
 {
     public Dialogue followUpDialogue;
+    public PlayerMovement player;
 
     /// <summary>
     /// Description: Adds a listener as override.
@@ -45,6 +46,8 @@ public class BlacksmithScript : NPCScript
     public void SwitchDialogue()
     {
         currentDialogue = followUpDialogue;
+        pm = player;
+        Interact(InputState.KEYDOWN);
     }
 
     /// <summary>

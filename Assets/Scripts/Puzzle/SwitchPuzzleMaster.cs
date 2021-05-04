@@ -45,13 +45,32 @@ public class SwitchPuzzleMaster : MonoBehaviour
         }
 
         int numOff = 0;
+        int numOn = 0;
 
         foreach (PuzzleSwitch n in switches)
         {
-            if (numOff < 5)
-                n.active = Random.value > 0.5f;
-            if (!n.active)
+            if (numOff >= 4)
+            {
+                n.active = true;
+                numOn++;
+            }
+            else if (numOn >= 4)
+            {
+                n.active = false;
                 numOff++;
+            }
+            else
+            {
+                n.active = Random.value > 0.5f;
+                if (!n.active)
+                {
+                    numOff++;
+                }
+                else
+                {
+                    numOn++;
+                }
+            }
 
             n.on = on;
             n.off = off;
