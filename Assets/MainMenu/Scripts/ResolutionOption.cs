@@ -8,6 +8,7 @@ public enum Resolution
     FULLHD,
     MASTERRACE
 }
+
 public class ResolutionOption : MonoBehaviour
 {
     public Resolution resolution;

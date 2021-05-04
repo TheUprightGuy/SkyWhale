@@ -20,7 +20,9 @@ public enum SliderType
 {
     Master,
     Sound,
-    Music
+    Music,
+    FOV,
+    Sensivity
 }
 
 public class DisplayValue : MonoBehaviour
@@ -90,6 +92,18 @@ public class DisplayValue : MonoBehaviour
                 Audio.AudioManager.instance.OnVolumeAdjusted(2, slider.value);
                 break;
             }
+            case SliderType.FOV:
+            {
+                slider.value = settings.fieldOfView;
+                //Audio.AudioManager.instance.OnVolumeAdjusted(2, slider.value);
+                break;
+            }
+            case SliderType.Sensivity:
+            {
+                slider.value = settings.mouseSensitivity;
+                CallbackHandler.instance.ChangeMouseSensitivity((int)slider.value);
+                break;
+            }
         }
     }
 
@@ -117,6 +131,17 @@ public class DisplayValue : MonoBehaviour
                 case SliderType.Music:
                 {
                     settings.musicVolume = (int)slider.value;
+                    break;
+                }
+                case SliderType.FOV:
+                {
+                    settings.fieldOfView = (int)slider.value;
+                    break;
+                }
+                case SliderType.Sensivity:
+                {
+                    settings.mouseSensitivity = (int)slider.value;
+                    CallbackHandler.instance.ChangeMouseSensitivity((int)slider.value);
                     break;
                 }
             }

@@ -283,4 +283,13 @@ public class CallbackHandler : MonoBehaviour
             updateObjectives();
         }
     }
+
+    public event Action<int> changeMouseSensitivity;
+    public void ChangeMouseSensitivity(int _value)
+    {
+        if (changeMouseSensitivity != null)
+        {
+            changeMouseSensitivity(_value);
+        }
+    }
 }

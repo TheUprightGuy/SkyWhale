@@ -23,8 +23,8 @@ public class MenuButtonController : MonoBehaviour
     // Local Variables
     bool keyDown;
     List<MenuButton> buttons = new List<MenuButton>();
-    private int maxIndex;
-    [HideInInspector] public int index;
+    //[HideInInspector]
+    public int index;
 
     #region Setup
     private void Awake()
@@ -41,7 +41,6 @@ public class MenuButtonController : MonoBehaviour
         }
 
         index = -1;
-        maxIndex = buttons.Count - 1;
     }
     #endregion Setup
     #region Callbacks

@@ -81,6 +81,7 @@ public class TimeSlowDown : MonoBehaviour
             return;
 
         Camera.main.GetComponent<UnityEngine.Rendering.Volume>().sharedProfile.TryGet<UnityEngine.Rendering.Universal.ColorAdjustments>(out adjustments);
+        defaultFOV = PauseMenuCanvasController.instance.gameSettings.fieldOfView;
     }
 
     /// <summary>
@@ -112,10 +113,10 @@ public class TimeSlowDown : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>() && defaultFOV < 0 ) //If in the scen with the correct cam and marked for update
+        /*if (Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>() && defaultFOV < 0 ) //If in the scen with the correct cam and marked for update
         {
             defaultFOV = Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView;
-        }
+        }*/
 
         if (slowDown)
         {
