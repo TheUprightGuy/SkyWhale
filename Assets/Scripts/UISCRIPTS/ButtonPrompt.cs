@@ -52,35 +52,65 @@ public class ButtonPrompt : MonoBehaviour
         switch(type)
         {
             case PromptType.Interact:
-                {
-                    text.SetText(VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").KeyToListen.ToString());
-                    break;
-                }
+            {
+                text.SetText(VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").KeyToListen.ToString());
+                break;
+            }
             case PromptType.Speech:
-                {
-                    text.SetText(VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").KeyToListen.ToString());
-                    break;
-                }
+            {
+                text.SetText(VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").KeyToListen.ToString());
+                break;
+            }
             case PromptType.Climb:
-                {
-                    text.SetText(VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").KeyToListen.ToString());
-                    break;
-                }
+            {
+                text.SetText(VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").KeyToListen.ToString());
+                break;
+            }
             case PromptType.GrappleAim:
+            {
+                string temp;
+
+                if (VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").KeyToListen == KeyCode.Mouse0)
                 {
-                    text.SetText(VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").KeyToListen.ToString());
-                    break;
+                    temp = "LMB";
                 }
+                else if (VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").KeyToListen == KeyCode.Mouse1)
+                {
+                    temp = "RMB";
+                }
+                else
+                {
+                    temp = VirtualInputs.GetInputListener(InputType.PLAYER, "GrappleAim").KeyToListen.ToString();
+                }
+
+                text.SetText(temp);
+                break;
+            }
             case PromptType.GrappleFire:
+            {
+                string temp;
+
+                if (VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").KeyToListen == KeyCode.Mouse0)
                 {
-                    text.SetText(VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").KeyToListen.ToString());
-                    break;
+                    temp = "LMB";
                 }
+                else if (VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").KeyToListen == KeyCode.Mouse1)
+                {
+                    temp = "RMB";
+                }
+                else
+                {
+                    temp = VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").KeyToListen.ToString();
+                }
+
+                text.SetText(temp);
+                break;
+            }
             case PromptType.Glide:
-                {
-                    text.SetText(VirtualInputs.GetInputListener(InputType.PLAYER, "Glide").KeyToListen.ToString());
-                    break;
-                }
+            {
+                text.SetText(VirtualInputs.GetInputListener(InputType.PLAYER, "Glide").KeyToListen.ToString());
+                break;
+            }
         }
 
     }

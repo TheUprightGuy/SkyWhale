@@ -235,14 +235,14 @@ public class GrappleScript : MonoBehaviour
 
                 if (aim)
                 {
-                    CallbackHandler.instance.DisplayPrompt(PromptType.GrappleAim);
+                    CallbackHandler.instance.DisplayPrompt(PromptType.GrappleFire);
                 }
                 return hit.point;
             }
 
             if (aim)
             {
-                CallbackHandler.instance.HidePrompt(PromptType.GrappleAim);
+                CallbackHandler.instance.HidePrompt(PromptType.GrappleFire);
             }
 
             grapplePoint.color = Color.white;
@@ -250,6 +250,8 @@ public class GrappleScript : MonoBehaviour
             //CallbackHandler.instance.HideHotkey("Grapple");
             return hit.point;
         }
+
+        CallbackHandler.instance.HidePrompt(PromptType.GrappleFire);
 
         grapplePoint.color = Color.white;
         //CallbackHandler.instance.HideGrapple();
@@ -314,7 +316,10 @@ public class GrappleScript : MonoBehaviour
         }
 
         if (!aim)
+        {
+            CallbackHandler.instance.HidePrompt(PromptType.GrappleFire);
             return;
+        }
 
         // Firehook if player clicked while already attached
         if (cachedShoot)
