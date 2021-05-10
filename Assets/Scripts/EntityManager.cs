@@ -54,7 +54,7 @@ public class EntityManager : MonoBehaviour
     public event Action<bool> toggleControl;
     public void TogglePlayer(bool _toggle)
     {
-        whale.GetComponent<OrbitScript>().enabled = _toggle;
+        //whale.GetComponent<OrbitScript>().enabled = _toggle;
         if(player.GetComponent<GliderMovement>().enabled && !_toggle) player.GetComponent<GliderMovement>().Toggle();
         player.SetActive(_toggle);
         playerOnWhale.SetActive(!_toggle);

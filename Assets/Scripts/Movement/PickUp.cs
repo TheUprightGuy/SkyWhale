@@ -29,6 +29,8 @@ public class PickUp : MonoBehaviour
     Vector3 target;
     [HideInInspector] new public bool enabled;
 
+    public Transform[] cinematicPoints;
+
     #region Setup
     /// <summary>
     /// Description: Gets component references.
@@ -46,6 +48,8 @@ public class PickUp : MonoBehaviour
     private void Start()
     {
         CallbackHandler.instance.setDestination += SetDestination;
+
+        GoToPoint(cinematicPoints[tracking]);
     }
     private void OnDestroy()
     {
@@ -64,6 +68,33 @@ public class PickUp : MonoBehaviour
         {
             // get direction to height reference
             Vector3 dir = target - transform.position;
+
+            if (cinematic)
+            {
+                float dist = Vector3.Distance(transform.position, target);
+                whale.moveSpeed = 5.0f * Mathf.Clamp01(dist / approachDistance);
+                rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * orbit.rotSpeed));
+
+                if (dist < 2.0f)
+                {
+
+                    if (cinematic)
+                    {
+                        if ((tracking < cinematicPoints.Length - 1))
+                        {
+                            tracking++;
+                            GoToPoint(cinematicPoints[tracking]);
+                        }
+                        else
+                        {
+                            orbit.SetOrbit(cinematicPoints[cinematicPoints.Length - 1].gameObject);
+                            //homing = true;
+                        }
+                    }
+                }
+                return;
+            }
+
 
             // If at orbit, proceed to pickup
             if (orbit.dist < 0.1f)
@@ -115,5 +146,15 @@ public class PickUp : MonoBehaviour
         heightRef = orbit.orbit;
         target = new Vector3(_target.transform.position.x, heightRef.transform.position.y + 20.0f, _target.transform.position.z);
         enabled = true;
+    }
+
+    bool cinematic;
+    int tracking = 0;
+    public void GoToPoint(Transform _tar)
+    {
+        target = _tar.position;
+        enabled = true;
+        homing = true;
+        cinematic = true;
     }
 }
