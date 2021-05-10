@@ -61,4 +61,46 @@ public class CameraManager : MonoBehaviour
             switchCam(_cam);
         }
     }
+
+
+    float zoom;
+    bool change;
+
+    public void LetterBox()
+    {
+        zoom = 0.8f;
+        change = true;
+    }
+
+    public void Standard()
+    {
+        zoom = 1.0f;
+        change = true;
+    }
+
+    public float y;
+
+    private void Update()
+    {
+        // TEMP KEYS
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            LetterBox();
+        }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Standard();
+        }
+
+        if (!change)
+            return;
+
+        float h = Mathf.MoveTowards(Camera.main.rect.height, zoom, Time.deltaTime / 2.0f);
+        y = (1.0f - h) / 2.0f;
+        Camera.main.rect = new Rect(0, y, 1, h);
+
+
+        if (Mathf.Abs(h - zoom) < Mathf.Epsilon)
+            change = false;
+    }
 }
