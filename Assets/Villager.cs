@@ -66,7 +66,7 @@ public class Villager : NPCScript
         CallbackHandler.instance.SetDialogue(currentDialogue);
         CallbackHandler.instance.Pause(true);
 
-        CallbackHandler.instance.HideSpeech();
+        CallbackHandler.instance.HidePrompt(PromptType.Speech);
     }
 
     public override void OnTriggerEnter(Collider other)
@@ -76,7 +76,6 @@ public class Villager : NPCScript
             pm = other.GetComponent<PlayerMovement>();
 
             CallbackHandler.instance.SpeechInRange(dialogueTransform);
-            CallbackHandler.instance.ShowSpeech();
         }
     }
 }

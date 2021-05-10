@@ -7,23 +7,12 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="BlacksmithScript.cs" t="Include" />
-        <e p="ButtonPrompt.cs" t="Include" />
         <e p="Editor" t="Include">
           <e p="ConditionalHidePropertyDrawer.cs" t="Include" />
           <e p="MaterialInstancer.cs" t="Include" />
           <e p="TexturePainterControllerEditor.cs" t="Include" />
         </e>
-        <e p="FullscreenToggle.cs" t="Include" />
-        <e p="GameUIController.cs" t="Include" />
-        <e p="GlidePrompt.cs" t="Include" />
-        <e p="GrappleChallengeMaster.cs" t="Include" />
-        <e p="GrappleChallengePoint.cs" t="Include" />
-        <e p="GrappleCheckPoint.cs" t="Include" />
-        <e p="GrappleEndPoint.cs" t="Include" />
         <e p="GrappleIslandFlightChallenges.cs" t="Include" />
-        <e p="GrapplePrompt.cs" t="Include" />
-        <e p="GrappleStartPoint.cs" t="Include" />
         <e p="Lava.cs" t="Include" />
         <e p="LeanTween" t="Include">
           <e p="Editor" t="Include">
@@ -62,12 +51,24 @@
           </e>
         </e>
         <e p="MatScript.cs" t="Include" />
-        <e p="NPCScript.cs" t="Include" />
-        <e p="ObjectiveTrackingUI.cs" t="Include" />
-        <e p="ObjectiveUIElement.cs" t="Include" />
-        <e p="PilotQuestCollectable.cs" t="Include" />
-        <e p="PromptGrapple.cs" t="Include" />
-        <e p="PuzzlePrompt.cs" t="Include" />
+        <e p="SampleScenes" t="Include">
+          <e p="Menu" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="MenuSceneLoader.cs" t="Include" />
+              <e p="PauseMenu.cs" t="Include" />
+              <e p="SceneAndURLLoader.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Scripts" t="Include">
+            <e p="CameraSwitch.cs" t="Include" />
+            <e p="LevelReset.cs" t="Include" />
+            <e p="PlaceTargetWithMouse.cs" t="Include" />
+            <e p="SlowMoButton.cs" t="Include" />
+          </e>
+          <e p="Shaders" t="Include">
+            <e p="Skybox-Procedural.shader" t="Include" />
+          </e>
+        </e>
         <e p="Scripts" t="Include">
           <e p="Audio" t="Include">
             <e p="AmbientLayer.cs" t="Include" />
@@ -105,6 +106,13 @@
           <e p="FlightChallengePlatform.cs" t="Include" />
           <e p="FlightChallengeRing.cs" t="Include" />
           <e p="GliderMovement.cs" t="Include" />
+          <e p="GrappleChallengeScripts" t="Include">
+            <e p="GrappleChallengeMaster.cs" t="Include" />
+            <e p="GrappleChallengePoint.cs" t="Include" />
+            <e p="GrappleCheckPoint.cs" t="Include" />
+            <e p="GrappleEndPoint.cs" t="Include" />
+            <e p="GrappleStartPoint.cs" t="Include" />
+          </e>
           <e p="GunMeshSwitch.cs" t="Include" />
           <e p="Island" t="Include">
             <e p="CollectableIsland" t="Include">
@@ -158,6 +166,11 @@
             <e p="WhaleMovement.cs" t="Include" />
           </e>
           <e p="NewGrappleHook.cs" t="Include" />
+          <e p="NPCScripts" t="Include">
+            <e p="BlacksmithScript.cs" t="Include" />
+            <e p="NPCScript.cs" t="Include" />
+            <e p="PilotQuestCollectable.cs" t="Include" />
+          </e>
           <e p="Particles" t="Include">
             <e p="ParticleSpeedScript.cs" t="Include" />
             <e p="RingPFX.cs" t="Include" />
@@ -213,6 +226,21 @@
             <e p="MapHandler.cs" t="Include" />
             <e p="SaveContainer.cs" t="Include" />
           </e>
+          <e p="UISCRIPTS" t="Include">
+            <e p="ApplyButton.cs" t="Include" />
+            <e p="ButtonPrompt.cs" t="Include" />
+            <e p="FullscreenToggle.cs" t="Include" />
+            <e p="GameUIController.cs" t="Include" />
+            <e p="MainMenuCanvasController.cs" t="Include" />
+            <e p="ObjectiveTrackingUI.cs" t="Include" />
+            <e p="ObjectiveUIElement.cs" t="Include" />
+            <e p="PromptGrapple.cs" t="Include" />
+            <e p="PuzzlePrompt.cs" t="Include" />
+            <e p="SpeechUIElement.cs" t="Include" />
+          </e>
+          <e p="UnityURPUnlitScreenSpaceDecalShader-master" t="Include">
+            <e p="URP_NiloCatExtension_ScreenSpaceDecal_Unlit.shader" t="Include" />
+          </e>
         </e>
         <e p="Shaders" t="Include">
           <e p="Clouds" t="Include">
@@ -223,8 +251,6 @@
           </e>
           <e p="UnlitTransparent.shader" t="Include" />
         </e>
-        <e p="SpeechPrompt.cs" t="Include" />
-        <e p="SpeechUIElement.cs" t="Include" />
         <e p="Stylized Water" t="Include">
           <e p="Shaders" t="Include">
             <e p="ShadowUtilities.cginc" t="Include" />
