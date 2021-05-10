@@ -20,7 +20,7 @@ MonoBehaviour:
     - Woah....
     - Can I see that bit of metal you have there?
     - Hmm... this would you be perfect
-    dialogueIndex: 0
+    dialogueIndex: 2
   - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
     left: 0
     name: MC
@@ -35,7 +35,7 @@ MonoBehaviour:
       been working on
     - Did you find this here?
     - On this island?
-    dialogueIndex: 0
+    dialogueIndex: 2
   - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
     left: 0
     name: MC
@@ -46,13 +46,13 @@ MonoBehaviour:
     left: 1
     name: Pilot
     dialogue:
-    - I's pretty impressive that you managed to find this
-    - It's the only bit of metal on this island that's pure enough for me to be able
-      to finish my gliders
+    - It's pretty impressive that you managed to find this
+    - That's the only bit of metal on this island that's pure enough for me to be
+      able to finish my gliders
     - Let's make a deal..
     - If you give me this material, then I'll give you one of these gliders and the
       location of a sweet island which is perfect for gliding
-    dialogueIndex: 0
+    dialogueIndex: 1
   - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
     left: 0
     name: Mc
@@ -67,6 +67,6 @@ MonoBehaviour:
     dialogueIndex: 0
   leftCharacter: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
   rightCharacter: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
-  dialogueIndex: 0
-  inUse: 0
+  dialogueIndex: 4
+  inUse: 1
   triggerEvent: EnableGlider

@@ -1,27 +1,12 @@
-﻿/*
-  Bachelor of Software Engineering
-  Media Design School
-  Auckland
-  New Zealand
-  (c) 2021 Media Design School
-  File Name   :   BlacksmithScript.cs
-  Description :   Derives from NPC Script - Listens for Special collectable collection.  Was modified from blacksmith script
-  Date        :   07/04/2021
-  Author      :   Jacob Gallagher
-  Mail        :   Jacob.Gallagher1@mds.ac.nz
-*/
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PilotScript : NPCScript
+public class Villager : NPCScript
 {
     public Dialogue followUpDialogue;
-    public Dialogue gatheredMaterialFirstDialogue;
-    public Quest pilotQuest;
-
-    private bool _talkedTo = false;
+    public Dialogue completedChallenges;
+    private int _glidingChallengesCompleted;
 
     /// <summary>
     /// Description: Adds a listener as override.
@@ -32,27 +17,38 @@ public class PilotScript : NPCScript
     {
         dialogue.StartUp();
         followUpDialogue.StartUp();
-        gatheredMaterialFirstDialogue.StartUp();
+        completedChallenges.StartUp();
 
         currentDialogue = dialogue;
+        _glidingChallengesCompleted = 0;
 
-        EventManager.StartListening("SpecialMetalCollected", SwitchDialogue);
-        EventManager.StartListening("StartPilotQuest", StartPilotQuest);
+        EventManager.StartListening("PilotVillagerDialogueUpdate", SwitchDialogue);
+        EventManager.StartListening("GrappleIslandGlidingChallengeComplete", SwitchDialogueFinal);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(Interact);
         CallbackHandler.instance.pause += Pause;
         CallbackHandler.instance.resetCamera += ResetCamera;
     }
 
     /// <summary>
-    /// Description:  Switches dialogue after collecting material.
-    /// Dialogue to switch to depends if the player has already talked to the pilot 
+    /// Description:  Switches dialogue after enabling glider.
     /// <br>Author: Jacob Gallagher </br>
-    /// <br>Last Updated: 04/30/2021</br> 
+    /// <br>Last Updated: 05/10/2021</br> 
     /// </summary>
     public void SwitchDialogue()
     {
-        currentDialogue = _talkedTo ? followUpDialogue : gatheredMaterialFirstDialogue;
-        EventManager.TriggerEvent("PilotVillagerDialogueUpdate");
+        currentDialogue = followUpDialogue;
+    }
+    
+    /// <summary>
+    /// Description:  Switches dialogue after completing gliding challenge.
+    /// <br>Author: Jacob Gallagher </br>
+    /// <br>Last Updated: 05/10/2021</br> 
+    /// </summary>
+    public void SwitchDialogueFinal()
+    {
+        _glidingChallengesCompleted++;
+        if(_glidingChallengesCompleted < 3) return;
+        currentDialogue = completedChallenges;
     }
 
     /// <summary>
@@ -71,18 +67,6 @@ public class PilotScript : NPCScript
         CallbackHandler.instance.Pause(true);
 
         CallbackHandler.instance.HideSpeech();
-        _talkedTo = true;
-
-        if (currentDialogue == followUpDialogue)
-        {
-            EventManager.TriggerEvent("ReturnPilot");
-            return;
-        }
-    }
-
-    public void StartPilotQuest()
-    {
-        QuestManager.instance.AddQuest(pilotQuest);
     }
 
     public override void OnTriggerEnter(Collider other)

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9acc76f917637d6458e8e47e08610bdc, type: 3}
-  m_Name: PLVillagerDialogue
+  m_Name: PLVillagerDialogue1
   m_EditorClassIdentifier: 
   dialogue:
   - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
@@ -36,9 +36,15 @@ MonoBehaviour:
     left: 1
     name: Villager
     dialogue:
-    - Yes! There's nothing like it! See if you can track down my master if you want
+    - Yes! There's nothing like it! See if you can track down the pilot if you want
       to try.
     - He's usually at the highest point on the island. Good luck tracking him down!
+    - I'm actually on my way up to convince him to lend me another glider
+    - Although I'm just having a short break right now
+    - ... and trying to figure out how it's possible to climb up the rest of the
+      way
+    - If you get a glider from the pilot at the top of the island,
+    - Then I'll be happy to show you some cool gliding spots!
     dialogueIndex: 0
   leftCharacter: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
   rightCharacter: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}

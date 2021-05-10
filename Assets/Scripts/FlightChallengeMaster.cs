@@ -34,6 +34,8 @@ public class FlightChallengeMaster : MonoBehaviour
             n.parent = this;
         }
 
+        enabled = true;
+
         GetComponentInChildren<FlightChallengePlatform>().parent = this;
 
         ps = GetComponentInChildren<ParticleSystem>();
@@ -59,6 +61,11 @@ public class FlightChallengeMaster : MonoBehaviour
         }
 
         Debug.Log("Passed Challenge!");
+        if (gameObject.scene.name == "Grapple_Island")
+        {
+            Debug.Log("GlidingChallenge completed on grapple island");
+            EventManager.TriggerEvent("GrappleIslandGlidingChallengeComplete");
+        }
         ps.Play();
         for (int i = rings.Count - 1; i >= 0; i--)
         {

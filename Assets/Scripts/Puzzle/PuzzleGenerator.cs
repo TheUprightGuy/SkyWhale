@@ -169,10 +169,10 @@ namespace Puzzle
             cam.m_Priority = 0;
         }*/
 
-        private void OnDrawGizmos()
+        /*private void OnDrawGizmos()
         {
             Gizmos.DrawSphere(RestartPos.position, 1.0f);
-        }
+        }*/
 
         /*public Cinemachine.CinemachineVirtualCamera cam;
         private void OnTriggerEnter(Collider other)
