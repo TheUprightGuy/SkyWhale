@@ -48,6 +48,8 @@ public class BlacksmithScript : NPCScript
         currentDialogue = followUpDialogue;
         pm = player;
         Interact(InputState.KEYDOWN);
+        EventManager.StopListening("SwitchPuzzleCompletion", SwitchDialogue);
+        pm = null;
     }
 
     /// <summary>
