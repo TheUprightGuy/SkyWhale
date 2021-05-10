@@ -184,75 +184,21 @@ public class CallbackHandler : MonoBehaviour
         }
     }
 
-    public event Action<InputType,string, string> displayHotkey;
-    public void DisplayHotkey(InputType _type, string _action, string _subName)
+    public event Action<PromptType> displayPrompt;
+    public void DisplayPrompt(PromptType _type)
     {
-        if (displayHotkey != null)
+        if (displayPrompt != null)
         {
-            displayHotkey(_type, _action, _subName);
+            displayPrompt(_type);
         }
     }
 
-    public event Action<string> hideHotkey;
-    public void HideHotkey(string _action)
+    public event Action<PromptType> hidePrompt;
+    public void HidePrompt(PromptType _type)
     {
-        if (hideHotkey != null)
+        if (hidePrompt != null)
         {
-            hideHotkey(_action);
-        }
-    }
-
-    public event Action showGlide;
-    public void ShowGlide()
-    {
-        if (showGlide != null)
-        {
-            showGlide();
-        }
-    }
-
-    public event Action hideGlide;
-    public void HideGlide()
-    {
-        if (hideGlide != null)
-        {
-            hideGlide();
-        }
-    }
-
-    public event Action showGrapple;
-    public void ShowGrapple()
-    {
-        if (showGrapple != null)
-        {
-            showGrapple();
-        }
-    }
-
-    public event Action hideGrapple;
-    public void HideGrapple()
-    {
-        if (hideGrapple != null)
-        {
-            hideGrapple();
-        }
-    }
-
-    public event Action showSpeech;
-    public void ShowSpeech()
-    {
-        if (showSpeech != null)
-        {
-            showSpeech();
-        }
-    }
-
-    public event Action hideSpeech;
-    public void HideSpeech()
-    {
-        if (hideSpeech != null)
-        {
-            hideSpeech();
+            hidePrompt(_type);
         }
     }
 

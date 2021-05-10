@@ -792,21 +792,27 @@ public class PlayerMovement : MonoBehaviour
         if (distanceFromGround > 3.0f && GetComponent<GliderMovement>().unlocked && playerState == PlayerStates.FALLING)
         {
             //CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Glide", "");
-            CallbackHandler.instance.ShowGlide();
+            //CallbackHandler.instance.ShowGlide();
+            CallbackHandler.instance.DisplayPrompt(PromptType.Glide);
         }
         else
         {
             //CallbackHandler.instance.HideHotkey("Glide");
-            CallbackHandler.instance.HideGlide();
+            //CallbackHandler.instance.HideGlide();
+            CallbackHandler.instance.HidePrompt(PromptType.Glide);
         }
 
         if (IsClimbing() && IsGrounded())
         {
-            CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Jump", "Climb");
+            //CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Jump", "Climb");
+            //CallbackHandler.instance.ShowJump();
+            CallbackHandler.instance.DisplayPrompt(PromptType.Climb);
         }
         else
         {
-            CallbackHandler.instance.HideHotkey("Jump");
+            //CallbackHandler.instance.HideHotkey("Jump");
+            //CallbackHandler.instance.HideJump();
+            CallbackHandler.instance.HidePrompt(PromptType.Climb);
         }
     }
 
