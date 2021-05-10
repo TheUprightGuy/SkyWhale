@@ -70,7 +70,7 @@ public class PilotScript : NPCScript
         CallbackHandler.instance.SetDialogue(currentDialogue);
         CallbackHandler.instance.Pause(true);
 
-        CallbackHandler.instance.HideSpeech();
+        CallbackHandler.instance.HidePrompt(PromptType.Speech);
         _talkedTo = true;
 
         if (currentDialogue == followUpDialogue)
@@ -92,7 +92,6 @@ public class PilotScript : NPCScript
             pm = other.GetComponent<PlayerMovement>();
 
             CallbackHandler.instance.SpeechInRange(dialogueTransform);
-            CallbackHandler.instance.ShowSpeech();
         }
     }
 }

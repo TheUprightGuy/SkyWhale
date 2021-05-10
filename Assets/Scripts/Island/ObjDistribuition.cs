@@ -44,6 +44,10 @@ public class ObjData
 
     [Header("Randomiser")]
     public int Seed = 69;
+
+    [Space()]
+    [Tooltip("If true the XYZ will all scale one one value, between minScale.x, and maxScale.x")]
+    public bool UnifyScale = false;
     public Vector3 minScale = Vector3.one;
     public Vector3 maxScale = Vector3.one;
 
@@ -132,9 +136,24 @@ public class ObjData
         {
             return;
         }
+
+        Camera test = Camera.main;
+        Matrix4x4 tf = Matrix4x4.TRS(Vector3.zero,
+                Quaternion.identity, Vector3.one);
         foreach (var item in grassContainer.GrassChunks)
         {
-            Graphics.DrawMesh(item.mesh, Vector3.zero, Quaternion.identity, prefabTemplate.GetComponentInChildren<MeshRenderer>().sharedMaterial, 0);
+            Graphics.DrawMesh(
+                item.mesh, //Mesh
+                tf,     //TRS
+                prefabTemplate.GetComponentInChildren<MeshRenderer>().sharedMaterial,//Mat
+                0,      //Layer
+                null,   //Camera
+                0,      //Submesh index
+                null,   //Mat Prop Block
+                true,  //Cast Shadows
+                true   //Receive Shadows
+                );
+
         }
     }
 
@@ -159,12 +178,18 @@ public class ObjData
             Vector2 randomPointxz = Random.insideUnitCircle * radius;
             Vector3 randomPoint = new Vector3(randomPointxz.x, 0.0f, randomPointxz.y);
             randomPoint = Vector3.ProjectOnPlane(randomPoint, normal);
+
+
             newPoints.Add(point + randomPoint);
             newNormals.Add(normal);
         }
+
         RaycastPositions(ref newPoints, ref newNormals);
         PointSet(newPoints, newNormals);
+
+        
     }
+
 
 
     public void PointSet(List<Vector3> PointList, List<Vector3> NormalList)
@@ -279,10 +304,20 @@ public class ObjData
                     instanceChunks.Add(chunk.index, instanceList); //Add if none found
                 }
 
-                //Apply a random scale to said prefab
-                Vector3 randScale = new Vector3(Random.Range(minScale.x, maxScale.x),
-                    Random.Range(minScale.y, maxScale.y),
-                    Random.Range(minScale.z, maxScale.z));
+                Vector3 randScale = Vector3.one;
+                if (UnifyScale) //IF wanting to apply a uniform scale on xyz
+                {
+                    randScale *= Random.Range(minScale.x, maxScale.x);
+                }
+                else
+                {
+                    //Apply a random scale to said prefab
+                    randScale = new Vector3(Random.Range(minScale.x, maxScale.x),
+                        Random.Range(minScale.y, maxScale.y),
+                        Random.Range(minScale.z, maxScale.z));
+
+                }
+
 
                 CombineInstance newInstance = new CombineInstance();
 

@@ -122,6 +122,7 @@ public class GrappleScript : MonoBehaviour
     void EnableGrapple()
     {
         enabled = true;
+        shootPoint.ToggleEnabled();
     }
 
     /// <summary>
@@ -233,20 +234,24 @@ public class GrappleScript : MonoBehaviour
                 grapplePoint.color = Color.red;
 
                 if (aim)
-                    CallbackHandler.instance.ShowGrapple();
-                //CallbackHandler.instance.DisplayHotkey(InputType.PLAYER, "Grapple", "");
-
+                {
+                    CallbackHandler.instance.DisplayPrompt(PromptType.GrappleFire);
+                }
                 return hit.point;
             }
 
             if (aim)
-                CallbackHandler.instance.HideGrapple();
+            {
+                CallbackHandler.instance.HidePrompt(PromptType.GrappleFire);
+            }
 
             grapplePoint.color = Color.white;
             //CallbackHandler.instance.HideGrapple();
             //CallbackHandler.instance.HideHotkey("Grapple");
             return hit.point;
         }
+
+        CallbackHandler.instance.HidePrompt(PromptType.GrappleFire);
 
         grapplePoint.color = Color.white;
         //CallbackHandler.instance.HideGrapple();
@@ -311,7 +316,10 @@ public class GrappleScript : MonoBehaviour
         }
 
         if (!aim)
+        {
+            CallbackHandler.instance.HidePrompt(PromptType.GrappleFire);
             return;
+        }
 
         // Firehook if player clicked while already attached
         if (cachedShoot)
@@ -346,8 +354,7 @@ public class GrappleScript : MonoBehaviour
         
         if(!AbleToRetract() && !aim) return;
 
-        //CallbackHandler.instance.HideHotkey("Grapple");
-        CallbackHandler.instance.HideGrapple();
+        CallbackHandler.instance.HidePrompt(PromptType.GrappleAim);
 
         // Available To Use
         if (!HookInUse() && (pm ? !pm.GLIDINGCheck() : grapplingFromWhale))
@@ -420,8 +427,7 @@ public class GrappleScript : MonoBehaviour
     /// <param name="_startAim">ADS</param>
     void ToggleAim(bool _startAim)
     {
-        //CallbackHandler.instance.HideHotkey("GrappleAim");
-        CallbackHandler.instance.HideGrapple();
+        CallbackHandler.instance.HidePrompt(PromptType.GrappleAim);
 
         // Toggle Reticule
         aim = _startAim;

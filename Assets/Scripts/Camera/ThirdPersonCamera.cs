@@ -60,16 +60,22 @@ public class ThirdPersonCamera : MonoBehaviour
 
         CameraManager.instance.switchCam += SwitchCam;
         CallbackHandler.instance.pause += Pause;
+        CallbackHandler.instance.changeMouseSensitivity += ChangeMouseSensitivity;
 
         VirtualInputs.GetInputListener(InputType.PLAYER, "CameraSnap").MethodToCall.AddListener(CameraSnap);
 
     }
 
+    void ChangeMouseSensitivity(int _value)
+    {
+        rotateSpeed = 150 * (_value / 10.0f);
+    }
 
     private void OnDestroy()
     {
         CameraManager.instance.switchCam -= SwitchCam;
         CallbackHandler.instance.pause -= Pause;
+        CallbackHandler.instance.changeMouseSensitivity -= ChangeMouseSensitivity;
     }
 
 

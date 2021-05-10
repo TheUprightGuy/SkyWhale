@@ -45,13 +45,32 @@ public class SwitchPuzzleMaster : MonoBehaviour
         }
 
         int numOff = 0;
+        int numOn = 0;
 
         foreach (PuzzleSwitch n in switches)
         {
-            if (numOff < 5)
-                n.active = Random.value > 0.5f;
-            if (!n.active)
+            if (numOff >= 4)
+            {
+                n.active = true;
+                numOn++;
+            }
+            else if (numOn >= 4)
+            {
+                n.active = false;
                 numOff++;
+            }
+            else
+            {
+                n.active = Random.value > 0.5f;
+                if (!n.active)
+                {
+                    numOff++;
+                }
+                else
+                {
+                    numOn++;
+                }
+            }
 
             n.on = on;
             n.off = off;
@@ -83,7 +102,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
         ToggleCam(inUse);
         Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = inUse;
-        CallbackHandler.instance.HideSpeech();
+        CallbackHandler.instance.HidePrompt(PromptType.Interact);
 
         if (inUse)
             CallbackHandler.instance.PuzzleOutOfRange();
@@ -104,7 +123,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
             return;
         }
         CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
-        CallbackHandler.instance.HideSpeech();
+        CallbackHandler.instance.HidePrompt(PromptType.Interact);
     }
 
     /// <summary>
@@ -148,7 +167,6 @@ public class SwitchPuzzleMaster : MonoBehaviour
         {
             pm = player;
             CallbackHandler.instance.PuzzleInRange(promptPosition);
-            CallbackHandler.instance.ShowSpeech();
         }
     }
 
@@ -160,7 +178,6 @@ public class SwitchPuzzleMaster : MonoBehaviour
             ToggleCam(false);
             pm = null;
             CallbackHandler.instance.PuzzleOutOfRange();
-            CallbackHandler.instance.HideSpeech();
         }
     }
     #endregion Triggers

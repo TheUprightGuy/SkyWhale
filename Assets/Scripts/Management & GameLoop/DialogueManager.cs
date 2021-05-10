@@ -128,6 +128,9 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void ShowDialogue()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+
         // No More Dialogue
         if (!currentDialogue)
         {
@@ -181,7 +184,14 @@ public class DialogueManager : MonoBehaviour
             StopDialogue();
             StopCoroutine(myCoroutine);
             currentDialogue = null;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
+    }
+
+    public void Progress()
+    {
+        ProgressDialogue(InputState.KEYDOWN);
     }
 
     void StopWriting()
@@ -203,6 +213,8 @@ public class DialogueManager : MonoBehaviour
         animator.SetTrigger("PopOut");
         dialogue.SetText(" ");
         dialogue.text = "";
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     /// <summary>

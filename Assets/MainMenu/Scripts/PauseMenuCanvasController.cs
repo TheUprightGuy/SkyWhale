@@ -74,8 +74,10 @@ public class PauseMenuCanvasController : MonoBehaviour
     }
     #endregion Setup
 
-    [HideInInspector] public MenuOptions menu = MenuOptions.Main;
-    [HideInInspector] public MenuOptions prevMenu;
+    //[HideInInspector] 
+    public MenuOptions menu = MenuOptions.Main;
+    //[HideInInspector]
+    public MenuOptions prevMenu;
     [HideInInspector] public AudioSource audioSource;
 
     public GameObject toggle;
@@ -89,7 +91,7 @@ public class PauseMenuCanvasController : MonoBehaviour
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
     /// <param name="type">InputState (Down/Held/Up)</param>
-    public void Pause(InputState type)
+    public virtual void Pause(InputState type)
     {
         toggle.SetActive(!toggle.activeSelf);
         CallbackHandler.instance.Pause(toggle.activeSelf);
