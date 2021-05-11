@@ -21,6 +21,7 @@ public struct QuestObjective
 {
     public string eventName;
     public string objDesc;
+    public Vector3 location;
 }
 
 [CreateAssetMenu(fileName = "Quest", menuName = "Quests/Quest", order = 1)]

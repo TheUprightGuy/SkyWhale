@@ -40,4 +40,9 @@ public class ObjectiveUIElement : MonoBehaviour
         currentQuest = _quest;
         DisplayObjective();
     }
+
+    public Vector3 GetQuestLocation()
+    {
+        return currentQuest.objectives[currentQuest.index].location;
+    }
 }

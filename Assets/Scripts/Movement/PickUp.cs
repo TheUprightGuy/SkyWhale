@@ -75,7 +75,7 @@ public class PickUp : MonoBehaviour
                 whale.moveSpeed = 5.0f * Mathf.Clamp01(dist / approachDistance);
                 rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * orbit.rotSpeed));
 
-                if (dist < 2.0f)
+                if (dist < 20.0f)
                 {
 
                     if (cinematic)
