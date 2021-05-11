@@ -38,6 +38,9 @@ public class ParticleSpeedScript : MonoBehaviour
     /// </summary>
     void Update()
     {
+        if (!GetComponentInParent<WhaleMovement>())
+            return;
+
         float alpha = GetComponentInParent<WhaleMovement>().currentSpeed / 200;
         
         //Debug.Log(alpha);

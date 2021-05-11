@@ -53,8 +53,11 @@ public class OrbitScript : MonoBehaviour
         // testing purposes
         if (enabled)
         {
+            rb.velocity = Vector3.forward;
+
             SetOrbit(orbit);
-            GetComponent<WhaleMovement>().moveSpeed = 2.5f;
+            if (GetComponent<WhaleMovement>())
+              GetComponent<WhaleMovement>().moveSpeed = 2.5f;
         }
     }
     private void OnDestroy()
@@ -72,6 +75,8 @@ public class OrbitScript : MonoBehaviour
     {
         if (enabled)
         {
+            rb.MovePosition(rb.position + transform.forward * Time.fixedDeltaTime);
+
             objToIsland = orbit.transform.position - transform.position;
             Vector3 islandToObj = transform.position - orbit.transform.position;
 

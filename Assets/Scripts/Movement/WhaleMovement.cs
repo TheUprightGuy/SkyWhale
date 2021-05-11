@@ -66,7 +66,8 @@ public class WhaleMovement : MonoBehaviour
         pickUp = GetComponent<PickUp>();
         cc = GetComponentInChildren<NewCharacter>();
         gs = GetComponentInChildren<GrappleScript>();
-        dismountPosition = GameObject.Find("DismountPos").transform;
+        if (GameObject.Find("DismountPos"))
+            dismountPosition = GameObject.Find("DismountPos").transform;
     }
 
     /// <summary>    
