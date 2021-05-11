@@ -22,6 +22,7 @@ public class TimeSlowDown : MonoBehaviour
     
     [Header("Debug")]
     public float timeScale = 1.0f;
+    public bool stop;
 
     // Local Variables
     float defaultGrayScale = 0.0f;
@@ -130,6 +131,8 @@ public class TimeSlowDown : MonoBehaviour
 
             //Physics.gravity = grav * timeScale;
         }
+
+        if (stop) timeScale = 0f;
 
         if (floating)
         {

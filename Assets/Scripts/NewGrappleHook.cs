@@ -243,7 +243,7 @@ public class NewGrappleHook : MonoBehaviour
                 return;
 
             // Fire player if connected to surface and player enters range
-            YeetPlayer(pc.GetComponentInParent<PlayerMovement>());
+            YeetPlayer();
         }
     }
 
@@ -267,14 +267,15 @@ public class NewGrappleHook : MonoBehaviour
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
     /// <param name="_player">Reference to player</param>
-    public void YeetPlayer(PlayerMovement _player)
+    public void YeetPlayer()
     {
         // If grapple disabled, do not launch.
         if (enabled)
             return;
 
         // Otherwise add force.
-        Rigidbody temp = _player.GetComponent<Rigidbody>();
+        EventManager.TriggerEvent("onGrappleJump");
+        Rigidbody temp = EntityManager.instance.player.GetComponent<Rigidbody>();
         temp.AddForce(Vector3.Normalize((Vector3.Normalize(forceDir) + Vector3.up * 2.0f)) * (temp.velocity.magnitude * yeetForceStrength), ForceMode.Impulse);
         // Play grapple disconnect audio
         AudioManager.instance.PlaySound("GrappleFail");

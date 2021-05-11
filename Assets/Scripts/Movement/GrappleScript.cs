@@ -195,9 +195,15 @@ public class GrappleScript : MonoBehaviour
         // Ensure a player is referenced (safety check)
         if (pm)       
             pm.haveControl = !hook.connected;
-
+        
         if (hook.connected)
         {
+            if (TimeSlowDown.instance.stop)
+            {
+                //Tutorial is showing remove player velocity and stop until tutorial is over
+                rb.velocity = Vector3.zero;
+                return;
+            }
             // Check as used by both mc and whale grapple
             if (!grapplingFromWhale)
             {
@@ -404,7 +410,7 @@ public class GrappleScript : MonoBehaviour
     public void YeetPlayer()
     {
         if (!grapplingFromWhale)
-            hook.YeetPlayer(this.GetComponent<PlayerMovement>());
+            hook.YeetPlayer();
     }
 
     public bool active;
@@ -461,7 +467,7 @@ public class GrappleScript : MonoBehaviour
             hook.retracting = true;
             
             if(!grapplingFromWhale && collision.gameObject.layer != 13) 
-                hook.YeetPlayer(this.GetComponent<PlayerMovement>());
+                hook.YeetPlayer();
         }
     }
 
