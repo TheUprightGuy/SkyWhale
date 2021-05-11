@@ -21,6 +21,7 @@ public class GrappleTutorial : MonoBehaviour
         tutorialsCompleted = 0;
         showingTutorial = false;
         VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(EndGrappleReleaseTutorial);
+        EventManager.StartListening("onGrappleJump", FailGrappleReleaseTutorial);
     }
 
     private void EndGrappleReleaseTutorial(InputState arg0)
@@ -28,8 +29,9 @@ public class GrappleTutorial : MonoBehaviour
         _timer = 0f;
         if (!showingTutorial) return;
         EndTutorial();
-        VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.RemoveListener(EndGrappleReleaseTutorial);
+        EventManager.StopListening("onGrappleJump", FailGrappleReleaseTutorial);
         EventManager.StartListening("onGrappleJump", EndGrappleJumpTutorial);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(FailGrappleJumpTutorial);
     }
 
     private void EndGrappleJumpTutorial()
@@ -48,7 +50,7 @@ public class GrappleTutorial : MonoBehaviour
         //Disable freeze time
         TimeSlowDown.instance.timeScale = 1f;
         TimeSlowDown.instance.stop = false;
-        
+
         //Disable letterbox goes here
         
         //Hide canvas UI
@@ -57,9 +59,34 @@ public class GrappleTutorial : MonoBehaviour
         showingTutorial = false;
     }
 
-    private void Start()
+    private void FailTutorial()
     {
-        //Disable jump from grapple until 1st tutorial completed
+        //Disable tutorial without ending it
+        //Unfreeze time
+        TimeSlowDown.instance.timeScale = 1f;
+        TimeSlowDown.instance.stop = false;
+        
+        
+        //Disable Letterbox effect
+
+        //Hide tutorial UI
+        tutorialCanvases[tutorialsCompleted].SetActive(false);
+        
+        GetComponent<PlayerMovement>().playerState = PlayerMovement.PlayerStates.FALLING;
+        
+        showingTutorial = false;
+    }
+
+    private void FailGrappleReleaseTutorial()
+    {
+        if(!showingTutorial || tutorialsCompleted != 1) return;
+        FailTutorial();
+    }
+    
+    private void FailGrappleJumpTutorial(InputState arg0)
+    {
+        if(!showingTutorial || tutorialsCompleted != 0) return;
+        Invoke(nameof(FailTutorial), 0.2f);
     }
 
     // Update is called once per frame
