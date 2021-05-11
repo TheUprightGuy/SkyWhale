@@ -47,6 +47,12 @@ public class ObjectiveTrackingUI : MonoBehaviour
             return;
 
         Vector3 objLoc = objs[0].GetQuestLocation();
+        if (objLoc == Vector3.zero)
+        {
+            objMarker.SetActive(false);
+            distanceText.enabled = false;
+            return;
+        }
         Vector3 newPoint = Camera.main.WorldToScreenPoint(objLoc);
         objMarker.transform.position = newPoint;
 

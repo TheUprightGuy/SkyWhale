@@ -48,6 +48,9 @@ public class PickUp : MonoBehaviour
     private void Start()
     {
         CallbackHandler.instance.setDestination += SetDestination;
+        EventManager.StartListening("WhaleCinematic", TriggerWhaleCinematic);
+
+        this.gameObject.SetActive(false);
 
         GoToPoint(cinematicPoints[tracking]);
     }
@@ -56,6 +59,25 @@ public class PickUp : MonoBehaviour
         CallbackHandler.instance.setDestination -= SetDestination;
     }
     #endregion Callbacks
+
+    public void TriggerWhaleCinematic()
+    {
+        CameraManager.instance.SwitchCamera(CameraType.CinemaCamera);
+        this.gameObject.SetActive(true);
+        CameraManager.instance.LetterBox();
+        CallbackHandler.instance.CinematicPause(true);
+        EventManager.StopListening("WhaleCinematic", TriggerWhaleCinematic);
+    }
+
+    public void EndWhaleCinematic()
+    {
+        CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
+        CallbackHandler.instance.CinematicPause(false);
+        CameraManager.instance.Standard();
+        playedCinematic = true;
+    }
+
+    bool playedCinematic;
 
     /// <summary>
     /// Description: Handles pathfinding and rotation for the whale during pickup sequence.
@@ -77,6 +99,10 @@ public class PickUp : MonoBehaviour
 
                 if (dist < 20.0f)
                 {
+                    if (!playedCinematic && tracking == 1)
+                    {
+                        EndWhaleCinematic();
+                    }
 
                     if (cinematic)
                     {

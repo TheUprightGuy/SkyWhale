@@ -143,7 +143,7 @@ public class TimeSlowDown : MonoBehaviour
             drainTimer = Mathf.Clamp(drainTimer + Time.deltaTime, 0.0f, slowDuration);
         }
 
-        if (!Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>())
+        if (!Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>() || !adjustments)
             return;
 
         Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = ((timeScale / 5) * defaultFOV) + (defaultFOV + FOVOffset);

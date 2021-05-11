@@ -36,6 +36,15 @@ public class CallbackHandler : MonoBehaviour
     }
     #endregion Singleton
 
+    public event Action<bool> cinematicPause;
+    public void CinematicPause(bool _pause)
+    {
+        if (cinematicPause != null)
+        {
+            cinematicPause(_pause);
+        }
+    }
+
     public event Action<bool> pause;
     /// <summary>
     /// Description: Pauses all movement based objects.

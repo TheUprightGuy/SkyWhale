@@ -19,12 +19,14 @@ using System.Collections.Generic;
 using Audio;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GrappleScript : MonoBehaviour
 {
     [Header("Required Fields")]
     public NewGrappleHook hook;
     public GameObject GrappleUI;
+    public Image rangeIndicator; 
     public LayerMask grappleableLayers;
     public float pullSpeed = 8.0f;
 
@@ -123,6 +125,8 @@ public class GrappleScript : MonoBehaviour
     {
         enabled = true;
         shootPoint.ToggleEnabled();
+        EventManager.TriggerEvent("WhaleCinematic");
+        EventManager.StopListening("EnableGrapple", EnableGrapple);
     }
 
     /// <summary>
@@ -216,6 +220,7 @@ public class GrappleScript : MonoBehaviour
     }
     
     public LayerMask raycastTargets;
+    Color fade = new Color(1, 1, 1, 0.2f);
     /// <summary>
     /// Description: Checks if target is grappleable.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -231,7 +236,8 @@ public class GrappleScript : MonoBehaviour
 
             if (grappleableLayers == (grappleableLayers | (1 << hit.transform.gameObject.layer)))
             {
-                grapplePoint.color = Color.red;
+                rangeIndicator.color = (Vector3.Distance(transform.position, hit.point) < 19.0f) ? Color.white : Color.red;
+                grapplePoint.color = Color.white;
 
                 if (aim)
                 {
@@ -245,7 +251,8 @@ public class GrappleScript : MonoBehaviour
                 CallbackHandler.instance.HidePrompt(PromptType.GrappleFire);
             }
 
-            grapplePoint.color = Color.white;
+            rangeIndicator.color = fade;
+            grapplePoint.color = fade;
             //CallbackHandler.instance.HideGrapple();
             //CallbackHandler.instance.HideHotkey("Grapple");
             return hit.point;
@@ -253,7 +260,8 @@ public class GrappleScript : MonoBehaviour
 
         CallbackHandler.instance.HidePrompt(PromptType.GrappleFire);
 
-        grapplePoint.color = Color.white;
+        grapplePoint.color = fade;
+        rangeIndicator.color = fade;
         //CallbackHandler.instance.HideGrapple();
         //CallbackHandler.instance.HideHotkey("Grapple");
         return Vector3.zero;

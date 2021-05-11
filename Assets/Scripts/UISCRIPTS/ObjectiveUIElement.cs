@@ -43,6 +43,9 @@ public class ObjectiveUIElement : MonoBehaviour
 
     public Vector3 GetQuestLocation()
     {
+        if (currentQuest.index >= currentQuest.objectives.Count)
+            return Vector3.zero;
+
         return currentQuest.objectives[currentQuest.index].location;
     }
 }
