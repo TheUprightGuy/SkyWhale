@@ -64,7 +64,7 @@ public class ObjData
 
     public bool DrawBrush = false;
     //Defines size of radius
-    [Range(0.0f, 100.0f)]
+    [Range(1.0f, 100.0f)]
     public float BrushRadius = 5.0f;
     [Tooltip("The ammount of objects will be density squared")]
     public float density = 10;
@@ -359,7 +359,7 @@ public class ObjData
 
   
 
-    //Todo: Attempt to reuse this by inputing a normal list as well as a position so can raycast to any surface
+    
     public void RaycastPositions(ref List<Vector3> posList, ref List<Vector3> normalList)
     {
 

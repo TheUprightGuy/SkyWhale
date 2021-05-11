@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct MeshChunk
+public class MeshChunk
 {
     public MeshChunk(Vector3Int _index)
     {
@@ -13,8 +13,16 @@ public struct MeshChunk
         mesh = null;
         mat = null;
         Rebuild = false;
+    }
 
-
+    public MeshChunk()
+    {
+        index = Vector3Int.zero;
+        pointList = new List<Vector3>();
+        normalList = new List<Vector3>();
+        mesh = null;
+        mat = null;
+        Rebuild = false;
     }
 
     public Vector3Int index;

@@ -107,20 +107,29 @@ public class ObjDistribuitionEditor : Editor
         if (thisObj.grassContainer != null)
         {
             base.OnInspectorGUI();
+            if (GUILayout.Button("Save"))
+            {
+                AssetDatabase.Refresh();
+                UnityEditor.EditorUtility.SetDirty(thisObj.grassContainer);
+                AssetDatabase.SaveAssets();
+            }
         }
         else
-
-        if (GUILayout.Button("New Grass Container"))
         {
-            string fp = "Assets/" + thisObj.transform.name + "GrassInstance.asset"; // Probs want to make this a public at some point
-            GrassContainer newContainer = ScriptableObject.CreateInstance<GrassContainer>();
 
-            AssetDatabase.CreateAsset(newContainer, fp);
-            AssetDatabase.SaveAssets();
-            thisObj.grassContainer = (GrassContainer)AssetDatabase.LoadAssetAtPath(fp, typeof(GrassContainer)); //Retrieve the new container 
+            if (GUILayout.Button("New Grass Container"))
+            {
+                string fp = "Assets/" + thisObj.transform.name + "GrassInstance.asset"; // Probs want to make this a public at some point
+                GrassContainer newContainer = ScriptableObject.CreateInstance<GrassContainer>();
 
-            UnityEditor.EditorUtility.SetDirty(thisObj.grassContainer);
+                AssetDatabase.CreateAsset(newContainer, fp);
+                AssetDatabase.SaveAssets();
+                thisObj.grassContainer = (GrassContainer)AssetDatabase.LoadAssetAtPath(fp, typeof(GrassContainer)); //Retrieve the new container 
+
+                UnityEditor.EditorUtility.SetDirty(thisObj.grassContainer);
+            }
         }
+
     }
 
    
