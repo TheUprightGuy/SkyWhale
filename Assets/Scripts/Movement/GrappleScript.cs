@@ -436,6 +436,7 @@ public class GrappleScript : MonoBehaviour
     void ToggleAim(bool _startAim)
     {
         CallbackHandler.instance.HidePrompt(PromptType.GrappleAim);
+        CallbackHandler.instance.ResetActionTimer();
 
         // Toggle Reticule
         aim = _startAim;

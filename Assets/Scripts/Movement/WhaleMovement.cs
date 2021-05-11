@@ -89,11 +89,13 @@ public class WhaleMovement : MonoBehaviour
 
         EntityManager.instance.toggleControl += ToggleControl;
         CallbackHandler.instance.pause += Pause;
+        CallbackHandler.instance.resetActionTimer += ResetActionTimer;
     }
     private void OnDestroy()
     {
         EntityManager.instance.toggleControl -= ToggleControl;
         CallbackHandler.instance.pause -= Pause;
+        CallbackHandler.instance.resetActionTimer -= ResetActionTimer;
     }
 
     /// <summary>
@@ -262,6 +264,7 @@ public class WhaleMovement : MonoBehaviour
         thrustChange = false;
     }
 
+    float actionTimer;
     /// <summary>
     /// Description: Handles corrections to movement and rotation, as well as animation parameter updates.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -282,10 +285,24 @@ public class WhaleMovement : MonoBehaviour
         if (control)
         {
             MovementCorrections();
+            actionTimer -= Time.deltaTime;
+            if (actionTimer <= 0)
+            {
+                CameraManager.instance.LetterBox();
+            }
+            else
+            {
+                CameraManager.instance.Standard();
+            }
         }
         GetDistance();
 
         Movement();
+    }
+
+    public void ResetActionTimer()
+    {
+        actionTimer = 10.0f;
     }
 
     /// <summary>
@@ -431,6 +448,8 @@ public class WhaleMovement : MonoBehaviour
         ComeToHalt();
         //control = true;
         gs.active = true;
+        orbit.enabled = false;
+        ResetActionTimer();
     }
 
     /// <summary>

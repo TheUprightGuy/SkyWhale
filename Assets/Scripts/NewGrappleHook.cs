@@ -207,7 +207,6 @@ public class NewGrappleHook : MonoBehaviour
                     enabled = false;
                     retracting = true;
                     connectedObj = null;
-                    Debug.Log(Vector3.Distance(transform.position, EntityManager.instance.player.transform.position));
                 }
             }
         }

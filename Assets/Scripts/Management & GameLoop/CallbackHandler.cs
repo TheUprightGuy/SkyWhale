@@ -36,6 +36,15 @@ public class CallbackHandler : MonoBehaviour
     }
     #endregion Singleton
 
+    public event Action resetActionTimer;
+    public void ResetActionTimer()
+    {
+        if (resetActionTimer != null)
+        {
+            resetActionTimer();
+        }
+    }
+
     public event Action<bool> cinematicPause;
     public void CinematicPause(bool _pause)
     {

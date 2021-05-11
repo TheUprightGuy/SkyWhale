@@ -94,7 +94,7 @@ namespace Audio
         {
             var sound = SoundDictionary[soundName];
             sound.Reset();
-            PlaySound(sound.AudioSource);
+            PlaySound(sound.audioSource);
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace Audio
         /// <param name="soundName">The name of the sound and it's corresponding audio source game object</param>
         public void StopSound(string soundName)
         {
-            SoundDictionary[soundName].AudioSource.Stop();
+            SoundDictionary[soundName].audioSource.Stop();
         }
 
         /// <summary>
@@ -174,7 +174,7 @@ namespace Audio
         /// <returns>Whether or not the audio source is currently playing</returns>
         public bool IsSoundPlaying(string soundName)
         {
-            return SoundDictionary[soundName].AudioSource.isPlaying;
+            return SoundDictionary[soundName].audioSource.isPlaying;
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Audio
         {
             yield return FadeAmbientTracks(ambientLayer.exposedParamName, 0f);
             RandomiseAudioClip(ambientLayer, audioSource);
-            yield return FadeAmbientTracks(ambientLayer.exposedParamName, ambientLayer.soundInfo.VolumeDefault);
+            yield return FadeAmbientTracks(ambientLayer.exposedParamName, ambientLayer.soundInfo.volumeDefault);
             yield return new WaitForSeconds(Random.Range(ambientSoundTimerMin, ambientSoundTimerMax));
             if (playAmbientSounds) StartCoroutine(PlayRandomAmbientTracks(ambientLayer, audioSource));
         }
@@ -325,7 +325,7 @@ namespace Audio
             foreach (var currentSound in soundNamesInOrder)
             {
                 PlaySound(currentSound);
-                while (SoundDictionary[currentSound].AudioSource.isPlaying) yield return new WaitForSeconds(0.05f);
+                while (SoundDictionary[currentSound].audioSource.isPlaying) yield return new WaitForSeconds(0.05f);
             }
 
             yield return null;
