@@ -123,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
         // this is bad but hey it works
         if (cinematicPause)
         {
-            CameraManager.instance.LetterBox();
+            CameraManager.instance.LetterBox(true);
         }
     }
 

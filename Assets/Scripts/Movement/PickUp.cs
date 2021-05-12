@@ -64,7 +64,7 @@ public class PickUp : MonoBehaviour
     {
         CameraManager.instance.SwitchCamera(CameraType.CinemaCamera);
         this.gameObject.SetActive(true);
-        CameraManager.instance.LetterBox();
+        CameraManager.instance.LetterBox(true);
         CallbackHandler.instance.CinematicPause(true);
         EventManager.StopListening("WhaleCinematic", TriggerWhaleCinematic);
     }
@@ -73,7 +73,7 @@ public class PickUp : MonoBehaviour
     {
         CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
         CallbackHandler.instance.CinematicPause(false);
-        CameraManager.instance.Standard();
+        CameraManager.instance.Standard(true);
         playedCinematic = true;
     }
 

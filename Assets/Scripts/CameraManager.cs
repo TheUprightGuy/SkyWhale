@@ -66,17 +66,20 @@ public class CameraManager : MonoBehaviour
 
     float zoom;
     bool change;
+    bool cinema;
 
-    public void LetterBox()
+    public void LetterBox(bool _cinema)
     {
         zoom = 0.8f;
         change = true;
+        cinema = _cinema;
     }
 
-    public void Standard()
+    public void Standard(bool _cinema)
     {
         zoom = 1.0f;
         change = true;
+        cinema = _cinema;
     }
 
     public float y;
@@ -86,17 +89,17 @@ public class CameraManager : MonoBehaviour
         // TEMP KEYS
         if (Input.GetKeyDown(KeyCode.U))
         {
-            LetterBox();
+            LetterBox(false);
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            Standard();
+            Standard(false);
         }
 
         if (!change)
             return;
 
-        float h = Mathf.MoveTowards(Camera.main.rect.height, zoom, Time.deltaTime / 2.0f);
+        float h = Mathf.MoveTowards(Camera.main.rect.height, zoom, Time.deltaTime / (cinema ? 2.0f : 4.0f));
         y = (1.0f - h) / 2.0f;
         Camera.main.rect = new Rect(0, y, 1, h);
 
