@@ -48,6 +48,9 @@ public class PickUp : MonoBehaviour
     private void Start()
     {
         CallbackHandler.instance.setDestination += SetDestination;
+        EventManager.StartListening("WhaleCinematic", TriggerWhaleCinematic);
+
+        this.gameObject.SetActive(false);
 
         GoToPoint(cinematicPoints[tracking]);
     }
@@ -56,6 +59,25 @@ public class PickUp : MonoBehaviour
         CallbackHandler.instance.setDestination -= SetDestination;
     }
     #endregion Callbacks
+
+    public void TriggerWhaleCinematic()
+    {
+        CameraManager.instance.SwitchCamera(CameraType.CinemaCamera);
+        this.gameObject.SetActive(true);
+        CameraManager.instance.LetterBox(true);
+        CallbackHandler.instance.CinematicPause(true);
+        EventManager.StopListening("WhaleCinematic", TriggerWhaleCinematic);
+    }
+
+    public void EndWhaleCinematic()
+    {
+        CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
+        CallbackHandler.instance.CinematicPause(false);
+        CameraManager.instance.Standard(true);
+        playedCinematic = true;
+    }
+
+    bool playedCinematic;
 
     /// <summary>
     /// Description: Handles pathfinding and rotation for the whale during pickup sequence.
@@ -75,8 +97,12 @@ public class PickUp : MonoBehaviour
                 whale.moveSpeed = 5.0f * Mathf.Clamp01(dist / approachDistance);
                 rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * orbit.rotSpeed));
 
-                if (dist < 2.0f)
+                if (dist < 20.0f)
                 {
+                    if (!playedCinematic && tracking == 1)
+                    {
+                        EndWhaleCinematic();
+                    }
 
                     if (cinematic)
                     {
@@ -87,7 +113,8 @@ public class PickUp : MonoBehaviour
                         }
                         else
                         {
-                            orbit.SetOrbit(cinematicPoints[cinematicPoints.Length - 1].gameObject);
+                            orbit.SetOrbit();// cinematicPoints[cinematicPoints.Length - 1].gameObject);
+                            cinematic = false;
                             //homing = true;
                         }
                     }

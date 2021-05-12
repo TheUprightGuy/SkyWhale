@@ -36,6 +36,24 @@ public class CallbackHandler : MonoBehaviour
     }
     #endregion Singleton
 
+    public event Action resetActionTimer;
+    public void ResetActionTimer()
+    {
+        if (resetActionTimer != null)
+        {
+            resetActionTimer();
+        }
+    }
+
+    public event Action<bool> cinematicPause;
+    public void CinematicPause(bool _pause)
+    {
+        if (cinematicPause != null)
+        {
+            cinematicPause(_pause);
+        }
+    }
+
     public event Action<bool> pause;
     /// <summary>
     /// Description: Pauses all movement based objects.
@@ -78,6 +96,36 @@ public class CallbackHandler : MonoBehaviour
         if (setOrbit != null)
         {
             setOrbit(_orbit);
+        }
+    }
+    
+    public Action onGrappleJump;
+    /// <summary>
+    /// Description: Callback on grapple jump
+    /// <br>Author: Jacob Gallagher</br>
+    /// <br>Last Updated: 05/12/2021</br>
+    /// </summary>
+    public void OnGrappleJump()
+    {
+        if (onGrappleJump != null)
+        {
+            onGrappleJump();
+        }
+    }
+    
+    public Action<GrappleChallengeMaster> updateClosestGrappleChallenge;
+    /// <summary>
+    /// Description: Updates which grapple challenge checkpoints/start points player should respawn to
+    /// when they fall below the islands.
+    /// <br>Author: Jacob Gallagher</br>
+    /// <br>Last Updated: 05/11/2021</br>
+    /// </summary>
+    /// <param name="_grappleChallengeMaster">Closest grapple challenge</param>
+    public void UpdateClosestGrappleChallenge(GrappleChallengeMaster _grappleChallengeMaster)
+    {
+        if (updateClosestGrappleChallenge != null)
+        {
+            updateClosestGrappleChallenge(_grappleChallengeMaster);
         }
     }
 
@@ -236,6 +284,15 @@ public class CallbackHandler : MonoBehaviour
         if (changeMouseSensitivity != null)
         {
             changeMouseSensitivity(_value);
+        }
+    }
+
+    public event Action<InputState> dismount;
+    public void Dismount(InputState _input)
+    {
+        if (dismount != null)
+        {
+            dismount(_input);
         }
     }
 }

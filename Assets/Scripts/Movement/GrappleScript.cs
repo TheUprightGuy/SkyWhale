@@ -19,12 +19,14 @@ using System.Collections.Generic;
 using Audio;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GrappleScript : MonoBehaviour
 {
     [Header("Required Fields")]
     public NewGrappleHook hook;
     public GameObject GrappleUI;
+    public Image rangeIndicator; 
     public LayerMask grappleableLayers;
     public float pullSpeed = 8.0f;
 
@@ -123,6 +125,8 @@ public class GrappleScript : MonoBehaviour
     {
         enabled = true;
         shootPoint.ToggleEnabled();
+        EventManager.TriggerEvent("WhaleCinematic");
+        EventManager.StopListening("EnableGrapple", EnableGrapple);
     }
 
     /// <summary>
@@ -195,9 +199,15 @@ public class GrappleScript : MonoBehaviour
         // Ensure a player is referenced (safety check)
         if (pm)       
             pm.haveControl = !hook.connected;
-
+        
         if (hook.connected)
         {
+            if (TimeSlowDown.instance.stop)
+            {
+                //Tutorial is showing remove player velocity and stop until tutorial is over
+                rb.velocity = Vector3.zero;
+                return;
+            }
             // Check as used by both mc and whale grapple
             if (!grapplingFromWhale)
             {
@@ -216,6 +226,7 @@ public class GrappleScript : MonoBehaviour
     }
     
     public LayerMask raycastTargets;
+    Color fade = new Color(1, 1, 1, 0.2f);
     /// <summary>
     /// Description: Checks if target is grappleable.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -231,7 +242,8 @@ public class GrappleScript : MonoBehaviour
 
             if (grappleableLayers == (grappleableLayers | (1 << hit.transform.gameObject.layer)))
             {
-                grapplePoint.color = Color.red;
+                rangeIndicator.color = (Vector3.Distance(transform.position, hit.point) < 19.0f) ? Color.white : Color.red;
+                grapplePoint.color = Color.white;
 
                 if (aim)
                 {
@@ -245,7 +257,8 @@ public class GrappleScript : MonoBehaviour
                 CallbackHandler.instance.HidePrompt(PromptType.GrappleFire);
             }
 
-            grapplePoint.color = Color.white;
+            rangeIndicator.color = fade;
+            grapplePoint.color = fade;
             //CallbackHandler.instance.HideGrapple();
             //CallbackHandler.instance.HideHotkey("Grapple");
             return hit.point;
@@ -253,7 +266,8 @@ public class GrappleScript : MonoBehaviour
 
         CallbackHandler.instance.HidePrompt(PromptType.GrappleFire);
 
-        grapplePoint.color = Color.white;
+        grapplePoint.color = fade;
+        rangeIndicator.color = fade;
         //CallbackHandler.instance.HideGrapple();
         //CallbackHandler.instance.HideHotkey("Grapple");
         return Vector3.zero;
@@ -404,7 +418,7 @@ public class GrappleScript : MonoBehaviour
     public void YeetPlayer()
     {
         if (!grapplingFromWhale)
-            hook.YeetPlayer(this.GetComponent<PlayerMovement>());
+            hook.YeetPlayer();
     }
 
     public bool active;
@@ -428,6 +442,7 @@ public class GrappleScript : MonoBehaviour
     void ToggleAim(bool _startAim)
     {
         CallbackHandler.instance.HidePrompt(PromptType.GrappleAim);
+        CallbackHandler.instance.ResetActionTimer();
 
         // Toggle Reticule
         aim = _startAim;
@@ -461,7 +476,7 @@ public class GrappleScript : MonoBehaviour
             hook.retracting = true;
             
             if(!grapplingFromWhale && collision.gameObject.layer != 13) 
-                hook.YeetPlayer(this.GetComponent<PlayerMovement>());
+                hook.YeetPlayer();
         }
     }
 

@@ -108,20 +108,34 @@ public class PlayerMovement : MonoBehaviour
 
         OnValidate();
         CallbackHandler.instance.pause += Pause;
+        CallbackHandler.instance.cinematicPause += CinematicPause;
     }
     private void OnDestroy()
     {
         CallbackHandler.instance.pause -= Pause;
+        CallbackHandler.instance.cinematicPause -= CinematicPause;
     }
     #endregion Inputs & Callbacks
 
     void Pause(bool _pause)
     {
         gamePaused = _pause;
+        // this is bad but hey it works
+        if (cinematicPause)
+        {
+            CameraManager.instance.LetterBox(true);
+        }
     }
+
+    bool cinematicPause;
+    void CinematicPause(bool _pause)
+    {
+        cinematicPause = _pause;
+    }
+
     private void Update()
     {
-        if (gamePaused)
+        if (gamePaused || cinematicPause)
             return;
 
         SetAnimations();
@@ -137,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (gamePaused)
+        if (gamePaused || cinematicPause)
             return;
 
         SetCurrentPlayerState();

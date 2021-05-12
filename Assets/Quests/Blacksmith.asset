@@ -16,10 +16,14 @@ MonoBehaviour:
   objectives:
   - eventName: FindBlacksmith
     objDesc: Find the Blacksmith
+    location: {x: -94, y: -16, z: 35}
   - eventName: TalkBlacksmith
     objDesc: Talk to the Blacksmith
+    location: {x: -94, y: -16, z: 35}
   - eventName: SolvePuzzle
     objDesc: Solve the Puzzle
+    location: {x: -96.5, y: -16, z: 37}
   - eventName: ReturnBlacksmith
     objDesc: Return to the Blacksmith
+    location: {x: -94, y: -16, z: 35}
   index: 4

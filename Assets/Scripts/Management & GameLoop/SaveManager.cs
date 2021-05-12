@@ -106,7 +106,7 @@ public class SaveManager : MonoBehaviour
     void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         uniqueID = 0;
-        Debug.Log("Loading with " + saveToUse);
+        //Debug.Log("Loading with " + saveToUse);
         Invoke("Load", 0.1f);
     }
 

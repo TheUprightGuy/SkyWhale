@@ -66,7 +66,8 @@ public class WhaleMovement : MonoBehaviour
         pickUp = GetComponent<PickUp>();
         cc = GetComponentInChildren<NewCharacter>();
         gs = GetComponentInChildren<GrappleScript>();
-        dismountPosition = GameObject.Find("DismountPos").transform;
+        if (GameObject.Find("DismountPos"))
+            dismountPosition = GameObject.Find("DismountPos").transform;
     }
 
     /// <summary>    
@@ -88,11 +89,15 @@ public class WhaleMovement : MonoBehaviour
 
         EntityManager.instance.toggleControl += ToggleControl;
         CallbackHandler.instance.pause += Pause;
+        CallbackHandler.instance.resetActionTimer += ResetActionTimer;
+        CallbackHandler.instance.dismount += Dismount;
     }
     private void OnDestroy()
     {
         EntityManager.instance.toggleControl -= ToggleControl;
         CallbackHandler.instance.pause -= Pause;
+        CallbackHandler.instance.resetActionTimer -= ResetActionTimer;
+        CallbackHandler.instance.dismount -= Dismount;
     }
 
     /// <summary>
@@ -135,13 +140,15 @@ public class WhaleMovement : MonoBehaviour
     /// <param name="arg0">Input state (Down/Held/Up)</param>
     private void Dismount(InputState arg0)
     {
-        if (!control) 
-            return;
-
-        control = false;
-        EntityManager.instance.OnDismountPlayer(dismountPosition);
-        //CallbackHandler.instance.DismountPlayer(dismountPosition);
+        if (control || bucking)
+        {
+            control = false;
+            bucking = false;
+            EntityManager.instance.OnDismountPlayer(dismountPosition);
+            //CallbackHandler.instance.DismountPlayer(dismountPosition);
+        }
     }
+    bool bucking;
 
     /// <summary>
     /// Description: Yaw/Pitch the whale to desired rotation - rolling body on yaw.
@@ -261,6 +268,7 @@ public class WhaleMovement : MonoBehaviour
         thrustChange = false;
     }
 
+    float actionTimer;
     /// <summary>
     /// Description: Handles corrections to movement and rotation, as well as animation parameter updates.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -281,10 +289,24 @@ public class WhaleMovement : MonoBehaviour
         if (control)
         {
             MovementCorrections();
+            actionTimer -= Time.deltaTime;
+            if (actionTimer <= 0)
+            {
+                CameraManager.instance.LetterBox(false);
+            }
+            else
+            {
+                CameraManager.instance.Standard(false);
+            }
         }
         GetDistance();
 
         Movement();
+    }
+
+    public void ResetActionTimer()
+    {
+        actionTimer = 10.0f;
     }
 
     /// <summary>
@@ -320,9 +342,9 @@ public class WhaleMovement : MonoBehaviour
         tooClose = true;
         control = false;
         buckTimer = 2.0f;
-
-        NewIslandScript temp = (hit.GetComponent<NewIslandScript>()) ? hit.GetComponent<NewIslandScript>() : hit.GetComponentInParent<NewIslandScript>();
-        cachedHeightRef = temp.heightRef;
+        
+        //NewIslandScript temp = (hit.GetComponent<NewIslandScript>()) ? hit.GetComponent<NewIslandScript>() : hit.GetComponentInParent<NewIslandScript>();
+        //cachedHeightRef = temp.heightRef;
     }
 
     /// <summary>
@@ -345,9 +367,11 @@ public class WhaleMovement : MonoBehaviour
             // Finished backing off to a safe distance
             if (buckTimer <= 0)
             {
+                bucking = true;
+                Dismount(InputState.KEYDOWN);
                 tooClose = false;
                 moveSpeed = maxSpeed / 2.0f;
-                orbit.SetOrbit(cachedHeightRef);
+                orbit.SetOrbit();// cachedHeightRef);
             }
         }
         else
@@ -430,6 +454,8 @@ public class WhaleMovement : MonoBehaviour
         ComeToHalt();
         //control = true;
         gs.active = true;
+        orbit.enabled = false;
+        ResetActionTimer();
     }
 
     /// <summary>

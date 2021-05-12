@@ -11,17 +11,14 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/SampleScenes/Scripts/ParticleSceneControls.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Villager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GrappleTutorial.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.4.2f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Layout/CanvasScaler.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Puzzle/PuzzleGenerator.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/PilotScript.cs" />
-      <option value="$PROJECT_DIR$/Assets/Villager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/FlightChallengeMaster.cs" />
-      <option value="$PROJECT_DIR$/Assets/GrappleIslandFlightChallenges.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GrappleTutorial.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
@@ -30,7 +27,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.3495212" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.44117647" />
     <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.032831736" />
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -82,6 +79,7 @@
       <workItem from="1619043334665" duration="8571000" />
       <workItem from="1619583881243" duration="4535000" />
       <workItem from="1619737137131" duration="7157000" />
+      <workItem from="1620692105203" duration="11138000" />
     </task>
     <servers />
   </component>

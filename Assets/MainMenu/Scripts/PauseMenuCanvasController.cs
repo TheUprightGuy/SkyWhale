@@ -93,12 +93,21 @@ public class PauseMenuCanvasController : MonoBehaviour
     /// <param name="type">InputState (Down/Held/Up)</param>
     public virtual void Pause(InputState type)
     {
-        toggle.SetActive(!toggle.activeSelf);
+        if (toggle.activeSelf && menu != MenuOptions.Main)
+        {
+            ToggleMenuOption(MenuOptions.Back);           
+        }
+        else
+        {
+            toggle.SetActive(!toggle.activeSelf);
+        }
+
+        //toggle.SetActive(!toggle.activeSelf);
         CallbackHandler.instance.Pause(toggle.activeSelf);
 
         if (toggle.activeSelf)
         {
-            CameraManager.instance.Standard();
+            CameraManager.instance.Standard(true);
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;

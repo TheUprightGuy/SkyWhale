@@ -22,6 +22,7 @@ public class TimeSlowDown : MonoBehaviour
     
     [Header("Debug")]
     public float timeScale = 1.0f;
+    public bool stop;
 
     // Local Variables
     float defaultGrayScale = 0.0f;
@@ -131,6 +132,8 @@ public class TimeSlowDown : MonoBehaviour
             //Physics.gravity = grav * timeScale;
         }
 
+        if (stop) timeScale = 0f;
+
         if (floating)
         {
             drainTimer -= Time.deltaTime;
@@ -143,7 +146,7 @@ public class TimeSlowDown : MonoBehaviour
             drainTimer = Mathf.Clamp(drainTimer + Time.deltaTime, 0.0f, slowDuration);
         }
 
-        if (!Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>())
+        if (!Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>() || !adjustments)
             return;
 
         Camera.main.GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Lens.FieldOfView = ((timeScale / 5) * defaultFOV) + (defaultFOV + FOVOffset);

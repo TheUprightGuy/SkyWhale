@@ -17,39 +17,39 @@ namespace Audio
     {
         //Public variables
         #region Public variables
-        public AudioSource AudioSource;
-        public float PitchDefault;
-        public float VolumeDefault;
+        public AudioSource audioSource;
+        public float pitchDefault;
+        public float volumeDefault;
         #endregion
 
         //Public functions
         #region Public functions
         public void InitialiseSound(string name, AudioSource _source)
         {
-            AudioSource = _source;// ObjectFinder.FindObject(name).GetComponent<AudioSource>();
+            audioSource = _source;// ObjectFinder.FindObject(name).GetComponent<AudioSource>();
 
-            PitchDefault = AudioSource.pitch;
-            VolumeDefault = AudioSource.volume;
+            pitchDefault = audioSource.pitch;
+            volumeDefault = audioSource.volume;
         }
 
         public void InitialiseSound()
         {
-            PitchDefault = AudioSource.pitch;
-            VolumeDefault = AudioSource.volume;
+            pitchDefault = audioSource.pitch;
+            volumeDefault = audioSource.volume;
         }
 
         public void Reset()
         {
             //Reset altered pitch and volume to defaults
-            AudioSource.pitch = PitchDefault;
-            AudioSource.volume = VolumeDefault;
+            audioSource.pitch = pitchDefault;
+            audioSource.volume = volumeDefault;
         }
 
         public void Reset(float newVolume)    //Resets audio source to default before adjusting it by the new volume
         {
             //Reset altered pitch and volume to defaults
-            AudioSource.pitch = PitchDefault;
-            AudioSource.volume = VolumeDefault * newVolume;
+            audioSource.pitch = pitchDefault;
+            audioSource.volume = volumeDefault * newVolume;
         }
         #endregion
     }

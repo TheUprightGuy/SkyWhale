@@ -8,6 +8,7 @@
 // Author      :   Jacob Gallagher
 // Mail        :   Jacob.Gallagher1.@mds.ac.nz
 
+using System;
 using UnityEngine;
 
 namespace Movement
@@ -16,9 +17,25 @@ namespace Movement
     {
         #region Inspector Variables
             public int yLowestBoundary; //When player y position is lower than this, they are teleported to the whale
+            public GrappleChallengeMaster ClosestGrappleChallengeMaster;    //Updated when entering a checkpoint/start/end point
 
         #endregion
-        
+
+        private void Start()
+        {
+            CallbackHandler.instance.updateClosestGrappleChallenge += UpdateClosestGrappleChallenge;
+        }
+
+        private void OnDestroy()
+        {
+            CallbackHandler.instance.updateClosestGrappleChallenge -= UpdateClosestGrappleChallenge;
+        }
+
+        private void UpdateClosestGrappleChallenge(GrappleChallengeMaster grappleChallengeMaster)
+        {
+            ClosestGrappleChallengeMaster = grappleChallengeMaster;
+        }
+
         // Update is called once per frame
         private void Update()
         {
@@ -28,7 +45,15 @@ namespace Movement
             {
                 //Respawn player and move the whale above boundary
                 EntityManager.instance.MoveWhaleAboveBoundary(yLowestBoundary);
+                return;
             }
+            //MovePlayerToWhale();
+            //Respawn player at last checkpoint
+            ClosestGrappleChallengeMaster.ResetChallenge();
+        }
+
+        private static void MovePlayerToWhale()
+        {
             //Respawn player by moving them to the whale
             EntityManager.instance.player.layer = LayerMask.NameToLayer("PlayerFromWhale");
             EntityManager.instance.grappleHook.gameObject.layer = LayerMask.NameToLayer("HookFromWhale");

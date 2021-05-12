@@ -13,6 +13,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Movement;
 using UnityEngine;
 
 public class GrappleStartPoint : MonoBehaviour
@@ -42,6 +43,7 @@ public class GrappleStartPoint : MonoBehaviour
         {
             gcm.pm = other.GetComponent<PlayerMovement>();
             gcm.LastCheckPoint = null;
+            CallbackHandler.instance.UpdateClosestGrappleChallenge(gcm);
         }
     }
     #endregion Trigger
