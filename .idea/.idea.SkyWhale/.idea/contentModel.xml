@@ -79,6 +79,7 @@
             <e p="FadeMixerGroup.cs" t="Include" />
             <e p="SoundInfo.cs" t="Include" />
           </e>
+          <e p="BobbingMovement.cs" t="Include" />
           <e p="Camera" t="Include">
             <e p="DumbCamera.cs" t="Include" />
             <e p="MouseOverHighlight.cs" t="Include" />

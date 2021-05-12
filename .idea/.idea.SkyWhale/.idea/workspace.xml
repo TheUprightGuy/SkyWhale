@@ -13,6 +13,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GrappleTutorial.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.4.2f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Layout/CanvasScaler.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BobbingMovement.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
@@ -21,6 +22,8 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/GrappleTutorial.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Movement/LevelBoundaryChecker.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/BobbingMovement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
