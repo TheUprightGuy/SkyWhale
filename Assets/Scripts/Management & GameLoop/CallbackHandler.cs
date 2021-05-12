@@ -81,6 +81,20 @@ public class CallbackHandler : MonoBehaviour
         }
     }
     
+    public Action onGrappleJump;
+    /// <summary>
+    /// Description: Callback on grapple jump
+    /// <br>Author: Jacob Gallagher</br>
+    /// <br>Last Updated: 05/12/2021</br>
+    /// </summary>
+    public void OnGrappleJump()
+    {
+        if (onGrappleJump != null)
+        {
+            onGrappleJump();
+        }
+    }
+    
     public Action<GrappleChallengeMaster> updateClosestGrappleChallenge;
     /// <summary>
     /// Description: Updates which grapple challenge checkpoints/start points player should respawn to

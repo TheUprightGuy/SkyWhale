@@ -13,7 +13,6 @@ public class GrappleTutorial : MonoBehaviour
     private int tutorialsCompleted;
     private bool showingTutorial;
 
-
     private void Awake()
     {
         _grappleScript = gameObject.GetComponent<GrappleScript>();
@@ -21,25 +20,25 @@ public class GrappleTutorial : MonoBehaviour
         tutorialsCompleted = 0;
         showingTutorial = false;
         VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(EndGrappleReleaseTutorial);
-        EventManager.StartListening("onGrappleJump", FailGrappleReleaseTutorial);
+        CallbackHandler.instance.onGrappleJump += FailGrappleReleaseTutorial;
     }
 
     private void EndGrappleReleaseTutorial(InputState arg0)
     {
         _timer = 0f;
-        if (!showingTutorial) return;
+        if (!showingTutorial || tutorialsCompleted != 0) return;
         EndTutorial();
-        EventManager.StopListening("onGrappleJump", FailGrappleReleaseTutorial);
-        EventManager.StartListening("onGrappleJump", EndGrappleJumpTutorial);
+        CallbackHandler.instance.onGrappleJump -= FailGrappleReleaseTutorial;
+        CallbackHandler.instance.onGrappleJump += EndGrappleJumpTutorial;
         VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(FailGrappleJumpTutorial);
     }
 
     private void EndGrappleJumpTutorial()
     {
         _timer = 0f;
-        if (!showingTutorial) return;
+        if (!showingTutorial || tutorialsCompleted != 1) return;
         EndTutorial();
-        EventManager.StopListening("onGrappleJump", EndGrappleJumpTutorial);
+        CallbackHandler.instance.onGrappleJump -= EndGrappleJumpTutorial;
         GetComponent<PlayerMovement>().playerState = PlayerMovement.PlayerStates.FALLING;
         GetComponent<Rigidbody>().velocity = transform.forward * 5f + Vector3.up * 6f;
         Destroy(this);
@@ -57,6 +56,7 @@ public class GrappleTutorial : MonoBehaviour
         Destroy(tutorialCanvases[tutorialsCompleted]);
         tutorialsCompleted++;
         showingTutorial = false;
+        GetComponent<PlayerMovement>().playerState = PlayerMovement.PlayerStates.FALLING;
     }
 
     private void FailTutorial()
@@ -69,8 +69,6 @@ public class GrappleTutorial : MonoBehaviour
         
         //Disable Letterbox effect
 
-        //Hide tutorial UI
-        tutorialCanvases[tutorialsCompleted].SetActive(false);
         
         GetComponent<PlayerMovement>().playerState = PlayerMovement.PlayerStates.FALLING;
         
@@ -79,14 +77,17 @@ public class GrappleTutorial : MonoBehaviour
 
     private void FailGrappleReleaseTutorial()
     {
-        if(!showingTutorial || tutorialsCompleted != 1) return;
+        if(!showingTutorial || tutorialsCompleted != 0) return;
+        //Hide tutorial UI
+        tutorialCanvases[0].SetActive(false);
         FailTutorial();
     }
     
     private void FailGrappleJumpTutorial(InputState arg0)
     {
-        if(!showingTutorial || tutorialsCompleted != 0) return;
-        Invoke(nameof(FailTutorial), 0.2f);
+        if(!showingTutorial || tutorialsCompleted != 1) return;
+        tutorialCanvases[1].SetActive(false);
+        FailTutorial();
     }
 
     // Update is called once per frame
