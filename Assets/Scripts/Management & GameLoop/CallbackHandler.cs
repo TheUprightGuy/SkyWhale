@@ -98,6 +98,36 @@ public class CallbackHandler : MonoBehaviour
             setOrbit(_orbit);
         }
     }
+    
+    public Action onGrappleJump;
+    /// <summary>
+    /// Description: Callback on grapple jump
+    /// <br>Author: Jacob Gallagher</br>
+    /// <br>Last Updated: 05/12/2021</br>
+    /// </summary>
+    public void OnGrappleJump()
+    {
+        if (onGrappleJump != null)
+        {
+            onGrappleJump();
+        }
+    }
+    
+    public Action<GrappleChallengeMaster> updateClosestGrappleChallenge;
+    /// <summary>
+    /// Description: Updates which grapple challenge checkpoints/start points player should respawn to
+    /// when they fall below the islands.
+    /// <br>Author: Jacob Gallagher</br>
+    /// <br>Last Updated: 05/11/2021</br>
+    /// </summary>
+    /// <param name="_grappleChallengeMaster">Closest grapple challenge</param>
+    public void UpdateClosestGrappleChallenge(GrappleChallengeMaster _grappleChallengeMaster)
+    {
+        if (updateClosestGrappleChallenge != null)
+        {
+            updateClosestGrappleChallenge(_grappleChallengeMaster);
+        }
+    }
 
     public event Action spawnCollectableIsland;
     /// <summary>

@@ -12,8 +12,6 @@
           <e p="MaterialInstancer.cs" t="Include" />
           <e p="TexturePainterControllerEditor.cs" t="Include" />
         </e>
-        <e p="GrappleIslandFlightChallenges.cs" t="Include" />
-        <e p="Lava.cs" t="Include" />
         <e p="LeanTween" t="Include">
           <e p="Editor" t="Include">
             <e p="LeanTweenDocumentationEditor.cs" t="Include" />
@@ -113,6 +111,8 @@
             <e p="GrappleEndPoint.cs" t="Include" />
             <e p="GrappleStartPoint.cs" t="Include" />
           </e>
+          <e p="GrappleIslandFlightChallenges.cs" t="Include" />
+          <e p="GrappleTutorial.cs" t="Include" />
           <e p="GunMeshSwitch.cs" t="Include" />
           <e p="Island" t="Include">
             <e p="CollectableIsland" t="Include">
@@ -129,6 +129,7 @@
             <e p="ObjDistribuition.cs" t="Include" />
           </e>
           <e p="IslandColliderScript.cs" t="Include" />
+          <e p="Lava.cs" t="Include" />
           <e p="Management &amp; GameLoop" t="Include">
             <e p="CallbackHandler.cs" t="Include" />
             <e p="CustomInputUI.cs" t="Include" />
@@ -241,6 +242,7 @@
           <e p="UnityURPUnlitScreenSpaceDecalShader-master" t="Include">
             <e p="URP_NiloCatExtension_ScreenSpaceDecal_Unlit.shader" t="Include" />
           </e>
+          <e p="Villager.cs" t="Include" />
         </e>
         <e p="Shaders" t="Include">
           <e p="Clouds" t="Include">
@@ -289,7 +291,6 @@
             <e p="EmojiOne Attribution.txt" t="Include" />
           </e>
         </e>
-        <e p="Villager.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />

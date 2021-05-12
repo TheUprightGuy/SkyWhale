@@ -15,20 +15,20 @@ MonoBehaviour:
   dialogue:
   - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
     left: 0
-    name: Chiken
+    name: MC
     dialogue:
     - Hey! What are you doing up here?
     dialogueIndex: 0
   - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
     left: 1
-    name: Villager
+    name: Pilot follower
     dialogue:
     - I love the view from up here! The wind is howling!
     - The only thing better is gliding!
     dialogueIndex: 0
   - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
     left: 0
-    name: Chiken
+    name: MC
     dialogue:
     - Gliding?
     dialogueIndex: 0

@@ -42,6 +42,7 @@ public class GrappleCheckPoint : MonoBehaviour
         {
             gcm.pm = other.GetComponent<PlayerMovement>();
             gcm.LastCheckPoint = this;
+            CallbackHandler.instance.UpdateClosestGrappleChallenge(gcm);
         }
     }
     #endregion Trigger
