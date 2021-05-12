@@ -323,11 +323,31 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5fdc727a5a5b13d4da550ab8105972f6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1040284157444982090, guid: 5fdc727a5a5b13d4da550ab8105972f6,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1040284157444982090, guid: 5fdc727a5a5b13d4da550ab8105972f6,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ff8472a3183a3554fabc2a0006327c84, type: 2}
+      objectReference: {fileID: 2100000, guid: d1b3cb954ab78144ab6ac2fea68b39c8, type: 2}
+    - target: {fileID: 1040284157444982090, guid: 5fdc727a5a5b13d4da550ab8105972f6,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8651483052343683148, guid: 5fdc727a5a5b13d4da550ab8105972f6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 17
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5fdc727a5a5b13d4da550ab8105972f6, type: 3}
 --- !u!1 &436516243 stripped
