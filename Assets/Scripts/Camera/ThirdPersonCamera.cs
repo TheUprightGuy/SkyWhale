@@ -60,12 +60,22 @@ public class ThirdPersonCamera : MonoBehaviour
 
         CameraManager.instance.switchCam += SwitchCam;
         CallbackHandler.instance.pause += Pause;
+        CallbackHandler.instance.changeMouseSensitivity += ChangeMouseSensitivity;
+
+        VirtualInputs.GetInputListener(InputType.PLAYER, "CameraSnap").MethodToCall.AddListener(CameraSnap);
+
+    }
+
+    void ChangeMouseSensitivity(int _value)
+    {
+        rotateSpeed = 150 * (_value / 10.0f);
     }
 
     private void OnDestroy()
     {
         CameraManager.instance.switchCam -= SwitchCam;
         CallbackHandler.instance.pause -= Pause;
+        CallbackHandler.instance.changeMouseSensitivity -= ChangeMouseSensitivity;
     }
 
 
@@ -82,18 +92,6 @@ public class ThirdPersonCamera : MonoBehaviour
 
         if (PlayerTrans.GetComponent<GliderMovement>() && PlayerTrans.GetComponent<GliderMovement>().enabled)
             return;
-
-        if (Input.GetKeyDown("`"))
-        {
-            if (Cursor.lockState == CursorLockMode.Locked)
-            {
-                Cursor.lockState = CursorLockMode.None;
-            }
-            else
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
-        }
 
         if (Cursor.lockState == CursorLockMode.Locked)
         {
@@ -118,10 +116,10 @@ public class ThirdPersonCamera : MonoBehaviour
 
             storedPos.x += horizontal;
 
-            if (Input.GetKeyUp(KeyCode.LeftAlt))//If rightclick released, snap back to position
-            {
-                waitingToReturn = true;
-            }
+            //if (Input.GetKeyUp(KeyCode.LeftAlt))//If rightclick released, snap back to position
+            //{
+            //    waitingToReturn = true;
+            //}
             if (waitingToReturn)
             {
                 if (storedPos.x != targetTrans.eulerAngles.y)
@@ -189,6 +187,11 @@ public class ThirdPersonCamera : MonoBehaviour
 
     Vector3 velocity = Vector3.zero;
 
+    void CameraSnap(InputState inputState)
+    {
+        waitingToReturn = true;
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -213,6 +216,12 @@ public class ThirdPersonCamera : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
     }
 
+    /// <summary>
+    /// Description: Handles camera transition through camera manager.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="_cam">Camera Type to Use</param>
     public void SwitchCam(CameraType _cam)
     {
         if (_cam == cameraType)

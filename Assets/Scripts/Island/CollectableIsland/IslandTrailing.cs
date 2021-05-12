@@ -1,4 +1,13 @@
-﻿using System.Collections;
+﻿// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+// (c) 2020 Media Design School
+// File Name   :   IslandTrailing.cs
+// Description :   Mono behaviour that handles island trailing, island flocking and island bobbing behaviours. 
+// Author      :   Jacob Gallagher
+// Mail        :   Jacob.Gallagher1.@mds.ac.nz
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -90,7 +99,6 @@ namespace Island.CollectableIsland
         /// <summary>
         /// Causes the island to rotate towards its follow point
         /// </summary>
-        /// <returns>Lean tween descriptor so the update function can tell when the tweening is complete</returns>
         private void RotateTowardsIsland()
         {
             //Calculate euler angle rotation required to rotate to face follow point

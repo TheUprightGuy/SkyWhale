@@ -1,4 +1,17 @@
-﻿using System.Collections;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   SaveSlot.cs
+  Description :   UI Element to display player save. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,6 +35,11 @@ public class SaveSlot : MonoBehaviour, IPointerDownHandler
     public TMPro.TextMeshProUGUI timePlayed;
     public Image renderImage;
 
+    /// <summary>
+    /// Description: Sets up slot to reflect content on the save.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Start()
     {
         save = SaveManager.instance.saves[saveSlot];
@@ -40,6 +58,11 @@ public class SaveSlot : MonoBehaviour, IPointerDownHandler
         }
     }
 
+    /// <summary>
+    /// Description: Updates the slot with content from the save.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     public void UpdateSlot()
     {
         if (!save || save.saveName.Equals(""))
@@ -72,6 +95,12 @@ public class SaveSlot : MonoBehaviour, IPointerDownHandler
         }
     }
 
+    /// <summary>
+    /// Description: Saves current world state, or loads depending on menu.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="eventData">Unused</param>
     public virtual void OnPointerDown(PointerEventData eventData)
     {
         switch (slotType)

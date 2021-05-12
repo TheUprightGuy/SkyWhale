@@ -16,7 +16,13 @@ public class LineSetup : MonoBehaviour
 
     public AnimationCurve LineWidthOverTime;
     //Vector3 currentPos = transform.position;
-    // Start is called before the first frame update
+
+    #region Setup
+    /// <summary>
+    /// Description: Setup Local Components.
+    /// <br>Author: Jack Belton</br>
+    /// <br>Last Updated: 04/07/2021</br>  
+    /// </summary>
     void Start()
     {
         lr = GetComponent<LineRenderer>();
@@ -26,6 +32,7 @@ public class LineSetup : MonoBehaviour
         positions[1] = transform.position;
         lr.SetPositions(positions);
     }
+    #endregion Setup
 
     private void OnEnable() {
         DrawLine();

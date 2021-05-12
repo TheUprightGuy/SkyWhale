@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9acc76f917637d6458e8e47e08610bdc, type: 3}
+  m_Name: PLDialogue1
+  m_EditorClassIdentifier: 
+  dialogue:
+  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+    left: 1
+    name: Pilot
+    dialogue:
+    - Oh? Someone actually made it up here
+    - That's pretty impressive kid
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+    left: 0
+    name: MC
+    dialogue:
+    - What are those contraptions behind you?
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+    left: 1
+    name: Pilot
+    dialogue:
+    - Yeah, I noticed you looking at those
+    - Beauties aren't they?
+    - They're my famous gliders!
+    - Although these ones aren't quite finished yet..
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+    left: 0
+    name: MC
+    dialogue:
+    - Are you still working on them?
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+    left: 1
+    name: Pilot
+    dialogue:
+    - Yep, broke my last one on another island not too far from here
+    - It was a paradise for gliding
+    - Long as you don't crash like I did..
+    - Hey, tell you what...
+    - I'm still pretty exhausted after my crash,
+    - So if you were able to get the final material I need to finish off these gliders
+    - I'd be happy to give one of them to you in exchange.
+    - Once it's finished of course
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+    left: 0
+    name: MC
+    dialogue:
+    - Sure! That sounds great
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+    left: 1
+    name: Pilot
+    dialogue:
+    - Perfect, I noticed the last bit of metal I need is all over the place on this
+      island
+    - However, most of the pieces aren't pure enough to work for these gliders
+    - Think I saw an sufficiently pure piece behind the puzzle looking contraption
+      when I flew over
+    - If you can get it for me and bring it back, I'll give you a fully functional
+      glider in return!
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+    left: 0
+    name: MC
+    dialogue:
+    - Great! I'll be right back
+    dialogueIndex: 0
+  leftCharacter: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+  rightCharacter: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+  dialogueIndex: 0
+  inUse: 0
+  triggerEvent: StartPilotQuest

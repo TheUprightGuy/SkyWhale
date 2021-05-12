@@ -61,6 +61,5 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void ChangeMenu()
     {
         PauseMenuCanvasController.instance.ToggleMenuOption(menuOptions);
-
     }
 }

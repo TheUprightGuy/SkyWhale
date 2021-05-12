@@ -1,7 +1,21 @@
-﻿using System.Collections;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   SwitchPuzzleMaster.cs
+  Description :   Handles puzzle layout and checks for completion upon switch change. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+
 public class SwitchPuzzleMaster : MonoBehaviour
 {
     #region Singleton
@@ -21,27 +35,56 @@ public class SwitchPuzzleMaster : MonoBehaviour
         switches = new List<PuzzleSwitch>();
     }
     #endregion Singleton
-    #region Singleton
+    #region Setup
     private void Start()
     {
         foreach (Transform n in transform)
         {
-            switches.Add(n.GetComponent<PuzzleSwitch>());
+            if (n.GetComponent<PuzzleSwitch>())
+                switches.Add(n.GetComponent<PuzzleSwitch>());
         }
+
+        int numOff = 0;
+        int numOn = 0;
 
         foreach (PuzzleSwitch n in switches)
         {
-            n.active = Random.value > 0.5f;
+            if (numOff >= 4)
+            {
+                n.active = true;
+                numOn++;
+            }
+            else if (numOn >= 4)
+            {
+                n.active = false;
+                numOff++;
+            }
+            else
+            {
+                n.active = Random.value > 0.5f;
+                if (!n.active)
+                {
+                    numOff++;
+                }
+                else
+                {
+                    numOn++;
+                }
+            }
+
             n.on = on;
             n.off = off;
             n.Switch();
         }
+
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(Interact);
     }
-    #endregion Singleton
+    #endregion Setup
 
     [Header("Setup Fields")]
     public Material on;
     public Material off;
+    public Transform promptPosition;
 
     //Local Variables
     List<PuzzleSwitch> switches;
@@ -50,24 +93,27 @@ public class SwitchPuzzleMaster : MonoBehaviour
     bool inUse;
 
 
-    private void Update()
+    public void Interact(InputState type)
     {
-        if (complete)
+        if (!pm || complete)
             return;
 
-        if (pm && Input.GetKeyDown(KeyCode.E))
-        {
-            inUse = !inUse;
-            ToggleCam(inUse);
-            Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
-        }
+        inUse = !inUse;
+        ToggleCam(inUse);
+        Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = inUse;
+        CallbackHandler.instance.HidePrompt(PromptType.Interact);
 
-        if (CheckComplete())
-        {
-            Debug.Log("COMPLETE");
-        }
+        if (inUse)
+            CallbackHandler.instance.PuzzleOutOfRange();
     }
 
+    /// <summary>
+    /// Description: Switches camera if matching type.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="_toggle">Puzzle/Player Camera</param>
     public void ToggleCam(bool _toggle)
     {
         inUse = _toggle;
@@ -77,8 +123,15 @@ public class SwitchPuzzleMaster : MonoBehaviour
             return;
         }
         CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
+        CallbackHandler.instance.HidePrompt(PromptType.Interact);
     }
 
+    /// <summary>
+    /// Description: Checks if puzzle is complete, if so triggers event.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <returns></returns>
     public bool CheckComplete()
     {
         foreach(PuzzleSwitch n in switches)
@@ -93,16 +146,27 @@ public class SwitchPuzzleMaster : MonoBehaviour
         inUse = !inUse;
         ToggleCam(inUse);
         Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = inUse;
         EventManager.TriggerEvent("SwitchPuzzleCompletion");
+        EventManager.TriggerEvent("SolvePuzzle");
+        CallbackHandler.instance.PuzzleOutOfRange();
         return true;
     }
 
+    #region Triggers
+    /// <summary>
+    /// Description: Gets reference to player to check if in range.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="other">Triggering Object</param>
     private void OnTriggerEnter(Collider other)
     {
         PlayerMovement player = other.GetComponent<PlayerMovement>();
         if (player && !complete)
         {
             pm = player;
+            CallbackHandler.instance.PuzzleInRange(promptPosition);
         }
     }
 
@@ -113,6 +177,8 @@ public class SwitchPuzzleMaster : MonoBehaviour
         {
             ToggleCam(false);
             pm = null;
+            CallbackHandler.instance.PuzzleOutOfRange();
         }
     }
+    #endregion Triggers
 }

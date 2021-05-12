@@ -85,6 +85,22 @@ MonoBehaviour:
     MethodToCall:
       m_PersistentCalls:
         m_Calls: []
+  - NameForInput: CameraSnap
+    KeyToListen: 308
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 0
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: Interact
+    KeyToListen: 101
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 0
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
   whaleInput:
   - NameForInput: YawLeft
     KeyToListen: 97

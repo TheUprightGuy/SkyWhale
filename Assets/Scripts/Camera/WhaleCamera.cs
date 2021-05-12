@@ -1,4 +1,17 @@
-﻿using System.Collections;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   WhaleCamera.cs
+  Description :   Handles the rotation of the camera when following the whale. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -28,7 +41,12 @@ public class WhaleCamera : MonoBehaviour
         target = GetComponentInParent<WhaleMovement>().transform;
     }
     #endregion Setup
-
+    #region Callbacks
+    /// <summary>
+    /// Description: Sets callbacks.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Start()
     {
         CameraManager.instance.switchCam += SwitchCam;
@@ -37,23 +55,31 @@ public class WhaleCamera : MonoBehaviour
     {
         CameraManager.instance.switchCam -= SwitchCam;
     }
+    #endregion Callbacks
 
+    /// <summary>
+    /// Description: Camera control.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     void LateUpdate()
     {
         timer -= Time.deltaTime;
         lerpTimer -= Time.deltaTime;
 
+        // Enables rotation while left click is down
         if (Input.GetMouseButtonDown(0) && !(EventSystem.current.IsPointerOverGameObject()))
         {
             rotating = true;
         }
         //(EventSystem.current.IsPointerOverGameObject()) ? false : true;}
-
+        // Disables rotation when left click is released
         if (Input.GetMouseButtonUp(0))
         {
             rotating = false;
         }
 
+        // Handles rotation of the camera
         if (Input.GetMouseButton(0) && rotating)
         {
             timer = 1.5f;
@@ -61,6 +87,7 @@ public class WhaleCamera : MonoBehaviour
             transform.RotateAround(target.position, transform.right, -Input.GetAxis("Mouse Y") * ySpeed);
         }
 
+        // Lerps to behind whale when untouched for timer duration
         if (timer <= 0.0f)
         {
             float targetRotationAngle = basePosition.eulerAngles.y;
@@ -82,9 +109,14 @@ public class WhaleCamera : MonoBehaviour
             transform.rotation = rotation;
             transform.position = (lerpTimer > 0) ? adjust : position;
         }
-        
-
     }
+
+    /// <summary>
+    /// Description: Handles camera transition through camera manager.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="_cam">Camera Type to Use</param>
     public void SwitchCam(CameraType _cam)
     {
         if (_cam == CameraType.WhaleCamera)
@@ -96,10 +128,12 @@ public class WhaleCamera : MonoBehaviour
             GetComponent<Cinemachine.CinemachineVirtualCamera>().m_Priority = 0;
         }
     }
+    #region Utility
     public static float ClampAngle(float angle, float min, float max)
     {
         if (angle < -360F) angle += 360F;
         if (angle > 360F) angle -= 360F;
         return Mathf.Clamp(angle, min, max);
     }
+    #endregion Utility
 }

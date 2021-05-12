@@ -1,4 +1,15 @@
-﻿using UnityEngine;
+﻿// Bachelor of Software Engineering
+// Media Design School
+// Auckland
+// New Zealand
+// (c) 2020 Media Design School
+// File Name   :   IslandChain.cs
+// Description :   Mono behaviour that handles setting the chains start, end and control point, calculating all
+//                 the other points along a quadratic curve and updating the line renderer to render the chain using
+//                 these points.
+// Author      :   Jacob Gallagher
+// Mail        :   Jacob.Gallagher1.@mds.ac.nz
+using UnityEngine;
 
 namespace Island.CollectableIsland
 {
@@ -11,8 +22,11 @@ namespace Island.CollectableIsland
         private const int NumPoints = 50;
         private readonly Vector3[] _positions = new Vector3[50];
 
-        public int index;
+        public int index;    //Which chain on the island is this (as island has 2 chains this can be 0 or 1)
 
+        /// <summary>
+        /// Set up variables and update previous island position in chain controller
+        /// </summary>
         private void Start()
         {
             _line = GetComponent<LineRenderer>();

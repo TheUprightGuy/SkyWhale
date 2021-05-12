@@ -1,4 +1,17 @@
-﻿using System.Collections;
+﻿/*
+  Bachelor of Software Engineering
+  Media Design School
+  Auckland
+  New Zealand
+  (c) 2021 Media Design School
+  File Name   :   DialogueManager.cs
+  Description :   Handles dialogue SOs and UI. 
+  Date        :   07/04/2021
+  Author      :   Wayd Barton-Redgrave
+  Mail        :   wayd.bartonregrave@mds.ac.nz
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +24,12 @@ public class DialogueManager : MonoBehaviour
     Animator animator;
     Image leftCharacter;
     Image rightCharacter;
+
+    /// <summary>
+    /// Description: Setup local Components.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Awake()
     {
         leftCharacter = transform.GetChild(0).GetComponent<Image>();
@@ -20,12 +39,12 @@ public class DialogueManager : MonoBehaviour
         animator = GetComponent<Animator>();
     }
     #endregion Setup
-    
-    public Dialogue currentDialogue;
-    public float dialogueTime;
-    float timer;
-    new bool enabled;
-
+    #region Callbacks
+    /// <summary>
+    /// Description: Setup Callbacks.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Start()
     {
         timer = dialogueTime;
@@ -35,28 +54,48 @@ public class DialogueManager : MonoBehaviour
         }
         ShowDialogue();
 
-
         CallbackHandler.instance.setDialogue += SetDialogue;
         CallbackHandler.instance.stopDialogue += StopDialogue;
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(ProgressDialogue);
     }
     private void OnDestroy()
     {
         CallbackHandler.instance.setDialogue -= SetDialogue;
         CallbackHandler.instance.stopDialogue -= StopDialogue;
     }
+    #endregion Callbacks
+    
+    public Dialogue currentDialogue;
+    public float dialogueTime;
+    float timer;
+    new bool enabled;
+    // Prevents Double Input of Interact Key
+    float startTimer;
 
+    private Coroutine myCoroutine;
+
+    /// <summary>
+    /// Description: Progresses dialogue over time or on E press.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     private void Update()
     {
         if (enabled)
         {
             timer -= Time.deltaTime;
-            if (timer <= 0 || Input.GetKeyDown(KeyCode.E))
-            {
-                ProgressDialogue();
-            }
+            startTimer -= Time.deltaTime;
+            if (timer <= 0)            
+                ProgressDialogue(InputState.KEYDOWN);          
         }
     }
 
+    /// <summary>
+    /// Description: Sets dialogue SO to use and begins dialogue.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <param name="_dialogue">Dialogue SO</param>
     public void SetDialogue(Dialogue _dialogue)
     {
         enabled = true;
@@ -65,17 +104,33 @@ public class DialogueManager : MonoBehaviour
         currentDialogue = _dialogue;
         leftCharacter.sprite = _dialogue.leftCharacter;
         rightCharacter.sprite = _dialogue.rightCharacter;
+
+        startTimer = 0.1f;
         
         ShowDialogue();
     }
 
+    /// <summary>
+    /// Description: Gets reference to current dialogue.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    /// <returns>Reference to current dialogue</returns>
     public DialogueComponent GetDialogue()
     {
         return currentDialogue.GetDialogue();
     }
 
+    /// <summary>
+    /// Description: Displays next line of dialogue and updates image.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     public void ShowDialogue()
     {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
+
         // No More Dialogue
         if (!currentDialogue)
         {
@@ -100,26 +155,57 @@ public class DialogueManager : MonoBehaviour
 
         speaker.SetText(temp.name);
 
-        StartCoroutine(WriteDialogue(temp.dialogue[temp.dialogueIndex]));        
+        myCoroutine = StartCoroutine(WriteDialogue(temp.dialogue[temp.dialogueIndex]));
     }
 
-    public void ProgressDialogue()
+    /// <summary>
+    /// Description: Checks if dialogue can be progressed.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
+    public void ProgressDialogue(InputState type)
     {
+        if (type != InputState.KEYDOWN || !currentDialogue || startTimer > 0)
+            return;
+
         timer = dialogueTime;
 
         if (typing)
-            return;
+        {
+            StopWriting();
+        }
         
         if (currentDialogue.Progress() != null)
         {
-                ShowDialogue();
+            ShowDialogue();
         }
         else
         {
-            HideText();
+            StopDialogue();
+            StopCoroutine(myCoroutine);
+            currentDialogue = null;
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
         }
     }
 
+    public void Progress()
+    {
+        ProgressDialogue(InputState.KEYDOWN);
+    }
+
+    void StopWriting()
+    {
+        dialogue.SetText("");
+        dialogue.text = "";
+        StopCoroutine(myCoroutine);
+    }
+
+    /// <summary>
+    /// Description: Hides dialogue.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     public void HideText()
     {
         enabled = false;
@@ -127,19 +213,48 @@ public class DialogueManager : MonoBehaviour
         animator.SetTrigger("PopOut");
         dialogue.SetText(" ");
         dialogue.text = "";
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
+    /// <summary>
+    /// Description: Reset dialogue upon completion.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     public void ResetDialogue()
     {
         if (currentDialogue)
-            currentDialogue.StartUp();
+        {
+            cachedDialogue = currentDialogue;
+            Invoke("RestartDialogue", 1.0f);
+        }
+            //currentDialogue.Restart();
     }
+
+    Dialogue cachedDialogue;
+    void RestartDialogue()
+    {
+        cachedDialogue.StartUp();
+        cachedDialogue = null;
+    }
+
+    /// <summary>
+    /// Description: Sets dialogue as inUse for checks.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     public void SetInUse()
     {
         if (currentDialogue)
             currentDialogue.inUse = true;
     }
 
+    /// <summary>
+    /// Description: Ends current dialogue.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
+    /// </summary>
     public void StopDialogue()
     {
         ResetDialogue();
@@ -148,6 +263,9 @@ public class DialogueManager : MonoBehaviour
 
     bool typing;
 
+    /// Description: Coroutine to type out text.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 04/07/2021</br>
     IEnumerator WriteDialogue(string _text)
     {
         typing = true;

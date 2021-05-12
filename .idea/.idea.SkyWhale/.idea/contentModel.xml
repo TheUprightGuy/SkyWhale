@@ -7,17 +7,11 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="BlacksmithScript.cs" t="Include" />
         <e p="Editor" t="Include">
           <e p="ConditionalHidePropertyDrawer.cs" t="Include" />
-          <e p="ObjDistributionEditor.cs" t="Include" />
+          <e p="MaterialInstancer.cs" t="Include" />
           <e p="TexturePainterControllerEditor.cs" t="Include" />
         </e>
-        <e p="GrappleChallengeMaster.cs" t="Include" />
-        <e p="GrappleChallengePoint.cs" t="Include" />
-        <e p="GrappleEndPoint.cs" t="Include" />
-        <e p="GrappleStartPoint.cs" t="Include" />
-        <e p="Lava.cs" t="Include" />
         <e p="LeanTween" t="Include">
           <e p="Editor" t="Include">
             <e p="LeanTweenDocumentationEditor.cs" t="Include" />
@@ -46,7 +40,6 @@
             <e p="MenuButtonController.cs" t="Include" />
             <e p="PauseMenuCanvasController.cs" t="Include" />
             <e p="ResolutionOption.cs" t="Include" />
-            <e p="SubtitlesToggle.cs" t="Include" />
             <e p="ToggleButton.cs" t="Include" />
           </e>
         </e>
@@ -55,13 +48,31 @@
             <e p="TexturePainterController.cs" t="Include" />
           </e>
         </e>
-        <e p="NPCScript.cs" t="Include" />
+        <e p="MatScript.cs" t="Include" />
+        <e p="SampleScenes" t="Include">
+          <e p="Menu" t="Include">
+            <e p="Scripts" t="Include">
+              <e p="MenuSceneLoader.cs" t="Include" />
+              <e p="PauseMenu.cs" t="Include" />
+              <e p="SceneAndURLLoader.cs" t="Include" />
+            </e>
+          </e>
+          <e p="Scripts" t="Include">
+            <e p="CameraSwitch.cs" t="Include" />
+            <e p="LevelReset.cs" t="Include" />
+            <e p="PlaceTargetWithMouse.cs" t="Include" />
+            <e p="SlowMoButton.cs" t="Include" />
+          </e>
+          <e p="Shaders" t="Include">
+            <e p="Skybox-Procedural.shader" t="Include" />
+          </e>
+        </e>
         <e p="Scripts" t="Include">
           <e p="Audio" t="Include">
             <e p="AmbientLayer.cs" t="Include" />
             <e p="AudioManager.cs" t="Include" />
+            <e p="AudioSourceInit.cs" t="Include" />
             <e p="FadeMixerGroup.cs" t="Include" />
-            <e p="InactiveAudiosource.cs" t="Include" />
             <e p="SoundInfo.cs" t="Include" />
           </e>
           <e p="Camera" t="Include">
@@ -81,12 +92,27 @@
             <e p="Quest.cs" t="Include" />
             <e p="SaveMe.cs" t="Include" />
           </e>
+          <e p="Debug" t="Include">
+            <e p="DebugTeleportButton.cs" t="Include" />
+            <e p="DebugTeleportLocations.cs" t="Include" />
+            <e p="DebugTool.cs" t="Include" />
+          </e>
           <e p="ElevatorScript.cs" t="Include" />
           <e p="EndScreen.cs" t="Include" />
           <e p="EntityManager.cs" t="Include" />
           <e p="FlightChallengeMaster.cs" t="Include" />
+          <e p="FlightChallengePlatform.cs" t="Include" />
           <e p="FlightChallengeRing.cs" t="Include" />
           <e p="GliderMovement.cs" t="Include" />
+          <e p="GrappleChallengeScripts" t="Include">
+            <e p="GrappleChallengeMaster.cs" t="Include" />
+            <e p="GrappleChallengePoint.cs" t="Include" />
+            <e p="GrappleCheckPoint.cs" t="Include" />
+            <e p="GrappleEndPoint.cs" t="Include" />
+            <e p="GrappleStartPoint.cs" t="Include" />
+          </e>
+          <e p="GrappleIslandFlightChallenges.cs" t="Include" />
+          <e p="GrappleTutorial.cs" t="Include" />
           <e p="GunMeshSwitch.cs" t="Include" />
           <e p="Island" t="Include">
             <e p="CollectableIsland" t="Include">
@@ -95,10 +121,15 @@
               <e p="IslandSpawner.cs" t="Include" />
               <e p="IslandTrailing.cs" t="Include" />
             </e>
+            <e p="Editor" t="Include">
+              <e p="ObjDistribuitionEditor.cs" t="Include" />
+            </e>
+            <e p="GrassContainer.cs" t="Include" />
             <e p="NewIslandScript.cs" t="Include" />
             <e p="ObjDistribuition.cs" t="Include" />
           </e>
           <e p="IslandColliderScript.cs" t="Include" />
+          <e p="Lava.cs" t="Include" />
           <e p="Management &amp; GameLoop" t="Include">
             <e p="CallbackHandler.cs" t="Include" />
             <e p="CustomInputUI.cs" t="Include" />
@@ -106,6 +137,7 @@
             <e p="EventManager.cs" t="Include" />
             <e p="LampManager.cs" t="Include" />
             <e p="LightRotator.cs" t="Include" />
+            <e p="ObjectFinder.cs" t="Include" />
             <e p="QuestManager.cs" t="Include" />
             <e p="SaveManager.cs" t="Include" />
             <e p="WorldStuff" t="Include">
@@ -115,6 +147,7 @@
           <e p="Movement" t="Include">
             <e p="FishingLineScript.cs" t="Include" />
             <e p="GrappleScript.cs" t="Include" />
+            <e p="LevelBoundaryChecker.cs" t="Include" />
             <e p="MCMovement" t="Include">
               <e p="PlayerMovement.cs" t="Include" />
               <e p="VirtualInputs.cs" t="Include" />
@@ -134,10 +167,17 @@
             <e p="WhaleMovement.cs" t="Include" />
           </e>
           <e p="NewGrappleHook.cs" t="Include" />
+          <e p="NPCScripts" t="Include">
+            <e p="BlacksmithScript.cs" t="Include" />
+            <e p="NPCScript.cs" t="Include" />
+            <e p="PilotQuestCollectable.cs" t="Include" />
+          </e>
           <e p="Particles" t="Include">
             <e p="ParticleSpeedScript.cs" t="Include" />
             <e p="RingPFX.cs" t="Include" />
           </e>
+          <e p="PilotScript.cs" t="Include" />
+          <e p="PreLoadSceneLoader.cs" t="Include" />
           <e p="Puzzle" t="Include">
             <e p="CirclePuzzle.cs" t="Include" />
             <e p="CirclePuzzleMaster.cs" t="Include" />
@@ -154,6 +194,11 @@
             <e p="SwitchPuzzleMaster.cs" t="Include" />
           </e>
           <e p="PuzzleCamera.cs" t="Include" />
+          <e p="ReplaceWithPrefab" t="Include">
+            <e p="Editor" t="Include">
+              <e p="replacewithprefab.cs" t="Include" />
+            </e>
+          </e>
           <e p="Resources" t="Include">
             <e p="CollectableResource.cs" t="Include" />
             <e p="ResourceDisplayScript.cs" t="Include" />
@@ -182,6 +227,22 @@
             <e p="MapHandler.cs" t="Include" />
             <e p="SaveContainer.cs" t="Include" />
           </e>
+          <e p="UISCRIPTS" t="Include">
+            <e p="ApplyButton.cs" t="Include" />
+            <e p="ButtonPrompt.cs" t="Include" />
+            <e p="FullscreenToggle.cs" t="Include" />
+            <e p="GameUIController.cs" t="Include" />
+            <e p="MainMenuCanvasController.cs" t="Include" />
+            <e p="ObjectiveTrackingUI.cs" t="Include" />
+            <e p="ObjectiveUIElement.cs" t="Include" />
+            <e p="PromptGrapple.cs" t="Include" />
+            <e p="PuzzlePrompt.cs" t="Include" />
+            <e p="SpeechUIElement.cs" t="Include" />
+          </e>
+          <e p="UnityURPUnlitScreenSpaceDecalShader-master" t="Include">
+            <e p="URP_NiloCatExtension_ScreenSpaceDecal_Unlit.shader" t="Include" />
+          </e>
+          <e p="Villager.cs" t="Include" />
         </e>
         <e p="Shaders" t="Include">
           <e p="Clouds" t="Include">
@@ -191,6 +252,16 @@
             <e p="SkyboxBlend.shader" t="Include" />
           </e>
           <e p="UnlitTransparent.shader" t="Include" />
+        </e>
+        <e p="Stylized Water" t="Include">
+          <e p="Shaders" t="Include">
+            <e p="ShadowUtilities.cginc" t="Include" />
+            <e p="Stylized Water.shader" t="Include" />
+            <e p="WaterUtilities.cginc" t="Include" />
+          </e>
+          <e p="Textures" t="Include">
+            <e p="ReadMe.txt" t="Include" />
+          </e>
         </e>
         <e p="TextMesh Pro" t="Include">
           <e p="Fonts" t="Include">

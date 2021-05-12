@@ -53,7 +53,6 @@ public class DefaultsButton : MenuButton, IPointerEnterHandler, IPointerExitHand
                 gameSettings.masterVolume = defaults.masterVolume;
                 gameSettings.soundVolume = defaults.soundVolume;
                 gameSettings.musicVolume = defaults.musicVolume;
-                gameSettings.subtitles = defaults.subtitles;
                 break;
             }
             case MenuOptions.Video:

@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60b9609937adbca41940674554d250d8, type: 3}
   m_Name: DefaultSettings
   m_EditorClassIdentifier: 
-  masterVolume: 0
-  soundVolume: 0
-  musicVolume: 0
-  subtitles: 0
-  resolution: 0
-  fullScreen: 0
+  mouseSensitivity: 10
+  masterVolume: 100
+  soundVolume: 100
+  musicVolume: 100
+  resolution: 1
+  fullScreen: 1
+  fieldOfView: 0

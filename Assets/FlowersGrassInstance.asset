@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f689181933431b459e931c74f5c2eef, type: 3}
+  m_Name: FlowersGrassInstance
+  m_EditorClassIdentifier: 
+  GrassChunks:
+  - index: {x: -5, y: -3, z: -3}
+    pointList:
+    - {x: -51.708252, y: -27.965034, z: -32.850643}
+    - {x: -50.327744, y: -28.166927, z: -27.160206}
+    - {x: -56.0194, y: -28.03611, z: -27.73581}
+    - {x: -54.006317, y: -27.981895, z: -29.718094}
+    - {x: -56.63096, y: -27.985344, z: -32.583054}
+    - {x: -52.228203, y: -27.97858, z: -34.821896}
+    normalList:
+    - {x: -0.0044359863, y: 0.9999739, z: -0.0057027503}
+    - {x: 0.060025346, y: 0.99449193, z: 0.085922815}
+    - {x: -0.006329908, y: 0.9997612, z: 0.020915383}
+    - {x: -0.006329908, y: 0.9997612, z: 0.020915383}
+    - {x: -0.0044359863, y: 0.9999739, z: -0.0057027503}
+    - {x: -0.0044359863, y: 0.9999739, z: -0.0057027503}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -5, y: -3, z: -2}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -6, y: -3, z: -3}
+    pointList: []
+    normalList: []
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: -3, z: -3}
+    pointList:
+    - {x: -45.729527, y: -28.062397, z: -32.411987}
+    - {x: -46.487793, y: -28.01118, z: -33.675816}
+    normalList:
+    - {x: 0.050043788, y: 0.99818903, z: 0.03338074}
+    - {x: 0.01994333, y: 0.9997974, z: -0.0027390555}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -4, y: -3, z: -4}
+    pointList:
+    - {x: -47.192833, y: -28.011486, z: -38.921013}
+    - {x: -46.96397, y: -28.013859, z: -38.121307}
+    normalList:
+    - {x: 0.01994333, y: 0.9997974, z: -0.0027390555}
+    - {x: 0.01994333, y: 0.9997974, z: -0.0027390555}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
+  - index: {x: -5, y: -3, z: -4}
+    pointList:
+    - {x: -52.721558, y: -27.991749, z: -36.747047}
+    normalList:
+    - {x: -0.0044359863, y: 0.9999739, z: -0.0057027503}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
