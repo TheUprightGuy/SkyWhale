@@ -19,6 +19,8 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/GrappleTutorial.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/LevelBoundaryChecker.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
@@ -27,8 +29,8 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.44117647" />
-    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.032831736" />
+    <property name="DebuggerViewTab_PTCS_FirstProportionKey" value="0.4409534" />
+    <property name="DebuggerViewTab_PTCS_LastProportionKey" value="0.0" />
     <property name="Discover.Launch.Via.Unity" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
