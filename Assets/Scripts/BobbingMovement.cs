@@ -15,13 +15,13 @@ public class BobbingMovement : MonoBehaviour
     void Start()
     {
         bobTime *= Random.Range(0.5f, 1.5f);
-        BobIsland();
+        Bob();
     }
     
-    private void BobIsland()
+    private void Bob()
     {
         _bobTween = LeanTween.moveY(gameObject,  transform.position.y + bobAmount * direction, bobTime)
-            .setEase(LeanTweenType.easeInOutQuad).setOnComplete(BobIsland);
+            .setEase(LeanTweenType.easeInOutQuad).setOnComplete(Bob);
         direction *= -1;
     }
 }

@@ -224,6 +224,7 @@
             <e p="GameState.cs" t="Include" />
           </e>
           <e p="SpeedLinesScript.cs" t="Include" />
+          <e p="SpinningMovement.cs" t="Include" />
           <e p="TimeSlowDown.cs" t="Include" />
           <e p="UI" t="Include">
             <e p="InputDefaults.cs" t="Include" />
