@@ -216,6 +216,10 @@ public class GrappleScript : MonoBehaviour
                 transform.LookAt(hook.transform);
                 return;
             }
+            else
+            {
+                CallbackHandler.instance.SetOrbit();
+            }
         }
 
         // Safety check before applying rotation

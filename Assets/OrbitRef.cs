@@ -13,5 +13,11 @@ public class OrbitRef : MonoBehaviour
         {
             temp.orbit = heightRef;
         }
+
+        PlayerMovement pm = other.GetComponent<PlayerMovement>();
+        if (pm)
+        {
+            CallbackHandler.instance.SetNewOrbitRefer(heightRef);
+        }
     }
 }
