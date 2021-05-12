@@ -445,6 +445,10 @@ public class GrappleScript : MonoBehaviour
     /// <param name="_startAim">ADS</param>
     void ToggleAim(bool _startAim)
     {
+        if (pm.cinematicPause)
+            return;
+
+
         CallbackHandler.instance.HidePrompt(PromptType.GrappleAim);
         CallbackHandler.instance.ResetActionTimer();
 

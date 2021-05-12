@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    bool cinematicPause;
+    public bool cinematicPause;
     void CinematicPause(bool _pause)
     {
         cinematicPause = _pause;
