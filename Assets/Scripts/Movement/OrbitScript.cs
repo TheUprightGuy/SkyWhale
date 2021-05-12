@@ -49,20 +49,20 @@ public class OrbitScript : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        CallbackHandler.instance.setOrbit += SetOrbit;
+        //CallbackHandler.instance.setOrbit += SetOrbit;
         // testing purposes
         if (enabled)
         {
             rb.velocity = Vector3.forward;
 
-            SetOrbit(orbit);
+            SetOrbit();// orbit);
             if (GetComponent<WhaleMovement>())
               GetComponent<WhaleMovement>().moveSpeed = 2.5f;
         }
     }
     private void OnDestroy()
     {
-        CallbackHandler.instance.setOrbit -= SetOrbit;
+        //CallbackHandler.instance.setOrbit -= SetOrbit;
     }
     #endregion Callbacks
 
@@ -118,11 +118,11 @@ public class OrbitScript : MonoBehaviour
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
     /// <param name="_orbit">Object to Orbit</param>
-    public void SetOrbit(GameObject _orbit)
+    public void SetOrbit()//GameObject _orbit)
     {
         //if (!enabled)
         {
-            orbit = _orbit;
+            //orbit = _orbit;
             orbitDistance = orbit.GetComponent<SphereCollider>().radius;
             enabled = true;
         }

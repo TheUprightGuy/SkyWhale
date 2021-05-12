@@ -113,7 +113,7 @@ public class PickUp : MonoBehaviour
                         }
                         else
                         {
-                            orbit.SetOrbit(cinematicPoints[cinematicPoints.Length - 1].gameObject);
+                            orbit.SetOrbit();// cinematicPoints[cinematicPoints.Length - 1].gameObject);
                             cinematic = false;
                             //homing = true;
                         }

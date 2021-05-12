@@ -90,12 +90,14 @@ public class WhaleMovement : MonoBehaviour
         EntityManager.instance.toggleControl += ToggleControl;
         CallbackHandler.instance.pause += Pause;
         CallbackHandler.instance.resetActionTimer += ResetActionTimer;
+        CallbackHandler.instance.dismount += Dismount;
     }
     private void OnDestroy()
     {
         EntityManager.instance.toggleControl -= ToggleControl;
         CallbackHandler.instance.pause -= Pause;
         CallbackHandler.instance.resetActionTimer -= ResetActionTimer;
+        CallbackHandler.instance.dismount -= Dismount;
     }
 
     /// <summary>
@@ -138,13 +140,15 @@ public class WhaleMovement : MonoBehaviour
     /// <param name="arg0">Input state (Down/Held/Up)</param>
     private void Dismount(InputState arg0)
     {
-        if (!control) 
-            return;
-
-        control = false;
-        EntityManager.instance.OnDismountPlayer(dismountPosition);
-        //CallbackHandler.instance.DismountPlayer(dismountPosition);
+        if (control || bucking)
+        {
+            control = false;
+            bucking = false;
+            EntityManager.instance.OnDismountPlayer(dismountPosition);
+            //CallbackHandler.instance.DismountPlayer(dismountPosition);
+        }
     }
+    bool bucking;
 
     /// <summary>
     /// Description: Yaw/Pitch the whale to desired rotation - rolling body on yaw.
@@ -338,9 +342,9 @@ public class WhaleMovement : MonoBehaviour
         tooClose = true;
         control = false;
         buckTimer = 2.0f;
-
-        NewIslandScript temp = (hit.GetComponent<NewIslandScript>()) ? hit.GetComponent<NewIslandScript>() : hit.GetComponentInParent<NewIslandScript>();
-        cachedHeightRef = temp.heightRef;
+        
+        //NewIslandScript temp = (hit.GetComponent<NewIslandScript>()) ? hit.GetComponent<NewIslandScript>() : hit.GetComponentInParent<NewIslandScript>();
+        //cachedHeightRef = temp.heightRef;
     }
 
     /// <summary>
@@ -363,9 +367,11 @@ public class WhaleMovement : MonoBehaviour
             // Finished backing off to a safe distance
             if (buckTimer <= 0)
             {
+                bucking = true;
+                Dismount(InputState.KEYDOWN);
                 tooClose = false;
                 moveSpeed = maxSpeed / 2.0f;
-                orbit.SetOrbit(cachedHeightRef);
+                orbit.SetOrbit();// cachedHeightRef);
             }
         }
         else

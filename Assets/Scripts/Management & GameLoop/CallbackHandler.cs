@@ -256,4 +256,13 @@ public class CallbackHandler : MonoBehaviour
             changeMouseSensitivity(_value);
         }
     }
+
+    public event Action<InputState> dismount;
+    public void Dismount(InputState _input)
+    {
+        if (dismount != null)
+        {
+            dismount(_input);
+        }
+    }
 }
