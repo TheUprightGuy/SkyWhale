@@ -49,6 +49,7 @@ namespace Movement
             }
             //MovePlayerToWhale();
             //Respawn player at last checkpoint
+            EntityManager.instance.player.layer = LayerMask.NameToLayer("Player");
             ClosestGrappleChallengeMaster.ResetChallenge();
         }
 
