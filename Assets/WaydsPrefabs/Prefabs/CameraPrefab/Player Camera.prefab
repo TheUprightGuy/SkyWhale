@@ -134,15 +134,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTrans: {fileID: 0}
   PlayerTrans: {fileID: 0}
+  cameraType: 0
   startOffset: {x: 0, y: 0, z: 1}
   invertX: 0
   invertY: 1
-  rotateSpeed: 100
+  rotateSpeed: 150
   zoomSpeed: 200
   CameraSnapAcceleration: 500
   minYAngle: -40
   maxYAngle: 60
-  defaultZoom: 1
+  defaultZoom: 2
   minZoomDist: 1
   maxZoomDist: 5
   smoothTime: 0
@@ -240,7 +241,7 @@ MonoBehaviour:
   priority: 0
   blendDistance: 0
   weight: 1
-  sharedProfile: {fileID: 11400000, guid: dcafee9ed718aff4abdc97eb1dfdb48b, type: 2}
+  sharedProfile: {fileID: 0}
 --- !u!1 &4838435617864182866
 GameObject:
   m_ObjectHideFlags: 0

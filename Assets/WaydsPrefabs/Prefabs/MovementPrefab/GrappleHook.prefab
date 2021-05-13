@@ -498,6 +498,7 @@ MonoBehaviour:
   manualRetract: 0
   retracting: 0
   flightTime: 0
+  maxFlightTime: 0.35
   connectedObj: {fileID: 0}
   yeetForceStrength: 2.5
   grappleableLayers:
