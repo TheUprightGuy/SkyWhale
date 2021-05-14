@@ -11,6 +11,7 @@
   Mail        :   wayd.bartonregrave@mds.ac.nz
 */
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class GrappleChallengeMaster : MonoBehaviour
     #region Setup
     [HideInInspector] public PlayerMovement pm;
     [HideInInspector] public GrappleCheckPoint LastCheckPoint;
+    public bool onFirstIsland;
     ParticleSystem ps;
     GrappleStartPoint startPoint;
 
@@ -44,6 +46,12 @@ public class GrappleChallengeMaster : MonoBehaviour
         LastCheckPoint = null;
     }
     #endregion Setup
+
+
+    private void Start()
+    {
+        if (onFirstIsland) CallbackHandler.instance.UpdateClosestGrappleChallenge(this);
+    }
 
     /// <summary>
     /// Description: Start Confetti Burst.
