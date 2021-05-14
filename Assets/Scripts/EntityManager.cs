@@ -77,14 +77,10 @@ public class EntityManager : MonoBehaviour
             var offset = player.transform.parent.position - player.transform.position;
             player.transform.parent.position = locationToTeleport.position + offset;
             
-            //Update rotation for both player and camera
+            //Update rotation for both player
             var rotation = locationToTeleport.rotation;
             player.transform.rotation = rotation;
-            var parent = player.transform.parent;
-            var cameraEulerAngles = parent.GetChild(1).rotation.eulerAngles;
-            parent.GetChild(1).rotation =  Quaternion.Euler(cameraEulerAngles.x, rotation.eulerAngles.y, cameraEulerAngles.z);
         }
-
         return true;
     }
 
