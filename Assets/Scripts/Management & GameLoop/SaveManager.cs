@@ -209,7 +209,8 @@ public class SaveManager : MonoBehaviour
         if (load != null)
         {
             load();
-        }      
+            CallbackHandler.instance.FadeIn();
+        }
     }
 
     int uniqueID = 0;

@@ -246,7 +246,7 @@ public class GrappleScript : MonoBehaviour
 
             if (grappleableLayers == (grappleableLayers | (1 << hit.transform.gameObject.layer)))
             {
-                rangeIndicator.color = (Vector3.Distance(transform.position, hit.point) < 19.0f) ? Color.white : Color.red;
+                rangeIndicator.color = (Vector3.Distance(transform.position, hit.point) < 19.0f) ? Color.green : Color.red;
                 grapplePoint.color = Color.white;
 
                 if (aim)

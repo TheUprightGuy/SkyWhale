@@ -67,6 +67,7 @@ public class GrappleChallengeMaster : MonoBehaviour
         }
     }
 
+    bool reset;
     /// <summary>
     /// Description: Reset player position and grapple objects.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -74,18 +75,38 @@ public class GrappleChallengeMaster : MonoBehaviour
     /// </summary>
     public void ResetChallenge()
     {
+        if (reset)
+            return;
+
+        reset = true;
+
         foreach(GrappleChallengePoint n in grapplePoints)
         {
             n.ResetMe();
         }
-        
-        if (LastCheckPoint == null)
-        {
-            EntityManager.instance.TeleportPlayer(startPoint.transform);
-            return;
-        }
 
-        
+        CallbackHandler.instance.FadeOut();
+        CallbackHandler.instance.CinematicPause(true);
+
+        Invoke(LastCheckPoint ? "Teleport" : "TeleportStart", 1.0f);
+        Invoke("GiveControl", 2.0f);
+    }
+
+    void Teleport()
+    {
+        CallbackHandler.instance.FadeIn();
         EntityManager.instance.TeleportPlayer(LastCheckPoint.transform);
+    }
+
+    void TeleportStart()
+    {
+        CallbackHandler.instance.FadeIn();
+        EntityManager.instance.TeleportPlayer(startPoint.transform);
+    }
+
+    void GiveControl()
+    {
+        CallbackHandler.instance.CinematicPause(false);
+        reset = false;
     }
 }

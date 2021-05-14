@@ -304,4 +304,22 @@ public class CallbackHandler : MonoBehaviour
             dismount(_input);
         }
     }
+
+    public event Action fadeIn;
+    public void FadeIn()
+    {
+        if (fadeIn != null)
+        {
+            fadeIn();
+        }
+    }
+
+    public event Action fadeOut;
+    public void FadeOut()
+    {
+        if (fadeOut != null)
+        {
+            fadeOut();
+        }
+    }
 }
