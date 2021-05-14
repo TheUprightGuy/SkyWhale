@@ -95,7 +95,6 @@ public class DisplayValue : MonoBehaviour
             case SliderType.FOV:
             {
                 slider.value = settings.fieldOfView;
-                //Audio.AudioManager.instance.OnVolumeAdjusted(2, slider.value);
                 break;
             }
             case SliderType.Sensivity:
