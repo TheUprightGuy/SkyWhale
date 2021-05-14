@@ -446,7 +446,7 @@ public class GrappleScript : MonoBehaviour
     /// <param name="_startAim">ADS</param>
     void ToggleAim(bool _startAim)
     {
-        if (pm.cinematicPause)
+        if (pm && pm.cinematicPause)
             return;
 
 
