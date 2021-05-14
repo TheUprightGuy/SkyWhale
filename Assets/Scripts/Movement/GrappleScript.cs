@@ -249,14 +249,14 @@ public class GrappleScript : MonoBehaviour
                 rangeIndicator.color = (Vector3.Distance(transform.position, hit.point) < 19.0f) ? Color.green : Color.red;
                 grapplePoint.color = Color.white;
 
-                if (aim)
+                if (aim && !grapplingFromWhale)
                 {
                     CallbackHandler.instance.DisplayPrompt(PromptType.GrappleFire);
                 }
                 return hit.point;
             }
 
-            if (aim)
+            if (aim && !grapplingFromWhale)
             {
                 CallbackHandler.instance.HidePrompt(PromptType.GrappleFire);
             }
