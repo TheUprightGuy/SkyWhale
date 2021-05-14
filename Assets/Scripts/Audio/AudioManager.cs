@@ -115,7 +115,11 @@ namespace Audio
         {
             if (SoundDictionary.ContainsKey(audioSource.name))    //Ensure sound dictionary doesn't already contain the audio source
             {
-                Debug.Log("Sound dictionary already contains an audio source with key: " + audioSource.name);
+                Debug.Log("Replacing sound dictionary reference for: " + audioSource.name);
+                var soundInfoToReplace = SoundDictionary[audioSource.name];
+                soundInfoToReplace.audioSource = audioSource;
+                soundInfoToReplace.pitchDefault = audioSource.pitch;
+                soundInfoToReplace.volumeDefault = audioSource.volume;
                 return;
             }
             
