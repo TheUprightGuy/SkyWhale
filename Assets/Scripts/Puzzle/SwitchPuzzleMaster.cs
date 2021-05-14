@@ -100,6 +100,8 @@ public class SwitchPuzzleMaster : MonoBehaviour
 
         inUse = !inUse;
         ToggleCam(inUse);
+        pm.haveControl = !inUse;
+
         Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = inUse;
         CallbackHandler.instance.HidePrompt(PromptType.Interact);

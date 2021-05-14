@@ -79,6 +79,7 @@ public class BlacksmithScript : NPCScript
             pm = other.GetComponent<PlayerMovement>();
 
             CallbackHandler.instance.SpeechInRange(dialogueTransform);
+            anim.SetBool("Wave", true);
 
             EventManager.TriggerEvent("FindBlacksmith");
         }
