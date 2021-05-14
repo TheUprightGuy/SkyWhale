@@ -68,6 +68,7 @@ public class WhaleMovement : MonoBehaviour
         gs = GetComponentInChildren<GrappleScript>();
         if (GameObject.Find("DismountPos"))
             dismountPosition = GameObject.Find("DismountPos").transform;
+        GetComponent<GrappleChallengeMaster>().LastCheckPoint = GetComponentInChildren<GrappleCheckPoint>();
     }
 
     /// <summary>    
@@ -456,6 +457,7 @@ public class WhaleMovement : MonoBehaviour
         gs.active = true;
         orbit.enabled = false;
         ResetActionTimer();
+        CallbackHandler.instance.UpdateClosestGrappleChallenge(GetComponent<GrappleChallengeMaster>());
     }
 
     /// <summary>

@@ -7,6 +7,7 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="CinemaCamera.cs" t="Include" />
         <e p="Editor" t="Include">
           <e p="ConditionalHidePropertyDrawer.cs" t="Include" />
           <e p="MaterialInstancer.cs" t="Include" />
@@ -29,6 +30,7 @@
           <e p="License.txt" t="Include" />
           <e p="ReadMe.txt" t="Include" />
         </e>
+        <e p="Letterbox.cs" t="Include" />
         <e p="MainMenu" t="Include">
           <e p="Scripts" t="Include">
             <e p="AnimatorFunctions.cs" t="Include" />
@@ -43,12 +45,14 @@
             <e p="ToggleButton.cs" t="Include" />
           </e>
         </e>
+        <e p="MainMenuWhaleOrbit.cs" t="Include" />
         <e p="Materials" t="Include">
           <e p="Island" t="Include">
             <e p="TexturePainterController.cs" t="Include" />
           </e>
         </e>
         <e p="MatScript.cs" t="Include" />
+        <e p="OrbitRef.cs" t="Include" />
         <e p="SampleScenes" t="Include">
           <e p="Menu" t="Include">
             <e p="Scripts" t="Include">
@@ -75,6 +79,7 @@
             <e p="FadeMixerGroup.cs" t="Include" />
             <e p="SoundInfo.cs" t="Include" />
           </e>
+          <e p="BobbingMovement.cs" t="Include" />
           <e p="Camera" t="Include">
             <e p="DumbCamera.cs" t="Include" />
             <e p="MouseOverHighlight.cs" t="Include" />
@@ -219,6 +224,7 @@
             <e p="GameState.cs" t="Include" />
           </e>
           <e p="SpeedLinesScript.cs" t="Include" />
+          <e p="SpinningMovement.cs" t="Include" />
           <e p="TimeSlowDown.cs" t="Include" />
           <e p="UI" t="Include">
             <e p="InputDefaults.cs" t="Include" />

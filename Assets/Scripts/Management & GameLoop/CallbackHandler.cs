@@ -84,18 +84,27 @@ public class CallbackHandler : MonoBehaviour
         }
     }
 
-    public Action<GameObject> setOrbit;
+    public Action setOrbit;
     /// <summary>
     /// Description: Sets whales object to orbit.
     /// <br>Author: Wayd Barton-Redgrave</br>
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
     /// <param name="_orbit">Object to orbit</param>
-    public void SetOrbit(GameObject _orbit)
+    public void SetOrbit()
     {
         if (setOrbit != null)
         {
-            setOrbit(_orbit);
+            setOrbit();
+        }
+    }
+
+    public Action<GameObject> setNewOrbitRef;
+    public void SetNewOrbitRefer(GameObject _ref)
+    {
+        if (setNewOrbitRef != null)
+        {
+            setNewOrbitRef(_ref);
         }
     }
     

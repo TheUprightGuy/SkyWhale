@@ -49,7 +49,8 @@ public class OrbitScript : MonoBehaviour
     /// </summary>
     private void Start()
     {
-        //CallbackHandler.instance.setOrbit += SetOrbit;
+        CallbackHandler.instance.setOrbit += SetOrbit;
+        CallbackHandler.instance.setNewOrbitRef += SetNewOrbitRef;
         // testing purposes
         if (enabled)
         {
@@ -62,7 +63,8 @@ public class OrbitScript : MonoBehaviour
     }
     private void OnDestroy()
     {
-        //CallbackHandler.instance.setOrbit -= SetOrbit;
+        CallbackHandler.instance.setOrbit -= SetOrbit;
+        CallbackHandler.instance.setNewOrbitRef -= SetNewOrbitRef;
     }
     #endregion Callbacks
 
@@ -126,5 +128,10 @@ public class OrbitScript : MonoBehaviour
             orbitDistance = orbit.GetComponent<SphereCollider>().radius;
             enabled = true;
         }
+    }
+
+    public void SetNewOrbitRef(GameObject _ref)
+    {
+        orbit = _ref;
     }
 }

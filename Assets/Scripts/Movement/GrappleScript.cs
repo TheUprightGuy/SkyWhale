@@ -216,6 +216,10 @@ public class GrappleScript : MonoBehaviour
                 transform.LookAt(hook.transform);
                 return;
             }
+            else
+            {
+                CallbackHandler.instance.SetOrbit();
+            }
         }
 
         // Safety check before applying rotation
@@ -274,6 +278,7 @@ public class GrappleScript : MonoBehaviour
     }
 
     float floatTimer;
+    public float maxFloatTimer = 0.1f;
     /// <summary>
     /// Description: Handles grapple gun rotation, gravity and loaded mesh states.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -383,7 +388,7 @@ public class GrappleScript : MonoBehaviour
                 hook.Fire(shootPoint.shootPoint, Vector3.Normalize(RaycastToTarget() - transform.position));
                 cachedShoot = false;
                 ToggleAim(false);
-                floatTimer = 1.0f;
+                floatTimer = maxFloatTimer;
                 return;
             }
 
@@ -409,7 +414,7 @@ public class GrappleScript : MonoBehaviour
                 hook.Fire(shootPoint.shootPoint, Vector3.Normalize(RaycastToTarget() - transform.position));
                 cachedShoot = false;
                 ToggleAim(false);
-                floatTimer = 1.0f;
+                floatTimer = maxFloatTimer;
                 return;
             }
         }
@@ -441,6 +446,10 @@ public class GrappleScript : MonoBehaviour
     /// <param name="_startAim">ADS</param>
     void ToggleAim(bool _startAim)
     {
+        if (pm && pm.cinematicPause)
+            return;
+
+
         CallbackHandler.instance.HidePrompt(PromptType.GrappleAim);
         CallbackHandler.instance.ResetActionTimer();
 
