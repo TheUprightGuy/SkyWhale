@@ -788,6 +788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9fd9cd0fca33314199101a39878187f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 0}
   cam: {fileID: 0}
   type: 0
   dialogue: {fileID: 11400000, guid: 26378f8c95a1c4b42a89ba148078c208, type: 2}
@@ -2674,7 +2675,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -9103484930961366303, guid: 59ddadc71fe0f1c47920e7fe8a451ab8, type: 3}
+  - {fileID: 2100000, guid: 57848629368a6764a9d2a7f1a386e943, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
