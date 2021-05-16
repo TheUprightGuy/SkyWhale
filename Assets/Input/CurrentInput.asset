@@ -45,19 +45,19 @@ MonoBehaviour:
     MethodToCall:
       m_PersistentCalls:
         m_Calls: []
-  - NameForInput: Jump
-    KeyToListen: 32
+  - NameForInput: Run
+    KeyToListen: 304
     CallOnKeyDown: 1
     CallOnKeyHeld: 0
     CallOnKeyUp: 1
     MethodToCall:
       m_PersistentCalls:
         m_Calls: []
-  - NameForInput: Run
-    KeyToListen: 304
+  - NameForInput: Jump
+    KeyToListen: 32
     CallOnKeyDown: 1
     CallOnKeyHeld: 0
-    CallOnKeyUp: 1
+    CallOnKeyUp: 0
     MethodToCall:
       m_PersistentCalls:
         m_Calls: []
@@ -102,6 +102,14 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   whaleInput:
+  - NameForInput: Thrust
+    KeyToListen: 32
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
   - NameForInput: YawLeft
     KeyToListen: 97
     CallOnKeyDown: 1
@@ -128,14 +136,6 @@ MonoBehaviour:
         m_Calls: []
   - NameForInput: PitchDown
     KeyToListen: 119
-    CallOnKeyDown: 1
-    CallOnKeyHeld: 1
-    CallOnKeyUp: 0
-    MethodToCall:
-      m_PersistentCalls:
-        m_Calls: []
-  - NameForInput: Thrust
-    KeyToListen: 32
     CallOnKeyDown: 1
     CallOnKeyHeld: 1
     CallOnKeyUp: 0

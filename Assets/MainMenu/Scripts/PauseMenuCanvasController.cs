@@ -142,6 +142,7 @@ public class PauseMenuCanvasController : MonoBehaviour
                 toggle.SetActive(false); 
                 CallbackHandler.instance.Pause(toggle.activeSelf);
                 Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 TimeSlowDown.instance.SpeedUp();
                 break;
             }

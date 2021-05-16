@@ -15,17 +15,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum NPCType
+{
+    BS,
+    PL,
+    SH
+}
+
+
 public class NPCScript : MonoBehaviour
 {
     protected PlayerMovement pm;
     bool pause;
     protected Transform dialogueTransform;
+    [HideInInspector] public Animator anim;
     public Cinemachine.CinemachineVirtualCamera cam;
+    public NPCType type;
 
     private void Awake()
     {
         dialogueTransform = this.transform.GetChild(0);
         cam = GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>();
+        anim = GetComponent<Animator>();
+
+        anim.SetBool(type.ToString(), true);
     }
 
     #region Callbacks
@@ -96,11 +109,14 @@ public class NPCScript : MonoBehaviour
         CallbackHandler.instance.SetDialogue(currentDialogue);
         CallbackHandler.instance.Pause(true);
         CallbackHandler.instance.HidePrompt(PromptType.Speech);
+
+        anim.SetBool("Talk", true);
     }
 
     public void ResetCamera()
     {
         cam.m_Priority = 0;
+        anim.SetBool("Talk", false);
     }
 
     #region Triggers
@@ -117,6 +133,7 @@ public class NPCScript : MonoBehaviour
             pm = other.GetComponent<PlayerMovement>();
 
             CallbackHandler.instance.SpeechInRange(dialogueTransform);
+            anim.SetBool("Wave", true);
         }
     }
 
@@ -128,6 +145,8 @@ public class NPCScript : MonoBehaviour
             CallbackHandler.instance.StopDialogue();
 
             CallbackHandler.instance.SpeechOutOfRange();
+            anim.SetBool("Wave", false);
+            anim.SetBool("Talk", false);
         }
     }
     #endregion Triggers

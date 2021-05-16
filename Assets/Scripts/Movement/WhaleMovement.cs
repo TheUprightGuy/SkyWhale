@@ -146,6 +146,7 @@ public class WhaleMovement : MonoBehaviour
             control = false;
             bucking = false;
             EntityManager.instance.OnDismountPlayer(dismountPosition);
+            gs.hook.transform.position = EntityManager.instance.player.transform.position;
             //CallbackHandler.instance.DismountPlayer(dismountPosition);
         }
     }
@@ -458,6 +459,7 @@ public class WhaleMovement : MonoBehaviour
         orbit.enabled = false;
         ResetActionTimer();
         CallbackHandler.instance.UpdateClosestGrappleChallenge(GetComponent<GrappleChallengeMaster>());
+        gs.hook.connected = false;
     }
 
     /// <summary>

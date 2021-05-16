@@ -59,12 +59,13 @@ public class DefaultsButton : MenuButton, IPointerEnterHandler, IPointerExitHand
             {
                 gameSettings.resolution = defaults.resolution;
                 gameSettings.fullScreen = defaults.fullScreen;
+                gameSettings.fieldOfView = defaults.fieldOfView;
                 break;
             }
             case MenuOptions.Controls:
             {
-                    // Keybindings
-                    VirtualInputs.ResetToDefaults();
+                // Keybindings
+                VirtualInputs.ResetToDefaults();
                 break;
             }
             default:

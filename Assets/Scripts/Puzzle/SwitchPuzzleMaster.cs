@@ -100,6 +100,16 @@ public class SwitchPuzzleMaster : MonoBehaviour
 
         inUse = !inUse;
         ToggleCam(inUse);
+        pm.haveControl = !inUse;
+        if (!inUse)
+        {
+            Camera.main.cullingMask |= 1 << LayerMask.NameToLayer("Player");
+        }
+        else
+        {
+            Camera.main.cullingMask &=  ~(1 << LayerMask.NameToLayer("Player"));
+        }
+
         Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = inUse;
         CallbackHandler.instance.HidePrompt(PromptType.Interact);
@@ -149,6 +159,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
         Cursor.visible = inUse;
         EventManager.TriggerEvent("SwitchPuzzleCompletion");
         EventManager.TriggerEvent("SolvePuzzle");
+        Camera.main.cullingMask |= 1 << LayerMask.NameToLayer("Player");
         CallbackHandler.instance.PuzzleOutOfRange();
         return true;
     }

@@ -258,6 +258,8 @@ public class PlayerMovement : MonoBehaviour
                             || playerState == PlayerStates.GLIDING
                                 || playerState == PlayerStates.CLIMBING);
 
+        Camera.main.GetComponent<ThirdPersonCamera>().climbing = (playerState == PlayerStates.CLIMBING);
+
     }    
     bool IDLECheck()
     {

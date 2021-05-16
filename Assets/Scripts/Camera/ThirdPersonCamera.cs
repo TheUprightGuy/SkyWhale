@@ -48,6 +48,8 @@ public class ThirdPersonCamera : MonoBehaviour
 
     bool pause;
 
+    public bool climbing;
+
     void Start()
     {
         offset = startOffset; // targetTrans.position - transform.position;
@@ -115,6 +117,11 @@ public class ThirdPersonCamera : MonoBehaviour
             storedPos.y = Mathf.Clamp(storedPos.y, minYAngle, maxYAngle);
 
             storedPos.x += horizontal;
+
+            if (climbing)
+            {
+                storedPos.x = Mathf.Clamp(storedPos.x, PlayerTrans.eulerAngles.y - 90.0f, PlayerTrans.eulerAngles.y + 90.0f);
+            }
 
             //if (Input.GetKeyUp(KeyCode.LeftAlt))//If rightclick released, snap back to position
             //{
