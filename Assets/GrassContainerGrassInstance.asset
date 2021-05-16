@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f689181933431b459e931c74f5c2eef, type: 3}
+  m_Name: GrassContainerGrassInstance
+  m_EditorClassIdentifier: 
+  GrassChunks:
+  - index: {x: -34, y: 0, z: -5}
+    pointList:
+    - {x: -402.1216, y: 8.455036, z: -49.91949}
+    - {x: -403.0967, y: 8.455036, z: -51.32921}
+    - {x: -403.37277, y: 8.455036, z: -49.67891}
+    - {x: -402.71014, y: 8.455036, z: -50.042076}
+    - {x: -402.99612, y: 8.455036, z: -50.791405}
+    - {x: -403.01135, y: 8.455036, z: -50.530643}
+    - {x: -401.87802, y: 8.455036, z: -50.0468}
+    - {x: -402.04324, y: 8.455036, z: -50.39982}
+    - {x: -402.87952, y: 8.455036, z: -49.52112}
+    - {x: -401.75336, y: 8.455036, z: -49.66597}
+    - {x: -402.14, y: 8.455036, z: -50.46491}
+    - {x: -402.33142, y: 8.455036, z: -50.267902}
+    - {x: -401.53653, y: 8.455036, z: -50.44283}
+    - {x: -401.5966, y: 8.455036, z: -49.99948}
+    - {x: -401.9184, y: 8.455036, z: -50.137844}
+    - {x: -402.17215, y: 8.455036, z: -49.746346}
+    normalList:
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0, y: 1, z: 0}
+    mesh: {fileID: 0}
+    mat: {fileID: 0}
+    Rebuild: 0
