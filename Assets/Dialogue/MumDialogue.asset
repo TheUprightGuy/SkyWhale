@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: MumDialogue
   m_EditorClassIdentifier: 
   dialogue:
-  - image: {fileID: 21300000, guid: ce8c388a435704f4f88c3cc14b2bee19, type: 3}
+  - image: {fileID: 21300000, guid: 90b27ccd97473b347949f4e9bd768336, type: 3}
     left: 0
     name: Mum
     dialogue:
@@ -25,7 +25,7 @@ MonoBehaviour:
     dialogue:
     - Yep! He makes so much cool stuff!
     dialogueIndex: 0
-  - image: {fileID: 21300000, guid: ce8c388a435704f4f88c3cc14b2bee19, type: 3}
+  - image: {fileID: 21300000, guid: 90b27ccd97473b347949f4e9bd768336, type: 3}
     left: 0
     name: Mum
     dialogue:
@@ -39,7 +39,7 @@ MonoBehaviour:
     - Thanks mum!
     dialogueIndex: 0
   leftCharacter: {fileID: 21300000, guid: 907bf8b2f3f98eb4b948a4fdff4b063a, type: 3}
-  rightCharacter: {fileID: 21300000, guid: ce8c388a435704f4f88c3cc14b2bee19, type: 3}
+  rightCharacter: {fileID: 21300000, guid: 90b27ccd97473b347949f4e9bd768336, type: 3}
   dialogueIndex: 0
   inUse: 0
   triggerEvent: 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BSDialogue2
   m_EditorClassIdentifier: 
   dialogue:
-  - image: {fileID: 21300000, guid: ce8c388a435704f4f88c3cc14b2bee19, type: 3}
+  - image: {fileID: 21300000, guid: 62bc85ac6cb595c419e651875ebc6b63, type: 3}
     left: 0
     name: Blacksmith
     dialogue:
@@ -25,7 +25,7 @@ MonoBehaviour:
     dialogue:
     - I'm not sure I could have missed it.
     dialogueIndex: 0
-  - image: {fileID: 21300000, guid: ce8c388a435704f4f88c3cc14b2bee19, type: 3}
+  - image: {fileID: 21300000, guid: 62bc85ac6cb595c419e651875ebc6b63, type: 3}
     left: 0
     name: Blacksmith
     dialogue:
@@ -36,7 +36,7 @@ MonoBehaviour:
       We will have to skip the final testing, but I'm sure it's safe.
     dialogueIndex: 0
   leftCharacter: {fileID: 21300000, guid: 907bf8b2f3f98eb4b948a4fdff4b063a, type: 3}
-  rightCharacter: {fileID: 21300000, guid: ce8c388a435704f4f88c3cc14b2bee19, type: 3}
+  rightCharacter: {fileID: 21300000, guid: 62bc85ac6cb595c419e651875ebc6b63, type: 3}
   dialogueIndex: 0
   inUse: 0
   triggerEvent: EnableGrapple
