@@ -3778,6 +3778,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prompts: []
+  whaleTutorials:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &9213967294332125030
 GameObject:
   m_ObjectHideFlags: 0
