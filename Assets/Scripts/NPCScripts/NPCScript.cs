@@ -19,13 +19,14 @@ public enum NPCType
 {
     BS,
     PL,
-    SH
+    SH,
+    Inanimate
 }
 
 
 public class NPCScript : MonoBehaviour
 {
-    protected PlayerMovement pm;
+    public  PlayerMovement pm;
     bool pause;
     protected Transform dialogueTransform;
     [HideInInspector] public Animator anim;
@@ -38,7 +39,11 @@ public class NPCScript : MonoBehaviour
         cam = GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>();
         anim = GetComponent<Animator>();
 
-        anim.SetBool(type.ToString(), true);
+        if (!anim)
+            return;
+
+        if (type != NPCType.Inanimate)
+            anim.SetBool(type.ToString(), true);
     }
 
     #region Callbacks
@@ -54,6 +59,11 @@ public class NPCScript : MonoBehaviour
         CallbackHandler.instance.pause += Pause;
         CallbackHandler.instance.resetCamera += ResetCamera;
         VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(Interact);
+
+        if (pm)
+        {
+            Invoke("MumStart", 0.1f);
+        }
     }
     private void OnDestroy()
     {
@@ -61,6 +71,11 @@ public class NPCScript : MonoBehaviour
         CallbackHandler.instance.resetCamera -= ResetCamera;
     }
     #endregion Callbacks
+
+    void MumStart()
+    {
+        Interact(InputState.KEYDOWN);
+    }
 
     /// <summary>
     /// Description: Toggles Pause State.
@@ -83,7 +98,7 @@ public class NPCScript : MonoBehaviour
         if (pause)
             return;
 
-        if (pm)
+        if (pm && type != NPCType.Inanimate)
         {
             Vector3 dir = pm.transform.position - transform.position;
             Quaternion rot = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
@@ -133,6 +148,10 @@ public class NPCScript : MonoBehaviour
             pm = other.GetComponent<PlayerMovement>();
 
             CallbackHandler.instance.SpeechInRange(dialogueTransform);
+
+            if (!anim)
+                return;
+
             anim.SetBool("Wave", true);
         }
     }
@@ -145,6 +164,10 @@ public class NPCScript : MonoBehaviour
             CallbackHandler.instance.StopDialogue();
 
             CallbackHandler.instance.SpeechOutOfRange();
+
+            if (!anim)
+                return;
+
             anim.SetBool("Wave", false);
             anim.SetBool("Talk", false);
         }

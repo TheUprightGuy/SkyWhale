@@ -71,6 +71,7 @@ public class PickUp : MonoBehaviour
 
     public void EndWhaleCinematic()
     {
+        EventManager.TriggerEvent("SwitchPuzzleCompletion");
         CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
         CallbackHandler.instance.CinematicPause(false);
         CameraManager.instance.Standard(true);

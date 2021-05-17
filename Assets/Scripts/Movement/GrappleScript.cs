@@ -125,7 +125,6 @@ public class GrappleScript : MonoBehaviour
     {
         enabled = true;
         shootPoint.ToggleEnabled();
-        EventManager.TriggerEvent("WhaleCinematic");
         EventManager.StopListening("EnableGrapple", EnableGrapple);
     }
 

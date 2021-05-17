@@ -10,33 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9acc76f917637d6458e8e47e08610bdc, type: 3}
-  m_Name: BSDialogue2
+  m_Name: MumDialogue
   m_EditorClassIdentifier: 
   dialogue:
   - image: {fileID: 21300000, guid: ce8c388a435704f4f88c3cc14b2bee19, type: 3}
     left: 0
-    name: Blacksmith
+    name: Mum
     dialogue:
-    - Did you see that!?
+    - You heading over to the blacksmiths again?
     dialogueIndex: 0
   - image: {fileID: 21300000, guid: 907bf8b2f3f98eb4b948a4fdff4b063a, type: 3}
     left: 1
     name: Param
     dialogue:
-    - I'm not sure I could have missed it.
+    - Yep! He makes so much cool stuff!
     dialogueIndex: 0
   - image: {fileID: 21300000, guid: ce8c388a435704f4f88c3cc14b2bee19, type: 3}
     left: 0
-    name: Blacksmith
+    name: Mum
     dialogue:
-    - That was a skywhale! I had been told they had gone extinct when I was just
-      a child!
-    - Go after it, there must be a reason it was called here.
-    - Take my invention. It's a grappling hook, it will be able to get you anywhere.
-      We will have to skip the final testing, but I'm sure it's safe.
+    - Okay, be safe and be back by noon.
+    - Oh, and don't forget about your map and compass!
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: 907bf8b2f3f98eb4b948a4fdff4b063a, type: 3}
+    left: 1
+    name: Param
+    dialogue:
+    - Thanks mum!
     dialogueIndex: 0
   leftCharacter: {fileID: 21300000, guid: 907bf8b2f3f98eb4b948a4fdff4b063a, type: 3}
   rightCharacter: {fileID: 21300000, guid: ce8c388a435704f4f88c3cc14b2bee19, type: 3}
   dialogueIndex: 0
   inUse: 0
-  triggerEvent: EnableGrapple
+  triggerEvent: 
