@@ -3631,6 +3631,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   questUIPrefab: {fileID: 4668791428106077110, guid: edc6749a5c2154642b5c6593e5392492,
     type: 3}
+  onScreen: {fileID: 21300000, guid: d96f699bc33858049b3252010fbec2e2, type: 3}
+  offScreen: {fileID: 21300000, guid: 80a0b9100812922448ddfd1d3f37dd88, type: 3}
   distanceText: {fileID: 7502276726792117065}
   objMarker: {fileID: 7502276727664083260}
 --- !u!95 &9213967293307983554
