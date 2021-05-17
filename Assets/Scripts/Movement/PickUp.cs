@@ -126,7 +126,7 @@ public class PickUp : MonoBehaviour
 
 
             // If at orbit, proceed to pickup
-            if (orbit.dist < 0.1f)
+            /*if (orbit.dist < 0.1f)
             {
                 Debug.DrawRay(transform.position, dir, Color.black);
                 // Check if hit anything between here and pickup position
@@ -146,7 +146,7 @@ public class PickUp : MonoBehaviour
                         orbit.enabled = false;
                     }
                 }
-            }
+            }*/
 
             // Has a direct path to above the player - start homing
             if (homing)
