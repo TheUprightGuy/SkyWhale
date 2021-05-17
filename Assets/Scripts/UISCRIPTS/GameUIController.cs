@@ -12,8 +12,8 @@ public class GameUIController : MonoBehaviour
     public ButtonPrompt[] prompts;
     public List<GameObject> whaleTutorials;
     private int whaleTutorialIndex = 0;
-    private float timer = 2.5f;
-    private float maxTimer = 2.5f;
+    private float timer = 1.0f;
+    private float maxTimer = 1.0f;
 
     private void Awake()
     {
