@@ -27,6 +27,7 @@ public class WhaleMovement : MonoBehaviour
     public float currentSpeed = 0.0f;
     public float moveSpeed = 1;
     public float accelSpeed = 1;
+    public float boost = 1;
     public float maxSpeed = 5.0f;
     public float minimumDistance = 15.0f;
     [Header("Dismount")]
@@ -287,6 +288,7 @@ public class WhaleMovement : MonoBehaviour
         animator.SetFloat("Movement", movement);
         currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime * accelSpeed);// * TimeSlowDown.instance.timeScale);
 
+        if (boost > 1f) boost -= Time.deltaTime;
         if (control)
         {
             MovementCorrections();
@@ -377,7 +379,7 @@ public class WhaleMovement : MonoBehaviour
         }
         else
         {
-            rb.MovePosition(transform.position + transform.forward * currentSpeed * Time.deltaTime);// * TimeSlowDown.instance.timeScale);
+            rb.MovePosition(transform.position + transform.forward * (currentSpeed * boost * Time.deltaTime));// * TimeSlowDown.instance.timeScale);
         }
 
         if (!control)

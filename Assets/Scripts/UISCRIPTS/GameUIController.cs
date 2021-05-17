@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,10 @@ public class GameUIController : MonoBehaviour
     PuzzlePrompt puzzlePrompt;
     SpeechUIElement speechUIElement;
     public ButtonPrompt[] prompts;
+    public List<GameObject> whaleTutorials;
+    private int whaleTutorialIndex = 0;
+    private float timer = 2.5f;
+    private float maxTimer = 2.5f;
 
     private void Awake()
     {
@@ -36,6 +41,38 @@ public class GameUIController : MonoBehaviour
 
         CallbackHandler.instance.puzzleInRange += DisplayPuzzlePrompt;
         CallbackHandler.instance.puzzleOutOfRange += HidePuzzlePrompt;
+        
+        VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").MethodToCall.AddListener(ProgressTutorial);
+        
+        EventManager.StartListening("WhaleTutorial", StartWhaleTutorial);
+    }
+
+    private void Update()
+    {
+        if (timer > 0) timer -= Time.deltaTime;
+    }
+
+    private void ProgressTutorial(InputState arg0)
+    {
+        if(timer > 0f) return;
+        if (whaleTutorialIndex == 0) return;
+        whaleTutorials[whaleTutorialIndex - 1].SetActive(false);
+        if (whaleTutorialIndex == whaleTutorials.Count)
+        {
+            VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").MethodToCall.RemoveListener(ProgressTutorial);
+            return;
+        }
+        whaleTutorials[whaleTutorialIndex].SetActive(true);
+        whaleTutorialIndex++;
+        timer = maxTimer;
+    }
+
+    private void StartWhaleTutorial()
+    {
+        whaleTutorials[whaleTutorialIndex].SetActive(true);
+        whaleTutorialIndex++;
+        EventManager.StopListening("WhaleTutorial", StartWhaleTutorial);
+        timer = maxTimer;
     }
 
     private void OnDestroy()
