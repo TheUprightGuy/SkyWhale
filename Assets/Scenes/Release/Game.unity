@@ -297,7 +297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &273410428
 Transform:
   m_ObjectHideFlags: 0
@@ -361,7 +361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabTemplate: {fileID: 8662888376264241180, guid: 2365a7d4f57cfa54e978c7e19bace188,
     type: 3}
-  grassContainer: {fileID: 11400000, guid: 5736dc773777d9e4b83207403dcb03b7, type: 2}
+  grassContainer: {fileID: 0}
   Seed: 69
   UnifyScale: 0
   minScale: {x: 0.3, y: 0.3, z: 0.3}

@@ -58,6 +58,9 @@ public class EntityManager : MonoBehaviour
         if(player.GetComponent<GliderMovement>().enabled && !_toggle) player.GetComponent<GliderMovement>().Toggle();
         player.SetActive(_toggle);
         playerOnWhale.SetActive(!_toggle);
+
+        if (!_toggle) EventManager.TriggerEvent("WhaleTutorial");
+
         grappleHook.pc = player.GetComponent<GrappleScript>().shootPoint.transform;
 
         if(!player.GetComponent<GliderMovement>().enabled) CameraManager.instance.SwitchCamera(_toggle ? CameraType.PlayerCamera : CameraType.WhaleCamera);
