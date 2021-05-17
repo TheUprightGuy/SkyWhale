@@ -8,6 +8,7 @@ public class GameUIController : MonoBehaviour
 
     PuzzlePrompt puzzlePrompt;
     SpeechUIElement speechUIElement;
+    Fader fader;
     public ButtonPrompt[] prompts;
 
     private void Awake()
@@ -16,6 +17,7 @@ public class GameUIController : MonoBehaviour
         puzzlePrompt = GetComponentInChildren<PuzzlePrompt>();
 
         prompts = GetComponentsInChildren<ButtonPrompt>();
+        fader = GetComponentInChildren<Fader>();
     }
     #endregion Setup
 
@@ -30,17 +32,18 @@ public class GameUIController : MonoBehaviour
         CallbackHandler.instance.displayPrompt += DisplayButtonPrompt;
         CallbackHandler.instance.hidePrompt += HideButtonPrompt;
 
-
         CallbackHandler.instance.speechInRange += DisplaySpeechUIElement;
         CallbackHandler.instance.speechOutOfRange += HideSpeechUIElement;
 
         CallbackHandler.instance.puzzleInRange += DisplayPuzzlePrompt;
         CallbackHandler.instance.puzzleOutOfRange += HidePuzzlePrompt;
+
+        CallbackHandler.instance.fadeIn += FadeIn;
+        CallbackHandler.instance.fadeOut += FadeOut;
     }
 
     private void OnDestroy()
     {
-
         CallbackHandler.instance.displayPrompt -= DisplayButtonPrompt;
         CallbackHandler.instance.hidePrompt -= HideButtonPrompt;
 
@@ -49,6 +52,9 @@ public class GameUIController : MonoBehaviour
 
         CallbackHandler.instance.puzzleInRange -= DisplayPuzzlePrompt;
         CallbackHandler.instance.puzzleOutOfRange -= HidePuzzlePrompt;
+
+        CallbackHandler.instance.fadeIn -= FadeIn;
+        CallbackHandler.instance.fadeOut -= FadeOut;
     }
     #endregion Callbacks
 
@@ -91,5 +97,15 @@ public class GameUIController : MonoBehaviour
     {
         puzzlePrompt.OutOfRange();
         HideButtonPrompt(PromptType.Interact);
+    }
+
+    public void FadeIn()
+    {
+        fader.FadeIn();
+    }
+
+    public void FadeOut()
+    {
+        fader.FadeOut();
     }
 }

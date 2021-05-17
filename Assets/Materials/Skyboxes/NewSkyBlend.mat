@@ -94,7 +94,11 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+<<<<<<< HEAD
     - _Vec1TimeOfDay: 1.3419237
+=======
+    - _Vec1TimeOfDay: 1.028089
+>>>>>>> Jake-Branch
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
