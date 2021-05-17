@@ -18,6 +18,7 @@ public class PromptGrapple : MonoBehaviour
                 npc.pm = pm;
                 npc.Interact(InputState.KEYDOWN);
                 first = true;
+                npc.pm = null;
             }
 
             if (pm.GetComponent<GrappleScript>().enabled)
