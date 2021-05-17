@@ -9,13 +9,23 @@ public class ObjectiveUIElement : MonoBehaviour
     public TMPro.TextMeshProUGUI questName;
     public TMPro.TextMeshProUGUI questDesc;
 
+    ObjectiveTrackingUI parent;
+    Animator animator;
+
     private void Start()
     {
         CallbackHandler.instance.updateObjectives += UpdateObjective;
+        parent = GetComponentInParent<ObjectiveTrackingUI>();
+        animator = GetComponent<Animator>();
     }
     private void OnDestroy()
     {
         CallbackHandler.instance.updateObjectives -= UpdateObjective;
+    }
+
+    private void Update()
+    {
+        animator.SetBool("Fade", !parent.animator.GetBool("Show"));
     }
 
     public void DisplayObjective()

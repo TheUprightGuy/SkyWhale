@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ObjectiveTrackingUI : MonoBehaviour
 {
     public GameObject questUIPrefab;
-    Animator animator;
+    public Animator animator;
 
     List<ObjectiveUIElement> objs = new List<ObjectiveUIElement>();
 
