@@ -69,6 +69,8 @@ public class PilotScript : NPCScript
 
         CallbackHandler.instance.SetDialogue(currentDialogue);
         CallbackHandler.instance.Pause(true);
+        
+        CallbackHandler.instance.StartTrackingQuest(pilotQuest);
 
         CallbackHandler.instance.HidePrompt(PromptType.Speech);
         _talkedTo = true;

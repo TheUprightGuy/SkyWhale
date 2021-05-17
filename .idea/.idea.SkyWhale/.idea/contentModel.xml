@@ -13,6 +13,7 @@
           <e p="MaterialInstancer.cs" t="Include" />
           <e p="TexturePainterControllerEditor.cs" t="Include" />
         </e>
+        <e p="Fader.cs" t="Include" />
         <e p="LeanTween" t="Include">
           <e p="Editor" t="Include">
             <e p="LeanTweenDocumentationEditor.cs" t="Include" />
@@ -223,6 +224,7 @@
           <e p="SO's" t="Include">
             <e p="GameState.cs" t="Include" />
           </e>
+          <e p="SpeedBoost.cs" t="Include" />
           <e p="SpeedLinesScript.cs" t="Include" />
           <e p="SpinningMovement.cs" t="Include" />
           <e p="TimeSlowDown.cs" t="Include" />
@@ -259,6 +261,7 @@
           </e>
           <e p="UnlitTransparent.shader" t="Include" />
         </e>
+        <e p="StartCinematic.cs" t="Include" />
         <e p="Stylized Water" t="Include">
           <e p="Shaders" t="Include">
             <e p="ShadowUtilities.cginc" t="Include" />
