@@ -27,6 +27,8 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/BobbingMovement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/SpinningMovement.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/PilotScript.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Debug/DebugTool.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/GliderMovement.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
