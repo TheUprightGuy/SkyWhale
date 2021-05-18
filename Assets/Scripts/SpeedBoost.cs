@@ -6,6 +6,16 @@ using UnityEngine;
 public class SpeedBoost : MonoBehaviour
 {
     public float boostAmount = 5f;
+
+    private void Start()
+    {
+        if (EntityManager.instance.SpeedBoostRingContainer == null)
+        {
+            EntityManager.instance.SpeedBoostRingContainer = transform.parent.gameObject;
+            transform.parent.gameObject.SetActive(false);
+        }
+    }
+
     private void Update()
     {
         //Testing

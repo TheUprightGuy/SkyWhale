@@ -37,6 +37,7 @@ public class EntityManager : MonoBehaviour
     public GameObject playerOnWhale;
     public NewGrappleHook grappleHook;
     public GameObject whale;
+    [HideInInspector] public GameObject SpeedBoostRingContainer;
     #endregion
 
     #region Local Variables
@@ -47,7 +48,7 @@ public class EntityManager : MonoBehaviour
 
     private void Start()
     {
-        TogglePlayer(true); 
+        TogglePlayer(true);
     }
 
     // Action to link up whale control and grapple script active to
