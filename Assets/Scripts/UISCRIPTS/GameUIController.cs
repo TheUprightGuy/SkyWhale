@@ -11,6 +11,7 @@ public class GameUIController : MonoBehaviour
     Fader fader;
     public ButtonPrompt[] prompts;
     public List<GameObject> whaleTutorials;
+    public GameObject gliderTutorial;
     private int whaleTutorialIndex = 0;
     private float timer = 1.0f;
     private float maxTimer = 1.0f;
@@ -48,6 +49,7 @@ public class GameUIController : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").MethodToCall.AddListener(ProgressTutorial);
 
         EventManager.StartListening("WhaleTutorial", StartWhaleTutorial);
+        EventManager.StartListening("GliderTutorial", ShowGliderTutorial);
     }
 
     private void OnDestroy()
@@ -139,9 +141,24 @@ public class GameUIController : MonoBehaviour
 
     private void StartWhaleTutorial()
     {
+        //Also enable speed boost rings
+        EntityManager.instance.SpeedBoostRingContainer.SetActive(true);
         whaleTutorials[whaleTutorialIndex].SetActive(true);
         whaleTutorialIndex++;
         EventManager.StopListening("WhaleTutorial", StartWhaleTutorial);
         timer = maxTimer;
+    }
+
+    public void ShowGliderTutorial()
+    {
+        gliderTutorial.SetActive(true);
+        EventManager.StopListening("GliderTutorial", ShowGliderTutorial);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(HideGliderTutorial);
+    }
+
+    private void HideGliderTutorial(InputState arg0)
+    {
+        gliderTutorial.SetActive(false);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.RemoveListener(HideGliderTutorial);
     }
 }

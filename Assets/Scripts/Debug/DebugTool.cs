@@ -76,6 +76,7 @@ public class DebugTool : MonoBehaviour
         _grappleEnabled = !_grappleEnabled;
         EntityManager.instance.player.GetComponent<GrappleScript>().enabled = _grappleEnabled;
         ToggleDebugToolMenu();
+        Destroy(EntityManager.instance.player.GetComponent<GrappleTutorial>());
     }
     
     public void EnableGlider()
@@ -83,5 +84,10 @@ public class DebugTool : MonoBehaviour
         _gliderEnabled = !_gliderEnabled;
         EntityManager.instance.player.GetComponent<GliderMovement>().unlocked = _gliderEnabled;
         ToggleDebugToolMenu();
+    }
+
+    public void ReleaseWhale()
+    {
+        EventManager.TriggerEvent("WhaleCinematic");
     }
 }
