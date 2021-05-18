@@ -16,15 +16,6 @@ public class SpeedBoost : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        //Testing
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            EntityManager.instance.whale.GetComponent<WhaleMovement>().boost = boostAmount;
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Whale"))

@@ -319,6 +319,7 @@ MonoBehaviour:
   teleportLocations: []
   genericButtonTemplate: {fileID: 6242267245896501931, guid: 7e1fb5f8fa0e2d44f861a00c1e7c05e6,
     type: 3}
+  boostAmount: 5
 --- !u!1 &2829408532712369914
 GameObject:
   m_ObjectHideFlags: 0

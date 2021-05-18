@@ -31,6 +31,7 @@ public class DebugTool : MonoBehaviour
     private bool _debugToolsActive;
     private bool _grappleEnabled;
     private bool _gliderEnabled;
+    public float boostAmount;
 
     // Start is called before the first frame update
     void OnAwake()
@@ -56,6 +57,10 @@ public class DebugTool : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            EntityManager.instance.whale.GetComponent<WhaleMovement>().boost = boostAmount;
+        }
         if (!Input.GetKeyDown(KeyCode.BackQuote)) return;
         ToggleDebugToolMenu();
     }
