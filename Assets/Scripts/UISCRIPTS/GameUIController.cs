@@ -160,5 +160,6 @@ public class GameUIController : MonoBehaviour
     {
         gliderTutorial.SetActive(false);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.RemoveListener(HideGliderTutorial);
+        CallbackHandler.instance.MovePilotNPCs();
     }
 }

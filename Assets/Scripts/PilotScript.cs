@@ -15,9 +15,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PilotScript : NPCScript
+public class PilotScript : MonoBehaviour
 {
-    public Dialogue followUpDialogue;
+    #region OldPilotFunctionality
+/*public Dialogue followUpDialogue;
     public Dialogue gatheredMaterialFirstDialogue;
     public Quest pilotQuest;
 
@@ -36,7 +37,7 @@ public class PilotScript : NPCScript
 
         currentDialogue = dialogue;
 
-        EventManager.StartListening("SpecialMetalCollected", SwitchDialogue);
+        CallbackHandler.instance.gliderPartsCollected += SwitchDialogue;
         EventManager.StartListening("StartPilotQuest", StartPilotQuest);
         VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(Interact);
         CallbackHandler.instance.pause += Pause;
@@ -95,5 +96,21 @@ public class PilotScript : NPCScript
 
             CallbackHandler.instance.SpeechInRange(dialogueTransform);
         }
+    }*/
+    
+
+    #endregion
+
+    public GameObject pilotAtStart;
+    
+    public void Start()
+    {
+        CallbackHandler.instance.movePilotNPCs += InstanceOnMovePilotNPCs;
+    }
+
+    private void InstanceOnMovePilotNPCs()
+    {
+        pilotAtStart.SetActive(true);
+        gameObject.SetActive(false);
     }
 }

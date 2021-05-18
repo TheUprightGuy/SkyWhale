@@ -30,4 +30,4 @@ MonoBehaviour:
   rightCharacter: {fileID: 21300000, guid: 017d37303ca7cbf468cd5fc7c3d9c0d6, type: 3}
   dialogueIndex: 0
   inUse: 0
-  triggerEvent: 
+  triggerEvent: EnableGlider

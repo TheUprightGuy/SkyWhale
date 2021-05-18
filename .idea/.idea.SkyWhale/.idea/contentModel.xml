@@ -55,6 +55,7 @@
         </e>
         <e p="MatScript.cs" t="Include" />
         <e p="OrbitRef.cs" t="Include" />
+        <e p="PilotSon.cs" t="Include" />
         <e p="SampleScenes" t="Include">
           <e p="Menu" t="Include">
             <e p="Scripts" t="Include">

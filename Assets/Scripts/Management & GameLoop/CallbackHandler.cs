@@ -54,6 +54,34 @@ public class CallbackHandler : MonoBehaviour
         }
     }
 
+    public event Action gliderPartsCollected;
+    public void GliderPartsCollected()
+    {
+        if (gliderPartsCollected != null)
+        {
+            gliderPartsCollected();
+        }
+    }
+
+    public void AddGliderPartsCollectedCallbackForNpc(GameObject npc)
+    {
+        gliderPartsCollected += npc.GetComponent<NPCScript>().SwitchDialogue;
+    }
+    
+    public event Action movePilotNPCs;
+    public void MovePilotNPCs()
+    {
+        if (movePilotNPCs != null)
+        {
+            movePilotNPCs();
+        }
+    }
+
+    public void AddMovePilotNPCsCallbackForNpc(GameObject npc)
+    {
+        movePilotNPCs += npc.GetComponent<NPCScript>().SwitchDialogue;
+    }
+
     public event Action<bool> pause;
     /// <summary>
     /// Description: Pauses all movement based objects.
