@@ -60,6 +60,8 @@ public class ObjectiveTrackingUI : MonoBehaviour
             return;
         }
 
+        distanceText.SetText(Mathf.RoundToInt(Vector3.Distance(objLoc, EntityManager.instance.player.transform.position)).ToString() + "m");
+
         Vector3 screenPos = Camera.main.WorldToScreenPoint(objLoc);
 
         if (screenPos.z > 0
