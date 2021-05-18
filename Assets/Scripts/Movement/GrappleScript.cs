@@ -126,6 +126,7 @@ public class GrappleScript : MonoBehaviour
         enabled = true;
         shootPoint.ToggleEnabled();
         EventManager.StopListening("EnableGrapple", EnableGrapple);
+        AudioManager.instance.PlaySound("Collect");
     }
 
     /// <summary>

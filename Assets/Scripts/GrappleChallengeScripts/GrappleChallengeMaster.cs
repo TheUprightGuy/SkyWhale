@@ -14,6 +14,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public class GrappleChallengeMaster : MonoBehaviour
@@ -64,6 +65,7 @@ public class GrappleChallengeMaster : MonoBehaviour
         {
             complete = true;
             ps.Play();
+            AudioManager.instance.PlaySound("Collect");
         }
     }
 

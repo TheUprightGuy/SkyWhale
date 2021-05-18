@@ -279,6 +279,7 @@ public class NewGrappleHook : MonoBehaviour
         temp.AddForce(Vector3.Normalize((Vector3.Normalize(forceDir) + Vector3.up * 2.0f)) * (temp.velocity.magnitude * yeetForceStrength), ForceMode.Impulse);
         // Play grapple disconnect audio
         AudioManager.instance.PlaySound("GrappleFail");
+        AudioManager.instance.PlaySound("Jump");
     }
 
     /// <summary>

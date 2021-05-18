@@ -9,12 +9,14 @@
 // Mail        :   Jacob.Gallagher1.@mds.ac.nz
 
 using System;
+using Audio;
 using UnityEngine;
 
 namespace Movement
 {
     public class LevelBoundaryChecker : MonoBehaviour
     {
+        private float timer;
         #region Inspector Variables
             public int yLowestBoundary; //When player y position is lower than this, they are teleported to the whale
             public GrappleChallengeMaster ClosestGrappleChallengeMaster;    //Updated when entering a checkpoint/start/end point
@@ -40,6 +42,7 @@ namespace Movement
         private void Update()
         {
             if (!(transform.position.y < yLowestBoundary)) return;
+            timer -= Time.deltaTime;
             //Ensure whale is not also below this boundary
             if (EntityManager.instance.whale.transform.position.y < yLowestBoundary)
             {
@@ -49,8 +52,11 @@ namespace Movement
             }
             //MovePlayerToWhale();
             //Respawn player at last checkpoint
+            if(timer > 0f) return;
             EntityManager.instance.player.layer = LayerMask.NameToLayer("Player");
             ClosestGrappleChallengeMaster.ResetChallenge();
+            AudioManager.instance.PlaySound("Fail");
+            timer = 1f;
         }
 
         private static void MovePlayerToWhale()

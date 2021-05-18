@@ -15,7 +15,6 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.4.2f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Layout/CanvasScaler.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/PilotSon.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GrappleTutorial.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
@@ -25,13 +24,23 @@
         <option value="$PROJECT_DIR$/Assets/SpeedBoost.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/EntityManager.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SpeedBoost.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/NPCScripts/PilotQuestCollectable.cs" />
         <option value="$PROJECT_DIR$/Assets/PilotSon.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/NPCScripts/NPCScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/PilotScript.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/UISCRIPTS/GameUIController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Audio/AudioManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PickUp.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NPCScripts/NPCScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/DialogueManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NPCScripts/PilotQuestCollectable.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/GliderMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Puzzle/SwitchPuzzleMaster.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Lava.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GrappleChallengeScripts/GrappleCheckPoint.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/LevelBoundaryChecker.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GrappleChallengeScripts/GrappleChallengeMaster.cs" />
       </list>
     </option>
   </component>
@@ -155,9 +164,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="616" y="240" key="run.anything.popup/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1621302777099" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1621303188715">
-      <screen x="0" y="0" width="1920" height="1040" />
+    <state x="2418" y="180" width="672" height="543" key="search.everywhere.popup" timestamp="1621343388323">
+      <screen x="1920" y="0" width="1536" height="832" />
     </state>
     <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1621303188715" />
+    <state x="2418" y="180" width="672" height="543" key="search.everywhere.popup/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1621343388323" />
   </component>
 </project>

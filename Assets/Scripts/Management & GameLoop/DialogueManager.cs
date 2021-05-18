@@ -13,6 +13,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -128,6 +129,7 @@ public class DialogueManager : MonoBehaviour
     /// </summary>
     public void ShowDialogue()
     {
+        AudioManager.instance.PlaySound("Click_Progress");
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
 
@@ -174,7 +176,7 @@ public class DialogueManager : MonoBehaviour
         {
             StopWriting();
         }
-        
+
         if (currentDialogue.Progress() != null)
         {
             ShowDialogue();

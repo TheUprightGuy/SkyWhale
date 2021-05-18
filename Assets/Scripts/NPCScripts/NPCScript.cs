@@ -13,6 +13,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public enum NPCType
@@ -152,6 +153,7 @@ public class NPCScript : MonoBehaviour
         CallbackHandler.instance.HidePrompt(PromptType.Speech);
 
         anim.SetBool("Talk", true);
+        AudioManager.instance.PlaySound("Click");
     }
 
     public void ResetCamera()

@@ -13,6 +13,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public class GrappleCheckPoint : MonoBehaviour
@@ -43,6 +44,7 @@ public class GrappleCheckPoint : MonoBehaviour
             gcm.pm = other.GetComponent<PlayerMovement>();
             gcm.LastCheckPoint = this;
             CallbackHandler.instance.UpdateClosestGrappleChallenge(gcm);
+            AudioManager.instance.PlaySound("Checkpoint");
         }
     }
     #endregion Trigger

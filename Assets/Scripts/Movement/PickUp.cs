@@ -13,6 +13,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public class PickUp : MonoBehaviour
@@ -67,6 +68,8 @@ public class PickUp : MonoBehaviour
         this.gameObject.SetActive(true);
         CameraManager.instance.LetterBox(true);
         CallbackHandler.instance.CinematicPause(true);
+        AudioManager.instance.PlaySound("WhaleSound");
+        AudioManager.instance.PlayWhaleAmbientLayer();
         EventManager.StopListening("WhaleCinematic", TriggerWhaleCinematic);
     }
 

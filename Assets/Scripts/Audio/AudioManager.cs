@@ -159,6 +159,16 @@ namespace Audio
         }
 
         /// <summary>
+        /// Starts the fade coroutine which plays the whale ambient layer
+        /// </summary>
+        public void PlayWhaleAmbientLayer()
+        {
+            StartCoroutine(PlayRandomAmbientTracks(
+                ambientLayers[0].GetComponent<AmbientLayer>(), 
+                ambientLayers[0].GetComponent<AudioSource>()));
+        }
+
+        /// <summary>
         /// This function allows you to switch the currently playing music track if the music tracks aren't being randomised.
         /// </summary>
         /// <param name="trackName">Name of the track to change to</param>
@@ -202,12 +212,15 @@ namespace Audio
             _musicSource.loop = false;
             //Start recursive coroutine for changing the music
             StartCoroutine(PlayRandomMusicTracks());
-            foreach (var layer in ambientLayers)
+            StartCoroutine(
+                PlayRandomAmbientTracks(ambientLayers[1].GetComponent<AmbientLayer>(), 
+                    ambientLayers[1].GetComponent<AudioSource>()));
+            /*foreach (var layer in ambientLayers)
             {
                 var ambientLayer = layer.GetComponent<AmbientLayer>();
                 var audioSource = layer.GetComponent<AudioSource>();
                 StartCoroutine(PlayRandomAmbientTracks(ambientLayer, audioSource));
-            }
+            }*/
         }
 
         /// <summary>
