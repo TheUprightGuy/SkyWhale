@@ -153,12 +153,12 @@ public class GameUIController : MonoBehaviour
     {
         gliderTutorial.SetActive(true);
         EventManager.StopListening("GliderTutorial", ShowGliderTutorial);
-        VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(HideGliderTutorial);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(HideGliderTutorial);
     }
 
     private void HideGliderTutorial(InputState arg0)
     {
         gliderTutorial.SetActive(false);
-        VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.RemoveListener(HideGliderTutorial);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.RemoveListener(HideGliderTutorial);
     }
 }

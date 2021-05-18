@@ -21,8 +21,9 @@
         <option value="$PROJECT_DIR$/Assets/SpeedBoost.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/EntityManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/UISCRIPTS/GameUIController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/SpeedBoost.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GliderMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/UISCRIPTS/GameUIController.cs" />
       </list>
     </option>
   </component>
@@ -85,7 +86,7 @@
       <workItem from="1619583881243" duration="4535000" />
       <workItem from="1619737137131" duration="7157000" />
       <workItem from="1620692105203" duration="11138000" />
-      <workItem from="1621209243306" duration="4966000" />
+      <workItem from="1621209243306" duration="6137000" />
     </task>
     <servers />
   </component>

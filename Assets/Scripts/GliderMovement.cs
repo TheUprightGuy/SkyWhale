@@ -80,6 +80,7 @@ public class GliderMovement : MonoBehaviour
     void EnableGlider()
     {
         unlocked = true;
+        EventManager.TriggerEvent("GliderTutorial");
     }
 
     private void PlayAudioOnToggle()
