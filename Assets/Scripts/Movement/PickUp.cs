@@ -110,10 +110,7 @@ public class PickUp : MonoBehaviour
         wm.Dismount(InputState.KEYDOWN);
 
         // why the fuck doesn't this work properly
-        Invoke("MovePlayer", 0.05f);
-        Invoke("MovePlayer", 0.06f);
-        Invoke("MovePlayer", 0.07f);
-        Invoke("MovePlayer", 0.08f);
+        Invoke("MovePlayer", 1.06f);
 
         //EntityManager.instance.TogglePlayer(true);
         //EntityManager.instance.TeleportPlayer(secondIslandPos);
