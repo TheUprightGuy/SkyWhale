@@ -88,6 +88,18 @@ public class EntityManager : MonoBehaviour
         return true;
     }
 
+    public void TeleportPlayer(Vector3 pos)
+    {
+        if (!player || !instance.player.activeSelf) return;
+        for (int i = 0; i < 2; i++) //not sure why but this needs to be repeated twice in order for the offset to actually be removed
+        {
+            //Update player container position by calculating offset
+            var offset = player.transform.parent.position - player.transform.position;
+            player.transform.parent.position = pos + offset;
+        }
+        return;
+    }
+
     public void MovePlayerToPlayerOnWhale()
     {
         player.transform.position = playerOnWhale.transform.position;

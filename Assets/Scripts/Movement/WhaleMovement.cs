@@ -140,7 +140,7 @@ public class WhaleMovement : MonoBehaviour
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
     /// <param name="arg0">Input state (Down/Held/Up)</param>
-    private void Dismount(InputState arg0)
+    public void Dismount(InputState arg0)
     {
         if (control || bucking)
         {
@@ -151,7 +151,7 @@ public class WhaleMovement : MonoBehaviour
             //CallbackHandler.instance.DismountPlayer(dismountPosition);
         }
     }
-    bool bucking;
+    [HideInInspector] public bool bucking;
 
     /// <summary>
     /// Description: Yaw/Pitch the whale to desired rotation - rolling body on yaw.
