@@ -8,6 +8,8 @@ public class PilotQuestCollectable : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.GetComponent<PlayerMovement>()) return;
+
+        EventManager.TriggerEvent("FindParts");
         Debug.Log("Collected Parts");
         CallbackHandler.instance.GliderPartsCollected();
         Destroy(gameObject);

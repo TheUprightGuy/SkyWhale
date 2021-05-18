@@ -450,6 +450,7 @@ public class WhaleMovement : MonoBehaviour
             EntityManager.instance.TogglePlayer(false);
 
             OnPlayerMountWhale();
+            EventManager.TriggerEvent("MountWhale");
         }
     }
 

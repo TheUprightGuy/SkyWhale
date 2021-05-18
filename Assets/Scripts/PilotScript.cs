@@ -110,6 +110,7 @@ public class PilotScript : MonoBehaviour
 
     private void InstanceOnMovePilotNPCs()
     {
+        GetComponent<NPCScript>().pm = null;
         pilotAtStart.SetActive(true);
         gameObject.SetActive(false);
     }

@@ -81,6 +81,7 @@ public class GliderMovement : MonoBehaviour
     {
         unlocked = true;
         EventManager.TriggerEvent("GliderTutorial");
+        EventManager.TriggerEvent("TalkPilot");
     }
 
     private void PlayAudioOnToggle()

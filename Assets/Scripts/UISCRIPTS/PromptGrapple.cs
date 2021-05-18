@@ -19,6 +19,7 @@ public class PromptGrapple : MonoBehaviour
                 npc.Interact(InputState.KEYDOWN);
                 first = true;
                 npc.pm = null;
+                EventManager.TriggerEvent("FollowWhale");
             }
 
             if (pm.GetComponent<GrappleScript>().enabled)
