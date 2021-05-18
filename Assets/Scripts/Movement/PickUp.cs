@@ -49,6 +49,7 @@ public class PickUp : MonoBehaviour
     {
         CallbackHandler.instance.setDestination += SetDestination;
         EventManager.StartListening("WhaleCinematic", TriggerWhaleCinematic);
+        EventManager.StartListening("MoveToSecondIsland", MoveToSecondIsland);
 
         this.gameObject.SetActive(false);
 
@@ -78,6 +79,50 @@ public class PickUp : MonoBehaviour
         playedCinematic = true;
     }
 
+    public Vector3 secondIslandPoint;
+    public bool secondIslandHoming;
+    public Transform secondIslandPos;
+
+    public void MoveToSecondIsland()
+    {
+        secondIslandHoming = true;
+        target = secondIslandPoint;
+
+        // change cam
+        CameraManager.instance.SwitchCamera(CameraType.WhaleCamera);
+        CameraManager.instance.LetterBox(true);
+        CallbackHandler.instance.CinematicPause(true);
+        GetComponent<WhaleMovement>().control = false;
+        EventManager.StopListening("MoveToSecondIsland", MoveToSecondIsland);
+    }
+
+    public void EndSecondIsland()
+    {
+        Debug.Log("Arrived");
+        CallbackHandler.instance.CinematicPause(false);
+        CameraManager.instance.LetterBox(false);
+        secondIslandHoming = false;
+        WhaleMovement wm = GetComponent<WhaleMovement>();
+        wm.control = true;
+        wm.Dismount(InputState.KEYDOWN);
+
+        // why the fuck doesn't this work properly
+        Invoke("MovePlayer", 0.05f);
+        Invoke("MovePlayer", 0.06f);
+        Invoke("MovePlayer", 0.07f);
+        Invoke("MovePlayer", 0.08f);
+
+        //EntityManager.instance.TogglePlayer(true);
+        //EntityManager.instance.TeleportPlayer(secondIslandPos);
+        //CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
+        CallbackHandler.instance.SetOrbit();
+    }
+
+    void MovePlayer()
+    {
+        EntityManager.instance.TeleportPlayer(secondIslandPos);
+    }
+
     bool playedCinematic;
 
     /// <summary>
@@ -87,6 +132,12 @@ public class PickUp : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
+        }
+
+
         if (enabled)
         {
             // get direction to height reference
@@ -124,7 +175,18 @@ public class PickUp : MonoBehaviour
                 return;
             }
 
+            if (secondIslandHoming)
+            {
+                float dist = Vector3.Distance(transform.position, target);
+                whale.moveSpeed = 5.0f * Mathf.Clamp01(dist / approachDistance);
+                rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * orbit.rotSpeed));
 
+                if (dist < 5.0f)
+                {
+                    EndSecondIsland();
+                }
+                return;
+            }
             // If at orbit, proceed to pickup
             /*if (orbit.dist < 0.1f)
             {
