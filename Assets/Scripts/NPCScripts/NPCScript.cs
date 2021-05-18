@@ -64,6 +64,11 @@ public class NPCScript : MonoBehaviour
         {
             Invoke("MumStart", 0.1f);
         }
+
+        if (callbackToSwitchDialogue != "" && dialoguesToSwitchTo.Count>0)
+        {
+            CallbackHandler.instance.BroadcastMessage(callbackToSwitchDialogue, gameObject);
+        }
     }
     private void OnDestroy()
     {
@@ -72,6 +77,25 @@ public class NPCScript : MonoBehaviour
     }
     #endregion Callbacks
 
+    public void SwitchDialogue()
+    {
+        if (callbackToSwitchDialogue == "" || dialoguesToSwitchTo.Count <= 0) return;
+        if (!dialoguesToSwitchTo.Contains(currentDialogue))
+        {
+            currentDialogue = dialoguesToSwitchTo[0];
+            return;
+        }
+        for (var i = 0; i < dialoguesToSwitchTo.Count; i++)
+        {
+            if (currentDialogue != dialoguesToSwitchTo[i]) continue;
+            if(i+1 >= dialoguesToSwitchTo.Count) return;
+            currentDialogue = dialoguesToSwitchTo[i + 1];
+            return;
+        }
+
+        
+    }
+    
     void MumStart()
     {
         Interact(InputState.KEYDOWN);
@@ -108,6 +132,8 @@ public class NPCScript : MonoBehaviour
 
     public Dialogue dialogue;
     public Dialogue currentDialogue;
+    public List<Dialogue> dialoguesToSwitchTo;
+    public string callbackToSwitchDialogue;
 
     /// <summary>
     /// Description: Passes dialogue to dialogue manager.

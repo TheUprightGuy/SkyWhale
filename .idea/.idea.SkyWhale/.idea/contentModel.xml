@@ -14,7 +14,7 @@
           <e p="TexturePainterControllerEditor.cs" t="Include" />
         </e>
         <e p="Fader.cs" t="Include" />
-        <e p="GliderTutorial.cs" t="Include" />
+        <e p="JellyfishMatRNG.cs" t="Include" />
         <e p="LeanTween" t="Include">
           <e p="Editor" t="Include">
             <e p="LeanTweenDocumentationEditor.cs" t="Include" />
@@ -55,6 +55,7 @@
         </e>
         <e p="MatScript.cs" t="Include" />
         <e p="OrbitRef.cs" t="Include" />
+        <e p="PilotSon.cs" t="Include" />
         <e p="SampleScenes" t="Include">
           <e p="Menu" t="Include">
             <e p="Scripts" t="Include">

@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42ff6e941d4d84147bb0535f235dfc72, type: 3}
   m_Name: Pilot
   m_EditorClassIdentifier: 
-  questName: Find glider material
+  questName: Find glider parts
   objectives:
-  - eventName: CollectGliderMetal
-    objDesc: Collect the metal for the gliders
+  - eventName: CollectGliderParts
+    objDesc: Collect the parts for the gliders
+    location: {x: 0, y: 0, z: 0}
   - eventName: ReturnPilot
     objDesc: Return to the pilot with the metal
+    location: {x: 0, y: 0, z: 0}
   index: 2

@@ -8,8 +8,8 @@ public class PilotQuestCollectable : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.GetComponent<PlayerMovement>()) return;
-        Debug.Log("Collected special metal");
-        EventManager.TriggerEvent("SpecialMetalCollected");
+        Debug.Log("Collected Parts");
+        CallbackHandler.instance.GliderPartsCollected();
         Destroy(gameObject);
     }
 }
