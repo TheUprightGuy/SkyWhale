@@ -14218,6 +14218,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Island_2
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 666a9f565011c3f4aa402d7a6817b956,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 666a9f565011c3f4aa402d7a6817b956, type: 3}
 --- !u!4 &1935084837 stripped
