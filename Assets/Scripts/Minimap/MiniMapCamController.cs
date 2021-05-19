@@ -51,6 +51,7 @@ public class MiniMapCamController : MonoBehaviour
         if (MinimapIcon != null)
         {
             MinimapIcon.transform.position = IconCurrentTrackingObj.transform.position + IconOffset;
+            MinimapIcon.transform.forward = IconCurrentTrackingObj.transform.forward;
         }
     }
 
