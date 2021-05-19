@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2044645862772358236
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2044645862772358237}
+  - component: {fileID: 2044645862772358238}
+  m_Layer: 0
+  m_Name: Plant_1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2044645862772358237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044645862772358236}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2044645862772358238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044645862772358236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b632b604ca833c4daea4b442407f3d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabTemplate: {fileID: 919132149155446097, guid: 861f660b77af46a45993d5a6ce492685,
+    type: 3}
+  grassContainer: {fileID: 11400000, guid: 55da93f2894a0ea48b1136104b70b91d, type: 2}
+  Seed: 69
+  UnifyScale: 0
+  minScale: {x: 0.3, y: 0.3, z: 0.3}
+  maxScale: {x: 0.5, y: 0.5, z: 0.5}
+  DrawBrush: 1
+  BrushRadius: 1
+  density: 2
+  RefreshRateInMs: 10
+  MaxPointsInChunk: 10000
+  ChunkSize: 12
+  MaxTerrainIncline: 20
+  ExclusionTag: 
+  CastForTriggers: 0
+  RayCastToHit:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  ShowChunkBorders: 0
+  BoundingBox:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}

@@ -1,18 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ObjectiveTrackingUI : MonoBehaviour
 {
     public GameObject questUIPrefab;
-    Animator animator;
+    public Animator animator;
 
     List<ObjectiveUIElement> objs = new List<ObjectiveUIElement>();
+
+    Image image;
+    public Sprite onScreen;
+    public Sprite offScreen;
 
 
     private void Start()
     {
         animator = GetComponent<Animator>();
+        image = objMarker.GetComponent<Image>();
 
         CallbackHandler.instance.startTrackingQuest += StartTrackingQuest;
     }
@@ -53,15 +59,72 @@ public class ObjectiveTrackingUI : MonoBehaviour
             distanceText.enabled = false;
             return;
         }
-        Vector3 newPoint = Camera.main.WorldToScreenPoint(objLoc);
-        objMarker.transform.position = newPoint;
 
-        float dist = Mathf.RoundToInt(Vector3.Distance(EntityManager.instance.player.transform.position, objLoc));
+        distanceText.SetText(Mathf.RoundToInt(Vector3.Distance(objLoc, EntityManager.instance.player.transform.position)).ToString() + "m");
 
-        distanceText.SetText(dist.ToString() + "m");
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(objLoc);
 
-        objMarker.SetActive(newPoint.z > 0);
-        distanceText.enabled = newPoint.z > 0;
+        if (screenPos.z > 0
+            && screenPos.x > 0 && screenPos.x < Screen.width
+            && screenPos.y > 0 && screenPos.y < Screen.height)
+        {
+            objMarker.transform.position = screenPos;
+            objMarker.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, 0.0f);
+
+            image.sprite = onScreen;
+        }
+        else // OFFSCREEN
+        {
+            image.sprite = offScreen;
+
+            if (screenPos.z < 0)
+            {
+                screenPos *= -1;
+            }
+
+            Vector3 screenCenter = new Vector3(Screen.width, Screen.height, 0) / 2.0f;
+
+            // translate coords
+            screenPos -= screenCenter;
+
+            // find angle from center to mousepos
+            float angle = Mathf.Atan2(screenPos.y, screenPos.x);
+            angle -= 90.0f * Mathf.Deg2Rad;
+
+            float cos = Mathf.Cos(angle);
+            float sin = -Mathf.Sin(angle);
+
+            screenPos = screenCenter + new Vector3(sin * 150.0f, cos * 150.0f, 0);
+
+            float m = cos / sin;
+
+            // get edge
+            Vector3 screenBounds = screenCenter * 0.9f;
+
+            // check vertical
+            if (cos > 0)
+            {
+                screenPos = new Vector3(screenBounds.y / m, screenBounds.y, 0);
+            }
+            else
+            {
+                screenPos = new Vector3(-screenBounds.y / m, -screenBounds.y, 0);
+            }
+
+            // check horizontal
+            if (screenPos.x > screenBounds.x)
+            {
+                screenPos = new Vector3(screenBounds.x, screenBounds.x * m, 0);
+            }
+            else if (screenPos.x < -screenBounds.x)
+            {
+                screenPos = new Vector3(-screenBounds.x, -screenBounds.x * m, 0);
+            }
+
+            screenPos += screenCenter;
+            objMarker.transform.position = screenPos;
+            objMarker.transform.localRotation = Quaternion.Euler(0.0f, 0.0f, angle * Mathf.Rad2Deg);
+        }
     }
 
     public TMPro.TextMeshProUGUI distanceText;

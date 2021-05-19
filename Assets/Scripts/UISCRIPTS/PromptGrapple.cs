@@ -5,12 +5,22 @@ using UnityEngine;
 public class PromptGrapple : MonoBehaviour
 {
     PlayerMovement pm;
-
+    public NPCScript npc;
+    bool first;
     private void OnTriggerEnter(Collider other)
     {
         if (other.GetComponent<PlayerMovement>())
         {
             pm = other.GetComponent<PlayerMovement>();
+
+            if (npc && !first)
+            {
+                npc.pm = pm;
+                npc.Interact(InputState.KEYDOWN);
+                first = true;
+                npc.pm = null;
+                EventManager.TriggerEvent("FollowWhale");
+            }
 
             if (pm.GetComponent<GrappleScript>().enabled)
             {

@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42ff6e941d4d84147bb0535f235dfc72, type: 3}
+  m_Name: MainQuest
+  m_EditorClassIdentifier: 
+  questName: Dark Clouds
+  objectives:
+  - eventName: FindBlacksmith
+    objDesc: Find the Blacksmith
+    location: {x: -94, y: -16, z: 35}
+  - eventName: TalkBlacksmith
+    objDesc: Talk to the Blacksmith
+    location: {x: -94, y: -16, z: 35}
+  - eventName: SolvePuzzle
+    objDesc: Solve the Puzzle
+    location: {x: -96.5, y: -16, z: 37}
+  - eventName: ReturnBlacksmith
+    objDesc: Return to the Blacksmith
+    location: {x: -94, y: -16, z: 35}
+  - eventName: FollowWhale
+    objDesc: Follow the Whale
+    location: {x: -26, y: 18, z: -22}
+  - eventName: MountWhale
+    objDesc: Grapple to the Whale
+    location: {x: -26, y: 20, z: -22}
+  - eventName: FlyToRuinIsland
+    objDesc: Fly to Ruin Island
+    location: {x: -400, y: 9, z: -55}
+  - eventName: TalkWife
+    objDesc: Talk to the Villager
+    location: {x: -401, y: 9.2, z: -43}
+  - eventName: FindSon
+    objDesc: Find the Pilots Son
+    location: {x: -425, y: 9.2, z: -25}
+  - eventName: FindParts
+    objDesc: Find the Glider Parts
+    location: {x: -424.5, y: 15, z: -6.5}
+  - eventName: TalkPilot
+    objDesc: Deliver the parts to the Pilot
+    location: {x: -434.4, y: 47, z: 11.8}
+  - eventName: ReturnWife
+    objDesc: Glide back to the Pilots Wife
+    location: {x: -401, y: 9.2, z: -43}
+  index: 0

@@ -52,35 +52,75 @@ public class Quest : ScriptableObject
             switch (i)
             {
                 case 0:
-                    {
-                        listeners.Add(ProgressQuest0);
-                        break;
-                    }
+                {
+                    listeners.Add(ProgressQuest0);
+                    break;
+                }
                 case 1:
-                    {
-                        listeners.Add(ProgressQuest1);
-                        break;
-                    }
+                {
+                    listeners.Add(ProgressQuest1);
+                    break;
+                }
                 case 2:
-                    {
-                        listeners.Add(ProgressQuest2);
-                        break;
-                    }
+                {
+                    listeners.Add(ProgressQuest2);
+                    break;
+                }
                 case 3:
-                    {
-                        listeners.Add(ProgressQuest3);
-                        break;
-                    }
+                {
+                    listeners.Add(ProgressQuest3);
+                    break;
+                }
                 case 4:
-                    {
-                        listeners.Add(ProgressQuest4);
-                        break;
-                    }
+                {
+                    listeners.Add(ProgressQuest4);
+                    break;
+                }
                 case 5:
-                    {
-                        listeners.Add(ProgressQuest5);
-                        break;
-                    }
+                {
+                    listeners.Add(ProgressQuest5);
+                    break;
+                }
+                case 6:
+                {
+                    listeners.Add(ProgressQuest6);
+                    break;
+                }
+                case 7:
+                {
+                    listeners.Add(ProgressQuest7);
+                    break;
+                }
+                case 8:
+                {
+                    listeners.Add(ProgressQuest8);
+                    break;
+                }
+                case 9:
+                {
+                    listeners.Add(ProgressQuest9);
+                    break;
+                }
+                case 10:
+                {
+                    listeners.Add(ProgressQuest10);
+                    break;
+                }
+                case 11:
+                {
+                    listeners.Add(ProgressQuest11);
+                    break;
+                }
+                case 12:
+                {
+                    listeners.Add(ProgressQuest12);
+                    break;
+                }
+                case 13:
+                {
+                    listeners.Add(ProgressQuest13);
+                    break;
+                }
                 default:
                     Debug.LogError("QUEST TOO LONG!");
                     break;
@@ -139,6 +179,46 @@ public class Quest : ScriptableObject
     {
         ProgressQuest(5);
     }
+
+    void ProgressQuest6()
+    {
+        ProgressQuest(6);
+    }
+
+    void ProgressQuest7()
+    {
+        ProgressQuest(7);
+    }
+
+    void ProgressQuest8()
+    {
+        ProgressQuest(8);
+    }
+
+    void ProgressQuest9()
+    {
+        ProgressQuest(9);
+    }
+
+    void ProgressQuest10()
+    {
+        ProgressQuest(10);
+    }
+
+    void ProgressQuest11()
+    {
+        ProgressQuest(11);
+    }
+    void ProgressQuest12()
+    {
+        ProgressQuest(12);
+    }
+    void ProgressQuest13()
+    {
+        ProgressQuest(13);
+    }
+
+
 
 
     /// <summary>

@@ -29,6 +29,7 @@ public class WhaleMovement : MonoBehaviour
     public float accelSpeed = 1;
     public float maxSpeed = 5.0f;
     public float minimumDistance = 15.0f;
+    public float boost = 1.0f;
     [Header("Dismount")]
     private Transform dismountPosition; 
 
@@ -139,7 +140,7 @@ public class WhaleMovement : MonoBehaviour
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
     /// <param name="arg0">Input state (Down/Held/Up)</param>
-    private void Dismount(InputState arg0)
+    public void Dismount(InputState arg0)
     {
         if (control || bucking)
         {
@@ -150,7 +151,7 @@ public class WhaleMovement : MonoBehaviour
             //CallbackHandler.instance.DismountPlayer(dismountPosition);
         }
     }
-    bool bucking;
+    [HideInInspector] public bool bucking;
 
     /// <summary>
     /// Description: Yaw/Pitch the whale to desired rotation - rolling body on yaw.
@@ -288,6 +289,8 @@ public class WhaleMovement : MonoBehaviour
         animator.SetFloat("Movement", movement);
         currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime * accelSpeed);// * TimeSlowDown.instance.timeScale);
 
+        if (boost > 1f) boost -= Time.deltaTime;
+
         if (control)
         {
             MovementCorrections();
@@ -378,7 +381,7 @@ public class WhaleMovement : MonoBehaviour
         }
         else
         {
-            rb.MovePosition(transform.position + transform.forward * currentSpeed * Time.deltaTime);// * TimeSlowDown.instance.timeScale);
+            rb.MovePosition(transform.position + transform.forward * currentSpeed * boost * Time.deltaTime);// * TimeSlowDown.instance.timeScale);
         }
 
         if (!control)
@@ -447,6 +450,7 @@ public class WhaleMovement : MonoBehaviour
             EntityManager.instance.TogglePlayer(false);
 
             OnPlayerMountWhale();
+            EventManager.TriggerEvent("MountWhale");
         }
     }
 

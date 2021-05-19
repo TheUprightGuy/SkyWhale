@@ -31,6 +31,7 @@ public class DebugTool : MonoBehaviour
     private bool _debugToolsActive;
     private bool _grappleEnabled;
     private bool _gliderEnabled;
+    public float boostAmount;
 
     // Start is called before the first frame update
     void OnAwake()
@@ -56,6 +57,10 @@ public class DebugTool : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            EntityManager.instance.whale.GetComponent<WhaleMovement>().boost = boostAmount;
+        }
         if (!Input.GetKeyDown(KeyCode.BackQuote)) return;
         ToggleDebugToolMenu();
     }
@@ -76,6 +81,7 @@ public class DebugTool : MonoBehaviour
         _grappleEnabled = !_grappleEnabled;
         EntityManager.instance.player.GetComponent<GrappleScript>().enabled = _grappleEnabled;
         ToggleDebugToolMenu();
+        Destroy(EntityManager.instance.player.GetComponent<GrappleTutorial>());
     }
     
     public void EnableGlider()
@@ -83,5 +89,10 @@ public class DebugTool : MonoBehaviour
         _gliderEnabled = !_gliderEnabled;
         EntityManager.instance.player.GetComponent<GliderMovement>().unlocked = _gliderEnabled;
         ToggleDebugToolMenu();
+    }
+
+    public void ReleaseWhale()
+    {
+        EventManager.TriggerEvent("WhaleCinematic");
     }
 }

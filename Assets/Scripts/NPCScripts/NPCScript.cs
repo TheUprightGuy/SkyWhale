@@ -13,19 +13,21 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public enum NPCType
 {
     BS,
     PL,
-    SH
+    SH,
+    Inanimate
 }
 
 
 public class NPCScript : MonoBehaviour
 {
-    protected PlayerMovement pm;
+    public  PlayerMovement pm;
     bool pause;
     protected Transform dialogueTransform;
     [HideInInspector] public Animator anim;
@@ -38,7 +40,11 @@ public class NPCScript : MonoBehaviour
         cam = GetComponentInChildren<Cinemachine.CinemachineVirtualCamera>();
         anim = GetComponent<Animator>();
 
-        anim.SetBool(type.ToString(), true);
+        if (!anim)
+            return;
+
+        if (type != NPCType.Inanimate)
+            anim.SetBool(type.ToString(), true);
     }
 
     #region Callbacks
@@ -54,6 +60,16 @@ public class NPCScript : MonoBehaviour
         CallbackHandler.instance.pause += Pause;
         CallbackHandler.instance.resetCamera += ResetCamera;
         VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(Interact);
+
+        if (pm)
+        {
+            Invoke("MumStart", 0.1f);
+        }
+
+        if (callbackToSwitchDialogue != "" && dialoguesToSwitchTo.Count>0)
+        {
+            CallbackHandler.instance.BroadcastMessage(callbackToSwitchDialogue, gameObject);
+        }
     }
     private void OnDestroy()
     {
@@ -61,6 +77,30 @@ public class NPCScript : MonoBehaviour
         CallbackHandler.instance.resetCamera -= ResetCamera;
     }
     #endregion Callbacks
+
+    public void SwitchDialogue()
+    {
+        if (callbackToSwitchDialogue == "" || dialoguesToSwitchTo.Count <= 0) return;
+        if (!dialoguesToSwitchTo.Contains(currentDialogue))
+        {
+            currentDialogue = dialoguesToSwitchTo[0];
+            return;
+        }
+        for (var i = 0; i < dialoguesToSwitchTo.Count; i++)
+        {
+            if (currentDialogue != dialoguesToSwitchTo[i]) continue;
+            if(i+1 >= dialoguesToSwitchTo.Count) return;
+            currentDialogue = dialoguesToSwitchTo[i + 1];
+            return;
+        }
+
+        
+    }
+    
+    void MumStart()
+    {
+        Interact(InputState.KEYDOWN);
+    }
 
     /// <summary>
     /// Description: Toggles Pause State.
@@ -83,7 +123,7 @@ public class NPCScript : MonoBehaviour
         if (pause)
             return;
 
-        if (pm)
+        if (pm && type != NPCType.Inanimate)
         {
             Vector3 dir = pm.transform.position - transform.position;
             Quaternion rot = Quaternion.LookRotation(new Vector3(dir.x, 0, dir.z));
@@ -93,6 +133,8 @@ public class NPCScript : MonoBehaviour
 
     public Dialogue dialogue;
     public Dialogue currentDialogue;
+    public List<Dialogue> dialoguesToSwitchTo;
+    public string callbackToSwitchDialogue;
 
     /// <summary>
     /// Description: Passes dialogue to dialogue manager.
@@ -111,6 +153,7 @@ public class NPCScript : MonoBehaviour
         CallbackHandler.instance.HidePrompt(PromptType.Speech);
 
         anim.SetBool("Talk", true);
+        AudioManager.instance.PlaySound("Click");
     }
 
     public void ResetCamera()
@@ -133,6 +176,10 @@ public class NPCScript : MonoBehaviour
             pm = other.GetComponent<PlayerMovement>();
 
             CallbackHandler.instance.SpeechInRange(dialogueTransform);
+
+            if (!anim)
+                return;
+
             anim.SetBool("Wave", true);
         }
     }
@@ -145,6 +192,10 @@ public class NPCScript : MonoBehaviour
             CallbackHandler.instance.StopDialogue();
 
             CallbackHandler.instance.SpeechOutOfRange();
+
+            if (!anim)
+                return;
+
             anim.SetBool("Wave", false);
             anim.SetBool("Talk", false);
         }

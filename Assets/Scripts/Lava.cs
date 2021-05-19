@@ -13,6 +13,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public class Lava : MonoBehaviour
@@ -42,6 +43,7 @@ public class Lava : MonoBehaviour
         {
             // ResetMe
             gcm.ResetChallenge();
+            AudioManager.instance.PlaySound("Fail");
         }
     }
     #endregion Trigger

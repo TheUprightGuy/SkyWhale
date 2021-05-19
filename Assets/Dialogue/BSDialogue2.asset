@@ -13,32 +13,30 @@ MonoBehaviour:
   m_Name: BSDialogue2
   m_EditorClassIdentifier: 
   dialogue:
-  - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+  - image: {fileID: 21300000, guid: 62bc85ac6cb595c419e651875ebc6b63, type: 3}
     left: 0
-    name: Chiken
-    dialogue:
-    - I figured it out!
-    dialogueIndex: 0
-  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
-    left: 1
     name: Blacksmith
     dialogue:
-    - Wow! How'd you manage that so quickly?
-    - A keen mind like that is worthy of my greatest invention! The GRAPPLE HOOK!
-    - Hold down Right Click to aim the GRAPPLE GUN, then left click to fire the grapple.
-      Targeting a grappleable surface will change the reticule colour, so it should
-      be pretty easy to tell what you can grapple to.
-    - If you need to, you can manually retract the grapple with left click - otherwise
-      it will do it automatically once it runs out of rope.
+    - Did you see that!?
     dialogueIndex: 0
-  - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
-    left: 0
-    name: Chiken
+  - image: {fileID: 21300000, guid: 907bf8b2f3f98eb4b948a4fdff4b063a, type: 3}
+    left: 1
+    name: Param
     dialogue:
-    - Awesome!
+    - I'm not sure I could have missed it.
     dialogueIndex: 0
-  leftCharacter: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
-  rightCharacter: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+  - image: {fileID: 21300000, guid: 62bc85ac6cb595c419e651875ebc6b63, type: 3}
+    left: 0
+    name: Blacksmith
+    dialogue:
+    - That was a skywhale! I had been told they had gone extinct when I was just
+      a child!
+    - Go after it, there must be a reason it was called here.
+    - Take my invention. It's a grappling hook, it will be able to get you anywhere.
+      We will have to skip the final testing, but I'm sure it's safe.
+    dialogueIndex: 0
+  leftCharacter: {fileID: 21300000, guid: 907bf8b2f3f98eb4b948a4fdff4b063a, type: 3}
+  rightCharacter: {fileID: 21300000, guid: 62bc85ac6cb595c419e651875ebc6b63, type: 3}
   dialogueIndex: 0
   inUse: 0
   triggerEvent: EnableGrapple

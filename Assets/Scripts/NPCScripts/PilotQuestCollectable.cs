@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public class PilotQuestCollectable : MonoBehaviour
@@ -8,8 +9,10 @@ public class PilotQuestCollectable : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.GetComponent<PlayerMovement>()) return;
-        Debug.Log("Collected special metal");
-        EventManager.TriggerEvent("SpecialMetalCollected");
+        AudioManager.instance.PlaySound("Collect");
+        EventManager.TriggerEvent("FindParts");
+        Debug.Log("Collected Parts");
+        CallbackHandler.instance.GliderPartsCollected();
         Destroy(gameObject);
     }
 }

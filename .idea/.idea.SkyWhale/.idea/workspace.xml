@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="49862464-cfeb-4e97-917e-e5f39af90043" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,22 +14,35 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GrappleTutorial.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SpinningMovement.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.4.2f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Layout/CanvasScaler.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BobbingMovement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GrappleTutorial.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
-    <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/GrappleTutorial.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/LevelBoundaryChecker.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/BobbingMovement.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/SpinningMovement.cs" />
-    </changedPaths>
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/SpeedBoost.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/EntityManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/SpeedBoost.cs" />
+        <option value="$PROJECT_DIR$/Assets/PilotSon.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/PilotScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/UISCRIPTS/GameUIController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Audio/AudioManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PickUp.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NPCScripts/NPCScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/DialogueManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/NPCScripts/PilotQuestCollectable.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GliderMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Puzzle/SwitchPuzzleMaster.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Lava.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GrappleChallengeScripts/GrappleCheckPoint.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/LevelBoundaryChecker.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/GrappleChallengeScripts/GrappleChallengeMaster.cs" />
+      </list>
+    </option>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
   <component name="ProjectViewState">
@@ -57,7 +73,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -66,7 +82,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <list />
+        <set />
       </option>
       <method v="2" />
     </configuration>
@@ -87,6 +103,7 @@
       <workItem from="1619583881243" duration="4535000" />
       <workItem from="1619737137131" duration="7157000" />
       <workItem from="1620692105203" duration="11138000" />
+      <workItem from="1621209243306" duration="15313000" />
     </task>
     <servers />
   </component>
@@ -97,5 +114,60 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="488" height="464" key="DebuggerActiveHint" timestamp="1621305275761">
+      <screen x="1920" y="0" width="1536" height="832" />
+    </state>
+    <state width="488" height="464" key="DebuggerActiveHint/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1621305275761" />
+    <state width="1493" height="308" key="GridCell.Tab.0.bottom" timestamp="1621304057038">
+      <screen x="1920" y="0" width="1536" height="832" />
+    </state>
+    <state width="1493" height="308" key="GridCell.Tab.0.bottom/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1621304057038" />
+    <state width="1493" height="308" key="GridCell.Tab.0.center" timestamp="1621304057038">
+      <screen x="1920" y="0" width="1536" height="832" />
+    </state>
+    <state width="1493" height="308" key="GridCell.Tab.0.center/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1621304057038" />
+    <state width="1493" height="308" key="GridCell.Tab.0.left" timestamp="1621304057038">
+      <screen x="1920" y="0" width="1536" height="832" />
+    </state>
+    <state width="1493" height="308" key="GridCell.Tab.0.left/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1621304057038" />
+    <state width="1493" height="308" key="GridCell.Tab.0.right" timestamp="1621304057038">
+      <screen x="1920" y="0" width="1536" height="832" />
+    </state>
+    <state width="1493" height="308" key="GridCell.Tab.0.right/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1621304057038" />
+    <state width="1493" height="308" key="GridCell.Tab.1.bottom" timestamp="1621304059004">
+      <screen x="1920" y="0" width="1536" height="832" />
+    </state>
+    <state width="1493" height="308" key="GridCell.Tab.1.bottom/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1621304059004" />
+    <state width="1493" height="308" key="GridCell.Tab.1.center" timestamp="1621304059003">
+      <screen x="1920" y="0" width="1536" height="832" />
+    </state>
+    <state width="1493" height="308" key="GridCell.Tab.1.center/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1621304059003" />
+    <state width="1493" height="308" key="GridCell.Tab.1.left" timestamp="1621304059003">
+      <screen x="1920" y="0" width="1536" height="832" />
+    </state>
+    <state width="1493" height="308" key="GridCell.Tab.1.left/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1621304059003" />
+    <state width="1493" height="308" key="GridCell.Tab.1.right" timestamp="1621304059004">
+      <screen x="1920" y="0" width="1536" height="832" />
+    </state>
+    <state width="1493" height="308" key="GridCell.Tab.1.right/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1621304059004" />
+    <state width="254" height="198" key="ShowFilterAction_Filter_Popup" timestamp="1621303140840">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state width="254" height="198" key="ShowFilterAction_Filter_Popup/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1621303140840" />
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1621302666281">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="777" y="434" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1621302666281" />
+    <state x="616" y="240" key="run.anything.popup" timestamp="1621302777099">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="616" y="240" key="run.anything.popup/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1621302777099" />
+    <state x="2418" y="180" width="672" height="543" key="search.everywhere.popup" timestamp="1621343388323">
+      <screen x="1920" y="0" width="1536" height="832" />
+    </state>
+    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/1920.0.1536.832/0.0.1920.1040@0.0.1920.1040" timestamp="1621303188715" />
+    <state x="2418" y="180" width="672" height="543" key="search.everywhere.popup/1920.0.1536.832/0.0.1920.1040@1920.0.1536.832" timestamp="1621343388323" />
   </component>
 </project>

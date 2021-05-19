@@ -13,6 +13,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public class PickUp : MonoBehaviour
@@ -49,6 +50,7 @@ public class PickUp : MonoBehaviour
     {
         CallbackHandler.instance.setDestination += SetDestination;
         EventManager.StartListening("WhaleCinematic", TriggerWhaleCinematic);
+        EventManager.StartListening("MoveToSecondIsland", MoveToSecondIsland);
 
         this.gameObject.SetActive(false);
 
@@ -66,15 +68,59 @@ public class PickUp : MonoBehaviour
         this.gameObject.SetActive(true);
         CameraManager.instance.LetterBox(true);
         CallbackHandler.instance.CinematicPause(true);
+        AudioManager.instance.PlaySound("WhaleSound");
+        AudioManager.instance.PlayWhaleAmbientLayer();
         EventManager.StopListening("WhaleCinematic", TriggerWhaleCinematic);
     }
 
     public void EndWhaleCinematic()
     {
+        EventManager.TriggerEvent("SwitchPuzzleCompletion");
         CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
         CallbackHandler.instance.CinematicPause(false);
         CameraManager.instance.Standard(true);
         playedCinematic = true;
+    }
+
+    public Vector3 secondIslandPoint;
+    public bool secondIslandHoming;
+    public Transform secondIslandPos;
+
+    public void MoveToSecondIsland()
+    {
+        secondIslandHoming = true;
+        target = secondIslandPoint;
+
+        // change cam
+        CameraManager.instance.SwitchCamera(CameraType.WhaleCamera);
+        CameraManager.instance.LetterBox(true);
+        CallbackHandler.instance.CinematicPause(true);
+        GetComponent<WhaleMovement>().control = false;
+        EventManager.StopListening("MoveToSecondIsland", MoveToSecondIsland);
+    }
+
+    public void EndSecondIsland()
+    {
+        Debug.Log("Arrived");
+        CallbackHandler.instance.CinematicPause(false);
+        CameraManager.instance.LetterBox(false);
+        secondIslandHoming = false;
+        WhaleMovement wm = GetComponent<WhaleMovement>();
+        wm.control = true;
+        wm.Dismount(InputState.KEYDOWN);
+
+        // why the fuck doesn't this work properly
+        Invoke("MovePlayer", 1.06f);
+
+        //EntityManager.instance.TogglePlayer(true);
+        //EntityManager.instance.TeleportPlayer(secondIslandPos);
+        //CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
+        CallbackHandler.instance.SetOrbit();
+    }
+
+    void MovePlayer()
+    {
+        EntityManager.instance.TeleportPlayer(secondIslandPos);
     }
 
     bool playedCinematic;
@@ -86,6 +132,12 @@ public class PickUp : MonoBehaviour
     /// </summary>
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
+        }
+
+
         if (enabled)
         {
             // get direction to height reference
@@ -123,9 +175,20 @@ public class PickUp : MonoBehaviour
                 return;
             }
 
+            if (secondIslandHoming)
+            {
+                float dist = Vector3.Distance(transform.position, target);
+                whale.moveSpeed = 5.0f * Mathf.Clamp01(dist / approachDistance);
+                rb.MoveRotation(Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * orbit.rotSpeed));
 
+                if (dist < 5.0f)
+                {
+                    EndSecondIsland();
+                }
+                return;
+            }
             // If at orbit, proceed to pickup
-            if (orbit.dist < 0.1f)
+            /*if (orbit.dist < 0.1f)
             {
                 Debug.DrawRay(transform.position, dir, Color.black);
                 // Check if hit anything between here and pickup position
@@ -145,7 +208,7 @@ public class PickUp : MonoBehaviour
                         orbit.enabled = false;
                     }
                 }
-            }
+            }*/
 
             // Has a direct path to above the player - start homing
             if (homing)

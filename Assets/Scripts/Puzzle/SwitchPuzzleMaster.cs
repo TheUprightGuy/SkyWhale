@@ -13,6 +13,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -157,10 +158,11 @@ public class SwitchPuzzleMaster : MonoBehaviour
         ToggleCam(inUse);
         Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = inUse;
-        EventManager.TriggerEvent("SwitchPuzzleCompletion");
+        EventManager.TriggerEvent("WhaleCinematic");
         EventManager.TriggerEvent("SolvePuzzle");
         Camera.main.cullingMask |= 1 << LayerMask.NameToLayer("Player");
         CallbackHandler.instance.PuzzleOutOfRange();
+        AudioManager.instance.PlaySound("Collect");
         return true;
     }
 

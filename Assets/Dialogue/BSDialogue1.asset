@@ -13,46 +13,47 @@ MonoBehaviour:
   m_Name: BSDialogue1
   m_EditorClassIdentifier: 
   dialogue:
-  - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+  - image: {fileID: 21300000, guid: 62bc85ac6cb595c419e651875ebc6b63, type: 3}
     left: 0
-    name: Chiken
-    dialogue:
-    - Hi! Are you the blacksmith?
-    dialogueIndex: 0
-  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
-    left: 1
     name: Blacksmith
     dialogue:
-    - Argh! I can't figure this out!
+    - Oh hello!
     dialogueIndex: 0
-  - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
-    left: 0
-    name: Chiken
-    dialogue:
-    - What's the problem? Maybe I can help.
-    dialogueIndex: 0
-  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+  - image: {fileID: 21300000, guid: 907bf8b2f3f98eb4b948a4fdff4b063a, type: 3}
     left: 1
+    name: Param
+    dialogue:
+    - Hi blacksmith! Your assistant said you got distracted again?
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: 62bc85ac6cb595c419e651875ebc6b63, type: 3}
+    left: 0
     name: Blacksmith
     dialogue:
-    - This puzzle here on the wall, it's kept me stumped for hours.
-    - I'm pretty sure you need to make all the lights green, but everytime I press
-      one the ones around it change colour!
+    - It's not a distraction when it's research!
     dialogueIndex: 0
-  - image: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
-    left: 0
-    name: Chiken
-    dialogue:
-    - Alright, let me take a look.
-    dialogueIndex: 0
-  - image: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
+  - image: {fileID: 21300000, guid: 907bf8b2f3f98eb4b948a4fdff4b063a, type: 3}
     left: 1
+    name: Param
+    dialogue:
+    - Uh-huh. Well, shouldn't you be researching your new invention?
+    dialogueIndex: 0
+  - image: {fileID: 21300000, guid: 62bc85ac6cb595c419e651875ebc6b63, type: 3}
+    left: 0
     name: Blacksmith
     dialogue:
-    - Press 'E' next to the puzzle to start the challenge. Good luck!
+    - Yes I shall, but there is still a mystery in these pillars. They glow green
+      and orange, they seem to all need to be green, but for what purpose, I have
+      no idea.
     dialogueIndex: 0
-  leftCharacter: {fileID: 21300000, guid: 4cec055532ed84f408562ac531c24b3b, type: 3}
-  rightCharacter: {fileID: 21300000, guid: e73407645ef2748439edb97f555960d3, type: 3}
+  - image: {fileID: 21300000, guid: 907bf8b2f3f98eb4b948a4fdff4b063a, type: 3}
+    left: 1
+    name: Param
+    dialogue:
+    - '''It seems the blacksmith is too distracted by this mystery to show you his
+      invention. Maybe solving it for him would speed this up.'''
+    dialogueIndex: 0
+  leftCharacter: {fileID: 21300000, guid: 907bf8b2f3f98eb4b948a4fdff4b063a, type: 3}
+  rightCharacter: {fileID: 21300000, guid: 62bc85ac6cb595c419e651875ebc6b63, type: 3}
   dialogueIndex: 0
   inUse: 0
   triggerEvent: 

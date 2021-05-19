@@ -37,6 +37,7 @@ public class EntityManager : MonoBehaviour
     public GameObject playerOnWhale;
     public NewGrappleHook grappleHook;
     public GameObject whale;
+    [HideInInspector] public GameObject SpeedBoostRingContainer;
     #endregion
 
     #region Local Variables
@@ -47,7 +48,7 @@ public class EntityManager : MonoBehaviour
 
     private void Start()
     {
-        TogglePlayer(true); 
+        TogglePlayer(true);
     }
 
     // Action to link up whale control and grapple script active to
@@ -58,6 +59,9 @@ public class EntityManager : MonoBehaviour
         if(player.GetComponent<GliderMovement>().enabled && !_toggle) player.GetComponent<GliderMovement>().Toggle();
         player.SetActive(_toggle);
         playerOnWhale.SetActive(!_toggle);
+
+        if (!_toggle) EventManager.TriggerEvent("WhaleTutorial");
+
         grappleHook.pc = player.GetComponent<GrappleScript>().shootPoint.transform;
 
         if(!player.GetComponent<GliderMovement>().enabled) CameraManager.instance.SwitchCamera(_toggle ? CameraType.PlayerCamera : CameraType.WhaleCamera);
@@ -82,6 +86,18 @@ public class EntityManager : MonoBehaviour
             player.transform.rotation = rotation;
         }
         return true;
+    }
+
+    public void TeleportPlayer(Vector3 pos)
+    {
+        if (!player || !instance.player.activeSelf) return;
+        for (int i = 0; i < 2; i++) //not sure why but this needs to be repeated twice in order for the offset to actually be removed
+        {
+            //Update player container position by calculating offset
+            var offset = player.transform.parent.position - player.transform.position;
+            player.transform.parent.position = pos + offset;
+        }
+        return;
     }
 
     public void MovePlayerToPlayerOnWhale()

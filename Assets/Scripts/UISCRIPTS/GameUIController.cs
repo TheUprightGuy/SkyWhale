@@ -10,6 +10,11 @@ public class GameUIController : MonoBehaviour
     SpeechUIElement speechUIElement;
     Fader fader;
     public ButtonPrompt[] prompts;
+    public List<GameObject> whaleTutorials;
+    public GameObject gliderTutorial;
+    private int whaleTutorialIndex = 0;
+    private float timer = 1.0f;
+    private float maxTimer = 1.0f;
 
     private void Awake()
     {
@@ -40,6 +45,11 @@ public class GameUIController : MonoBehaviour
 
         CallbackHandler.instance.fadeIn += FadeIn;
         CallbackHandler.instance.fadeOut += FadeOut;
+
+        VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").MethodToCall.AddListener(ProgressTutorial);
+
+        EventManager.StartListening("WhaleTutorial", StartWhaleTutorial);
+        EventManager.StartListening("GliderTutorial", ShowGliderTutorial);
     }
 
     private void OnDestroy()
@@ -107,5 +117,49 @@ public class GameUIController : MonoBehaviour
     public void FadeOut()
     {
         fader.FadeOut();
+    }
+
+    private void Update()
+    {
+        if (timer > 0) timer -= Time.deltaTime;
+    }
+
+    private void ProgressTutorial(InputState arg0)
+    {
+        if (timer > 0f) return;
+        if (whaleTutorialIndex == 0) return;
+        whaleTutorials[whaleTutorialIndex - 1].SetActive(false);
+        if (whaleTutorialIndex == whaleTutorials.Count)
+        {
+            VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").MethodToCall.RemoveListener(ProgressTutorial);
+            return;
+        }
+        whaleTutorials[whaleTutorialIndex].SetActive(true);
+        whaleTutorialIndex++;
+        timer = maxTimer;
+    }
+
+    private void StartWhaleTutorial()
+    {
+        //Also enable speed boost rings
+        EntityManager.instance.SpeedBoostRingContainer.SetActive(true);
+        whaleTutorials[whaleTutorialIndex].SetActive(true);
+        whaleTutorialIndex++;
+        EventManager.StopListening("WhaleTutorial", StartWhaleTutorial);
+        timer = maxTimer;
+    }
+
+    public void ShowGliderTutorial()
+    {
+        gliderTutorial.SetActive(true);
+        EventManager.StopListening("GliderTutorial", ShowGliderTutorial);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(HideGliderTutorial);
+    }
+
+    private void HideGliderTutorial(InputState arg0)
+    {
+        gliderTutorial.SetActive(false);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.RemoveListener(HideGliderTutorial);
+        CallbackHandler.instance.MovePilotNPCs();
     }
 }
