@@ -8,8 +8,11 @@ public class MiniMapCamController : MonoBehaviour
     public LayerMask IslandLayers;
 
     private GameObject CurrentTrackingObj => (TrackingObj.activeSelf) ? (TrackingObj) : (WhaleTrackingObj); //Set tracking object to whale if playercontainer is turned off
+    private GameObject IconCurrentTrackingObj => (IconTrackingObj.activeSelf) ? (IconTrackingObj) : (IconWhaleTrackingObj); //Set tracking object to whale if playercontainer is turned off
     public GameObject TrackingObj;
     public GameObject WhaleTrackingObj;
+    public GameObject IconTrackingObj;
+    public GameObject IconWhaleTrackingObj;
 
     private GameObject CurrentObj = null;
     private List<SphereCollider> IslandObjColliders = new List<SphereCollider>();
@@ -47,7 +50,7 @@ public class MiniMapCamController : MonoBehaviour
 
         if (MinimapIcon != null)
         {
-            MinimapIcon.transform.position = CurrentTrackingObj.transform.position + IconOffset;
+            MinimapIcon.transform.position = IconCurrentTrackingObj.transform.position + IconOffset;
         }
     }
 
@@ -58,7 +61,7 @@ public class MiniMapCamController : MonoBehaviour
         foreach (var item in IslandObjColliders)
         {
             float distToObj = Vector3.Distance(item.gameObject.transform.position, CurrentTrackingObj.transform.position);
-            if (distToObj < item.radius) //Check if the current tracking obj is within the radius of the sphere collider
+            if (distToObj < (item.radius * item.gameObject.transform.localScale.magnitude)) //Check if the current tracking obj is within the radius of the sphere collider, account for scale
             {
                 return (item.gameObject);
             }
