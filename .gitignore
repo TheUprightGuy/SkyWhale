@@ -61,3 +61,9 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+
+Assets/SkyMaster/
+
+Assets/Resources/CloudNoiseGen/
+
+Assets/Resources/CloudNoiseGen.meta

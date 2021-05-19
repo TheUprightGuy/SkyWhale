@@ -314,6 +314,8 @@ public class WhaleMovement : MonoBehaviour
         actionTimer = 10.0f;
     }
 
+    public LayerMask layers;
+
     /// <summary>
     /// Description: Checks if whale is too close to an object.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -323,7 +325,7 @@ public class WhaleMovement : MonoBehaviour
     {
         Debug.DrawRay(transform.position, transform.forward * Mathf.Infinity, Color.green);
         RaycastHit hit;
-        if (Physics.SphereCast(transform.position, GetComponent<CapsuleCollider>().radius, transform.forward, out hit, Mathf.Infinity))
+        if (Physics.SphereCast(transform.position, GetComponent<CapsuleCollider>().radius, transform.forward, out hit, Mathf.Infinity, layers, QueryTriggerInteraction.Ignore))
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Island"))
             {
