@@ -121,11 +121,11 @@ public class MiniMapCamController : MonoBehaviour
 
     void MapPlus(InputState inputState)
     {
-        DefaultMapZoom = Mathf.Clamp(DefaultMapZoom - ZoomSteps, ClosestZoom, FurthestZoom);
+        DefaultMapZoom = Mathf.Clamp(DefaultMapZoom - ZoomSteps * Time.deltaTime, ClosestZoom, FurthestZoom);
     }
 
     void MapMinus(InputState inputState)
     {
-        DefaultMapZoom = Mathf.Clamp(DefaultMapZoom + ZoomSteps, ClosestZoom, FurthestZoom);
+        DefaultMapZoom = Mathf.Clamp(DefaultMapZoom + ZoomSteps * Time.deltaTime, ClosestZoom, FurthestZoom);
     }
 }
