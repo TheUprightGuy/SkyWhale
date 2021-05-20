@@ -101,6 +101,30 @@ MonoBehaviour:
     MethodToCall:
       m_PersistentCalls:
         m_Calls: []
+  - NameForInput: Map
+    KeyToListen: 109
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 0
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: MapPlus
+    KeyToListen: 61
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
+  - NameForInput: MapMinus
+    KeyToListen: 45
+    CallOnKeyDown: 1
+    CallOnKeyHeld: 1
+    CallOnKeyUp: 0
+    MethodToCall:
+      m_PersistentCalls:
+        m_Calls: []
   whaleInput:
   - NameForInput: Thrust
     KeyToListen: 32
