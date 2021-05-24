@@ -91,6 +91,9 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    
+    private static readonly int MovementSpeed = Animator.StringToHash("MovementSpeed");
+    
     /// <summary>
     /// Description: Sets dialogue SO to use and begins dialogue.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -107,7 +110,7 @@ public class DialogueManager : MonoBehaviour
         rightCharacter.sprite = _dialogue.rightCharacter;
 
         startTimer = 0.1f;
-        
+        EntityManager.instance.player.GetComponentInChildren<Animator>().SetFloat(MovementSpeed, 0f);
         ShowDialogue();
     }
 
