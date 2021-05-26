@@ -24800,6 +24800,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.y
       value: 86.721
       objectReference: {fileID: 0}
+    - target: {fileID: 1518757650989197844, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3234001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518757650989197844, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3234
+      objectReference: {fileID: 0}
+    - target: {fileID: 1518757650989197844, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3234001
+      objectReference: {fileID: 0}
     - target: {fileID: 1652712679909458941, guid: 1b3987150f1e46843beb873c6b2da9d0,
         type: 3}
       propertyPath: m_Layer
@@ -24864,6 +24879,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240463042000347452, guid: 1b3987150f1e46843beb873c6b2da9d0,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3316078014074666849, guid: 1b3987150f1e46843beb873c6b2da9d0,
         type: 3}
