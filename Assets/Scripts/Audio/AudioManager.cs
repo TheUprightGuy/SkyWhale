@@ -68,6 +68,7 @@ namespace Audio
         public Dictionary<string, SoundInfo> SoundDictionary;
         [HideInInspector] public bool randomlyCycleMusic = true;
         [HideInInspector] public bool playAmbientSounds = true;
+        public float[] targetValueMultiplier = {1f,1f};
 
         #endregion
 
@@ -165,7 +166,7 @@ namespace Audio
         {
             StartCoroutine(PlayRandomAmbientTracks(
                 ambientLayers[0].GetComponent<AmbientLayer>(), 
-                ambientLayers[0].GetComponent<AudioSource>()));
+                ambientLayers[0].GetComponent<AudioSource>(), 0));
         }
 
         /// <summary>
@@ -214,7 +215,7 @@ namespace Audio
             StartCoroutine(PlayRandomMusicTracks());
             StartCoroutine(
                 PlayRandomAmbientTracks(ambientLayers[1].GetComponent<AmbientLayer>(), 
-                    ambientLayers[1].GetComponent<AudioSource>()));
+                    ambientLayers[1].GetComponent<AudioSource>(), 1));
             /*foreach (var layer in ambientLayers)
             {
                 var ambientLayer = layer.GetComponent<AmbientLayer>();
@@ -277,13 +278,13 @@ namespace Audio
         /// <param name="ambientLayer">The ambient layer containing the tracks being faded</param>
         /// <param name="audioSource">The audio source the ambient layer is played through</param>
         /// <returns>After the random (within range) duration</returns>
-        private IEnumerator PlayRandomAmbientTracks(AmbientLayer ambientLayer, AudioSource audioSource)
+        private IEnumerator PlayRandomAmbientTracks(AmbientLayer ambientLayer, AudioSource audioSource, int index)
         {
-            yield return FadeAmbientTracks(ambientLayer.exposedParamName, 0f);
+            yield return FadeAmbientTracks(ambientLayer.exposedParamName, 0f, index);
             RandomiseAudioClip(ambientLayer, audioSource);
-            yield return FadeAmbientTracks(ambientLayer.exposedParamName, ambientLayer.soundInfo.volumeDefault);
+            yield return FadeAmbientTracks(ambientLayer.exposedParamName, ambientLayer.soundInfo.volumeDefault, index);
             yield return new WaitForSeconds(Random.Range(ambientSoundTimerMin, ambientSoundTimerMax));
-            if (playAmbientSounds) StartCoroutine(PlayRandomAmbientTracks(ambientLayer, audioSource));
+            if (playAmbientSounds) StartCoroutine(PlayRandomAmbientTracks(ambientLayer, audioSource, index));
         }
 
         /// <summary>
@@ -292,10 +293,10 @@ namespace Audio
         /// <param name="exposedParameter">The name of the exposed parameter (corresponding to an audio mixer group's volume) to fade</param>
         /// <param name="targetVolume">The target volume to fade to</param>
         /// <returns>After the fade duration</returns>
-        private object FadeAmbientTracks(string exposedParameter, float targetVolume)
+        private object FadeAmbientTracks(string exposedParameter, float targetVolume, int index)
         {
             //Fade ambient tracks to target volume
-            StartCoroutine(FadeMixerGroup.StartFade(audioMixer, exposedParameter, fadeDuration, targetVolume));
+            StartCoroutine(FadeMixerGroup.StartFade(audioMixer, exposedParameter, fadeDuration, targetVolume, index));
             return new WaitForSeconds(fadeDuration);
         }
 

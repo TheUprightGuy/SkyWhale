@@ -15,6 +15,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public class WhaleMovement : MonoBehaviour
@@ -232,6 +233,8 @@ public class WhaleMovement : MonoBehaviour
         }
 
         thrustChange = true;
+
+        AudioManager.instance.targetValueMultiplier[0] = Mathf.Lerp(1f, 5f, Mathf.Clamp01(currentSpeed * boost / maxSpeed));
     }
 
     /// <summary>
@@ -264,6 +267,8 @@ public class WhaleMovement : MonoBehaviour
             {
                 moveSpeed -= accelSpeed * Time.deltaTime * 0.1f;
             }
+
+            AudioManager.instance.targetValueMultiplier[0] -= AudioManager.instance.targetValueMultiplier[0] > 1f ? Time.deltaTime / 5f : 0f;
         }
 
         yawChange = false;

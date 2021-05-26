@@ -14,9 +14,9 @@ using UnityEngine.Audio;
 
 namespace Audio
 {
-    public static class FadeMixerGroup {
-
-        public static IEnumerator StartFade(AudioMixer audioMixer, string exposedParam, float duration, float targetVolume)
+    public static class FadeMixerGroup
+    {
+        public static IEnumerator StartFade(AudioMixer audioMixer, string exposedParam, float duration, float targetVolume, int ambientLayerIndex)
         {
             float currentTime = 0;
             audioMixer.GetFloat(exposedParam, out var currentVol);
@@ -26,7 +26,7 @@ namespace Audio
             while (currentTime < duration)
             {
                 currentTime += Time.deltaTime;
-                var newVol = Mathf.Lerp(currentVol, targetValue, currentTime / duration);
+                var newVol = Mathf.Lerp(currentVol, targetValue * AudioManager.instance.targetValueMultiplier[ambientLayerIndex], currentTime / duration);
                 audioMixer.SetFloat(exposedParam, Mathf.Log10(newVol) * 20);
                 yield return null;
             }
