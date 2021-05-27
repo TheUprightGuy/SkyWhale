@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Customizable Skybox/Stylized Sky.meta
 guid: 135450dfab8085c4ebd673f58f013df4
+=======
+guid: 19ba50db36637e348b045418eb5c47e7
+>>>>>>> WaydsBranch:Assets/SkyMaster.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
