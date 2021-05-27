@@ -102,6 +102,7 @@ public class ObjDistribuitionEditor : Editor
     }
     public override void OnInspectorGUI()
     {
+        thisObj = target as ObjDistribuition;
         thisObj.grassContainer = (GrassContainer)EditorGUILayout.ObjectField( "Grass Container", thisObj.grassContainer, typeof(GrassContainer), false);
 
         if (thisObj.grassContainer != null)
