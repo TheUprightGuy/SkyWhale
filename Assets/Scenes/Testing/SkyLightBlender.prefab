@@ -323,11 +323,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: 9fb2b70b832dece40a06eb880c5e269a, type: 2}
-  blendSpeed: 0.1
+  blendSpeed: 0.01
+  raining: 0
   outputColor: {r: 0, g: 0, b: 0, a: 0}
   color1: {r: 0.99607843, g: 0.62352943, b: 0.5803922, a: 1}
-  color2: {r: 0, g: 0.9019608, b: 0.99607843, a: 1}
-  color3: {r: 0.19607843, g: 0.23921569, b: 0.4862745, a: 1}
+  color2: {r: 0, g: 0.90551186, b: 1, a: 1}
+  color3: {r: 0.13163048, g: 0.15974356, b: 0.3207547, a: 1}
   fogBlend: {r: 0.27450982, g: 0.58431375, b: 0.7921569, a: 1}
   lightBlend: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   lights: []

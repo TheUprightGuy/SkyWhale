@@ -7,6 +7,7 @@ public class ThirdPersonCamera : MonoBehaviour
     [Header("Dependencies")]
     public Transform targetTrans;
     public Transform PlayerTrans;
+    public GameObject rainEffect;
 
     [Header("Settings")] 
     public CameraType cameraType = CameraType.PlayerCamera;
@@ -62,24 +63,30 @@ public class ThirdPersonCamera : MonoBehaviour
 
         CameraManager.instance.switchCam += SwitchCam;
         CallbackHandler.instance.pause += Pause;
+        CallbackHandler.instance.toggleRain += ToggleRain;
         CallbackHandler.instance.changeMouseSensitivity += ChangeMouseSensitivity;
 
         VirtualInputs.GetInputListener(InputType.PLAYER, "CameraSnap").MethodToCall.AddListener(CameraSnap);
+    }
 
+
+    private void OnDestroy()
+    {
+        CameraManager.instance.switchCam -= SwitchCam;
+        CallbackHandler.instance.pause -= Pause;
+        CallbackHandler.instance.toggleRain -= ToggleRain;
+        CallbackHandler.instance.changeMouseSensitivity -= ChangeMouseSensitivity;
+    }
+
+    void ToggleRain(bool _toggle)
+    {
+        rainEffect.SetActive(_toggle);
     }
 
     void ChangeMouseSensitivity(int _value)
     {
         rotateSpeed = 150 * (_value / 10.0f);
     }
-
-    private void OnDestroy()
-    {
-        CameraManager.instance.switchCam -= SwitchCam;
-        CallbackHandler.instance.pause -= Pause;
-        CallbackHandler.instance.changeMouseSensitivity -= ChangeMouseSensitivity;
-    }
-
 
     void Pause(bool _pause)
     {
