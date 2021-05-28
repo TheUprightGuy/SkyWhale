@@ -20,6 +20,7 @@ namespace Audio
         public AudioSource audioSource;
         public float pitchDefault;
         public float volumeDefault;
+        public bool multiSoundAudioSource;
         #endregion
 
         //Public functions

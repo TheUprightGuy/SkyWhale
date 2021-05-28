@@ -17,6 +17,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Audio;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class WhaleMovement : MonoBehaviour
 {
@@ -71,6 +72,7 @@ public class WhaleMovement : MonoBehaviour
         if (GameObject.Find("DismountPos"))
             dismountPosition = GameObject.Find("DismountPos").transform;
         GetComponent<GrappleChallengeMaster>().LastCheckPoint = GetComponentInChildren<GrappleCheckPoint>();
+        whaleAmbientAudioMixer = AudioManager.instance.ambientLayers[0].GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer;
     }
 
     /// <summary>    
@@ -222,6 +224,8 @@ public class WhaleMovement : MonoBehaviour
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
     bool thrustChange = false;
+
+    private AudioMixer whaleAmbientAudioMixer;
     private void Thrust(InputState type)
     {
         if (orbit.enabled)
@@ -235,6 +239,9 @@ public class WhaleMovement : MonoBehaviour
         thrustChange = true;
 
         AudioManager.instance.targetValueMultiplier[0] = Mathf.Lerp(1f, 5f, Mathf.Clamp01(currentSpeed * boost / maxSpeed));
+        float volume;
+        whaleAmbientAudioMixer.GetFloat("WhaleAmbientVolume", out volume);
+        Debug.Log("Volume is " + volume);
     }
 
     /// <summary>
@@ -268,7 +275,6 @@ public class WhaleMovement : MonoBehaviour
                 moveSpeed -= accelSpeed * Time.deltaTime * 0.1f;
             }
 
-            AudioManager.instance.targetValueMultiplier[0] -= AudioManager.instance.targetValueMultiplier[0] > 1f ? Time.deltaTime / 5f : 0f;
         }
 
         yawChange = false;
@@ -293,6 +299,8 @@ public class WhaleMovement : MonoBehaviour
         animator.SetFloat("Turning", f / 10.0f);
         animator.SetFloat("Movement", movement);
         currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime * accelSpeed);// * TimeSlowDown.instance.timeScale);
+        
+        AudioManager.instance.targetValueMultiplier[0] -= AudioManager.instance.targetValueMultiplier[0] > 1f ? Time.deltaTime / 5f : 0f;
 
         if (boost > 1f) boost -= Time.deltaTime;
 

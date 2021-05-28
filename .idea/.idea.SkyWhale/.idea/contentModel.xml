@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\jacob\AppData\Local\JetBrains\Rider2020.2\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\jacob\AppData\Local\JetBrains\Rider2020.2\resharper-host\Local\Transient\Rider\v202\SolutionCaches\_SkyWhale.-1246438828.00" t="ExcludeRecursive" />
-    <e p="D:\Projects\SkyWhale" t="IncludeRecursive">
+    <e p="D:\Users\mds00001nb\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="D:\Users\mds00001nb\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_SkyWhale.-1814424878.00" t="ExcludeRecursive" />
+    <e p="D:\Users\mds00001nb\Desktop\Alpha Project\SkyWhale" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
@@ -14,6 +14,7 @@
           <e p="TexturePainterControllerEditor.cs" t="Include" />
         </e>
         <e p="Fader.cs" t="Include" />
+        <e p="IslandRangeTrigger.cs" t="Include" />
         <e p="JellyfishMatRNG.cs" t="Include" />
         <e p="LeanTween" t="Include">
           <e p="Editor" t="Include">
@@ -54,26 +55,8 @@
           </e>
         </e>
         <e p="MatScript.cs" t="Include" />
+        <e p="MultiSoundAudioSource.cs" t="Include" />
         <e p="OrbitRef.cs" t="Include" />
-        <e p="PilotSon.cs" t="Include" />
-        <e p="SampleScenes" t="Include">
-          <e p="Menu" t="Include">
-            <e p="Scripts" t="Include">
-              <e p="MenuSceneLoader.cs" t="Include" />
-              <e p="PauseMenu.cs" t="Include" />
-              <e p="SceneAndURLLoader.cs" t="Include" />
-            </e>
-          </e>
-          <e p="Scripts" t="Include">
-            <e p="CameraSwitch.cs" t="Include" />
-            <e p="LevelReset.cs" t="Include" />
-            <e p="PlaceTargetWithMouse.cs" t="Include" />
-            <e p="SlowMoButton.cs" t="Include" />
-          </e>
-          <e p="Shaders" t="Include">
-            <e p="Skybox-Procedural.shader" t="Include" />
-          </e>
-        </e>
         <e p="Scripts" t="Include">
           <e p="Audio" t="Include">
             <e p="AmbientLayer.cs" t="Include" />
@@ -152,6 +135,9 @@
               <e p="BackgroundWhaleMovement.cs" t="Include" />
             </e>
           </e>
+          <e p="Minimap" t="Include">
+            <e p="MiniMapCamController.cs" t="Include" />
+          </e>
           <e p="Movement" t="Include">
             <e p="FishingLineScript.cs" t="Include" />
             <e p="GrappleScript.cs" t="Include" />
@@ -202,6 +188,7 @@
             <e p="SwitchPuzzleMaster.cs" t="Include" />
           </e>
           <e p="PuzzleCamera.cs" t="Include" />
+          <e p="RawImageInstancer.cs" t="Include" />
           <e p="ReplaceWithPrefab" t="Include">
             <e p="Editor" t="Include">
               <e p="replacewithprefab.cs" t="Include" />
@@ -254,6 +241,7 @@
           </e>
           <e p="Villager.cs" t="Include" />
         </e>
+        <e p="SecondIslandTrigger.cs" t="Include" />
         <e p="Shaders" t="Include">
           <e p="Clouds" t="Include">
             <e p="Clouds.shader" t="Include" />

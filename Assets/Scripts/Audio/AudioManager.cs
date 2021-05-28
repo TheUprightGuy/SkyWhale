@@ -96,6 +96,7 @@ namespace Audio
             var sound = SoundDictionary[soundName];
             sound.Reset();
             PlaySound(sound.audioSource);
+            if(sound.multiSoundAudioSource) sound.audioSource.gameObject.GetComponent<MultiSoundAudioSource>().ChangeSound();
         }
 
         /// <summary>
@@ -121,6 +122,8 @@ namespace Audio
                 soundInfoToReplace.audioSource = audioSource;
                 soundInfoToReplace.pitchDefault = audioSource.pitch;
                 soundInfoToReplace.volumeDefault = audioSource.volume;
+                soundInfoToReplace.multiSoundAudioSource =
+                    audioSource.gameObject.GetComponent<MultiSoundAudioSource>() != null;
                 return;
             }
             
@@ -128,6 +131,8 @@ namespace Audio
             var soundName = audioSource.name;
             var soundInfo = new SoundInfo();
             soundInfo.InitialiseSound(soundName, audioSource);
+            soundInfo.multiSoundAudioSource =
+                audioSource.gameObject.GetComponent<MultiSoundAudioSource>() != null;
             SoundDictionary.Add(soundName, soundInfo);
         }
 

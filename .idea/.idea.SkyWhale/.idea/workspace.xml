@@ -14,35 +14,18 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.4.2f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Layout/CanvasScaler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GrappleTutorial.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://C:/Program Files/Unity/Hub/Editor/2019.4.2f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Layout/CanvasScaler.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/MultiSoundAudioSource.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
-        <option value="$PROJECT_DIR$/Assets/SpeedBoost.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/EntityManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/SpeedBoost.cs" />
-        <option value="$PROJECT_DIR$/Assets/PilotSon.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/CallbackHandler.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/PilotScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/UISCRIPTS/GameUIController.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Audio/AudioManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/PickUp.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/NPCScripts/NPCScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Management &amp; GameLoop/DialogueManager.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/NewGrappleHook.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/NPCScripts/PilotQuestCollectable.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GliderMovement.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/GrappleScript.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Puzzle/SwitchPuzzleMaster.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Lava.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GrappleChallengeScripts/GrappleCheckPoint.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/Movement/LevelBoundaryChecker.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/GrappleChallengeScripts/GrappleChallengeMaster.cs" />
-      </list>
-    </option>
+    <changedPaths>
+      <option value="$PROJECT_DIR$/Assets/Scripts/Audio/SoundInfo.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Audio/AudioManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/MultiSoundAudioSource.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Movement/WhaleMovement.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Audio/FadeMixerGroup.cs" />
+    </changedPaths>
   </component>
   <component name="ProjectId" id="1pUhXugarrmpgCnBnhTHwjizTlu" />
   <component name="ProjectViewState">
@@ -73,7 +56,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <set />
+        <list />
       </option>
       <method v="2" />
     </configuration>
@@ -82,7 +65,7 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="selectedOptions">
-        <set />
+        <list />
       </option>
       <method v="2" />
     </configuration>
