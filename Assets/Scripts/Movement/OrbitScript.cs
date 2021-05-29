@@ -57,8 +57,8 @@ public class OrbitScript : MonoBehaviour
             rb.velocity = Vector3.forward;
 
             SetOrbit();// orbit);
-            if (GetComponent<WhaleMovement>())
-              GetComponent<WhaleMovement>().moveSpeed = 2.5f;
+            //if (GetComponent<WhaleMovement>())
+              //GetComponent<WhaleMovement>().moveSpeed = 2.5f;
         }
     }
     private void OnDestroy()
