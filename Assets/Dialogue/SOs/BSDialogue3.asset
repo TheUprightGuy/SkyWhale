@@ -66,7 +66,7 @@ MonoBehaviour:
     - I also have these, I was told they were used by riders of these creatures when
       I bought it. Never guessed they would be used again.
     dialogueIndex: 0
-  - image: {fileID: 21300000, guid: 907bf8b2f3f98eb4b948a4fdff4b063a, type: 3}
+  - image: {fileID: 21300000, guid: 23acba4a96537834b9aca4aaaaaa73c8, type: 3}
     left: 1
     name: Param
     dialogue:
