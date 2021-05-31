@@ -30,7 +30,7 @@ namespace Audio
                 audioMixer.SetFloat(exposedParam, Mathf.Log10(newVol) * 20);
                 float val = Mathf.Log10(newVol) * 20;
                 float orVal = Mathf.Pow(10, val / 20);
-                Debug.Log(exposedParam + " :" + orVal + " or " + newVol);
+                //Debug.Log(exposedParam + " :" + orVal + " or " + newVol);
                 yield return null;
             }
         }
