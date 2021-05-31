@@ -138,7 +138,7 @@ public class ObjData
         }
 
         Camera test = Camera.main;
-        Matrix4x4 tf = Matrix4x4.TRS(Vector3.zero,
+        Matrix4x4 tf = Matrix4x4.TRS(transform.position,
                 Quaternion.identity, Vector3.one);
         foreach (var item in grassContainer.GrassChunks)
         {

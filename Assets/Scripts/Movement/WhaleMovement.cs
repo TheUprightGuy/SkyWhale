@@ -236,6 +236,8 @@ public class WhaleMovement : MonoBehaviour
             moveSpeed += accelSpeed * Time.deltaTime;
         }
 
+        if (boost < 2f) boost = 2f;
+
         thrustChange = true;
 
         AudioManager.instance.targetValueMultiplier[0] = Mathf.Lerp(1f, 5f, Mathf.Clamp01(currentSpeed * boost / maxSpeed));
