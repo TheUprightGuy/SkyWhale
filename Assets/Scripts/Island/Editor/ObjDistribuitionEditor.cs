@@ -72,11 +72,11 @@ public class ObjDistribuitionEditor : Editor
         }
         else
         {
-            Tools.hidden = false; //Used to re-enable the tool
         }
 
         SceneView.RepaintAll(); //I dunno if this is healthy tbh lmao
         //bHandles.color = Color.white;//Reset to default
+        Tools.hidden = false; //Used to re-enable the tool
     }
 
     public void BrushHandling(Vector3 _point, Vector3 _normal)

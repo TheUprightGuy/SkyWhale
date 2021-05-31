@@ -419,7 +419,16 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="accel">The rate to move towards speed</param>
     void GroundMovement(float speed, float accel)
     {
-        Vector3 projectedForward = Vector3.ProjectOnPlane(transform.forward, groundContactNormal);
+        //Forward Vector relative to the camera direction
+        Vector3 camForwardRelativeToPlayerRot = Vector3.Normalize(Vector3.ProjectOnPlane(cam.forward, transform.up));
+        //Vector perpendicular to the above
+        Vector3 left = Vector3.Cross(camForwardRelativeToPlayerRot, Vector3.up).normalized;
+
+        //Direction currently represented by the keys pressed relative to the camera forward direction
+        Vector3 heading = ((camForwardRelativeToPlayerRot * inputAxis.z) + (left * inputAxis.x)).normalized;
+
+
+        Vector3 projectedForward = Vector3.ProjectOnPlane(heading, groundContactNormal);
         float xzMag = new Vector2(inputAxis.x, inputAxis.z).magnitude;//Key is pressed
         projectedForward *= xzMag; 
 
