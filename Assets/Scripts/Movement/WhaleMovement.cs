@@ -447,7 +447,7 @@ public class WhaleMovement : MonoBehaviour
     public void ComeToHalt()
     {
         moveSpeed = 0.0f;
-        currentSpeed = 0.0f;
+        //currentSpeed = 0.0f;
     }
 
     /// <summary>
