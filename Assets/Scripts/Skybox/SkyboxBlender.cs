@@ -7,12 +7,15 @@ public class SkyboxBlender : MonoBehaviour
     float timeOfDay = 0.0f;
     public float blendSpeed = 1.0f;
 
+    public bool raining;
+
     public Color outputColor;
     public Color color1;
     public Color color2;
     public Color color3;
     public Color fogBlend;// = new Color(70, 149, 202);
     public Color lightBlend;
+    Color rainColor;
 
     public Light[] lights;
 
@@ -26,10 +29,30 @@ public class SkyboxBlender : MonoBehaviour
     {
         lights = GetComponentsInChildren<Light>();
 
+        rainColor = material.GetColor("RainColor");
+        Invoke("RainOff", 0.1f);
+
         //worldLight = LightRotator.instance.worldLight;
         //material.SetFloat("_Blend", 0f);
         //color1 = material.GetColor("_Tint1");
         //color2 = material.GetColor("_Tint2");
+
+        CallbackHandler.instance.toggleRain += ToggleRain;
+    }
+
+    private void OnDestroy()
+    {
+        CallbackHandler.instance.toggleRain -= ToggleRain;
+    }
+
+    void RainOff()
+    {
+        CallbackHandler.instance.ToggleRain(false);
+    }
+
+    void ToggleRain(bool _toggle)
+    {
+        raining = _toggle;
     }
 
     void SetLightColor()
@@ -44,17 +67,17 @@ public class SkyboxBlender : MonoBehaviour
     {
         if (timeOfDay < 0.5f)
         {
-            outputColor = Color.Lerp(color1, color2, timeOfDay * 2.0f);
+            outputColor = Color.Lerp(color1, color2, timeOfDay * 2.0f) * (raining ? rainColor : Color.white);
             RenderSettings.fogColor = Color.Lerp(outputColor, fogBlend, 0.5f);
         }
         else if (timeOfDay < 1.0f)
         {
-            outputColor = Color.Lerp(color2, color3, (timeOfDay - 0.5f) * 2.0f);
+            outputColor = Color.Lerp(color2, color3, (timeOfDay - 0.5f) * 2.0f) * (raining ? rainColor : Color.white);
             RenderSettings.fogColor = Color.Lerp(outputColor, fogBlend, 0.5f);
         }
         else if (timeOfDay < 1.5f)
         {
-            outputColor = Color.Lerp(color3, color1, (timeOfDay - 1.0f) * 2.0f);
+            outputColor = Color.Lerp(color3, color1, (timeOfDay - 1.0f) * 2.0f) * (raining ? rainColor : Color.white);
             RenderSettings.fogColor = Color.Lerp(outputColor, fogBlend, 0.5f);
         }
     }
@@ -69,6 +92,7 @@ public class SkyboxBlender : MonoBehaviour
         }
 
         material.SetFloat("_Vec1TimeOfDay", timeOfDay);
+        material.SetInt("Raining", raining ? 1 : 0);
 
         SetFogColor();
         SetLightColor();

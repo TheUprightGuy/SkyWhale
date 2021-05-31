@@ -350,4 +350,13 @@ public class CallbackHandler : MonoBehaviour
             fadeOut();
         }
     }
+
+    public event Action<bool> toggleRain;
+    public void ToggleRain(bool _toggle)
+    {
+        if (toggleRain != null)
+        {
+            toggleRain(_toggle);
+        }
+    }
 }

@@ -444,10 +444,10 @@ public class WhaleMovement : MonoBehaviour
     /// <br>Author: Wayd Barton-Redgrave</br>
     /// <br>Last Updated: 04/07/2021</br>
     /// </summary>
-    void ComeToHalt()
+    public void ComeToHalt()
     {
         moveSpeed = 0.0f;
-        currentSpeed = 0.0f;
+        //currentSpeed = 0.0f;
     }
 
     /// <summary>

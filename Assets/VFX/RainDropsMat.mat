@@ -70,13 +70,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - AlphaControl: 1
+    - AlphaControl: 0.05
     - DistortionPower: 1
     - DistortionScale: 10
-    - NormalPower: 0
-    - OffsetSpeed: 1
-    - SmoothnessControl: 0.929
-    - SplotchesDensity: 5
+    - NormalPower: 0.1
+    - OffsetSpeed: 0.2
+    - SmoothnessControl: 0.5
+    - SplotchesDensity: 1
     - SplotchesPower: 1
     - SplotchesSpasm: 2
     - _AlphaClip: 0

@@ -50,6 +50,8 @@ public class GameUIController : MonoBehaviour
 
         EventManager.StartListening("WhaleTutorial", StartWhaleTutorial);
         EventManager.StartListening("GliderTutorial", ShowGliderTutorial);
+
+        SetupTutorialHotkeys();
     }
 
     private void OnDestroy()
@@ -162,4 +164,52 @@ public class GameUIController : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.RemoveListener(HideGliderTutorial);
         CallbackHandler.instance.MovePilotNPCs();
     }
+
+    /// TUTORIAL TEXT
+    [Header("Tutorials")]
+    // GRAPPLE TUTORIAL
+    public List<TMPro.TextMeshProUGUI> grappleTuts;
+    // WHALE TUTORIAL
+    public List<TMPro.TextMeshProUGUI> whaleTuts;
+    // GLIDER TUTORIAL
+    public List<TMPro.TextMeshProUGUI> glideTuts;
+
+    public void SetupTutorialHotkeys()
+    {
+        // Grapple
+        grappleTuts[0].SetText(CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").KeyToListen) + " TO MANUALLY RELEASE GRAPPLE.");
+        grappleTuts[1].SetText("PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").KeyToListen) + " TO JUMP FROM GRAPPLE.");
+
+        // Whale
+        whaleTuts[0].SetText(CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "PitchDown").KeyToListen) + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "YawLeft").KeyToListen) + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "PitchUp").KeyToListen) + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "YawRight").KeyToListen) + " TO STEER WHALE.\n"
+            + "PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").KeyToListen) + " TO MOVE FORWARDS.\n"
+            + "FLY THROUGH RINGS TO GAIN A SPEED BOOST.");
+        whaleTuts[1].SetText("PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "Dismount").KeyToListen) + " TO DISMOUNT FROM THE WHALE.\n"
+            + "THE WHALE WILL SAVE YOU IF YOU FALL.");
+
+        // Glider
+        glideTuts[0].SetText("PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Glide").KeyToListen) + " WHILE FALLING TO OPEN THE GLIDER.\n"
+            + "GAIN SPEED BY PITCHING DOWNWARDS.");
+    }
+
+    string CheckKey(KeyCode _key)
+    {
+        string temp;
+
+        if (_key == KeyCode.Mouse0)
+        {
+            temp = "LMB";
+        }
+        else if (_key == KeyCode.Mouse1)
+        {
+            temp = "RMB";
+        }
+        else
+        {
+            temp = _key.ToString();
+        }
+
+        return temp;
+    }
+
 }

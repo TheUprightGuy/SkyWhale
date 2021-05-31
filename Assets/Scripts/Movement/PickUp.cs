@@ -166,9 +166,11 @@ public class PickUp : MonoBehaviour
                         else
                         {
                             CallbackHandler.instance.SetNewOrbitRefer(cinematicPoints[tracking].gameObject);
-                            orbit.SetOrbit();// cinematicPoints[cinematicPoints.Length - 1].gameObject);
+                            WhaleMovement wm = GetComponent<WhaleMovement>();
+                            wm.ComeToHalt();
+                            //orbit.SetOrbit();// cinematicPoints[cinematicPoints.Length - 1].gameObject);
                             cinematic = false;
-                            //homing = true;
+                            homing = false;
                         }
                     }
                 }
