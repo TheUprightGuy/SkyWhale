@@ -63,7 +63,6 @@ public class FlightChallengeMaster : MonoBehaviour
         Debug.Log("Passed Challenge!");
         if (gameObject.scene.name == "Grapple_Island")
         {
-            Debug.Log("GlidingChallenge completed on grapple island");
             EventManager.TriggerEvent("GrappleIslandGlidingChallengeComplete");
         }
         ps.Play();

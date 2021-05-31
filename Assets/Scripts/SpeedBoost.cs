@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public class SpeedBoost : MonoBehaviour
@@ -22,6 +23,7 @@ public class SpeedBoost : MonoBehaviour
         {
             //Provide speed boost to whale
             other.gameObject.GetComponent<WhaleMovement>().boost = boostAmount;
+            AudioManager.instance.PlaySound("Checkpoint");
         }
     }
 }

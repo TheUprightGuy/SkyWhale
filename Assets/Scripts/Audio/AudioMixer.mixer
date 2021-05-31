@@ -14,6 +14,20 @@ AudioMixerEffectController:
   m_SendTarget: {fileID: 0}
   m_EnableWetMix: 0
   m_Bypass: 0
+--- !u!244 &-6032053994092536357
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: ce5b81a9a4666d341a5084f907f59db9
+  m_EffectName: Attenuation
+  m_MixLevel: 6eb4476939d55d740be3bf4ec603fc2e
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!243 &-5273126110907823214
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -66,6 +80,25 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!243 &-1768636132957363659
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: WhaleWind
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: a09ed43f588e4e24e96b88746acd53f7
+  m_Children: []
+  m_Volume: b6df97ead888e61428a1b3631dd2fbc5
+  m_Pitch: 9411cb1a86a244a409e67ce5222ae5f8
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: 4202647931380463507}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
 --- !u!243 &-1150006247599028980
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -101,6 +134,8 @@ AudioMixerController:
   m_EnableSuspend: 1
   m_UpdateMode: 0
   m_ExposedParameters:
+  - guid: d9670578b29e5064ab771075cc079743
+    name: AdditionalWhaleVolume
   - guid: f6e56c64fd52c024a9b5d42f3dfade73
     name: MusicVolume
   - guid: 3f84c959df70167419e673f83e5d196f
@@ -113,6 +148,10 @@ AudioMixerController:
     name: SfxVolume
   - guid: 9678b15320646b343938fa364cff11e1
     name: WhaleAmbientVolume
+  - guid: b6df97ead888e61428a1b3631dd2fbc5
+    name: WhaleWindVolume
+  - guid: 9411cb1a86a244a409e67ce5222ae5f8
+    name: WhaleWindPitch
   - guid: 36a413d6642266544abdfc19e5b5248f
     name: WindAmbientVolume
   m_AudioMixerGroupViews:
@@ -123,6 +162,8 @@ AudioMixerController:
     - 1248e9b031ac0a245955917fede2d32d
     - 4feb9a0256cb18b47ab637dbbd78a6d2
     - c7d1df8f17466064098f338827c09714
+    - e6182d3bd08c24344bb79930ba768ddc
+    - a09ed43f588e4e24e96b88746acd53f7
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -213,6 +254,8 @@ AudioMixerGroupController:
   - {fileID: -4442300236545808200}
   - {fileID: -1150006247599028980}
   - {fileID: -5273126110907823214}
+  - {fileID: 3973588819898787201}
+  - {fileID: -1768636132957363659}
   m_Volume: 4cfd2d889d9ee53409f34a8e77966922
   m_Pitch: 7c7b2942b5750d64e8e533871a751d4c
   m_Send: 00000000000000000000000000000000
@@ -222,6 +265,39 @@ AudioMixerGroupController:
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
+--- !u!243 &3973588819898787201
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AdditionalWhaleMixer
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: e6182d3bd08c24344bb79930ba768ddc
+  m_Children: []
+  m_Volume: d9670578b29e5064ab771075cc079743
+  m_Pitch: bb7196ebabe54684a849519667ebd25d
+  m_Send: 00000000000000000000000000000000
+  m_Effects:
+  - {fileID: -6032053994092536357}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &4202647931380463507
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_EffectID: 50d9bee075227da479c54687964ef7b3
+  m_EffectName: Attenuation
+  m_MixLevel: 4d269b2328837ee40b5a2fe95e4389c1
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
 --- !u!243 &5616761262179451932
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
