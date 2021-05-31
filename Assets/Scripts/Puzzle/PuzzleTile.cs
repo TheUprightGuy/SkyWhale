@@ -16,7 +16,6 @@ public class PuzzleTile : MonoBehaviour
         //Check if correct type
         if (puzzleGenerator.CheckIfCorrectType(puzzleTileSo.type))
         {
-            Debug.Log(gameObject.name + " triggered");
             puzzleTileSo.triggered = true;
         }
         else

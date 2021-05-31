@@ -73,6 +73,10 @@ public class WhaleMovement : MonoBehaviour
             dismountPosition = GameObject.Find("DismountPos").transform;
         GetComponent<GrappleChallengeMaster>().LastCheckPoint = GetComponentInChildren<GrappleCheckPoint>();
         whaleAmbientAudioMixer = AudioManager.instance.ambientLayers[0].GetComponent<AudioSource>().outputAudioMixerGroup.audioMixer;
+        whaleAdditionalAmbientLayerAudioMixer = GetComponentsInChildren<AudioSource>()[0].outputAudioMixerGroup.audioMixer;
+        whaleWindAudioMixer = GetComponentsInChildren<AudioSource>()[1].outputAudioMixerGroup.audioMixer;
+        defaultVolume = GetComponentsInChildren<AudioSource>()[1].volume;
+        defaultPitch = GetComponentsInChildren<AudioSource>()[1].pitch;
     }
 
     /// <summary>    
@@ -226,6 +230,7 @@ public class WhaleMovement : MonoBehaviour
     bool thrustChange = false;
 
     private AudioMixer whaleAmbientAudioMixer;
+    private AudioMixer whaleAdditionalAmbientLayerAudioMixer;
     private void Thrust(InputState type)
     {
         if (orbit.enabled)
@@ -241,9 +246,18 @@ public class WhaleMovement : MonoBehaviour
         thrustChange = true;
 
         AudioManager.instance.targetValueMultiplier[0] = Mathf.Lerp(1f, 5f, Mathf.Clamp01(currentSpeed * boost / maxSpeed));
+        
+        //Play whale sound through additional whale ambient layer
+        //This is based upon the inverse of the regular whale ambient layers volume
+        //This has the effect of ensuring the whale and the volume multiplier based upon speed is more noticeable as the whale
+        //sounds can still be heard even while the regular whale ambient layer fades in and out
         float volume;
         whaleAmbientAudioMixer.GetFloat("WhaleAmbientVolume", out volume);
-        Debug.Log("Volume is " + volume);
+        volume = Mathf.Pow(10, volume / 20);
+        float inverseVolume = Mathf.Abs(volume - 5f);
+        inverseVolume = Mathf.Log10(inverseVolume) * 20;
+        whaleAdditionalAmbientLayerAudioMixer.SetFloat("AdditionalWhaleVolume", inverseVolume);
+        AudioManager.instance.PlaySound("AdditionalWhaleSound");
     }
 
     /// <summary>
@@ -276,7 +290,6 @@ public class WhaleMovement : MonoBehaviour
             {
                 moveSpeed -= accelSpeed * Time.deltaTime * 0.1f;
             }
-
         }
 
         yawChange = false;
@@ -285,6 +298,7 @@ public class WhaleMovement : MonoBehaviour
     }
 
     float actionTimer;
+    private AudioMixer whaleWindAudioMixer;
     /// <summary>
     /// Description: Handles corrections to movement and rotation, as well as animation parameter updates.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -295,12 +309,15 @@ public class WhaleMovement : MonoBehaviour
         if (pause)
             return;
 
+        
+        UpdateWhaleWindAudio();
         float movement = currentSpeed / 2;
         float f = body.transform.rotation.eulerAngles.z;
         f = (f > 180) ? f - 360 : f;
         animator.SetFloat("Turning", f / 10.0f);
         animator.SetFloat("Movement", movement);
-        currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime * accelSpeed);// * TimeSlowDown.instance.timeScale);
+        //currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime * accelSpeed);// * TimeSlowDown.instance.timeScale);
+        currentSpeed = moveSpeed;
         
         AudioManager.instance.targetValueMultiplier[0] -= AudioManager.instance.targetValueMultiplier[0] > 1f ? Time.deltaTime / 5f : 0f;
 
@@ -322,6 +339,16 @@ public class WhaleMovement : MonoBehaviour
         GetDistance();
 
         Movement();
+    }
+
+    private float defaultVolume;
+    private float defaultPitch;
+    private void UpdateWhaleWindAudio()
+    {
+        float currentVolume = defaultVolume * (1 + Mathf.Clamp01(currentSpeed * boost / (maxSpeed * maxSpeed))*3f);
+        float currentPitch = defaultPitch * (0.5f + Mathf.Clamp01(currentSpeed * boost / (maxSpeed * maxSpeed)));
+        whaleWindAudioMixer.SetFloat("WhaleWindVolume",currentVolume);
+        whaleWindAudioMixer.SetFloat("WhaleWindPitch", currentPitch);
     }
 
     public void ResetActionTimer()

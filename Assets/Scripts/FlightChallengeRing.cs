@@ -13,6 +13,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public class FlightChallengeRing : MonoBehaviour
@@ -56,6 +57,7 @@ public class FlightChallengeRing : MonoBehaviour
     {
         complete = true;
         SetMat(complete);
+        AudioManager.instance.PlaySound("Checkpoint");
     }
 
     /// <summary>
