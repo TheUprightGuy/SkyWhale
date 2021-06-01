@@ -155,6 +155,7 @@ public class SwitchPuzzleMaster : MonoBehaviour
 
         complete = true;
         inUse = !inUse;
+        //pm.haveControl = !inUse;
         ToggleCam(inUse);
         Cursor.lockState = (inUse) ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = inUse;

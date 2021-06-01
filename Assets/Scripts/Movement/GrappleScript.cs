@@ -81,26 +81,14 @@ public class GrappleScript : MonoBehaviour
         VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(Grapple);
 
         // Trigger to enable Grapple Tool
-        EventManager.StartListening("EnableGrapple", EnableGrapple);
+        if (!grapplingFromWhale)
+        { 
+            EventManager.StartListening("EnableGrapple", EnableGrapple);
+        }
 
         // Callback to swap between Whale and Player
         EntityManager.instance.toggleControl += ToggleGrapple;
         CallbackHandler.instance.pause += Pause;
-    }
-
-    private void OnEnable()
-    {
-        Invoke(nameof(SetWhaleGrappleEnabled), 3f);
-        //SetWhaleGrappleEnabled();
-    }
-
-    private void SetWhaleGrappleEnabled()
-    {
-        if (grapplingFromWhale)
-        {
-            //Check if grapple on regular player is enabled
-            enabled = EntityManager.instance.player.GetComponent<GrappleScript>().enabled;
-        }
     }
 
     private void OnDestroy()
@@ -131,7 +119,7 @@ public class GrappleScript : MonoBehaviour
     {
         enabled = true;
         shootPoint.ToggleEnabled();
-        EventManager.StopListening("EnableGrapple", EnableGrapple);
+        //EventManager.StopListening("EnableGrapple", EnableGrapple);
         AudioManager.instance.PlaySound("Collect");
     }
 
