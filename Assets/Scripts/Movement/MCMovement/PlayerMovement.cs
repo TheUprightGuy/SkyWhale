@@ -53,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     float maxGroundAngle = 60.0f;
     float maxClimbAngle = 60.0f;
 
+    public float GroundToClimbAngle = 50.0f;
     [Header("Check Settings")]
 
     public LayerMask GroundLayers;
@@ -161,7 +162,7 @@ public class PlayerMovement : MonoBehaviour
 
         HandleMovement();
 
-        groundContactNormal = climbContactNormal = Vector3.zero;
+        groundContactNormal = climbContactNormal  = Vector3.zero;
     }
 
     #region Animations
@@ -263,11 +264,11 @@ public class PlayerMovement : MonoBehaviour
     }    
     bool IDLECheck()
     {
-        return (IsGrounded() && inputAxis.magnitude <= 0.0f);
+        return (/*IsGrounded()*/groundContactNormal.magnitude > 0 && inputAxis.magnitude <= 0.0f);
     }
     bool MOVINGCheck()
     {
-        return (IsGrounded() && inputAxis.magnitude > 0.0f);
+        return (/*IsGrounded()*/groundContactNormal.magnitude > 0 && inputAxis.magnitude > 0.0f);
     }
     bool GRAPPLECheck()
     {
@@ -275,17 +276,18 @@ public class PlayerMovement : MonoBehaviour
     }
     bool CLIMBINGCheck()
     {
-        return (!IsGrounded() && IsClimbing());
+        //return (!IsGrounded() && IsClimbing());
+        return (groundContactNormal == Vector3.zero && climbContactNormal.magnitude > 0.0f);
     }
     bool JUMPINGCheck()
     {
         float currenty = Vector3.Dot(RB.velocity, transform.up);
-        return currenty > 0.0f && !IsGrounded() && !IsClimbing();
+        return currenty > 0.0f && groundContactNormal == Vector3.zero && !CLIMBINGCheck();
     }
     bool FALLINGCheck()
     {
         float currenty = Vector3.Dot(RB.velocity, transform.up);
-        return currenty < 0.0f && !IsGrounded() && !IsClimbing();
+        return currenty < 0.0f && groundContactNormal == Vector3.zero && !CLIMBINGCheck();
     }
     public bool GLIDINGCheck()
     {
@@ -313,8 +315,10 @@ public class PlayerMovement : MonoBehaviour
                     RotateTowardInput();
                 }
 
+               
                 //Setting the up position without changing the forward
-                transform.rotation = (Quaternion.LookRotation(transform.forward, Vector3.up));
+                Vector3 projectedForward = Vector3.ProjectOnPlane(transform.forward, Vector3.up);
+                transform.rotation = (Quaternion.LookRotation(projectedForward, Vector3.up));
                 break;
             case PlayerStates.JUMPING:
             case PlayerStates.FALLING:
@@ -325,8 +329,8 @@ public class PlayerMovement : MonoBehaviour
                 RB.MoveRotation(Quaternion.LookRotation(transform.forward, Vector3.up));
                 break;
             case PlayerStates.CLIMBING:
-                Vector3 rotateTo = (climbContactNormal != Vector3.zero) ? (-climbContactNormal) : (transform.forward);
-                transform.rotation = (Quaternion.LookRotation(rotateTo, transform.up));
+                Vector3 rotateTo = (climbContactNormal != Vector3.zero) ? (-calcClimbNormal) : (transform.forward);
+                transform.rotation = (Quaternion.LookRotation(rotateTo, Vector3.up));
                 break;
             case PlayerStates.GRAPPLE:
                 break;
@@ -870,6 +874,14 @@ public class PlayerMovement : MonoBehaviour
     {
         EvalCollision(collision, 1);
     }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        EvalCollision(collision, 2);
+    }
+    Vector3 calcClimbNormal = Vector3.zero;
+    Vector3 calcGroundNormal = Vector3.zero;
+
     /// <summary>
     /// Evaluates when this collider hits some other collider
     /// </summary>
@@ -877,38 +889,67 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="collisionEvent">0 = Enter, 1 = Stay, 2 = Exit</param>
     private void EvalCollision(Collision collision, int collisionEvent = 0)
     {
+        if (collision.contactCount < 1)
+        {
+            calcClimbNormal = Vector3.zero;
+            calcGroundNormal = Vector3.zero;
+            return;
+        }
         Vector3 normal = collision.GetContact(0).normal;
-        float degreeCheck = Vector3.Angle(transform.forward, -normal);
-        if (degreeCheck <= maxClimbAngle)
+        Vector3 projectedNormal = Vector3.ProjectOnPlane(normal, transform.right);
+        //projectedNormal = new Vector3(Mathf.Abs(projectedNormal.x), Mathf.Abs(projectedNormal.y), Mathf.Abs(projectedNormal.z));
+        Vector3 projectedForward = Vector3.ProjectOnPlane(transform.forward, Vector3.up);
+        float degreeCheck = Vector3.Angle(projectedForward, -projectedNormal);
+
+        if (degreeCheck < GroundToClimbAngle) //Climbing
         {
             climbContactNormal = normal;
+            Debug.DrawLine(transform.position, transform.position + (1 * -projectedNormal), Color.blue);
+            calcClimbNormal += normal;
+            calcClimbNormal = calcClimbNormal.normalized;
         }
-
-        float upDot = Vector3.Dot(Vector3.up, normal);
-
-        if (upDot >= minGroundDotProduct)
+        else
         {
             groundContactNormal = normal;
+            Debug.DrawLine(transform.position, transform.position + (1 * -projectedNormal), Color.green);
         }
+        //if (degreeCheck <= maxClimbAngle)
+        //{
+        //    climbContactNormal = normal;
+            
+        //}
+        
+        //float upDot = Vector3.Dot(Vector3.up, normal);
+
+        //if (upDot >= minGroundDotProduct)
+        //{
+        //    groundContactNormal = normal;
+        //}
     }
     #endregion Collisions
 
 
     #region Debug
-
+    
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        Vector3 groundStartPos = transform.position + GroundCheckStartOffset;
-        Vector3 groundEndPos = groundStartPos + ((-Vector3.up) * GroundCheckDistance);
-        Gizmos.DrawLine(groundStartPos, groundEndPos);
-        Gizmos.DrawSphere(groundEndPos, GroundCheckRadius);
+        //Gizmos.color = Color.red;
+        //Vector3 groundStartPos = transform.position + GroundCheckStartOffset;
+        //Vector3 groundEndPos = groundStartPos + ((-Vector3.up) * GroundCheckDistance);
+        //Gizmos.DrawLine(groundStartPos, groundEndPos);
+        //Gizmos.DrawSphere(groundEndPos, GroundCheckRadius);
 
-        Gizmos.color = Color.blue;
-        Vector3 climbStartPos = transform.position + ClimbCheckStartOffset;
-        Vector3 climbEndPos = climbStartPos + ((transform.forward) * ClimbCheckDistance);
-        Gizmos.DrawLine(climbStartPos, climbEndPos);
-        Gizmos.DrawSphere(climbEndPos, ClimbCheckRadius);
+        //Gizmos.color = Color.blue;
+        //Vector3 climbStartPos = transform.position + ClimbCheckStartOffset;
+        //Vector3 climbEndPos = climbStartPos + ((transform.forward) * ClimbCheckDistance);
+        //Gizmos.DrawLine(climbStartPos, climbEndPos);
+        //Gizmos.DrawSphere(climbEndPos, ClimbCheckRadius);
+
+        Vector3 representAngle = Vector3.RotateTowards(transform.forward, -transform.up, GroundToClimbAngle*Mathf.Deg2Rad, 0.0f);
+        Gizmos.DrawLine(transform.position, transform.position + (representAngle * 1.0f));
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, transform.position + (calcClimbNormal.normalized * 1));
     }
     #endregion
 }
