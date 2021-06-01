@@ -181,7 +181,8 @@ public class GameUIController : MonoBehaviour
         grappleTuts[1].SetText("PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").KeyToListen) + " TO JUMP FROM GRAPPLE.");
 
         // Whale
-        whaleTuts[0].SetText(CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "PitchDown").KeyToListen) + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "YawLeft").KeyToListen) + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "PitchUp").KeyToListen) + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "YawRight").KeyToListen) + " TO STEER WHALE.\n"
+        whaleTuts[0].SetText(CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "PitchDown").KeyToListen) + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "YawLeft").KeyToListen) 
+            + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "PitchUp").KeyToListen) + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "YawRight").KeyToListen) + " TO STEER WHALE.\n"
             + "PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").KeyToListen) + " TO MOVE FORWARDS.\n"
             + "FLY THROUGH RINGS TO GAIN A SPEED BOOST.");
         whaleTuts[1].SetText("PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "Dismount").KeyToListen) + " TO DISMOUNT FROM THE WHALE.\n"

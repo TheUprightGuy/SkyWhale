@@ -61,11 +61,6 @@ public class NPCScript : MonoBehaviour
         CallbackHandler.instance.resetCamera += ResetCamera;
         VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(Interact);
 
-        if (pm)
-        {
-            Invoke("MumStart", 0.1f);
-        }
-
         if (callbackToSwitchDialogue != "" && dialoguesToSwitchTo.Count>0)
         {
             CallbackHandler.instance.BroadcastMessage(callbackToSwitchDialogue, gameObject);
@@ -92,14 +87,7 @@ public class NPCScript : MonoBehaviour
             if(i+1 >= dialoguesToSwitchTo.Count) return;
             currentDialogue = dialoguesToSwitchTo[i + 1];
             return;
-        }
-
-        
-    }
-    
-    void MumStart()
-    {
-        Interact(InputState.KEYDOWN);
+        }     
     }
 
     /// <summary>
