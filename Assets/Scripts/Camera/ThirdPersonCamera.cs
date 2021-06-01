@@ -125,10 +125,10 @@ public class ThirdPersonCamera : MonoBehaviour
 
             storedPos.x += horizontal;
 
-            if (climbing)
+            /*if (climbing)
             {
                 storedPos.x = Mathf.Clamp(storedPos.x, PlayerTrans.eulerAngles.y - 90.0f, PlayerTrans.eulerAngles.y + 90.0f);
-            }
+            }*/
 
             //if (Input.GetKeyUp(KeyCode.LeftAlt))//If rightclick released, snap back to position
             //{
