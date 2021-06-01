@@ -46,6 +46,7 @@ public class MiniMapCamController : MonoBehaviour
                 IslandObjColliders.Add(go.GetComponent<SphereCollider>());
             }
         }
+        CurrentObj = CheckOnIsland(); //Update the current stood on island
         thisCam = GetComponent<Camera>();
         MinimapIcon.SetActive(true);
         MiniMapUI.SetActive(true);
@@ -77,17 +78,31 @@ public class MiniMapCamController : MonoBehaviour
     //    RenderSettings.fog = /*doWeHaveFogInScene*/false;
     //}
 
+    float LerpTime = 1.0f;
     // Update is called once per frame
     void Update()
     {
+        GameObject cachObj = CurrentObj;
         CurrentObj = CheckOnIsland(); //Update the current stood on island
 
-        transform.forward = CurrentTrackingObj.transform.forward;
-        transform.position = CurrentObj.transform.position - (transform.forward * DefaultMapZoom);
-        thisCam.orthographicSize = DefaultMapZoom;
+        if (cachObj != CurrentObj)
+        {
+            LeanTween.move(gameObject,
+                           CurrentObj.transform.position - (transform.forward * DefaultMapZoom),
+                           LerpTime);
+        }
+
+        if (!LeanTween.isTweening(gameObject))
+        {
+            transform.forward = CurrentTrackingObj.transform.forward;
+            transform.position = CurrentObj.transform.position - (transform.forward * DefaultMapZoom);
+            thisCam.orthographicSize = DefaultMapZoom;
+        }
+        
         Vector3 Objectiveloc = QuestManager.instance.activeQuests[0].objectives[QuestManager.instance.activeQuests[0].index].location;
         ObjectiveIcon.SetActive(!(Objectiveloc == Vector3.zero));
         ObjectiveIcon.transform.position = Objectiveloc + IconOffset;
+
         if (MinimapIcon != null)
         {
             MinimapIcon.transform.position = IconCurrentTrackingObj.transform.position + IconOffset;
@@ -107,6 +122,7 @@ public class MiniMapCamController : MonoBehaviour
                 return (item.gameObject);
             }
         }
+        
         return (returnObj);
     }
 
