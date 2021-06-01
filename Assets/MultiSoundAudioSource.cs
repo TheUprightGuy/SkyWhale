@@ -16,6 +16,11 @@ public class MultiSoundAudioSource : MonoBehaviour
 
     public void ChangeSound()
     {
+        Invoke(nameof(ChangeSoundPrivate), .75f);
+    }
+
+    public void ChangeSoundPrivate()
+    {
         _audioSource.clip = RandomAudioClip();
     }
     

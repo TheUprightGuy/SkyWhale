@@ -133,8 +133,13 @@ public class PlayerMovement : MonoBehaviour
         cinematicPause = _pause;
     }
 
+    private float basePlayerHeight = -27f;
+    private float maxHeightDifference = 74f;
+    
     private void Update()
     {
+        AmbientLayer windLayer = AudioManager.instance.ambientLayers[1].GetComponent<AmbientLayer>();
+        windLayer.soundInfo.audioSource.pitch = windLayer.soundInfo.pitchDefault * Mathf.Lerp(1f, 3f, Mathf.Clamp01(Mathf.Abs(basePlayerHeight - transform.position.y)/maxHeightDifference));
         if (gamePaused || cinematicPause)
             return;
 

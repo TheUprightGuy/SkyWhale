@@ -14,6 +14,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 public class PuzzleSwitch : MonoBehaviour
@@ -61,6 +62,7 @@ public class PuzzleSwitch : MonoBehaviour
             {
                 n.material = active ? on : off;
             }
+            AudioManager.instance.PlaySound("Switch");
         }
     }
 }
