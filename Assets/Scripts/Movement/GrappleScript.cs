@@ -91,7 +91,7 @@ public class GrappleScript : MonoBehaviour
     private void OnEnable()
     {
         Invoke(nameof(SetWhaleGrappleEnabled), 3f);
-        SetWhaleGrappleEnabled();
+        //SetWhaleGrappleEnabled();
     }
 
     private void SetWhaleGrappleEnabled()

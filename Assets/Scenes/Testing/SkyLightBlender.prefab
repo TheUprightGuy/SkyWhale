@@ -322,7 +322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cddfa3b25188c1742836f801bdebd872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 9fb2b70b832dece40a06eb880c5e269a, type: 2}
+  material: {fileID: 2100000, guid: 0de268d74fd552844bb3c5732a9a516c, type: 2}
   blendSpeed: 0.01
   raining: 0
   outputColor: {r: 0, g: 0, b: 0, a: 0}
