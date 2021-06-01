@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8662888376264241176}
   - component: {fileID: 8959950982457963903}
   m_Layer: 0
-  m_Name: GrassSmolContainer 2
+  m_Name: GrassSmolContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
