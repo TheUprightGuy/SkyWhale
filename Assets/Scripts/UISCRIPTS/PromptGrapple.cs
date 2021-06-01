@@ -20,6 +20,7 @@ public class PromptGrapple : MonoBehaviour
                 first = true;
                 npc.pm = null;
                 EventManager.TriggerEvent("FollowWhale");
+                CallbackHandler.instance.ToggleRain(true);
             }
 
             if (pm.GetComponent<GrappleScript>().enabled)

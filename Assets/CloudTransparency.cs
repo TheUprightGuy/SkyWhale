@@ -25,8 +25,8 @@ public class CloudTransparency : MonoBehaviour
     void CheckDistanceToPlayer()
     {
         dist = Mathf.Min(Vector3.Distance(EntityManager.instance.player.transform.position, this.transform.position), Vector3.Distance(EntityManager.instance.playerOnWhale.transform.position, this.transform.position));
-        float temp = Mathf.Clamp(dist, 0, 100.0f);
-        temp = Remap(temp, 0.0f, 150.0f, 0.8f, 0.0f);
+        float temp = Mathf.Clamp(dist, 0, 80.0f);
+        temp = Remap(temp, 0.0f, 80.0f, 0.8f, 0.0f);
         SetTransparency(temp);
     }
 
