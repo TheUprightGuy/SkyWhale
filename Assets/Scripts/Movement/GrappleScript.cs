@@ -90,6 +90,12 @@ public class GrappleScript : MonoBehaviour
 
     private void OnEnable()
     {
+        Invoke(nameof(SetWhaleGrappleEnabled), 3f);
+        SetWhaleGrappleEnabled();
+    }
+
+    private void SetWhaleGrappleEnabled()
+    {
         if (grapplingFromWhale)
         {
             //Check if grapple on regular player is enabled

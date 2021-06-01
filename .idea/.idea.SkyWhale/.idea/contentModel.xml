@@ -8,6 +8,7 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="CinemaCamera.cs" t="Include" />
+        <e p="DissolveControl.cs" t="Include" />
         <e p="Editor" t="Include">
           <e p="ConditionalHidePropertyDrawer.cs" t="Include" />
           <e p="MaterialInstancer.cs" t="Include" />
@@ -56,7 +57,9 @@
         </e>
         <e p="MatScript.cs" t="Include" />
         <e p="MultiSoundAudioSource.cs" t="Include" />
+        <e p="NPCMoveTo.cs" t="Include" />
         <e p="OrbitRef.cs" t="Include" />
+        <e p="RainSystem.cs" t="Include" />
         <e p="Scripts" t="Include">
           <e p="Audio" t="Include">
             <e p="AmbientLayer.cs" t="Include" />
@@ -290,6 +293,7 @@
             <e p="EmojiOne Attribution.txt" t="Include" />
           </e>
         </e>
+        <e p="WhaleCamp.cs" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />

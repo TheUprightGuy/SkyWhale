@@ -6140,16 +6140,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prompts: []
   whaleTutorials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 162477270050395034}
+  - {fileID: 6474968340055990061}
+  - {fileID: 1483748571044910943}
   gliderTutorial: {fileID: 7282572790789323135}
   grappleTuts:
   - {fileID: 3410315482713231208}
   - {fileID: 7478101534062831096}
   whaleTuts:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3841066736931503925}
+  - {fileID: 3199853647539992555}
   glideTuts:
   - {fileID: 196809311584691167}
 --- !u!1 &9213967294332125030
