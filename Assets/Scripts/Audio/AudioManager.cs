@@ -236,7 +236,7 @@ namespace Audio
         {
             _musicSource = GetComponent<AudioSource>();
             SoundDictionary = new Dictionary<string, SoundInfo>();
-            _soundsUnrestricted = new List<string> { "Click", "Click_Progress" };
+            _soundsUnrestricted = new List<string> { "Click", "Click_Progress", "Switch" };
             
             foreach (var audioSource in audioSources) 
                 AddAudioSourceToDictionary(audioSource);
@@ -335,7 +335,10 @@ namespace Audio
         private void PlaySound(AudioSource audioSource) //Only play sound if it's not already playing
         {
             RandomisePitch(audioSource);
-            if (!audioSource.isPlaying || _soundsUnrestricted.Contains(audioSource.name)) audioSource.Play();
+            if (!audioSource.isPlaying || _soundsUnrestricted.Contains(audioSource.name))
+            {
+                audioSource.Play();
+            }
         }
 
         /// <summary>
