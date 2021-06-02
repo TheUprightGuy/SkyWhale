@@ -37,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
     public float maxRunAcceleration = 20f;
     private float currentVelMag;
     public float rotationSpeed = 0.1f;
+    public float climbrotationSpeed = 100.0f;
+    public float uprightrotationSpeed = 200.0f;
     [Space(20.0f)]
     private float setSpeed;
     public float setAccel;
@@ -50,10 +52,9 @@ public class PlayerMovement : MonoBehaviour
     [Space(20.0f)]
     public float groundjumpHeight = 5.0f;
     public float wallJumpHeight = 5.0f;
-    float maxGroundAngle = 60.0f;
-    float maxClimbAngle = 60.0f;
 
     public float GroundToClimbAngle = 50.0f;
+    public float ForwardToClimbAngle = 50.0f;
     [Header("Check Settings")]
 
     public LayerMask GroundLayers;
@@ -70,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
     float minGroundDotProduct;
     Vector3 groundContactNormal;
     Vector3 climbContactNormal;
+    Vector3 wallContactnormal;
     float distanceFromGround;
 
     // Input Tracking
@@ -89,7 +91,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnValidate()
     {
-        minGroundDotProduct = Mathf.Cos(maxGroundAngle * Mathf.Deg2Rad);
+        //minGroundDotProduct = Mathf.Cos(maxGroundAngle * Mathf.Deg2Rad);
     }
     #endregion Setup
     #region Inputs & Callbacks
@@ -151,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
         if (!haveControl)
             return;
 
-        HandleRotation();
+        //HandleRotation();
 
         PromptCheck();
     }
@@ -166,8 +168,8 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         HandleMovement();
-
-        groundContactNormal = climbContactNormal  = Vector3.zero;
+        HandleRotation();
+        groundContactNormal = climbContactNormal  = wallContactnormal =  calcClimbNormal = Vector3.zero;
     }
 
     #region Animations
@@ -320,10 +322,12 @@ public class PlayerMovement : MonoBehaviour
                     RotateTowardInput();
                 }
 
-               
+                float deg = uprightrotationSpeed * Time.deltaTime;
                 //Setting the up position without changing the forward
                 Vector3 projectedForward = Vector3.ProjectOnPlane(transform.forward, Vector3.up);
-                transform.rotation = (Quaternion.LookRotation(projectedForward, Vector3.up));
+                Quaternion to = Quaternion.LookRotation(projectedForward, Vector3.up);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, to, deg);
+                //transform.rotation = (to);
                 break;
             case PlayerStates.JUMPING:
             case PlayerStates.FALLING:
@@ -331,11 +335,14 @@ public class PlayerMovement : MonoBehaviour
                 {
                     RotateTowardInput();
                 }
-                RB.MoveRotation(Quaternion.LookRotation(transform.forward, Vector3.up));
+                Vector3 projectedOtherForward = Vector3.ProjectOnPlane(transform.forward, Vector3.up);
+                RB.MoveRotation(Quaternion.LookRotation(projectedOtherForward, Vector3.up));
                 break;
             case PlayerStates.CLIMBING:
-                Vector3 rotateTo = (climbContactNormal != Vector3.zero) ? (-calcClimbNormal) : (transform.forward);
-                transform.rotation = (Quaternion.LookRotation(rotateTo, Vector3.up));
+                Vector3 rotateTo = (climbContactNormal != Vector3.zero) ? (-climbContactNormal) : (transform.forward);
+                float climbdeg = climbrotationSpeed * Time.deltaTime;
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(rotateTo, Vector3.up), climbdeg);
+                //transform.rotation = (Quaternion.LookRotation(rotateTo, Vector3.up));
                 break;
             case PlayerStates.GRAPPLE:
                 break;
@@ -452,10 +459,10 @@ public class PlayerMovement : MonoBehaviour
                                                                     accel * Time.fixedDeltaTime ); //Amount to change by
 
         //Against a wall in the front dir
-        if (climbContactNormal != Vector3.zero)
+        if (wallContactnormal != Vector3.zero)
         {
-            float currentForwardVel = Vector3.Dot(currentVel, climbContactNormal);
-            Vector3 negateforce = currentForwardVel * climbContactNormal;
+            float currentForwardVel = Vector3.Dot(currentVel, wallContactnormal);
+            Vector3 negateforce = currentForwardVel * wallContactnormal;
             currentVel -= negateforce;
         }
 
@@ -775,7 +782,7 @@ public class PlayerMovement : MonoBehaviour
             ClimbCheckDistance, ClimbLayers.value))
         {
             float degreeCheck = Vector3.Angle(transform.forward, -rh.normal);
-            if (degreeCheck <= maxClimbAngle)
+            if (climbContactNormal !=Vector3.zero)
             {
                 return true;
             }
@@ -878,12 +885,15 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionStay(Collision collision)
     {
         EvalCollision(collision, 1);
+
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        EvalCollision(collision, 2);
+
     }
+
+
     Vector3 calcClimbNormal = Vector3.zero;
     Vector3 calcGroundNormal = Vector3.zero;
 
@@ -892,31 +902,46 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     /// <param name="collision">The Collision struct from the OnCollide Funcs</param>
     /// <param name="collisionEvent">0 = Enter, 1 = Stay, 2 = Exit</param>
+    /// 
+    Dictionary<GameObject, Vector3> NormalMap = new Dictionary<GameObject, Vector3>();
     private void EvalCollision(Collision collision, int collisionEvent = 0)
     {
-        if (collision.contactCount < 1)
-        {
-            calcClimbNormal = Vector3.zero;
-            calcGroundNormal = Vector3.zero;
-            return;
-        }
+
         Vector3 normal = collision.GetContact(0).normal;
-        Vector3 projectedNormal = Vector3.ProjectOnPlane(normal, transform.right);
+        //Vector3 projectedNormal = Vector3.ProjectOnPlane(normal, transform.right);
         //projectedNormal = new Vector3(Mathf.Abs(projectedNormal.x), Mathf.Abs(projectedNormal.y), Mathf.Abs(projectedNormal.z));
         Vector3 projectedForward = Vector3.ProjectOnPlane(transform.forward, Vector3.up);
-        float degreeCheck = Vector3.Angle(projectedForward, -projectedNormal);
+        float degreeDownCheck = Vector3.Angle(Vector3.down, -normal);
+        float degreeForwardCheck = Vector3.Angle(projectedForward, -normal);
 
-        if (degreeCheck < GroundToClimbAngle) //Climbing
+        bool GtC = degreeDownCheck > GroundToClimbAngle;
+        bool FtC = degreeForwardCheck < ForwardToClimbAngle;
+        if (GtC) //Climbing
         {
-            climbContactNormal = normal;
-            Debug.DrawLine(transform.position, transform.position + (1 * -projectedNormal), Color.blue);
-            calcClimbNormal += normal;
-            calcClimbNormal = calcClimbNormal.normalized;
+            Debug.DrawLine(transform.position, transform.position + (1 * -normal), Color.blue);
+
+            
+
+            if (FtC) //In front of player
+            {
+                wallContactnormal += normal; //theres a wakk here
+                wallContactnormal = wallContactnormal.normalized;
+                if (ClimbLayers == (ClimbLayers | (1 << collision.gameObject.layer))) //This is a climbing surface dawg
+                {
+                    calcClimbNormal += normal;
+                    calcClimbNormal = calcClimbNormal.normalized;
+                    climbContactNormal = calcClimbNormal;
+                }
+                
+                //climbContactNormal = normal;
+            }
+
+
         }
-        else
+        else if (GroundLayers == (GroundLayers | (1 << collision.gameObject.layer))) //Ground
         {
             groundContactNormal = normal;
-            Debug.DrawLine(transform.position, transform.position + (1 * -projectedNormal), Color.green);
+            Debug.DrawLine(transform.position, transform.position + (1 * -normal), Color.green);
         }
         //if (degreeCheck <= maxClimbAngle)
         //{
@@ -950,11 +975,14 @@ public class PlayerMovement : MonoBehaviour
         //Gizmos.DrawLine(climbStartPos, climbEndPos);
         //Gizmos.DrawSphere(climbEndPos, ClimbCheckRadius);
 
-        Vector3 representAngle = Vector3.RotateTowards(transform.forward, -transform.up, GroundToClimbAngle*Mathf.Deg2Rad, 0.0f);
-        Gizmos.DrawLine(transform.position, transform.position + (representAngle * 1.0f));
+        //Vector3 representAngle = Vector3.RotateTowards(transform.up, -transform.up, GroundToClimbAngle*Mathf.Deg2Rad, 0.0f);
+        //Gizmos.DrawLine(transform.position, transform.position - (representAngle * 1.0f));
+
+        //Vector3 representForwardAngle = Vector3.RotateTowards(transform.forward, transform.right, ForwardToClimbAngle * Mathf.Deg2Rad, 0.0f);
+        //Gizmos.DrawLine(transform.position, transform.position - (representForwardAngle * 1.0f));
 
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + (calcClimbNormal.normalized * 1));
+        Gizmos.DrawLine(transform.position, transform.position + (-calcClimbNormal.normalized * 1));
     }
     #endregion
 }
