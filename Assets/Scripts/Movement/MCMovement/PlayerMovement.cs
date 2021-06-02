@@ -924,9 +924,14 @@ public class PlayerMovement : MonoBehaviour
 
             if (FtC) //In front of player
             {
-                wallContactnormal += normal; //theres a wakk here
+                wallContactnormal += normal; //theres a wall here
                 wallContactnormal = wallContactnormal.normalized;
-                if (ClimbLayers == (ClimbLayers | (1 << collision.gameObject.layer))) //This is a climbing surface dawg
+
+
+                Vector3 checkpos = anims.transform.position;
+                checkpos.y += transform.localScale.y * 1.75f;
+                if (ClimbLayers == (ClimbLayers | (1 << collision.gameObject.layer))//This is a climbing surface dawg
+                    && Physics.Raycast(checkpos, transform.forward, 0.5f)) //Not a step
                 {
                     calcClimbNormal += normal;
                     calcClimbNormal = calcClimbNormal.normalized;
@@ -981,8 +986,13 @@ public class PlayerMovement : MonoBehaviour
         //Vector3 representForwardAngle = Vector3.RotateTowards(transform.forward, transform.right, ForwardToClimbAngle * Mathf.Deg2Rad, 0.0f);
         //Gizmos.DrawLine(transform.position, transform.position - (representForwardAngle * 1.0f));
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + (-calcClimbNormal.normalized * 1));
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawLine(transform.position, transform.position + (-calcClimbNormal.normalized * 1));
+        //Gizmos.color = Color.cyan;
+        //Vector3 checkpos = anims.transform.position;
+        //checkpos.y += transform.localScale.y * 1.75f;
+        //Gizmos.DrawSphere(checkpos, 0.05f);
+        //Gizmos.DrawLine(checkpos, checkpos + (transform.forward * 0.5f));
     }
     #endregion
 }
