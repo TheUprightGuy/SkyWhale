@@ -375,6 +375,8 @@ MonoBehaviour:
   runSpeed: 0.075
   maxRunAcceleration: 0.5
   rotationSpeed: 10
+  climbrotationSpeed: 100
+  uprightrotationSpeed: 200
   setAccel: 0.5
   inAirSpeed: 0.05
   maxAirAcceleration: 0.25
@@ -383,6 +385,8 @@ MonoBehaviour:
   climbGripForce: 1
   groundjumpHeight: 1.5
   wallJumpHeight: 0.5
+  GroundToClimbAngle: 50
+  ForwardToClimbAngle: 50
   GroundLayers:
     serializedVersion: 2
     m_Bits: 180023
@@ -6909,7 +6913,7 @@ PrefabInstance:
     - target: {fileID: 4838435617739099568, guid: 322a1d509c204d94d8353a2b81a6052d,
         type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 2096951
+      value: 6291255
       objectReference: {fileID: 0}
     - target: {fileID: 4838435617739099569, guid: 322a1d509c204d94d8353a2b81a6052d,
         type: 3}

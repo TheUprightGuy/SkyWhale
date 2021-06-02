@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 8334320313607433213}
   - component: {fileID: 8122946409459103760}
   - component: {fileID: 6878473514446867635}
+  - component: {fileID: 8376555291105811319}
   m_Layer: 0
   m_Name: Tree02_LOD0
   m_TagString: Untagged
@@ -125,6 +126,19 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.15612195
-  m_Height: 4.388033
+  m_Height: 5.4900165
   m_Direction: 2
-  m_Center: {x: 0, y: 0.04280089, z: 1.6940169}
+  m_Center: {x: 0, y: 0.04280089, z: 2.245009}
+--- !u!65 &8376555291105811319
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7081041562378165666}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.17643249, y: 0.19242768, z: 0.20725437}
+  m_Center: {x: 0.012207806, y: 0.047837436, z: 4.8460712}
