@@ -99,8 +99,14 @@ public class ObjData
     [Header("Debug")]
     public bool ShowChunkBorders = false;
 
+
     private void Awake()
     {
+        tf = Matrix4x4.TRS(
+                transform.position, //pos
+                Quaternion.identity, //rot 
+                Vector3.one);
+        runtimeMat = prefabTemplate.GetComponentInChildren<MeshRenderer>().sharedMaterial;
         if (VerifyVariables())
         {
             BuildMesh(true);
@@ -120,8 +126,8 @@ public class ObjData
         RedrawMesh();
     }
 
-    
-
+    Matrix4x4 tf;
+    Material runtimeMat;
     /// <summary>
     /// Draws each mesh in <see cref="MeshCells"/> using <see cref="Graphics.DrawMesh(Mesh, Vector3, Quaternion, Material, int)"/>
     /// <br>Author:Jack Belton</br>
@@ -137,18 +143,12 @@ public class ObjData
             return;
         }
 
-        Camera test = Camera.main;
-        Matrix4x4 tf = Matrix4x4.TRS(
-                transform.position, //pos
-                Quaternion.identity, //rot 
-                Vector3.one); //scale
-
         foreach (var item in grassContainer.GrassChunks)
         {
             Graphics.DrawMesh(
                 item.mesh, //Mesh
                 tf,     //TRS
-                prefabTemplate.GetComponentInChildren<MeshRenderer>().sharedMaterial,//Mat
+                runtimeMat,//Mat
                 0,      //Layer
                 null,   //Camera
                 0,      //Submesh index
@@ -160,8 +160,14 @@ public class ObjData
         }
     }
 
-   
 
+    private void OnValidate()
+    {
+        tf = Matrix4x4.TRS(
+                transform.position, //pos
+                Quaternion.identity, //rot 
+                Vector3.one);
+    }
     public bool VerifyVariables()
     {
         
