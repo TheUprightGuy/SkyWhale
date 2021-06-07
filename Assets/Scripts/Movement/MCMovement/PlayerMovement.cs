@@ -927,11 +927,17 @@ public class PlayerMovement : MonoBehaviour
                 wallContactnormal += normal; //theres a wall here
                 wallContactnormal = wallContactnormal.normalized;
 
-
                 Vector3 checkpos = anims.transform.position;
                 checkpos.y += transform.localScale.y * 1.75f;
+                bool stepCheck = false;
+                if (playerState != PlayerStates.CLIMBING)
+                {
+                    stepCheck = !Physics.Raycast(checkpos, transform.forward, 0.5f);
+                }
+
+
                 if (ClimbLayers == (ClimbLayers | (1 << collision.gameObject.layer))//This is a climbing surface dawg
-                    && Physics.Raycast(checkpos, transform.forward, 0.5f)) //Not a step
+                    && !stepCheck) //Not a step
                 {
                     calcClimbNormal += normal;
                     calcClimbNormal = calcClimbNormal.normalized;
