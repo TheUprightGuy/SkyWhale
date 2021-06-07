@@ -113,12 +113,14 @@ namespace Audio
         /// function to cleanly play the sound corresponding to the audio source from anywhere.
         /// </summary>
         /// <param name="audioSource">The audio source being added</param>
-        public void AddAudioSourceToDictionary(AudioSource audioSource)
+        /// <param name="id"></param>
+        public void AddAudioSourceToDictionary(AudioSource audioSource, int id = 0)
         {
-            if (SoundDictionary.ContainsKey(audioSource.name))    //Ensure sound dictionary doesn't already contain the audio source
+            string name = id != 0 ? id.ToString() : audioSource.name;
+            if (SoundDictionary.ContainsKey(name))    //Ensure sound dictionary doesn't already contain the audio source
             {
-                Debug.Log("Replacing sound dictionary reference for: " + audioSource.name);
-                var soundInfoToReplace = SoundDictionary[audioSource.name];
+                Debug.Log("Replacing sound dictionary reference for: " + name);
+                var soundInfoToReplace = SoundDictionary[name];
                 soundInfoToReplace.audioSource = audioSource;
                 soundInfoToReplace.pitchDefault = audioSource.pitch;
                 soundInfoToReplace.volumeDefault = audioSource.volume;
@@ -128,12 +130,11 @@ namespace Audio
             }
             
             //Set up necessary information and references from the audio source
-            var soundName = audioSource.name;
             var soundInfo = new SoundInfo();
-            soundInfo.InitialiseSound(soundName, audioSource);
+            soundInfo.InitialiseSound(name, audioSource);
             soundInfo.multiSoundAudioSource =
                 audioSource.gameObject.GetComponent<MultiSoundAudioSource>() != null;
-            SoundDictionary.Add(soundName, soundInfo);
+            SoundDictionary.Add(name, soundInfo);
         }
 
         /// <summary>
