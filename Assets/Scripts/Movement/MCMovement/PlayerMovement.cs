@@ -929,15 +929,11 @@ public class PlayerMovement : MonoBehaviour
 
                 Vector3 checkpos = anims.transform.position;
                 checkpos.y += transform.localScale.y * 1.75f;
-                bool stepCheck = false;
-                if (playerState != PlayerStates.CLIMBING)
-                {
-                    stepCheck = !Physics.Raycast(checkpos, transform.forward, 0.5f);
-                }
+             
 
 
                 if (ClimbLayers == (ClimbLayers | (1 << collision.gameObject.layer))//This is a climbing surface dawg
-                    && !stepCheck) //Not a step
+                    && (playerState == PlayerStates.CLIMBING || Physics.Raycast(checkpos, transform.forward, ClimbCheckDistance))) //Not a step
                 {
                     calcClimbNormal += normal;
                     calcClimbNormal = calcClimbNormal.normalized;
