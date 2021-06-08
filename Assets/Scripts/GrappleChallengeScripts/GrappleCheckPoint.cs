@@ -20,6 +20,8 @@ public class GrappleCheckPoint : MonoBehaviour
 {
     #region Setup
     GrappleChallengeMaster gcm;
+    private PlayerMovement pm;
+    public bool whaleCheckpoint = false;
     /// <summary>
     /// Description: Get Local Components.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -27,25 +29,60 @@ public class GrappleCheckPoint : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        gcm = GetComponentInParent<GrappleChallengeMaster>();
+        gcm = transform.parent.GetComponentInParent<GrappleChallengeMaster>();
+        if(!whaleCheckpoint) VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").MethodToCall.AddListener(Interact);
     }
     #endregion Setup
-    #region Trigger
+    
     /// <summary>
-    /// Description: Gets player reference for grapple challenge master and updates last checkpoint.
+    /// Description: Sets player reference for grapple challenge master and updates last checkpoint. (After player interacts)
     /// <br>Author: Jacob Gallagher</br>
     /// <br>Last Updated: 04/27/2021</br>
+    /// </summary>
+    private void Interact(InputState inputState)
+    {
+        if (!pm) return;
+        gcm.pm = pm;
+        gcm.LastCheckPoint = this;
+        CallbackHandler.instance.UpdateClosestGrappleChallenge(gcm);
+        AudioManager.instance.PlaySound("Checkpoint");
+        Debug.Log("TriggeredCheckPoint");
+        CallbackHandler.instance.ResetCheckpointDissolve();
+        GetComponentInChildren<DissolveControl>().dissolve = false;
+    }
+    
+    #region Triggers
+    /// <summary>
+    /// Description: Gets reference to player to check if in range.
+    /// <br>Author: Wayd Barton-Redgrave</br>
+    /// <br>Last Updated: 08/06/2021 (By Jacob Gallagher)</br>
     /// </summary>
     /// <param name="other">Triggering Object</param>
     private void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<PlayerMovement>())
+        if (whaleCheckpoint)
         {
+            if (!other.GetComponent<PlayerMovement>()) return;
             gcm.pm = other.GetComponent<PlayerMovement>();
             gcm.LastCheckPoint = this;
             CallbackHandler.instance.UpdateClosestGrappleChallenge(gcm);
             AudioManager.instance.PlaySound("Checkpoint");
+            CallbackHandler.instance.ResetCheckpointDissolve();
+            return;
         }
+        var player = other.GetComponent<PlayerMovement>();
+        if (!player) return;
+        pm = player;
+        CallbackHandler.instance.CheckPointInRange(transform);
     }
-    #endregion Trigger
+
+    private void OnTriggerExit(Collider other)
+    {
+        if(whaleCheckpoint) return;
+        var player = other.GetComponent<PlayerMovement>();
+        if (!player) return;
+        pm = null;
+        CallbackHandler.instance.CheckPointOutOfRange();
+    }
+    #endregion Triggers
 }

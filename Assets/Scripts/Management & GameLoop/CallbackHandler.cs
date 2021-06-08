@@ -268,6 +268,35 @@ public class CallbackHandler : MonoBehaviour
             puzzleOutOfRange();
         }
     }
+    
+    public event Action<Transform> checkPointInRange;
+    /// <summary>
+    /// Description: Prompts the speech ui element to show.
+    /// <br>Author: Jacob Gallagher</br>
+    /// <br>Last Updated: 08/06/2021</br>
+    /// </summary>
+    /// <param name="_dialogueTransform"></param>
+    public void CheckPointInRange(Transform _dialogueTransform)
+    {
+        if (checkPointInRange != null)
+        {
+            checkPointInRange(_dialogueTransform);
+        }
+    }
+
+    public event Action checkPointOutOfRange;
+    /// <summary>
+    /// Description: Prompts the speech ui element to hide.
+    /// <br>Author: Jacob Gallagher</br>
+    /// <br>Last Updated: 08/06/2021</br>
+    /// </summary>
+    public void CheckPointOutOfRange()
+    {
+        if (checkPointOutOfRange != null)
+        {
+            checkPointOutOfRange();
+        }
+    }
 
     public event Action<PromptType> displayPrompt;
     public void DisplayPrompt(PromptType _type)
@@ -357,6 +386,15 @@ public class CallbackHandler : MonoBehaviour
         if (toggleRain != null)
         {
             toggleRain(_toggle);
+        }
+    }
+
+    public event Action resetCheckpointDissolve;
+    public void ResetCheckpointDissolve()
+    {
+        if (resetCheckpointDissolve != null)
+        {
+            resetCheckpointDissolve();
         }
     }
 }
