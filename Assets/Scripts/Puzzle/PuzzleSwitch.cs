@@ -62,6 +62,7 @@ public class PuzzleSwitch : MonoBehaviour
             {
                 n.material = active ? on : off;
             }
+
             AudioManager.instance.PlaySound("Switch");
         }
     }

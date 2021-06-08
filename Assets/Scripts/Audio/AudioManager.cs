@@ -93,6 +93,9 @@ namespace Audio
         /// <param name="soundName">The name of the sound and it's corresponding audio source game object</param>
         public void PlaySound(string soundName)
         {
+            if (!SoundDictionary.ContainsKey(soundName))
+                return;
+
             var sound = SoundDictionary[soundName];
             sound.Reset();
             PlaySound(sound.audioSource);
