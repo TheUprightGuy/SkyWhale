@@ -68,18 +68,28 @@ public class CameraManager : MonoBehaviour
     bool change;
     bool cinema;
 
+    public event Action letterbox;
+
     public void LetterBox(bool _cinema)
     {
         zoom = 0.8f;
         change = true;
         cinema = _cinema;
+
+        if (letterbox != null)
+            letterbox();
     }
+
+    public event Action standard;
 
     public void Standard(bool _cinema)
     {
         zoom = 1.0f;
         change = true;
         cinema = _cinema;
+
+        if (standard != null)
+            standard();
     }
 
     public float y;
@@ -87,14 +97,14 @@ public class CameraManager : MonoBehaviour
     private void Update()
     {
         // TEMP KEYS
-        if (Input.GetKeyDown(KeyCode.U))
+        /*if (Input.GetKeyDown(KeyCode.U))
         {
             LetterBox(false);
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
             Standard(false);
-        }
+        }*/
 
         if (!change)
             return;

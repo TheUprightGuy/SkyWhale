@@ -172,6 +172,10 @@ public class DialogueManager : MonoBehaviour
     {
         if (type != InputState.KEYDOWN || !currentDialogue || startTimer > 0)
             return;
+        PlayerMovement pm = EntityManager.instance.player.GetComponent<PlayerMovement>();
+
+        //if (pm.cinematicPause || pm.gamePaused)
+            //return;
 
         timer = dialogueTime;
 

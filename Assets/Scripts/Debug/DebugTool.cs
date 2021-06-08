@@ -57,10 +57,10 @@ public class DebugTool : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.B))
+        /*if (Input.GetKeyDown(KeyCode.B))
         {
             EntityManager.instance.whale.GetComponent<WhaleMovement>().boost = boostAmount;
-        }
+        }*/
         if (!Input.GetKeyDown(KeyCode.BackQuote)) return;
         ToggleDebugToolMenu();
     }

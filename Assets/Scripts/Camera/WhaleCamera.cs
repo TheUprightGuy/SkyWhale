@@ -24,12 +24,13 @@ public class WhaleCamera : MonoBehaviour
     #region LocalVariables
     Transform target;
     float distance = 2.0f;
-    float xSpeed = 10.0f, ySpeed = 2.0f;
+    float xSpeed = 4.0f, ySpeed = 0.8f;
     float yMinLimit = -60.0f, yMaxLimit = 60.0f;
     float distanceMin = 0.5f, distanceMax = 20.0f;
     float x = 0.0f, y = 0.0f;
     bool rotating = false;
     float timer = 0.0f, lerpTimer = 0.0f;
+    float sens = 1.0f;
     #endregion LocalVariables
     #region Setup
     void Awake()
@@ -50,12 +51,19 @@ public class WhaleCamera : MonoBehaviour
     private void Start()
     {
         CameraManager.instance.switchCam += SwitchCam;
+        CallbackHandler.instance.changeMouseSensitivity += ChangeMouseSensitivity;
     }
     private void OnDestroy()
     {
         CameraManager.instance.switchCam -= SwitchCam;
+        CallbackHandler.instance.changeMouseSensitivity -= ChangeMouseSensitivity;
     }
     #endregion Callbacks
+
+    public void ChangeMouseSensitivity(int _sens)
+    {
+        sens = _sens / 10.0f;
+    }
 
     /// <summary>
     /// Description: Camera control.
@@ -68,7 +76,7 @@ public class WhaleCamera : MonoBehaviour
         lerpTimer -= Time.deltaTime;
 
         // Enables rotation while left click is down
-        if (Input.GetMouseButtonDown(0) && !(EventSystem.current.IsPointerOverGameObject()))
+        /*if (Input.GetMouseButtonDown(0) && !(EventSystem.current.IsPointerOverGameObject()))
         {
             rotating = true;
         }
@@ -77,15 +85,21 @@ public class WhaleCamera : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             rotating = false;
-        }
+        }*/
 
         // Handles rotation of the camera
-        if (Input.GetMouseButton(0) && rotating)
+        /*if (Input.GetMouseButton(0) && rotating)
+        {
+            timer = 1.5f;*/
+            transform.RotateAround(target.position, Vector3.up, Input.GetAxis("Mouse X") * xSpeed * sens);
+            transform.RotateAround(target.position, transform.right, -Input.GetAxis("Mouse Y") * ySpeed * sens);
+        //}
+
+        if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
         {
             timer = 1.5f;
-            transform.RotateAround(target.position, Vector3.up, Input.GetAxis("Mouse X") * xSpeed);
-            transform.RotateAround(target.position, transform.right, -Input.GetAxis("Mouse Y") * ySpeed);
         }
+
 
         // Lerps to behind whale when untouched for timer duration
         if (timer <= 0.0f)

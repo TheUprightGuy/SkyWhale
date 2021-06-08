@@ -15,7 +15,7 @@ MonoBehaviour:
   dialogue:
   - image: {fileID: 21300000, guid: de9501d791d9dfc42afec714e213ff5d, type: 3}
     left: 0
-    name: Son
+    name: Pilots Son
     dialogue:
     - Who are you?
     dialogueIndex: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
     dialogueIndex: 0
   - image: {fileID: 21300000, guid: de9501d791d9dfc42afec714e213ff5d, type: 3}
     left: 0
-    name: Son
+    name: Pilots Son
     dialogue:
     - Okay, but my dad asked me to get parts for his glider. He gave me directions,
       but I can't seem to find them.sorry. This island began to get torn apart by

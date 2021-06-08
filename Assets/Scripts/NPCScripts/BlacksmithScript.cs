@@ -59,7 +59,10 @@ public class BlacksmithScript : NPCScript
     /// </summary>
     public override void Interact(InputState type)
     {
-        if (currentDialogue.inUse || !pm)
+        if (currentDialogue.inUse || !pm || pause)
+            return;
+
+        if (pm && pm.cinematicPause)
             return;
 
         cam.m_Priority = 2;

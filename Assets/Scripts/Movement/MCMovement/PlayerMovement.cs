@@ -24,7 +24,7 @@ public class PlayerMovement : MonoBehaviour
     // Character State
     public PlayerStates playerState;
     [HideInInspector] public bool haveControl;
-    bool gamePaused;
+    [HideInInspector] public bool gamePaused;
 
     [Header("Dependencies")]
     public Transform cam;

@@ -132,10 +132,10 @@ public class PickUp : MonoBehaviour
     /// </summary>
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
+        /*if (Input.GetKeyDown(KeyCode.N))
         {
             CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
-        }
+        }*/
 
 
         if (enabled)

@@ -326,7 +326,7 @@ public class WhaleMovement : MonoBehaviour
         if (control)
         {
             MovementCorrections();
-            actionTimer -= Time.deltaTime;
+            /*actionTimer -= Time.deltaTime;
             if (actionTimer <= 0)
             {
                 CameraManager.instance.LetterBox(false);
@@ -334,7 +334,7 @@ public class WhaleMovement : MonoBehaviour
             else
             {
                 CameraManager.instance.Standard(false);
-            }
+            }*/
         }
         GetDistance();
 
