@@ -396,7 +396,7 @@ MonoBehaviour:
   ClimbLayers:
     serializedVersion: 2
     m_Bits: 262144
-  ClimbCheckDistance: 0.2
+  ClimbCheckDistance: 1
   ClimbCheckRadius: 0.1
   ClimbCheckStartOffset: {x: 0, y: -0.25, z: 0}
   cinematicPause: 0
