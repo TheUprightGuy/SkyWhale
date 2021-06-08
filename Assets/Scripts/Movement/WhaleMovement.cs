@@ -168,7 +168,7 @@ public class WhaleMovement : MonoBehaviour
     bool yawChange = false;
     void YawRight(InputState type)
     {
-        if (orbit.enabled)
+        if (orbit.enabled || !control)
             return;
 
         if (myTurn + Time.deltaTime * turnSpeed < 40)
@@ -184,7 +184,7 @@ public class WhaleMovement : MonoBehaviour
     }
     void YawLeft(InputState type)
     {
-        if (orbit.enabled)
+        if (orbit.enabled || !control)
             return;
 
         if (myTurn - Time.deltaTime * turnSpeed > -40)
@@ -201,7 +201,7 @@ public class WhaleMovement : MonoBehaviour
     bool pitchChange = false;
     void PitchDown(InputState type)
     {
-        if (orbit.enabled)
+        if (orbit.enabled || !control)
             return;
 
         if (myPitch + Time.deltaTime * liftSpeed < 30)
@@ -212,7 +212,7 @@ public class WhaleMovement : MonoBehaviour
     }
     void PitchUp(InputState type)
     {
-        if (orbit.enabled)
+        if (orbit.enabled || !control)
             return;
 
         if (myPitch - Time.deltaTime * liftSpeed > -30)
@@ -233,7 +233,7 @@ public class WhaleMovement : MonoBehaviour
     private AudioMixer whaleAdditionalAmbientLayerAudioMixer;
     private void Thrust(InputState type)
     {
-        if (orbit.enabled)
+        if (orbit.enabled || !control)
             return;
 
         if (moveSpeed < maxSpeed)

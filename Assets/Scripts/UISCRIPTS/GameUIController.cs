@@ -177,8 +177,8 @@ public class GameUIController : MonoBehaviour
     public void SetupTutorialHotkeys()
     {
         // Grapple
-        grappleTuts[0].SetText(CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").KeyToListen) + " TO MANUALLY RELEASE GRAPPLE.");
-        grappleTuts[1].SetText("PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").KeyToListen) + " TO JUMP FROM GRAPPLE.");
+        grappleTuts[1].SetText(CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").KeyToListen) + " TO MANUALLY RELEASE GRAPPLE.");
+        grappleTuts[0].SetText("PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").KeyToListen) + " TO JUMP FROM GRAPPLE.");
 
         // Whale
         whaleTuts[0].SetText(CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "PitchDown").KeyToListen) + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "YawLeft").KeyToListen) 

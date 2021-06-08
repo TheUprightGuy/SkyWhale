@@ -95,4 +95,24 @@ public class DebugTool : MonoBehaviour
     {
         EventManager.TriggerEvent("WhaleCinematic");
     }
+
+    public void SetDay()
+    {
+        CallbackHandler.instance.SetTimeOfDay(0.25f);
+    }
+
+    public void SetNight()
+    {
+        CallbackHandler.instance.SetTimeOfDay(1.25f);
+    }
+
+    public void SetRain()
+    {
+        CallbackHandler.instance.ToggleRain(true);
+    }
+
+    public void StopRain()
+    {
+        CallbackHandler.instance.ToggleRain(false);
+    }
 }

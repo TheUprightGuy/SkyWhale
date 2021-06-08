@@ -38,11 +38,14 @@ public class SkyboxBlender : MonoBehaviour
         //color2 = material.GetColor("_Tint2");
 
         CallbackHandler.instance.toggleRain += ToggleRain;
+        CallbackHandler.instance.setTimeOfDay += SetTimeOfDay;
+        EventManager.StartListening("StartRain", Rain);
     }
 
     private void OnDestroy()
     {
         CallbackHandler.instance.toggleRain -= ToggleRain;
+        CallbackHandler.instance.setTimeOfDay -= SetTimeOfDay;
     }
 
     void RainOff()
@@ -61,6 +64,12 @@ public class SkyboxBlender : MonoBehaviour
         {
             n.color = Color.Lerp(outputColor, lightBlend, 0.8f);
         }
+    }
+
+    public void Rain()
+    {
+        CallbackHandler.instance.ToggleRain(true);
+        EventManager.StopListening("StartRain", Rain);
     }
 
     void SetFogColor()
@@ -103,6 +112,11 @@ public class SkyboxBlender : MonoBehaviour
        // material.SetFloat("_Blend", blend);
         //color = Color.Lerp(color1, color2, blend);
        // worldLight.color = color;
+    }
+
+    public void SetTimeOfDay(float _time)
+    {
+        timeOfDay = _time;
     }
 }
 

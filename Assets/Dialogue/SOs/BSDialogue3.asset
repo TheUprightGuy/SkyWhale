@@ -84,4 +84,4 @@ MonoBehaviour:
   rightCharacter: {fileID: 21300000, guid: 62bc85ac6cb595c419e651875ebc6b63, type: 3}
   dialogueIndex: 0
   inUse: 0
-  triggerEvent: EnableGrapple
+  triggerEvent: StartRain

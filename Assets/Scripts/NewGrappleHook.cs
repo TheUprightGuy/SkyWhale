@@ -274,7 +274,7 @@ public class NewGrappleHook : MonoBehaviour
             return;
 
         // Otherwise add force.
-        CallbackHandler.instance.OnGrappleJump();
+        CallbackHandler.instance.OnGrappleJump(InputState.KEYDOWN);
         Rigidbody temp = EntityManager.instance.player.GetComponent<Rigidbody>();
         temp.AddForce(Vector3.Normalize((Vector3.Normalize(forceDir) + Vector3.up * 2.0f)) * (temp.velocity.magnitude * yeetForceStrength), ForceMode.Impulse);
         // Play grapple disconnect audio

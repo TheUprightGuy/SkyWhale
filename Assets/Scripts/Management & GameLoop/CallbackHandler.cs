@@ -136,17 +136,17 @@ public class CallbackHandler : MonoBehaviour
         }
     }
     
-    public Action onGrappleJump;
+    public Action<InputState> onGrappleJump;
     /// <summary>
     /// Description: Callback on grapple jump
     /// <br>Author: Jacob Gallagher</br>
     /// <br>Last Updated: 05/12/2021</br>
     /// </summary>
-    public void OnGrappleJump()
+    public void OnGrappleJump(InputState _args)
     {
         if (onGrappleJump != null)
         {
-            onGrappleJump();
+            onGrappleJump(_args);
         }
     }
     
@@ -357,6 +357,15 @@ public class CallbackHandler : MonoBehaviour
         if (toggleRain != null)
         {
             toggleRain(_toggle);
+        }
+    }
+
+    public event Action<float> setTimeOfDay;
+    public void SetTimeOfDay(float _time)
+    {
+        if (setTimeOfDay != null)
+        {
+            setTimeOfDay(_time);
         }
     }
 }

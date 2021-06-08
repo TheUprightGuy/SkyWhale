@@ -19,29 +19,35 @@ public class GrappleTutorial : MonoBehaviour
         _timer = 0f;
         tutorialsCompleted = 0;
         showingTutorial = false;
-        VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(EndGrappleReleaseTutorial);
-        CallbackHandler.instance.onGrappleJump += FailGrappleReleaseTutorial;
+
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").MethodToCall.AddListener(EndGrappleJumpTutorial);
+        //CallbackHandler.instance.onGrappleJump += FailGrappleReleaseTutorial;
+        CallbackHandler.instance.onGrappleJump += FailGrappleJumpTutorial;
     }
 
     private void EndGrappleReleaseTutorial(InputState arg0)
     {
         _timer = 0f;
-        if (!showingTutorial || tutorialsCompleted != 0) return;
-        EndTutorial();
-        CallbackHandler.instance.onGrappleJump -= FailGrappleReleaseTutorial;
-        CallbackHandler.instance.onGrappleJump += EndGrappleJumpTutorial;
-        VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(FailGrappleJumpTutorial);
-    }
-
-    private void EndGrappleJumpTutorial()
-    {
-        _timer = 0f;
         if (!showingTutorial || tutorialsCompleted != 1) return;
         EndTutorial();
-        CallbackHandler.instance.onGrappleJump -= EndGrappleJumpTutorial;
+        CallbackHandler.instance.onGrappleJump -= EndGrappleReleaseTutorial;
+        //CallbackHandler.instance.onGrappleJump += EndGrappleJumpTutorial;
+        //VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(FailGrappleJumpTutorial);
+        Destroy(this);
+    }
+
+    private void EndGrappleJumpTutorial(InputState arg0)
+    {
+        _timer = 0f;
+        if (!showingTutorial || tutorialsCompleted != 0) return;
+        EndTutorial();
+        CallbackHandler.instance.onGrappleJump -= FailGrappleJumpTutorial;
+
+        CallbackHandler.instance.onGrappleJump += FailGrappleReleaseTutorial;
         GetComponent<PlayerMovement>().playerState = PlayerMovement.PlayerStates.FALLING;
         GetComponent<Rigidbody>().velocity = transform.forward * 5f + Vector3.up * 6f;
-        Destroy(this);
+        VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").MethodToCall.AddListener(EndGrappleReleaseTutorial);
+        //Destroy(this);
     }
 
     private void EndTutorial()
@@ -75,18 +81,18 @@ public class GrappleTutorial : MonoBehaviour
         showingTutorial = false;
     }
 
-    private void FailGrappleReleaseTutorial()
+    private void FailGrappleReleaseTutorial(InputState arg0)
     {
-        if(!showingTutorial || tutorialsCompleted != 0) return;
+        if(!showingTutorial || tutorialsCompleted != 1) return;
         //Hide tutorial UI
-        tutorialCanvases[0].SetActive(false);
+        tutorialCanvases[1].SetActive(false);
         FailTutorial();
     }
     
     private void FailGrappleJumpTutorial(InputState arg0)
     {
-        if(!showingTutorial || tutorialsCompleted != 1) return;
-        tutorialCanvases[1].SetActive(false);
+        if(!showingTutorial || tutorialsCompleted != 0) return;
+        tutorialCanvases[0].SetActive(false);
         FailTutorial();
     }
 
