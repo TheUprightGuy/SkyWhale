@@ -14,9 +14,16 @@ namespace Audio
 {
     public class AudioSourceInit : MonoBehaviour
     {
+        public bool useInstanceIdForSoundName = false;
         // Start is called before the first frame update
         private void Start()
         {
+            if (useInstanceIdForSoundName)
+            {
+                AudioManager.instance.AddAudioSourceToDictionary(gameObject.GetComponent<AudioSource>(), gameObject.GetInstanceID());
+                return;
+            }
+
             AudioManager.instance.AddAudioSourceToDictionary(gameObject.GetComponent<AudioSource>());
         }
     }
