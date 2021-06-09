@@ -18,6 +18,6 @@ public class HoverEffect : MonoBehaviour
         transform.RotateAround(transform.position, rotateAxis, RotationSpeed * Time.deltaTime);
 
         time += Time.deltaTime;
-        transform.position = transform.position + (rotateAxis * ((HeightRange * Mathf.Sin(time * FloatSpeed))) );
+        transform.position = transform.position + (rotateAxis * (HeightRange * Mathf.Sin(time * FloatSpeed)));
     }
 }
