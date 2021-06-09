@@ -99,6 +99,8 @@ public class GrappleScript : MonoBehaviour
         CallbackHandler.instance.pause -= Pause;
     }
 
+    Vector3 storedVel;
+
     /// <summary>
     /// Description: Pause callback.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -108,6 +110,20 @@ public class GrappleScript : MonoBehaviour
     void Pause(bool _pause)
     {
         pause = _pause;
+
+        if (hook.connected && !grapplingFromWhale)
+        {
+            if (pause)
+            {
+                storedVel = rb.velocity;
+                rb.velocity = Vector3.zero;
+            }
+            else
+            {
+                rb.velocity = storedVel;
+                storedVel = Vector3.zero;
+            }
+        }
     }
     #endregion Setup
 
