@@ -127,6 +127,8 @@ public class CollectableHandler : MonoBehaviour
         collectablesTriggers[_index].Collectable.UIText.text = collectablesTriggers[_index].Collectable.Name;
         collectablesTriggers[_index].Collectable.UIImage.sprite = collectablesTriggers[_index].Collectable.UISprite;
 
+        
+        //JACOB add sounds here pls thx :)
         numCollected++;
 
         if (numCollected >= collectablesTriggers.Length)
