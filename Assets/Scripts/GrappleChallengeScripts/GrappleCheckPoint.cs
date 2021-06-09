@@ -41,7 +41,7 @@ public class GrappleCheckPoint : MonoBehaviour
     /// </summary>
     private void Interact(InputState inputState)
     {
-        if (!pm) return;
+        if (!pm || gcm.LastCheckPoint == this) return;    //only proceed if checkpoint hasn't been set already and player movement reference is set
         gcm.pm = pm;
         gcm.LastCheckPoint = this;
         CallbackHandler.instance.UpdateClosestGrappleChallenge(gcm);
@@ -49,6 +49,8 @@ public class GrappleCheckPoint : MonoBehaviour
         Debug.Log("TriggeredCheckPoint");
         CallbackHandler.instance.ResetCheckpointDissolve();
         GetComponentInChildren<DissolveControl>().dissolve = false;
+        //Ignore this checkpoint
+        IgnoreCheckPoint();
     }
     
     #region Triggers
@@ -73,6 +75,7 @@ public class GrappleCheckPoint : MonoBehaviour
         var player = other.GetComponent<PlayerMovement>();
         if (!player) return;
         pm = player;
+        if(gcm.LastCheckPoint == this) return;
         CallbackHandler.instance.CheckPointInRange(transform);
     }
 
@@ -81,8 +84,15 @@ public class GrappleCheckPoint : MonoBehaviour
         if(whaleCheckpoint) return;
         var player = other.GetComponent<PlayerMovement>();
         if (!player) return;
+        IgnoreCheckPoint();
+    }
+
+    private void IgnoreCheckPoint()
+    {
+        //Player has either left the checkpoints range or has set already set the checkpoint
         pm = null;
         CallbackHandler.instance.CheckPointOutOfRange();
     }
+
     #endregion Triggers
 }

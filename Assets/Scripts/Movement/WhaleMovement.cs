@@ -245,7 +245,7 @@ public class WhaleMovement : MonoBehaviour
 
         thrustChange = true;
 
-        AudioManager.instance.targetValueMultiplier[0] = Mathf.Lerp(1f, 5f, Mathf.Clamp01(currentSpeed * boost / maxSpeed));
+        AudioManager.instance.targetValueMultiplier[0] = Mathf.Lerp(1f, 1.5f, Mathf.Clamp01(currentSpeed * boost / maxSpeed));
         
         //Play whale sound through additional whale ambient layer
         //This is based upon the inverse of the regular whale ambient layers volume
@@ -319,7 +319,7 @@ public class WhaleMovement : MonoBehaviour
         //currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime * accelSpeed);// * TimeSlowDown.instance.timeScale);
         currentSpeed = moveSpeed;
         
-        AudioManager.instance.targetValueMultiplier[0] -= AudioManager.instance.targetValueMultiplier[0] > 1f ? Time.deltaTime / 5f : 0f;
+        AudioManager.instance.targetValueMultiplier[0] -= AudioManager.instance.targetValueMultiplier[0] > 1f ? Time.deltaTime / 1.5f : 0f;
 
         if (boost > 1f) boost -= Time.deltaTime;
 

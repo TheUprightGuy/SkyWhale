@@ -42,6 +42,9 @@ public class GameUIController : MonoBehaviour
 
         CallbackHandler.instance.puzzleInRange += DisplayPuzzlePrompt;
         CallbackHandler.instance.puzzleOutOfRange += HidePuzzlePrompt;
+        
+        CallbackHandler.instance.checkPointInRange += DisplayCheckPointPrompt;
+        CallbackHandler.instance.checkPointOutOfRange += HideCheckPointPrompt;
 
         CallbackHandler.instance.fadeIn += FadeIn;
         CallbackHandler.instance.fadeOut += FadeOut;
@@ -65,6 +68,9 @@ public class GameUIController : MonoBehaviour
         CallbackHandler.instance.puzzleInRange -= DisplayPuzzlePrompt;
         CallbackHandler.instance.puzzleOutOfRange -= HidePuzzlePrompt;
 
+        CallbackHandler.instance.checkPointInRange -= DisplayCheckPointPrompt;
+        CallbackHandler.instance.checkPointOutOfRange -= HideCheckPointPrompt;
+        
         CallbackHandler.instance.fadeIn -= FadeIn;
         CallbackHandler.instance.fadeOut -= FadeOut;
     }
@@ -109,6 +115,18 @@ public class GameUIController : MonoBehaviour
     {
         puzzlePrompt.OutOfRange();
         HideButtonPrompt(PromptType.Interact);
+    }
+    
+    public void DisplayCheckPointPrompt(Transform _position)
+    {
+        //.InRange(_position);
+        DisplayButtonPrompt(PromptType.CheckPoint);
+    }
+    
+    public void HideCheckPointPrompt()
+    {
+        //checkPointPrompt.OutOfRange();
+        HideButtonPrompt(PromptType.CheckPoint);
     }
 
     public void FadeIn()
