@@ -22,7 +22,7 @@ public class CollectableUIHandler : MonoBehaviour
         }
 
         float yBounds = (transform.childCount - (transform.childCount % 5)) / 5;
-        yBounds *= 400;
+        yBounds *= 480;
 
         Vector2 rectsize = thisRect.sizeDelta;
         rectsize.y = yBounds;

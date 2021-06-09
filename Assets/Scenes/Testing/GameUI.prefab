@@ -6706,6 +6706,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 7719637795724511403, guid: 1e589ff89316c374581a58c36249fdae,
+        type: 3}
+      propertyPath: m_Text
+      value: "You've found your first collectable! There are 25 more of these in
+        the world. \nEach collectable will unlock an entry in the gallery, which
+        can be viewed from the pause menu.\nCollect them all for a prize!\n\nPress
+        the any key to continue"
+      objectReference: {fileID: 0}
     - target: {fileID: 9133283767765468121, guid: 1e589ff89316c374581a58c36249fdae,
         type: 3}
       propertyPath: m_Name

@@ -12,7 +12,7 @@ public class CollectableInfo
         Collected = collected;
     }
 
-    [HideInInspector]
+    //[HideInInspector]
     public bool Collected;
     [Space]
     public string Name;
@@ -35,6 +35,7 @@ public class CollectableHandler : MonoBehaviour
     public GameObject UIPrefab;
     public GameObject UIParent;
 
+    public GameObject ScrollObj;
 
     public GameObject ShowcasePanel;
     public GameObject CollectableTut;
@@ -94,16 +95,16 @@ public class CollectableHandler : MonoBehaviour
             collectablesTriggers[i].Collectable.UIImage = NewPanel.GetComponentsInChildren<Image>()[1];
             collectablesTriggers[i].Collectable.UIText = NewPanel.GetComponentInChildren<Text>();
 
-           
         }
     }
 
     public void AssignListeners()
     {
-        for (int i = 0; i < collectablesTriggers.Length; i++)
+        for (int i = 0; i < collectablesTriggers.Length - 1; i++)
         {
+            int test = i;
             Button butt = collectablesTriggers[i].Collectable.UIObject.GetComponentInChildren<Button>();
-            butt.onClick.AddListener(() => TriggerLargePanel(i));
+            butt.onClick.AddListener(delegate {TriggerLargePanel(test);});
         }
     }
 
@@ -113,7 +114,7 @@ public class CollectableHandler : MonoBehaviour
         CollectableTut.SetActive(true);
     }
 
-
+    int numCollected = 0;
     public void ItemCollected(int _index)
     {
         if (!firstCollected)
@@ -125,20 +126,34 @@ public class CollectableHandler : MonoBehaviour
         collectablesTriggers[_index].Collectable.Collected = true;
         collectablesTriggers[_index].Collectable.UIText.text = collectablesTriggers[_index].Collectable.Name;
         collectablesTriggers[_index].Collectable.UIImage.sprite = collectablesTriggers[_index].Collectable.UISprite;
+
+        numCollected++;
+
+        if (numCollected >= collectablesTriggers.Length)
+        {
+            AllCollected();
+        }
     }
 
+    public void AllCollected()
+    {
+        //Good job
+    }
     public void TriggerLargePanel(int _index)
     {
 
-        if (!collectablesTriggers[_index - 1].Collectable.Collected)
+        if (!collectablesTriggers[_index].Collectable.Collected)
         {
             return;
         }
-
-        Debug.Log("Collectable UI " + collectablesTriggers[_index - 1].Collectable.Name + " clicked");
-        lpImage.sprite = collectablesTriggers[_index - 1].Collectable.UISprite;
-        lpTitle.text = collectablesTriggers[_index - 1].Collectable.Name;
-        lpDesc.text = collectablesTriggers[_index - 1].Collectable.Description;
+        if (ScrollObj!=null)
+        {
+            ScrollObj.SetActive(false);
+        }
+        Debug.Log("Collectable UI " + collectablesTriggers[_index].Collectable.Name + " clicked");
+        lpImage.sprite = collectablesTriggers[_index].Collectable.UISprite;
+        lpTitle.text = collectablesTriggers[_index ].Collectable.Name;
+        lpDesc.text = collectablesTriggers[_index].Collectable.Description;
 
         ShowcasePanel.SetActive(true);
 

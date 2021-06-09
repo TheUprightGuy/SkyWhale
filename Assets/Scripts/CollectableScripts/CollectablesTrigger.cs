@@ -39,23 +39,26 @@ public class CollectablesTrigger : MonoBehaviour
     }
 
 
-    private void Update()
-    {
+    //private void Update()
+    //{
 
-        if (collected && !ps.isPlaying)
-        {
-            this.gameObject.SetActive(false);
-        }
+    //    if (Collectable.Collected && !ps.isPlaying)
+    //    {
+    //        this.gameObject.SetActive(false);
+    //    }
+    //}
+
+    public void TriggerLargePanel()
+    {
+        collectableHandler.TriggerLargePanel(handlerIndex);
     }
 
-    bool collected = false;
     private void OnTriggerEnter(Collider other)
     {
-        if (collectableHandler != null)
+        if (collectableHandler != null || !Collectable.Collected)
         {
-            
+            Collectable.Collected = true;
             collectableHandler.ItemCollected(handlerIndex);
-            collected = true;
             ps.Play();
             for (int i = 0; i < renderers.Length; i++)
             {
