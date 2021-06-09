@@ -69,6 +69,7 @@ public class SkyboxBlender : MonoBehaviour
     public void Rain()
     {
         CallbackHandler.instance.ToggleRain(true);
+        EventManager.TriggerEvent("AllowGrapple");
         EventManager.StopListening("StartRain", Rain);
     }
 

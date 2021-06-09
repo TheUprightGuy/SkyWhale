@@ -294,12 +294,12 @@ public class NewGrappleHook : MonoBehaviour
         // If hitting whale, change layer to ignore whale collision
         if (collision.gameObject.GetComponent<WhaleMovement>())
         {
-            this.gameObject.layer = LayerMask.NameToLayer("HookFromWhale");
+            //this.gameObject.layer = LayerMask.NameToLayer("HookFromWhale");
         }
         // If not hitting whale, change layer back and enable the player
         else if (this.gameObject.layer == LayerMask.NameToLayer("HookFromWhale"))
         {
-            this.gameObject.layer = LayerMask.NameToLayer("Hook");
+            //this.gameObject.layer = LayerMask.NameToLayer("Hook");
             // Start Moving Player
             EntityManager.instance.TogglePlayer(true);
             EntityManager.instance.MovePlayerToPlayerOnWhale();

@@ -84,6 +84,7 @@ public class GrappleScript : MonoBehaviour
         if (!grapplingFromWhale)
         { 
             EventManager.StartListening("EnableGrapple", EnableGrapple);
+            EventManager.StartListening("AllowGrapple", AllowGrappleToWhale);
         }
 
         // Callback to swap between Whale and Player
@@ -481,6 +482,15 @@ public class GrappleScript : MonoBehaviour
             if(!grapplingFromWhale && collision.gameObject.layer != 13) 
                 hook.YeetPlayer();
         }
+    }
+
+    public void AllowGrappleToWhale()
+    {
+        grappleableLayers |= (1 << LayerMask.NameToLayer("Whale"));
+        raycastTargets |= (1 << LayerMask.NameToLayer("Whale"));
+        hook.grappleableLayers = grappleableLayers;
+
+        EventManager.StopListening("AllowGrapple", AllowGrappleToWhale);
     }
 
     #region Checks

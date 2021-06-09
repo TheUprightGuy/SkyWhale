@@ -155,10 +155,16 @@ public class WhaleMovement : MonoBehaviour
             bucking = false;
             EntityManager.instance.OnDismountPlayer(dismountPosition);
             gs.hook.transform.position = EntityManager.instance.player.transform.position;
+            Invoke("SwapLayer", 1.0f);
             //CallbackHandler.instance.DismountPlayer(dismountPosition);
         }
     }
     [HideInInspector] public bool bucking;
+
+    void SwapLayer()
+    {
+        EntityManager.instance.player.layer = LayerMask.NameToLayer("Player");
+    }
 
     /// <summary>
     /// Description: Yaw/Pitch the whale to desired rotation - rolling body on yaw.
@@ -490,11 +496,21 @@ public class WhaleMovement : MonoBehaviour
         {
             // Change Layer so when we transition back we don't collide with whale instantly
             pc.gameObject.layer = LayerMask.NameToLayer("PlayerFromWhale");
-            //pc.gameObject.SetActive(false);
+            pc.gameObject.SetActive(false);
             EntityManager.instance.TogglePlayer(false);
 
             OnPlayerMountWhale();
             EventManager.TriggerEvent("MountWhale");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        PlayerMovement pc = other.GetComponent<PlayerMovement>();
+        if (pc)
+        {
+            // Change Layer so when we transition back we don't collide with whale instantly
+            pc.gameObject.layer = LayerMask.NameToLayer("Player");
         }
     }
 

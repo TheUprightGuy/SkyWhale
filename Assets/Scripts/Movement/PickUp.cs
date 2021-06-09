@@ -75,10 +75,11 @@ public class PickUp : MonoBehaviour
 
     public void EndWhaleCinematic()
     {
-        EventManager.TriggerEvent("SwitchPuzzleCompletion");
         CameraManager.instance.SwitchCamera(CameraType.PlayerCamera);
         CallbackHandler.instance.CinematicPause(false);
         CameraManager.instance.Standard(true);
+        EventManager.TriggerEvent("SwitchPuzzleCompletion");
+
         playedCinematic = true;
     }
 
@@ -104,6 +105,7 @@ public class PickUp : MonoBehaviour
         Debug.Log("Arrived");
         CallbackHandler.instance.CinematicPause(false);
         CameraManager.instance.LetterBox(false);
+        CameraManager.instance.Standard(true);
         secondIslandHoming = false;
         WhaleMovement wm = GetComponent<WhaleMovement>();
         wm.control = true;

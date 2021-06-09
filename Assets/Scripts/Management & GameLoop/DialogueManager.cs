@@ -174,8 +174,8 @@ public class DialogueManager : MonoBehaviour
             return;
         PlayerMovement pm = EntityManager.instance.player.GetComponent<PlayerMovement>();
 
-        //if (pm.cinematicPause || pm.gamePaused)
-            //return;
+        if (pm.cinematicPause)
+            return;
 
         timer = dialogueTime;
 

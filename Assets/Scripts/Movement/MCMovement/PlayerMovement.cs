@@ -23,8 +23,10 @@ public class PlayerMovement : MonoBehaviour
     GrappleScript grapple;
     // Character State
     public PlayerStates playerState;
-    [HideInInspector] public bool haveControl;
-    [HideInInspector] public bool gamePaused;
+    //[HideInInspector] 
+    public bool haveControl;
+    //[HideInInspector] 
+    public bool gamePaused;
 
     [Header("Dependencies")]
     public Transform cam;
