@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6356258164557667121
+--- !u!114 &-2325806452425411160
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NewSkyBlend
-  m_Shader: {fileID: -6465566751694194690, guid: 2fdb35d789ce483428b87e26d5970067,
+  m_Name: DissolveRingMat
+  m_Shader: {fileID: -6465566751694194690, guid: f5cdc01f30a32c04d86689e0f36a0817,
     type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -33,16 +33,28 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - MiddaySky:
-        m_Texture: {fileID: 8900000, guid: 4ddb615c495759f4e8cfe41fdcccabd1, type: 2}
+    - BaseTexture:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - MorningSky:
-        m_Texture: {fileID: 8900000, guid: ccb68ade68522574e998af2b16029bdb, type: 2}
+    - Texture2D_218DE755:
+        m_Texture: {fileID: 2800000, guid: 8416fc47a1fa5bc4bba2c0f53299e36c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - NightSky:
-        m_Texture: {fileID: 8900000, guid: 60f6bf6320289a6498f82530c1fcfd51, type: 2}
+    - Texture2D_2E4E6FCD:
+        m_Texture: {fileID: 2800000, guid: 1af2a56960717004083859dc7c77ee4c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_70BF4B86:
+        m_Texture: {fileID: 2800000, guid: c047c17fd7e6d8646aa2bb08be6a3f86, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_B25874EC:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_FF4AE7CF:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -73,8 +85,30 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_17121890_Out_0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_2B90CD64_Out_0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_3744877B_Out_0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Texture2DAsset_83B87D79_Out_0:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Raining: 1
+    - CutoffHeight: 65
+    - EdgeWidth: 2.4
+    - NoiseScale: 50.51
+    - NoiseStrength: 1.5
+    - Vector1_2102263D: 0
+    - Vector1_5113B783: 0
+    - Vector1_5E28A71D: -44.64
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -94,11 +128,14 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _Vec1TimeOfDay: 1.3770539
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - RainColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
+    - EdgeColor: {r: 23.96863, g: 3.137255, b: 0, a: 1}
+    - Vector2_238759EB: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_4AE62A24: {r: 5, g: 5, b: 0, a: 0}
+    - Vector2_807AEFBB: {r: 0, g: 0, b: 0, a: 0}
+    - Vector2_CDD19A65: {r: 5, g: 5, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
