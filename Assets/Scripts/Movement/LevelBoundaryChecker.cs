@@ -63,7 +63,7 @@ namespace Movement
         {
             //Respawn player by moving them to the whale
             EntityManager.instance.player.layer = LayerMask.NameToLayer("PlayerFromWhale");
-            EntityManager.instance.grappleHook.gameObject.layer = LayerMask.NameToLayer("HookFromWhale");
+            //EntityManager.instance.grappleHook.gameObject.layer = LayerMask.NameToLayer("HookFromWhale");
             EntityManager.instance.TogglePlayer(false);
             EntityManager.instance.OnPlayerLowerThanBoundary();
         }

@@ -155,10 +155,16 @@ public class WhaleMovement : MonoBehaviour
             bucking = false;
             EntityManager.instance.OnDismountPlayer(dismountPosition);
             gs.hook.transform.position = EntityManager.instance.player.transform.position;
+            Invoke("SwapLayer", 1.0f);
             //CallbackHandler.instance.DismountPlayer(dismountPosition);
         }
     }
     [HideInInspector] public bool bucking;
+
+    void SwapLayer()
+    {
+        EntityManager.instance.player.layer = LayerMask.NameToLayer("Player");
+    }
 
     /// <summary>
     /// Description: Yaw/Pitch the whale to desired rotation - rolling body on yaw.
@@ -245,7 +251,7 @@ public class WhaleMovement : MonoBehaviour
 
         thrustChange = true;
 
-        AudioManager.instance.targetValueMultiplier[0] = Mathf.Lerp(1f, 5f, Mathf.Clamp01(currentSpeed * boost / maxSpeed));
+        AudioManager.instance.targetValueMultiplier[0] = Mathf.Lerp(1f, 1.5f, Mathf.Clamp01(currentSpeed * boost / maxSpeed));
         
         //Play whale sound through additional whale ambient layer
         //This is based upon the inverse of the regular whale ambient layers volume
@@ -319,14 +325,14 @@ public class WhaleMovement : MonoBehaviour
         //currentSpeed = Mathf.Lerp(currentSpeed, moveSpeed, Time.deltaTime * accelSpeed);// * TimeSlowDown.instance.timeScale);
         currentSpeed = moveSpeed;
         
-        AudioManager.instance.targetValueMultiplier[0] -= AudioManager.instance.targetValueMultiplier[0] > 1f ? Time.deltaTime / 5f : 0f;
+        AudioManager.instance.targetValueMultiplier[0] -= AudioManager.instance.targetValueMultiplier[0] > 1f ? Time.deltaTime / 1.5f : 0f;
 
         if (boost > 1f) boost -= Time.deltaTime;
 
         if (control)
         {
             MovementCorrections();
-            actionTimer -= Time.deltaTime;
+            /*actionTimer -= Time.deltaTime;
             if (actionTimer <= 0)
             {
                 CameraManager.instance.LetterBox(false);
@@ -334,7 +340,7 @@ public class WhaleMovement : MonoBehaviour
             else
             {
                 CameraManager.instance.Standard(false);
-            }
+            }*/
         }
         GetDistance();
 
@@ -490,11 +496,21 @@ public class WhaleMovement : MonoBehaviour
         {
             // Change Layer so when we transition back we don't collide with whale instantly
             pc.gameObject.layer = LayerMask.NameToLayer("PlayerFromWhale");
-            //pc.gameObject.SetActive(false);
+            pc.gameObject.SetActive(false);
             EntityManager.instance.TogglePlayer(false);
 
             OnPlayerMountWhale();
             EventManager.TriggerEvent("MountWhale");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        PlayerMovement pc = other.GetComponent<PlayerMovement>();
+        if (pc)
+        {
+            // Change Layer so when we transition back we don't collide with whale instantly
+            pc.gameObject.layer = LayerMask.NameToLayer("Player");
         }
     }
 

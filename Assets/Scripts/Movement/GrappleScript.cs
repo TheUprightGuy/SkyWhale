@@ -84,6 +84,7 @@ public class GrappleScript : MonoBehaviour
         if (!grapplingFromWhale)
         { 
             EventManager.StartListening("EnableGrapple", EnableGrapple);
+            EventManager.StartListening("AllowGrapple", AllowGrappleToWhale);
         }
 
         // Callback to swap between Whale and Player
@@ -98,6 +99,8 @@ public class GrappleScript : MonoBehaviour
         CallbackHandler.instance.pause -= Pause;
     }
 
+    Vector3 storedVel;
+
     /// <summary>
     /// Description: Pause callback.
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -107,6 +110,20 @@ public class GrappleScript : MonoBehaviour
     void Pause(bool _pause)
     {
         pause = _pause;
+
+        if (hook.connected && !grapplingFromWhale)
+        {
+            if (pause)
+            {
+                storedVel = rb.velocity;
+                rb.velocity = Vector3.zero;
+            }
+            else
+            {
+                rb.velocity = storedVel;
+                storedVel = Vector3.zero;
+            }
+        }
     }
     #endregion Setup
 
@@ -481,6 +498,15 @@ public class GrappleScript : MonoBehaviour
             if(!grapplingFromWhale && collision.gameObject.layer != 13) 
                 hook.YeetPlayer();
         }
+    }
+
+    public void AllowGrappleToWhale()
+    {
+        grappleableLayers |= (1 << LayerMask.NameToLayer("Whale"));
+        raycastTargets |= (1 << LayerMask.NameToLayer("Whale"));
+        hook.grappleableLayers = grappleableLayers;
+
+        EventManager.StopListening("AllowGrapple", AllowGrappleToWhale);
     }
 
     #region Checks

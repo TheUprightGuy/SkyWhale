@@ -21,11 +21,18 @@ public class ObjectiveTrackingUI : MonoBehaviour
         image = objMarker.GetComponent<Image>();
 
         CallbackHandler.instance.startTrackingQuest += StartTrackingQuest;
+        CameraManager.instance.letterbox += Letterbox;
     }
 
     private void OnDestroy()
     {
         CallbackHandler.instance.startTrackingQuest -= StartTrackingQuest;
+        CameraManager.instance.letterbox -= Letterbox;
+    }
+
+    public void Letterbox()
+    {
+        timer = 0.0f;
     }
 
     public void StartTrackingQuest(Quest _quest)

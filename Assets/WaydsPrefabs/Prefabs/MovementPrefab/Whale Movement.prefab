@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f77bfcdc44500d4e8b1adf5f2922ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useInstanceIdForSoundName: 0
 --- !u!1 &237195404
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,6 +390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f77bfcdc44500d4e8b1adf5f2922ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useInstanceIdForSoundName: 0
 --- !u!114 &1892628202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -786,7 +788,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5276632769089201482}
   - component: {fileID: 4485807605162949051}
-  - component: {fileID: 2050823630736892417}
+  - component: {fileID: 6661653696907760373}
   m_Layer: 0
   m_Name: Checkpoint
   m_TagString: Untagged
@@ -821,7 +823,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2050823630736892417
+--- !u!114 &6661653696907760373
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -833,6 +835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82f9a3e747beca54b9a2aa3066430383, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whaleCheckpoint: 1
 --- !u!1 &3162940677968485438
 GameObject:
   m_ObjectHideFlags: 0

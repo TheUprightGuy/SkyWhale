@@ -79,7 +79,7 @@ public class EntityManager : MonoBehaviour
         {
             //Update player container position by calculating offset
             var offset = player.transform.parent.position - player.transform.position;
-            player.transform.parent.position = locationToTeleport.position + offset;
+            player.transform.parent.position = (locationToTeleport.position + Vector3.up) + offset;
             
             //Update rotation for both player
             var rotation = locationToTeleport.rotation;
@@ -110,11 +110,15 @@ public class EntityManager : MonoBehaviour
     {
         grappleHook.connected = false;
         grappleHook.connectedObj = null;
-        grappleHook.gameObject.layer = LayerMask.NameToLayer("Hook");
+        //player.GetComponent<GrappleScript>().active = false;
+        //grappleHook.gameObject.layer = LayerMask.NameToLayer("Hook");
         grappleHook.flightTime = 0.0f;
 
-        TogglePlayer(true);
 
+
+        TogglePlayer(true);
+        player.GetComponent<Rigidbody>().velocity = -Vector3.up;
+        player.GetComponent<Rigidbody>().useGravity = true;
         player.transform.position = dismountPosition.position;
         player.transform.rotation = Quaternion.identity;
     }

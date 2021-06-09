@@ -23,8 +23,10 @@ public class PlayerMovement : MonoBehaviour
     GrappleScript grapple;
     // Character State
     public PlayerStates playerState;
-    [HideInInspector] public bool haveControl;
-    bool gamePaused;
+    //[HideInInspector] 
+    public bool haveControl;
+    //[HideInInspector] 
+    public bool gamePaused;
 
     [Header("Dependencies")]
     public Transform cam;
@@ -120,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion Inputs & Callbacks
 
+    Vector3 storedVel;
     void Pause(bool _pause)
     {
         gamePaused = _pause;
@@ -127,6 +130,18 @@ public class PlayerMovement : MonoBehaviour
         if (cinematicPause)
         {
             CameraManager.instance.LetterBox(true);
+        }
+
+        if (gamePaused)
+        {
+            storedVel = RB.velocity;
+            RB.velocity = Vector3.zero;
+            RB.useGravity = false;
+        }
+        else
+        {
+            RB.velocity = storedVel;
+            storedVel = Vector3.zero;
         }
     }
 

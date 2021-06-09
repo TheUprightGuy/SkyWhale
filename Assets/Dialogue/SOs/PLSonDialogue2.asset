@@ -15,7 +15,7 @@ MonoBehaviour:
   dialogue:
   - image: {fileID: 21300000, guid: de9501d791d9dfc42afec714e213ff5d, type: 3}
     left: 0
-    name: Son
+    name: Pilots Son
     dialogue:
     - You've returned!
     dialogueIndex: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
     dialogueIndex: 0
   - image: {fileID: 21300000, guid: de9501d791d9dfc42afec714e213ff5d, type: 3}
     left: 0
-    name: Son
+    name: Pilots Son
     dialogue:
     - You found them?! I need to get these to my father!
     dialogueIndex: 0
@@ -39,7 +39,7 @@ MonoBehaviour:
     dialogueIndex: 0
   - image: {fileID: 21300000, guid: de9501d791d9dfc42afec714e213ff5d, type: 3}
     left: 0
-    name: Son
+    name: Pilots Son
     dialogue:
     - Okay... be safe. Thank you!
     dialogueIndex: 0

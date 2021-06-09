@@ -15,7 +15,7 @@ MonoBehaviour:
   dialogue:
   - image: {fileID: 21300000, guid: de9501d791d9dfc42afec714e213ff5d, type: 3}
     left: 0
-    name: Wife
+    name: Pilots Wife
     dialogue:
     - You... you came on that skywhale? Are you a rider? Can you get us out of here?
     dialogueIndex: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
     dialogueIndex: 0
   - image: {fileID: 21300000, guid: de9501d791d9dfc42afec714e213ff5d, type: 3}
     left: 0
-    name: Wife
+    name: Pilots Wife
     dialogue:
     - I'm... I'm sorry. This island began to get torn apart by this... storm, and
       I have no idea where my husband and son are.
@@ -42,7 +42,7 @@ MonoBehaviour:
     dialogueIndex: 0
   - image: {fileID: 21300000, guid: de9501d791d9dfc42afec714e213ff5d, type: 3}
     left: 0
-    name: Wife
+    name: Pilots Wife
     dialogue:
     - Thank you! Please hurry.
     dialogueIndex: 0

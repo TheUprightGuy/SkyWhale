@@ -41,7 +41,7 @@ MonoBehaviour:
     left: 1
     name: Param
     dialogue:
-    - Okay but....
+    - How?
     dialogueIndex: 0
   - image: {fileID: 21300000, guid: ce8c388a435704f4f88c3cc14b2bee19, type: 3}
     left: 0

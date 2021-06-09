@@ -22,13 +22,13 @@ public class DoorPFX : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    /*void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
         {
             StartPFX();
         }
-    }
+    }*/
 
     public void StartPFX()
     {

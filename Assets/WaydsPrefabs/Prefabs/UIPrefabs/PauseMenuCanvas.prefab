@@ -13737,7 +13737,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SAVE
+  m_text: GALLERY
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 735907316ca70c042a8764cbfda74ee2, type: 2}
   m_sharedMaterial: {fileID: 4417904475864566122, guid: 735907316ca70c042a8764cbfda74ee2,
@@ -13807,7 +13807,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 4376439731574686907}
-    characterCount: 4
+    characterCount: 7
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -15258,7 +15258,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   animatorFunctions: {fileID: 0}
   thisIndex: 0
-  menuOptions: 12
+  menuOptions: 13
 --- !u!114 &4376439732818224650
 MonoBehaviour:
   m_ObjectHideFlags: 0

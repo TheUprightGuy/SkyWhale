@@ -28,7 +28,7 @@ public enum NPCType
 public class NPCScript : MonoBehaviour
 {
     public  PlayerMovement pm;
-    bool pause;
+    [HideInInspector] public bool pause;
     protected Transform dialogueTransform;
     [HideInInspector] public Animator anim;
     public Cinemachine.CinemachineVirtualCamera cam;
@@ -131,7 +131,10 @@ public class NPCScript : MonoBehaviour
     /// </summary>
     public virtual void Interact(InputState type)
     {
-        if (currentDialogue.inUse || !pm)
+        if (currentDialogue.inUse || !pm || pause)
+            return;
+
+        if (pm && pm.cinematicPause)
             return;
 
         cam.m_Priority = 2;

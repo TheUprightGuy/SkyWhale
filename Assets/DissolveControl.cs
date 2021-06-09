@@ -14,6 +14,7 @@ public class DissolveControl : MonoBehaviour
 
         dissolveMat = GetComponent<MeshRenderer>().material;
         dissolveMat.SetFloat("CutoffHeight", offsetY);
+        CallbackHandler.instance.resetCheckpointDissolve += () => dissolve = true;
     }
 
     private void Update()

@@ -14,7 +14,7 @@ public class SaddleScript : MonoBehaviour
         parent = GetComponentInParent<WhaleMovement>();
     }
 
-    private void OnTriggerStay(Collider other)
+    /*private void OnTriggerStay(Collider other)
     {
         PlayerMovement pc = other.gameObject.GetComponent<PlayerMovement>();
 
@@ -29,5 +29,5 @@ public class SaddleScript : MonoBehaviour
                 other.GetComponent<PlayerMovement>().haveControl = false;
             }
         }
-    }
+    }*/
 }
