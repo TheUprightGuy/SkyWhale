@@ -79,7 +79,7 @@ public class EntityManager : MonoBehaviour
         {
             //Update player container position by calculating offset
             var offset = player.transform.parent.position - player.transform.position;
-            player.transform.parent.position = locationToTeleport.position + offset;
+            player.transform.parent.position = (locationToTeleport.position + Vector3.up) + offset;
             
             //Update rotation for both player
             var rotation = locationToTeleport.rotation;

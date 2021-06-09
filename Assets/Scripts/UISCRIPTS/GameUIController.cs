@@ -42,6 +42,9 @@ public class GameUIController : MonoBehaviour
 
         CallbackHandler.instance.puzzleInRange += DisplayPuzzlePrompt;
         CallbackHandler.instance.puzzleOutOfRange += HidePuzzlePrompt;
+        
+        CallbackHandler.instance.checkPointInRange += DisplayCheckPointPrompt;
+        CallbackHandler.instance.checkPointOutOfRange += HideCheckPointPrompt;
 
         CallbackHandler.instance.fadeIn += FadeIn;
         CallbackHandler.instance.fadeOut += FadeOut;
@@ -65,6 +68,9 @@ public class GameUIController : MonoBehaviour
         CallbackHandler.instance.puzzleInRange -= DisplayPuzzlePrompt;
         CallbackHandler.instance.puzzleOutOfRange -= HidePuzzlePrompt;
 
+        CallbackHandler.instance.checkPointInRange -= DisplayCheckPointPrompt;
+        CallbackHandler.instance.checkPointOutOfRange -= HideCheckPointPrompt;
+        
         CallbackHandler.instance.fadeIn -= FadeIn;
         CallbackHandler.instance.fadeOut -= FadeOut;
     }
@@ -109,6 +115,18 @@ public class GameUIController : MonoBehaviour
     {
         puzzlePrompt.OutOfRange();
         HideButtonPrompt(PromptType.Interact);
+    }
+    
+    public void DisplayCheckPointPrompt(Transform _position)
+    {
+        //.InRange(_position);
+        DisplayButtonPrompt(PromptType.CheckPoint);
+    }
+    
+    public void HideCheckPointPrompt()
+    {
+        //checkPointPrompt.OutOfRange();
+        HideButtonPrompt(PromptType.CheckPoint);
     }
 
     public void FadeIn()
@@ -174,23 +192,23 @@ public class GameUIController : MonoBehaviour
     // GLIDER TUTORIAL
     public List<TMPro.TextMeshProUGUI> glideTuts;
 
-    public void SetupTutorialHotkeys()
-    {
-        // Grapple
-        grappleTuts[1].SetText(CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").KeyToListen) + " TO MANUALLY RELEASE GRAPPLE.");
-        grappleTuts[0].SetText("PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").KeyToListen) + " TO JUMP FROM GRAPPLE.");
-
-        // Whale
-        whaleTuts[0].SetText(CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "PitchDown").KeyToListen) + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "YawLeft").KeyToListen) 
-            + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "PitchUp").KeyToListen) + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "YawRight").KeyToListen) + " TO STEER WHALE.\n"
-            + "PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").KeyToListen) + " TO MOVE FORWARDS.\n"
-            + "FLY THROUGH RINGS TO GAIN A SPEED BOOST.");
-        whaleTuts[1].SetText("PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "Dismount").KeyToListen) + " TO DISMOUNT FROM THE WHALE.\n"
-            + "THE WHALE WILL SAVE YOU IF YOU FALL.");
-
-        // Glider
-        glideTuts[0].SetText("PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Glide").KeyToListen) + " WHILE FALLING TO OPEN THE GLIDER.\n"
-            + "GAIN SPEED BY PITCHING DOWNWARDS.");
+    public void SetupTutorialHotkeys()
+    {
+        // Grapple
+        grappleTuts[1].SetText(CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Grapple").KeyToListen) + " TO MANUALLY RELEASE GRAPPLE.");
+        grappleTuts[0].SetText("PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Jump").KeyToListen) + " TO JUMP FROM GRAPPLE.");
+
+        // Whale
+        whaleTuts[0].SetText(CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "PitchDown").KeyToListen) + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "YawLeft").KeyToListen) 
+            + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "PitchUp").KeyToListen) + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "YawRight").KeyToListen) + " TO STEER WHALE.\n"
+            + "PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "Thrust").KeyToListen) + " TO MOVE FORWARDS.\n"
+            + "FLY THROUGH RINGS TO GAIN A SPEED BOOST.");
+        whaleTuts[1].SetText("PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.WHALE, "Dismount").KeyToListen) + " TO DISMOUNT FROM THE WHALE.\n"
+            + "THE WHALE WILL SAVE YOU IF YOU FALL.");
+
+        // Glider
+        glideTuts[0].SetText("PRESS " + CheckKey(VirtualInputs.GetInputListener(InputType.PLAYER, "Glide").KeyToListen) + " WHILE FALLING TO OPEN THE GLIDER.\n"
+            + "GAIN SPEED BY PITCHING DOWNWARDS.");
     }
 
     string CheckKey(KeyCode _key)

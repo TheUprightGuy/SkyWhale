@@ -12,6 +12,7 @@ public enum PromptType
     GrappleAim,
     GrappleFire,
     Glide,
+    CheckPoint,
 }
 
 public class ButtonPrompt : MonoBehaviour
@@ -109,6 +110,11 @@ public class ButtonPrompt : MonoBehaviour
             case PromptType.Glide:
             {
                 text.SetText(VirtualInputs.GetInputListener(InputType.PLAYER, "Glide").KeyToListen.ToString());
+                break;
+            }
+            case PromptType.CheckPoint:
+            {
+                text.SetText(VirtualInputs.GetInputListener(InputType.PLAYER, "Interact").KeyToListen.ToString());
                 break;
             }
         }
