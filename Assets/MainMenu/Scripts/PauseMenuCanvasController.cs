@@ -31,7 +31,8 @@ public enum MenuOptions
     QuitToMenu,
     Continue,
     Save,
-    Gallery
+    Gallery,
+    ShowCase
 }
 
 public class PauseMenuCanvasController : MonoBehaviour

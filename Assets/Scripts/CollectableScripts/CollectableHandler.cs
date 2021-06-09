@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class CollectableInfo
@@ -10,51 +11,136 @@ public class CollectableInfo
         Name = _name;
         Collected = collected;
     }
-    public string Name;
+
+    [HideInInspector]
     public bool Collected;
+    [Space]
+    public string Name;
+    public string Description;
+    public Sprite UISprite = null;
+
+    [HideInInspector]
+    public GameObject UIObject = null;
+    [HideInInspector]
+    public Text UIText = null;
+    [HideInInspector]
+    public Image UIImage = null;
+
 }
-[ExecuteAlways]
+
+
 public class CollectableHandler : MonoBehaviour
 {
+   
+    public GameObject UIPrefab;
+    public GameObject UIParent;
 
-    public List<CollectableInfo> Collectables = new List<CollectableInfo>();
+
+    public GameObject ShowcasePanel;
+    public GameObject CollectableTut;
+
+    Text lpTitle;
+    Image lpImage;
+    Text lpDesc;
+
+    CollectablesTrigger[] collectablesTriggers;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        collectablesTriggers = GetComponentsInChildren<CollectablesTrigger>();
+        SetUpUI();
+        AssignListeners();
+
+        if (ShowcasePanel != null)
+        {
+            Text[] texts = ShowcasePanel.GetComponentsInChildren<Text>();
+            lpTitle = texts[0];
+            lpDesc = texts[1];
+
+            lpImage = ShowcasePanel.GetComponentsInChildren<Image>()[1];
+            ShowcasePanel.SetActive(false);
+
+        }
+
+        if (CollectableTut != null)
+        {
+            CollectableTut.SetActive(false);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
-#if UNITY_EDITOR
-        if (!Application.isPlaying)
+        if (CollectableTut != null && CollectableTut.activeSelf)
         {
-            CollectablesTrigger[] collectablesTriggers = GetComponentsInChildren<CollectablesTrigger>();
-            int cc = Collectables.Count;
-            int tc = collectablesTriggers.Length;
-
-            if (cc < tc)
+            if (Input.anyKeyDown)
             {
-                for (int i = cc; i < tc - cc; i++) //for each one until amount in childcount
-                {
-                    CollectableInfo newInfo = new CollectableInfo(collectablesTriggers[i].gameObject.name);
-                    collectablesTriggers[i].handlerIndex = i;
-                    Collectables.Add(newInfo);
-                }
-            }
-
-            if (cc > tc)
-            {
-                for (int i = cc; i > tc; i--)
-                {
-                    Collectables.RemoveAt(i - 1);
-                }
+                CollectableTut.SetActive(false);
             }
         }
-        
-#endif
+    }
+
+    public void SetUpUI()
+    {
+        int tc = collectablesTriggers.Length;
+
+        for (int i = 0; i < tc; i++) //for each one until amount in childcount
+        {
+            //CollectableInfo newInfo = collectablesTriggers[i].Collectable;
+            collectablesTriggers[i].handlerIndex = i;
+
+            GameObject NewPanel = Instantiate(UIPrefab, UIParent.transform);
+            collectablesTriggers[i].Collectable.UIObject = NewPanel;
+            collectablesTriggers[i].Collectable.UIImage = NewPanel.GetComponentsInChildren<Image>()[1];
+            collectablesTriggers[i].Collectable.UIText = NewPanel.GetComponentInChildren<Text>();
+
+           
+        }
+    }
+
+    public void AssignListeners()
+    {
+        for (int i = 0; i < collectablesTriggers.Length; i++)
+        {
+            Button butt = collectablesTriggers[i].Collectable.UIObject.GetComponentInChildren<Button>();
+            butt.onClick.AddListener(() => TriggerLargePanel(i));
+        }
+    }
+
+    bool firstCollected = false;
+    void CollectionPrompt()
+    {
+        CollectableTut.SetActive(true);
+    }
+
+
+    public void ItemCollected(int _index)
+    {
+        if (!firstCollected)
+        {
+            firstCollected = true;
+            CollectionPrompt();
+        }
+
+        collectablesTriggers[_index].Collectable.Collected = true;
+        collectablesTriggers[_index].Collectable.UIText.text = collectablesTriggers[_index].Collectable.Name;
+        collectablesTriggers[_index].Collectable.UIImage.sprite = collectablesTriggers[_index].Collectable.UISprite;
+    }
+
+    public void TriggerLargePanel(int _index)
+    {
+
+        if (!collectablesTriggers[_index - 1].Collectable.Collected)
+        {
+            return;
+        }
+
+        Debug.Log("Collectable UI " + collectablesTriggers[_index - 1].Collectable.Name + " clicked");
+        lpImage.sprite = collectablesTriggers[_index - 1].Collectable.UISprite;
+        lpTitle.text = collectablesTriggers[_index - 1].Collectable.Name;
+        lpDesc.text = collectablesTriggers[_index - 1].Collectable.Description;
+
+        ShowcasePanel.SetActive(true);
 
     }
 }

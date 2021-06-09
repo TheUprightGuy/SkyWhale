@@ -13,28 +13,34 @@ public class CollectablesTrigger : MonoBehaviour
     CollectableHandler collectableHandler = null;
 
     MeshRenderer[] renderers;
+
+
+    public MeshRenderer front;
+    public MeshRenderer rear;
+
+    public Sprite TokenImageOverload = null;
+    public CollectableInfo Collectable;
     private void Awake()
     {
         if (transform.parent !=null)
         {
             collectableHandler = transform.parent.GetComponent<CollectableHandler>();
 
+            Texture applyTex = (TokenImageOverload != null) ? (TokenImageOverload.texture) : (Collectable.UISprite.texture);
+
+            front.material.SetTexture("_BaseMap", applyTex);
+            rear.material.SetTexture("_BaseMap", applyTex);
         }
+
         ps = GetComponentInChildren<ParticleSystem>();
-        prevName = gameObject.name;
 
         renderers = GetComponentsInChildren<MeshRenderer>();
+        
     }
 
-    string prevName = "";
 
     private void Update()
     {
-        if (collectableHandler != null && prevName != gameObject.name)
-        {
-            collectableHandler.Collectables[handlerIndex].Name = gameObject.name;
-            prevName = gameObject.name;
-        }
 
         if (collected && !ps.isPlaying)
         {
@@ -47,7 +53,8 @@ public class CollectablesTrigger : MonoBehaviour
     {
         if (collectableHandler != null)
         {
-            collectableHandler.Collectables[handlerIndex].Collected = true;
+            
+            collectableHandler.ItemCollected(handlerIndex);
             collected = true;
             ps.Play();
             for (int i = 0; i < renderers.Length; i++)
