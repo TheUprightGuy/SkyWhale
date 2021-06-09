@@ -16,6 +16,7 @@ public class CollectableInfo
     public bool Collected;
     [Space]
     public string Name;
+    [TextArea]
     public string Description;
     public Sprite UISprite = null;
 
