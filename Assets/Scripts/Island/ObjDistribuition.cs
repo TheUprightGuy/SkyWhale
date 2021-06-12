@@ -453,10 +453,12 @@ public class ObjData
     public Vector3Int GetChunk(Vector3 _pos)
     {
         //Vector3Int returnVec = -Vector3Int.one;
+
+        Vector3 newPos = _pos + transform.position;
         Vector3Int returnVec = new Vector3Int(
-            Mathf.FloorToInt(_pos.x / ChunkSize),
-            Mathf.FloorToInt(_pos.y / ChunkSize),
-            Mathf.FloorToInt(_pos.z / ChunkSize));
+            Mathf.FloorToInt(newPos.x / ChunkSize),
+            Mathf.FloorToInt(newPos.y / ChunkSize),
+            Mathf.FloorToInt(newPos.z / ChunkSize));
         return returnVec;
     }
 
