@@ -332,3 +332,4 @@ MonoBehaviour:
   fogBlend: {r: 0.27450982, g: 0.58431375, b: 0.7921569, a: 1}
   lightBlend: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   lights: []
+  waterMat: {fileID: 2100000, guid: 5252ad2add739ed49a438f4229ba3bc5, type: 2}

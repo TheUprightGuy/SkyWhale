@@ -19,6 +19,9 @@ public class SkyboxBlender : MonoBehaviour
 
     public Light[] lights;
 
+
+    [Header("Water Blending")]
+    public Material waterMat;
    /* public Color color1;
     public Color color2;
     public Color color;
@@ -103,6 +106,7 @@ public class SkyboxBlender : MonoBehaviour
 
         material.SetFloat("_Vec1TimeOfDay", timeOfDay);
         material.SetInt("Raining", raining ? 1 : 0);
+        waterMat.SetColor("WorldLightColor", lightBlend);
 
         SetFogColor();
         SetLightColor();

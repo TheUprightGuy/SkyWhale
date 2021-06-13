@@ -74,7 +74,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Raining: 0
+    - Raining: 1
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -94,7 +94,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _Vec1TimeOfDay: 0.3678016
+    - _Vec1TimeOfDay: 1.0017565
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

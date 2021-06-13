@@ -12,6 +12,7 @@ public class PilotQuestCollectable : MonoBehaviour
         AudioManager.instance.PlaySound("Collect");
         EventManager.TriggerEvent("FindParts");
         CallbackHandler.instance.GliderPartsCollected();
+        GetComponentInParent<Puzzle.PuzzleGenerator>().disabled = true;
         Destroy(gameObject);
     }
 }

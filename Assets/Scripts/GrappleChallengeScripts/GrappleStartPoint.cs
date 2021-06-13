@@ -45,7 +45,9 @@ public class GrappleStartPoint : MonoBehaviour
             gcm.LastCheckPoint = null;
             CallbackHandler.instance.UpdateClosestGrappleChallenge(gcm);
             CallbackHandler.instance.ResetCheckpointDissolve();
-            GetComponentInChildren<DissolveControl>().dissolve = false;
+
+            if (GetComponentInChildren<DissolveControl>())
+                GetComponentInChildren<DissolveControl>().dissolve = false;
         }
     }
     #endregion Trigger
