@@ -55,7 +55,7 @@ public class CollectablesTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (collectableHandler != null || !Collectable.Collected)
+        if (collectableHandler != null && !Collectable.Collected)
         {
             Collectable.Collected = true;
             collectableHandler.ItemCollected(handlerIndex);
