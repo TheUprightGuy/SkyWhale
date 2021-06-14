@@ -103,7 +103,7 @@ public class DebugTool : MonoBehaviour
 
     public void SetNight()
     {
-        CallbackHandler.instance.SetTimeOfDay(1.25f);
+        CallbackHandler.instance.SetTimeOfDay(0.9f);
     }
 
     public void SetRain()
