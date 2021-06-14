@@ -68,7 +68,7 @@ namespace Audio
         public Dictionary<string, SoundInfo> SoundDictionary;
         [HideInInspector] public bool randomlyCycleMusic = true;
         [HideInInspector] public bool playAmbientSounds = true;
-        public float[] targetValueMultiplier = {1f,1f};
+        public float[] targetValueMultiplier = new float[3];
 
         #endregion
 
@@ -79,6 +79,7 @@ namespace Audio
         private int _currentTrackIndex;
         private List<string> _soundsUnrestricted;    //Audio source will play these sounds regardless of if whether they are already playing
         private Slider _slider;
+        private Coroutine _thunderRainAmbientLayerCoroutine;
 
         #endregion
 
@@ -178,6 +179,36 @@ namespace Audio
                 ambientLayers[0].GetComponent<AudioSource>(), 0));
         }
 
+        private bool rainLayerStarted = false;
+        /// <summary>
+        /// Starts the fade coroutine which plays the whale ambient layer
+        /// </summary>
+        public void PlayRainThunderAmbientLayer(bool toggle)
+        {
+            if (!toggle)
+            {
+                if(!rainLayerStarted) return;
+                StopRainThunderAmbientLayer();
+                return;
+            }
+
+            if (rainLayerStarted)
+            {
+                ambientLayers[2].GetComponent<AudioSource>().Play();
+                return;
+            }
+            StartCoroutine(PlayRandomAmbientTracks(
+                ambientLayers[2].GetComponent<AmbientLayer>(), 
+                ambientLayers[2].GetComponent<AudioSource>(), 2));
+            rainLayerStarted = true;
+        }
+
+        public void StopRainThunderAmbientLayer()
+        {
+            //Most likely very abrupt
+            ambientLayers[2].GetComponent<AudioSource>().Stop();
+        }
+
         /// <summary>
         /// This function allows you to switch the currently playing music track if the music tracks aren't being randomised.
         /// </summary>
@@ -233,6 +264,11 @@ namespace Audio
             }*/
         }
 
+        private void Start()
+        {
+            CallbackHandler.instance.toggleRain += PlayRainThunderAmbientLayer;
+        }
+
         /// <summary>
         /// Initialises all the audio managers private variables. (Most importantly all the audio sources added through the inspector).
         /// </summary>
@@ -240,11 +276,12 @@ namespace Audio
         {
             _musicSource = GetComponent<AudioSource>();
             SoundDictionary = new Dictionary<string, SoundInfo>();
-            _soundsUnrestricted = new List<string> { "Click", "Click_Progress", "Switch" };
+            _soundsUnrestricted = new List<string> { "Click", "Click_Progress", "Switch", "Footsteps" };
             
             foreach (var audioSource in audioSources) 
                 AddAudioSourceToDictionary(audioSource);
 
+            targetValueMultiplier = new[] {1f, 1f, 1f};
             //AddInitiallyDisabledAudioSources();
         }
 

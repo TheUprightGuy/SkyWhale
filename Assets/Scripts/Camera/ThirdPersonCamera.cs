@@ -37,7 +37,9 @@ public class ThirdPersonCamera : MonoBehaviour
     public float CastWidth = 0.25f;
     public float CameraAcceleration = 0.5f;
 
+    public QueryTriggerInteraction RaycastTriggerBehaviour = QueryTriggerInteraction.Ignore;
     public bool RaycastToPlayer = true;
+
     [Header("Debug")]
     [Tooltip("Press ` to enable/disable cursor locking.")]
     public bool UnlockCameraKeyBind = true;
@@ -176,7 +178,7 @@ public class ThirdPersonCamera : MonoBehaviour
             Vector3 dir = (RaycastToPlayer) ? (playerToNewPos) : (-newDir);
 
             //If something ahead of you
-            if (Physics.SphereCast(origin, CastWidth, dir, out fronthit, Mathf.Min(newDist, RayLength), CollisionLayers.value))
+            if (Physics.SphereCast(origin, CastWidth, dir, out fronthit, Mathf.Min(newDist, RayLength), CollisionLayers.value, RaycastTriggerBehaviour))
             {
                 newDist = Mathf.MoveTowards(currentDist, fronthit.distance + camCollisionRadius, CameraAcceleration * Time.deltaTime);
             }

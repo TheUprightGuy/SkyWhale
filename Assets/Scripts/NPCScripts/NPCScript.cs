@@ -33,6 +33,7 @@ public class NPCScript : MonoBehaviour
     [HideInInspector] public Animator anim;
     public Cinemachine.CinemachineVirtualCamera cam;
     public NPCType type;
+    private GameObject audioSource;
 
     private void Awake()
     {
@@ -192,4 +193,13 @@ public class NPCScript : MonoBehaviour
         }
     }
     #endregion Triggers
+    
+    public void TriggerSound(string soundName)
+    {
+        if (audioSource == null)
+        {
+            audioSource = GetComponentInChildren<AudioSource>().gameObject;
+        }
+        AudioManager.instance.PlaySound(audioSource.GetInstanceID().ToString());
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Audio;
 using UnityEngine;
 
 [ExecuteAlways]
@@ -60,6 +61,7 @@ public class CollectablesTrigger : MonoBehaviour
             Collectable.Collected = true;
             collectableHandler.ItemCollected(handlerIndex);
             ps.Play();
+            AudioManager.instance.PlaySound("Collect");
             for (int i = 0; i < renderers.Length; i++)
             {
                 renderers[i].enabled = false;
