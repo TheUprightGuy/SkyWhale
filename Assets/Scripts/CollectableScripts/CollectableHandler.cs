@@ -75,8 +75,9 @@ public class CollectableHandler : MonoBehaviour
     {
         if (CollectableTut != null && CollectableTut.activeSelf)
         {
-            if (Input.anyKeyDown)
+            if (Input.GetKeyDown(KeyCode.Space))
             {
+                CallbackHandler.instance.Pause(false);
                 CollectableTut.SetActive(false);
             }
         }
@@ -121,6 +122,7 @@ public class CollectableHandler : MonoBehaviour
         if (!firstCollected)
         {
             firstCollected = true;
+            CallbackHandler.instance.Pause(true);
             CollectionPrompt();
         }
 
