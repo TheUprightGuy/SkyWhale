@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 1946371156470093852}
   - component: {fileID: 1946371156470093851}
   - component: {fileID: 1946371156470093850}
+  - component: {fileID: 3030038299859669976}
   m_Layer: 0
   m_Name: Lava (1)
   m_TagString: Untagged
@@ -212,6 +213,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d660c7538bcae4f44bc6bf9203eb9cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &3030038299859669976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946371156470093848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 0
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 460cf601843bd37489584c51837a9e7d, type: 2}
 --- !u!1 &1946371156743457838
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,6 +305,7 @@ GameObject:
   - component: {fileID: 1946371156817328278}
   - component: {fileID: 1946371156817328277}
   - component: {fileID: 1946371156817328264}
+  - component: {fileID: 8789006821675630383}
   m_Layer: 0
   m_Name: Lava
   m_TagString: Untagged
@@ -380,6 +399,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d660c7538bcae4f44bc6bf9203eb9cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8789006821675630383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946371156817328275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 0
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 460cf601843bd37489584c51837a9e7d, type: 2}
 --- !u!1 &1946371157845807263
 GameObject:
   m_ObjectHideFlags: 0
@@ -5204,6 +5240,7 @@ GameObject:
   - component: {fileID: 4300191371494929588}
   - component: {fileID: 4300191371494929589}
   - component: {fileID: 4300191371494929586}
+  - component: {fileID: 5054343715699820743}
   m_Layer: 0
   m_Name: Lava (3)
   m_TagString: Untagged
@@ -5297,6 +5334,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d660c7538bcae4f44bc6bf9203eb9cd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5054343715699820743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4300191371494929584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGlobal: 0
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 460cf601843bd37489584c51837a9e7d, type: 2}
 --- !u!1 &6034998831100546904
 GameObject:
   m_ObjectHideFlags: 0
