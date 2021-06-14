@@ -70,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
     public float ClimbCheckRadius = 0.1f;
     public Vector3 ClimbCheckStartOffset = Vector3.zero;
 
+    public float testFloat = 0.5f;
     float minGroundDotProduct;
     Vector3 groundContactNormal;
     Vector3 climbContactNormal;
@@ -90,6 +91,10 @@ public class PlayerMovement : MonoBehaviour
         anims = GetComponentInChildren<Animator>();
         glider = GetComponent<GliderMovement>();
         grapple = GetComponent<GrappleScript>();
+        if (capsuleCollider == null)
+        {
+            capsuleCollider = GetComponent<CapsuleCollider>();
+        }
     }
     private void OnValidate()
     {
@@ -181,6 +186,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (!haveControl)
             return;
+
+        UpdateClimbNormal();
 
         HandleMovement();
         HandleRotation();
@@ -905,12 +912,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-
+       
     }
 
 
     Vector3 calcClimbNormal = Vector3.zero;
-    Vector3 calcGroundNormal = Vector3.zero;
+    Vector3 calcTestNormal = Vector3.zero;
 
     /// <summary>
     /// Evaluates when this collider hits some other collider
@@ -978,38 +985,89 @@ public class PlayerMovement : MonoBehaviour
         //    groundContactNormal = normal;
         //}
     }
+
+
+    private void UpdateClimbNormal()
+    {
+        Vector3 centerPoint = (transform.position + (capsuleCollider.center * transform.localScale.y));
+        Vector3 offset = ((transform.up * transform.localScale.y) * (capsuleCollider.height / 2));
+        //Gizmos.DrawSphere(centerPoint- ((transform.up * transform.localScale.y) * (capsuleCollider.height / 2)), 0.05f);
+        Vector3 top = centerPoint + offset;
+        Vector3 bot = centerPoint - offset;
+
+        RaycastHit[] casts = Physics.SphereCastAll(top, testFloat, -transform.up, capsuleCollider.height, ClimbLayers.value, QueryTriggerInteraction.Ignore);
+        if (casts.Length > 0)
+        {
+            foreach (RaycastHit item in casts)
+            {
+                EvalClimbCollision(item.normal);
+            }
+        }
+
+    }
+    private void EvalClimbCollision(Vector3 _normal, int collisionEvent = 0)
+    {
+
+        Vector3 normal = _normal;
+
+        Vector3 projectedForward = Vector3.ProjectOnPlane(transform.forward, Vector3.up);
+        float degreeDownCheck = Vector3.Angle(Vector3.down, -normal);
+        float degreeForwardCheck = Vector3.Angle(projectedForward, -normal);
+
+        bool GtC = degreeDownCheck > GroundToClimbAngle;
+        bool FtC = degreeForwardCheck < ForwardToClimbAngle;
+        if (GtC) //Climbing
+        {
+            Debug.DrawLine(transform.position, transform.position + (1 * -normal), Color.blue);
+
+            if (FtC) //In front of player
+            {
+               //wallContactnormal += normal; //theres a wall here
+                //wallContactnormal = wallContactnormal.normalized;
+
+                Vector3 checkpos = anims.transform.position;
+                checkpos.y += transform.localScale.y * 1.75f;
+
+                if (playerState == PlayerStates.CLIMBING || Physics.Raycast(checkpos, transform.forward, ClimbCheckDistance)) //Not a step
+                {
+                    calcTestNormal += normal;
+                    calcTestNormal = calcTestNormal.normalized;
+                }
+
+                //climbContactNormal = normal;
+            }
+
+
+        }
+    }
     #endregion Collisions
 
 
     #region Debug
-    
+
+
+    CapsuleCollider capsuleCollider = null;
     private void OnDrawGizmos()
     {
-        //Gizmos.color = Color.red;
-        //Vector3 groundStartPos = transform.position + GroundCheckStartOffset;
-        //Vector3 groundEndPos = groundStartPos + ((-Vector3.up) * GroundCheckDistance);
-        //Gizmos.DrawLine(groundStartPos, groundEndPos);
-        //Gizmos.DrawSphere(groundEndPos, GroundCheckRadius);
+        Gizmos.color = Color.red;
+        if (capsuleCollider == null)
+        {
+            capsuleCollider = GetComponent<CapsuleCollider>();
+        }
 
-        //Gizmos.color = Color.blue;
-        //Vector3 climbStartPos = transform.position + ClimbCheckStartOffset;
-        //Vector3 climbEndPos = climbStartPos + ((transform.forward) * ClimbCheckDistance);
-        //Gizmos.DrawLine(climbStartPos, climbEndPos);
-        //Gizmos.DrawSphere(climbEndPos, ClimbCheckRadius);
+        Vector3 centerPoint = (transform.position + (capsuleCollider.center* transform.localScale.y));
+        Vector3 offset = ((transform.up * transform.localScale.y) * (capsuleCollider.height / 2));
+        //Gizmos.DrawSphere(centerPoint- ((transform.up * transform.localScale.y) * (capsuleCollider.height / 2)), 0.05f);
+        Vector3 top = centerPoint + offset;
+        Vector3 bot = centerPoint - offset;
 
-        //Vector3 representAngle = Vector3.RotateTowards(transform.up, -transform.up, GroundToClimbAngle*Mathf.Deg2Rad, 0.0f);
-        //Gizmos.DrawLine(transform.position, transform.position - (representAngle * 1.0f));
+        Gizmos.DrawLine(bot, top);
 
-        //Vector3 representForwardAngle = Vector3.RotateTowards(transform.forward, transform.right, ForwardToClimbAngle * Mathf.Deg2Rad, 0.0f);
-        //Gizmos.DrawLine(transform.position, transform.position - (representForwardAngle * 1.0f));
+        Gizmos.color = Color.green;
 
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawLine(transform.position, transform.position + (-calcClimbNormal.normalized * 1));
-        //Gizmos.color = Color.cyan;
-        //Vector3 checkpos = anims.transform.position;
-        //checkpos.y += transform.localScale.y * 1.75f;
-        //Gizmos.DrawSphere(checkpos, 0.05f);
-        //Gizmos.DrawLine(checkpos, checkpos + (transform.forward * 0.5f));
+        Gizmos.DrawLine(centerPoint, centerPoint + (transform.forward * testFloat));
+
+        Gizmos.DrawLine(centerPoint, centerPoint + (calcTestNormal * testFloat));
     }
     #endregion
 }

@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f77bfcdc44500d4e8b1adf5f2922ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useInstanceIdForSoundName: 0
 --- !u!114 &1239349582197024136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -369,14 +370,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerState: 0
   haveControl: 1
+  gamePaused: 0
   cam: {fileID: 4913185220026473846}
   walkSpeed: 0.03
   maxWalkAcceleration: 0.5
   runSpeed: 0.075
   maxRunAcceleration: 0.5
   rotationSpeed: 10
-  climbrotationSpeed: 100
-  uprightrotationSpeed: 200
+  climbrotationSpeed: 150
+  uprightrotationSpeed: 120
   setAccel: 0.5
   inAirSpeed: 0.05
   maxAirAcceleration: 0.25
@@ -385,8 +387,8 @@ MonoBehaviour:
   climbGripForce: 1
   groundjumpHeight: 1.5
   wallJumpHeight: 0.5
-  GroundToClimbAngle: 50
-  ForwardToClimbAngle: 50
+  GroundToClimbAngle: 40
+  ForwardToClimbAngle: 75
   GroundLayers:
     serializedVersion: 2
     m_Bits: 180023
@@ -395,8 +397,8 @@ MonoBehaviour:
   GroundCheckStartOffset: {x: 0, y: 0, z: 0}
   ClimbLayers:
     serializedVersion: 2
-    m_Bits: 262144
-  ClimbCheckDistance: 1
+    m_Bits: 12976896
+  ClimbCheckDistance: 2.5
   ClimbCheckRadius: 0.1
   ClimbCheckStartOffset: {x: 0, y: -0.25, z: 0}
   cinematicPause: 0
@@ -675,6 +677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f77bfcdc44500d4e8b1adf5f2922ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useInstanceIdForSoundName: 0
 --- !u!1 &1591608248537439705
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,6 +819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f77bfcdc44500d4e8b1adf5f2922ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useInstanceIdForSoundName: 0
 --- !u!1 &1599445596835227768
 GameObject:
   m_ObjectHideFlags: 0
@@ -5900,6 +5904,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f77bfcdc44500d4e8b1adf5f2922ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useInstanceIdForSoundName: 0
 --- !u!1 &4409105305589841881
 GameObject:
   m_ObjectHideFlags: 0
@@ -6089,6 +6094,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f77bfcdc44500d4e8b1adf5f2922ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useInstanceIdForSoundName: 0
 --- !u!82 &2372293662260313141
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6426,6 +6432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f77bfcdc44500d4e8b1adf5f2922ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useInstanceIdForSoundName: 0
 --- !u!1 &7425158751144914866
 GameObject:
   m_ObjectHideFlags: 0
@@ -6567,6 +6574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f77bfcdc44500d4e8b1adf5f2922ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useInstanceIdForSoundName: 0
 --- !u!1 &7512055394066343171
 GameObject:
   m_ObjectHideFlags: 0
@@ -6738,6 +6746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f77bfcdc44500d4e8b1adf5f2922ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useInstanceIdForSoundName: 0
 --- !u!114 &6265218879353523767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6898,6 +6907,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f77bfcdc44500d4e8b1adf5f2922ebc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useInstanceIdForSoundName: 0
 --- !u!1001 &507411843196604615
 PrefabInstance:
   m_ObjectHideFlags: 0
