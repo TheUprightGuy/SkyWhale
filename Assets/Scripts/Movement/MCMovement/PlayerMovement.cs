@@ -187,11 +187,9 @@ public class PlayerMovement : MonoBehaviour
         if (!haveControl)
             return;
 
-        UpdateClimbNormal();
-
         HandleMovement();
         HandleRotation();
-        groundContactNormal = climbContactNormal  = wallContactnormal =  calcClimbNormal = Vector3.zero;
+        groundContactNormal = climbContactNormal  = wallContactnormal =  calcClimbNormal  = calcTestNormal = Vector3.zero;
     }
 
     #region Animations
@@ -987,87 +985,14 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void UpdateClimbNormal()
-    {
-        Vector3 centerPoint = (transform.position + (capsuleCollider.center * transform.localScale.y));
-        Vector3 offset = ((transform.up * transform.localScale.y) * (capsuleCollider.height / 2));
-        //Gizmos.DrawSphere(centerPoint- ((transform.up * transform.localScale.y) * (capsuleCollider.height / 2)), 0.05f);
-        Vector3 top = centerPoint + offset;
-        Vector3 bot = centerPoint - offset;
 
-        RaycastHit[] casts = Physics.SphereCastAll(top, testFloat, -transform.up, capsuleCollider.height, ClimbLayers.value, QueryTriggerInteraction.Ignore);
-        if (casts.Length > 0)
-        {
-            foreach (RaycastHit item in casts)
-            {
-                EvalClimbCollision(item.normal);
-            }
-        }
-
-    }
-    private void EvalClimbCollision(Vector3 _normal, int collisionEvent = 0)
-    {
-
-        Vector3 normal = _normal;
-
-        Vector3 projectedForward = Vector3.ProjectOnPlane(transform.forward, Vector3.up);
-        float degreeDownCheck = Vector3.Angle(Vector3.down, -normal);
-        float degreeForwardCheck = Vector3.Angle(projectedForward, -normal);
-
-        bool GtC = degreeDownCheck > GroundToClimbAngle;
-        bool FtC = degreeForwardCheck < ForwardToClimbAngle;
-        if (GtC) //Climbing
-        {
-            Debug.DrawLine(transform.position, transform.position + (1 * -normal), Color.blue);
-
-            if (FtC) //In front of player
-            {
-               //wallContactnormal += normal; //theres a wall here
-                //wallContactnormal = wallContactnormal.normalized;
-
-                Vector3 checkpos = anims.transform.position;
-                checkpos.y += transform.localScale.y * 1.75f;
-
-                if (playerState == PlayerStates.CLIMBING || Physics.Raycast(checkpos, transform.forward, ClimbCheckDistance)) //Not a step
-                {
-                    calcTestNormal += normal;
-                    calcTestNormal = calcTestNormal.normalized;
-                }
-
-                //climbContactNormal = normal;
-            }
-
-
-        }
-    }
     #endregion Collisions
 
 
     #region Debug
 
-
-    CapsuleCollider capsuleCollider = null;
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        if (capsuleCollider == null)
-        {
-            capsuleCollider = GetComponent<CapsuleCollider>();
-        }
-
-        Vector3 centerPoint = (transform.position + (capsuleCollider.center* transform.localScale.y));
-        Vector3 offset = ((transform.up * transform.localScale.y) * (capsuleCollider.height / 2));
-        //Gizmos.DrawSphere(centerPoint- ((transform.up * transform.localScale.y) * (capsuleCollider.height / 2)), 0.05f);
-        Vector3 top = centerPoint + offset;
-        Vector3 bot = centerPoint - offset;
-
-        Gizmos.DrawLine(bot, top);
-
-        Gizmos.color = Color.green;
-
-        Gizmos.DrawLine(centerPoint, centerPoint + (transform.forward * testFloat));
-
-        Gizmos.DrawLine(centerPoint, centerPoint + (calcTestNormal * testFloat));
     }
     #endregion
 }
