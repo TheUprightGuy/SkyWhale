@@ -34,20 +34,20 @@ MonoBehaviour:
     location: {x: -26, y: 20, z: -22}
   - eventName: FlyToRuinIsland
     objDesc: Fly to Ruin Island
-    location: {x: -400, y: 9, z: -55}
+    location: {x: -1565.006, y: 10, z: -55}
   - eventName: TalkWife
     objDesc: Talk to the Villager
-    location: {x: -401, y: 9.2, z: -43}
+    location: {x: -1562.58, y: 10, z: -43}
   - eventName: FindSon
     objDesc: Find the Pilots Son
-    location: {x: -425, y: 9.2, z: -25}
+    location: {x: -1586.376, y: 9.2, z: -25}
   - eventName: FindParts
     objDesc: Find the Glider Parts
-    location: {x: -424.5, y: 15, z: -6.5}
+    location: {x: -1585.564, y: 15, z: -6.5}
   - eventName: TalkPilot
     objDesc: Deliver the parts to the Pilot
-    location: {x: -434.4, y: 47, z: 11.8}
+    location: {x: -1595.317, y: 47, z: 11.8}
   - eventName: ReturnWife
     objDesc: Glide back to the Pilots Wife
-    location: {x: -401, y: 9.2, z: -43}
-  index: 0
+    location: {x: -1562.58, y: 10, z: -43}
+  index: 6

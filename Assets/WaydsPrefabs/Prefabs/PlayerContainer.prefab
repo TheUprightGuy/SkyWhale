@@ -410,10 +410,11 @@ MonoBehaviour:
   GroundCheckStartOffset: {x: 0, y: 0, z: 0}
   ClimbLayers:
     serializedVersion: 2
-    m_Bits: 8388407
+    m_Bits: 12976896
   ClimbCheckDistance: 2.5
   ClimbCheckRadius: 0.1
   ClimbCheckStartOffset: {x: 0, y: -0.25, z: 0}
+  testFloat: 0.5
   cinematicPause: 0
   debugGrav: 0
 --- !u!114 &1363942243561523383

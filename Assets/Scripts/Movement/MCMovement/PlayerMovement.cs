@@ -70,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
     public float ClimbCheckRadius = 0.1f;
     public Vector3 ClimbCheckStartOffset = Vector3.zero;
 
+    public uint FrameCountForNormalClear = 5;
     float minGroundDotProduct;
     Vector3 groundContactNormal;
     Vector3 climbContactNormal;
@@ -90,6 +91,7 @@ public class PlayerMovement : MonoBehaviour
         anims = GetComponentInChildren<Animator>();
         glider = GetComponent<GliderMovement>();
         grapple = GetComponent<GrappleScript>();
+
     }
     private void OnValidate()
     {
@@ -172,6 +174,8 @@ public class PlayerMovement : MonoBehaviour
 
         PromptCheck();
     }
+
+    public uint FrameCount = 0;
     void FixedUpdate()
     {
         if (gamePaused || cinematicPause)
@@ -182,9 +186,17 @@ public class PlayerMovement : MonoBehaviour
         if (!haveControl)
             return;
 
+        FrameCount++;
         HandleMovement();
         HandleRotation();
-        groundContactNormal = climbContactNormal  = wallContactnormal =  calcClimbNormal = Vector3.zero;
+
+
+        if (FrameCount > FrameCountForNormalClear)
+        {
+            FrameCount = 0;
+            climbContactNormal = calcClimbNormal = Vector3.zero;
+        }
+            groundContactNormal  = wallContactnormal   = calcTestNormal = Vector3.zero;
     }
 
     #region Animations
@@ -910,12 +922,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-
+       
     }
 
 
     Vector3 calcClimbNormal = Vector3.zero;
-    Vector3 calcGroundNormal = Vector3.zero;
+    Vector3 calcTestNormal = Vector3.zero;
 
     /// <summary>
     /// Evaluates when this collider hits some other collider
@@ -983,38 +995,16 @@ public class PlayerMovement : MonoBehaviour
         //    groundContactNormal = normal;
         //}
     }
+
+
+
     #endregion Collisions
 
 
     #region Debug
-    
+
     private void OnDrawGizmos()
     {
-        //Gizmos.color = Color.red;
-        //Vector3 groundStartPos = transform.position + GroundCheckStartOffset;
-        //Vector3 groundEndPos = groundStartPos + ((-Vector3.up) * GroundCheckDistance);
-        //Gizmos.DrawLine(groundStartPos, groundEndPos);
-        //Gizmos.DrawSphere(groundEndPos, GroundCheckRadius);
-
-        //Gizmos.color = Color.blue;
-        //Vector3 climbStartPos = transform.position + ClimbCheckStartOffset;
-        //Vector3 climbEndPos = climbStartPos + ((transform.forward) * ClimbCheckDistance);
-        //Gizmos.DrawLine(climbStartPos, climbEndPos);
-        //Gizmos.DrawSphere(climbEndPos, ClimbCheckRadius);
-
-        //Vector3 representAngle = Vector3.RotateTowards(transform.up, -transform.up, GroundToClimbAngle*Mathf.Deg2Rad, 0.0f);
-        //Gizmos.DrawLine(transform.position, transform.position - (representAngle * 1.0f));
-
-        //Vector3 representForwardAngle = Vector3.RotateTowards(transform.forward, transform.right, ForwardToClimbAngle * Mathf.Deg2Rad, 0.0f);
-        //Gizmos.DrawLine(transform.position, transform.position - (representForwardAngle * 1.0f));
-
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawLine(transform.position, transform.position + (-calcClimbNormal.normalized * 1));
-        //Gizmos.color = Color.cyan;
-        //Vector3 checkpos = anims.transform.position;
-        //checkpos.y += transform.localScale.y * 1.75f;
-        //Gizmos.DrawSphere(checkpos, 0.05f);
-        //Gizmos.DrawLine(checkpos, checkpos + (transform.forward * 0.5f));
     }
     #endregion
 }

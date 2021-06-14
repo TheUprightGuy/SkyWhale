@@ -65,8 +65,8 @@ public class GrappleChallengeMaster : MonoBehaviour
         {
             complete = true;
             
-            if (ps)
-                ps.Play();
+            //if (ps)
+                //ps.Play();
                 
             AudioManager.instance.PlaySound("Collect");
         }

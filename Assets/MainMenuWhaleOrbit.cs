@@ -67,6 +67,8 @@ public class MainMenuWhaleOrbit : MonoBehaviour
     }
     #endregion Callbacks
 
+    public float orbitSpeed;
+
     /// <summary>    
     /// Description: Handles path and rotation when in orbit (no control).
     /// <br>Author: Wayd Barton-Redgrave</br>
@@ -76,8 +78,8 @@ public class MainMenuWhaleOrbit : MonoBehaviour
     {
         if (enabled)
         {
-            rb.MovePosition(rb.position + transform.forward * Time.fixedDeltaTime);
-            animator.SetFloat("Movement", 0.5f);
+            rb.MovePosition(rb.position + transform.forward * Time.fixedDeltaTime * orbitSpeed);
+            animator.SetFloat("Movement", 1.0f);
 
             objToIsland = orbit.transform.position - transform.position;
             Vector3 islandToObj = transform.position - orbit.transform.position;
