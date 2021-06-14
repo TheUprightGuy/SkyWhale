@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
     public float ClimbCheckRadius = 0.1f;
     public Vector3 ClimbCheckStartOffset = Vector3.zero;
 
-    public float testFloat = 0.5f;
+    public uint FrameCountForNormalClear = 5;
     float minGroundDotProduct;
     Vector3 groundContactNormal;
     Vector3 climbContactNormal;
@@ -91,10 +91,7 @@ public class PlayerMovement : MonoBehaviour
         anims = GetComponentInChildren<Animator>();
         glider = GetComponent<GliderMovement>();
         grapple = GetComponent<GrappleScript>();
-        if (capsuleCollider == null)
-        {
-            capsuleCollider = GetComponent<CapsuleCollider>();
-        }
+
     }
     private void OnValidate()
     {
@@ -177,6 +174,8 @@ public class PlayerMovement : MonoBehaviour
 
         PromptCheck();
     }
+
+    public uint FrameCount = 0;
     void FixedUpdate()
     {
         if (gamePaused || cinematicPause)
@@ -187,9 +186,17 @@ public class PlayerMovement : MonoBehaviour
         if (!haveControl)
             return;
 
+        FrameCount++;
         HandleMovement();
         HandleRotation();
-        groundContactNormal = climbContactNormal  = wallContactnormal =  calcClimbNormal  = calcTestNormal = Vector3.zero;
+
+
+        if (FrameCount > FrameCountForNormalClear)
+        {
+            FrameCount = 0;
+            climbContactNormal = calcClimbNormal = Vector3.zero;
+        }
+            groundContactNormal  = wallContactnormal   = calcTestNormal = Vector3.zero;
     }
 
     #region Animations
