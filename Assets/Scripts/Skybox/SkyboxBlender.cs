@@ -19,11 +19,17 @@ public class SkyboxBlender : MonoBehaviour
 
     public Light[] lights;
 
-   /* public Color color1;
-    public Color color2;
-    public Color color;
 
-    Light worldLight;*/
+    [Header("Water Blending")]
+    public Material waterMat;
+    /* public Color color1;
+     public Color color2;
+     public Color color;
+
+     Light worldLight;*/
+
+    [Header("Main Menu")]
+    public bool mainMenu;
 
     void Start()
     {
@@ -39,7 +45,9 @@ public class SkyboxBlender : MonoBehaviour
 
         CallbackHandler.instance.toggleRain += ToggleRain;
         CallbackHandler.instance.setTimeOfDay += SetTimeOfDay;
-        EventManager.StartListening("StartRain", Rain);
+
+        if (!mainMenu)
+            EventManager.StartListening("StartRain", Rain);
     }
 
     private void OnDestroy()
@@ -103,6 +111,7 @@ public class SkyboxBlender : MonoBehaviour
 
         material.SetFloat("_Vec1TimeOfDay", timeOfDay);
         material.SetInt("Raining", raining ? 1 : 0);
+        waterMat.SetColor("WorldLightColor", lightBlend);
 
         SetFogColor();
         SetLightColor();

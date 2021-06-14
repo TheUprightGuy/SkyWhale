@@ -160,7 +160,25 @@ namespace Puzzle
 
         private void TeleportToStart(GameObject player)
         {
+            CallbackHandler.instance.FadeOut();
+            //CallbackHandler.instance.FadeIn();
+
+            CallbackHandler.instance.FadeOut();
+            CallbackHandler.instance.CinematicPause(true);
+
+            Invoke("Teleport", 1.0f);
+            Invoke("GiveControl", 2.0f);
+        }
+
+        void Teleport()
+        {
+            CallbackHandler.instance.FadeIn();
             EntityManager.instance.TeleportPlayer(RestartPos);
+        }
+
+        void GiveControl()
+        {
+            CallbackHandler.instance.CinematicPause(false);
         }
 
         /*public void FoundCollectable()

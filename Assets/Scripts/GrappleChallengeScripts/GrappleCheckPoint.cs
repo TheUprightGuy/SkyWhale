@@ -48,7 +48,8 @@ public class GrappleCheckPoint : MonoBehaviour
         AudioManager.instance.PlaySound("Checkpoint");
         Debug.Log("TriggeredCheckPoint");
         CallbackHandler.instance.ResetCheckpointDissolve();
-        GetComponentInChildren<DissolveControl>().dissolve = false;
+        if (GetComponentInChildren<DissolveControl>())
+            GetComponentInChildren<DissolveControl>().dissolve = false;
         //Ignore this checkpoint
         IgnoreCheckPoint();
     }
