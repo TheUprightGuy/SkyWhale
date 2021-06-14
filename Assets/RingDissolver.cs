@@ -20,7 +20,7 @@ public class RingDissolver : MonoBehaviour
     private void Update()
     {
         fadeAmount = fade ? fadeAmount - Time.deltaTime * 30.0f : fadeAmount + Time.deltaTime * 30.0f;
-        fadeAmount = Mathf.Clamp(fadeAmount, startPos - 50.0f, startPos + 65.0f);
+        fadeAmount = Mathf.Clamp(fadeAmount, startPos, startPos + 65.0f);
 
         mat.SetFloat("CutoffHeight", fadeAmount);
     }

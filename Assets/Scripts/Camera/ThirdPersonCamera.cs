@@ -63,7 +63,7 @@ public class ThirdPersonCamera : MonoBehaviour
 
         CameraManager.instance.switchCam += SwitchCam;
         CallbackHandler.instance.pause += Pause;
-        CallbackHandler.instance.toggleRain += ToggleRain;
+        //CallbackHandler.instance.toggleRain += ToggleRain;
         CallbackHandler.instance.changeMouseSensitivity += ChangeMouseSensitivity;
 
         VirtualInputs.GetInputListener(InputType.PLAYER, "CameraSnap").MethodToCall.AddListener(CameraSnap);
@@ -74,7 +74,7 @@ public class ThirdPersonCamera : MonoBehaviour
     {
         CameraManager.instance.switchCam -= SwitchCam;
         CallbackHandler.instance.pause -= Pause;
-        CallbackHandler.instance.toggleRain -= ToggleRain;
+        //CallbackHandler.instance.toggleRain -= ToggleRain;
         CallbackHandler.instance.changeMouseSensitivity -= ChangeMouseSensitivity;
     }
 
