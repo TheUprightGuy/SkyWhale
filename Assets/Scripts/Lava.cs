@@ -43,7 +43,7 @@ public class Lava : MonoBehaviour
         {
             // ResetMe
             gcm.ResetChallenge();
-            AudioManager.instance.PlaySound("Fail");
+            AudioManager.instance.PlaySound("Splash");
         }
     }
     #endregion Trigger

@@ -317,6 +317,9 @@ public class NewGrappleHook : MonoBehaviour
         {
             connected = true;
             connectedObj = collision.gameObject;
+            AudioSource bounceAudioSource = connectedObj.GetComponentInChildren<AudioSource>();
+            if (bounceAudioSource)
+                AudioManager.instance.PlaySound(bounceAudioSource.gameObject.GetInstanceID().ToString());
             cachedPos = connectedObj.transform.position;
         }
         // Grappleable surface not found
