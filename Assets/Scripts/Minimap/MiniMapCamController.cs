@@ -98,10 +98,17 @@ public class MiniMapCamController : MonoBehaviour
             transform.position = CurrentObj.transform.position - (transform.forward * DefaultMapZoom);
             thisCam.orthographicSize = DefaultMapZoom;
         }
-        
-        Vector3 Objectiveloc = QuestManager.instance.activeQuests[0].objectives[QuestManager.instance.activeQuests[0].index].location;
-        ObjectiveIcon.SetActive(!(Objectiveloc == Vector3.zero));
-        ObjectiveIcon.transform.position = Objectiveloc + IconOffset;
+
+        if (QuestManager.instance.activeQuests[0].index < QuestManager.instance.activeQuests[0].objectives.Count)
+        {
+            Vector3 Objectiveloc = QuestManager.instance.activeQuests[0].objectives[QuestManager.instance.activeQuests[0].index].location;
+            ObjectiveIcon.SetActive(!(Objectiveloc == Vector3.zero));
+            ObjectiveIcon.transform.position = Objectiveloc + IconOffset;
+        }
+        else
+        {
+            ObjectiveIcon.SetActive(false);
+        }
 
         if (MinimapIcon != null)
         {

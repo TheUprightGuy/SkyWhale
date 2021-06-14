@@ -10,13 +10,14 @@ public class WhaleCamp : MonoBehaviour
     void Start()
     {
         ToggleObjects(false);
-        EventManager.StartListening("ReturnWife", ToggleCampOn);
+        EventManager.StartListening("ReturnWife2", ToggleCampOn);
     }
 
     public void ToggleCampOn()
     {
         ToggleObjects(true);
-        EventManager.StopListening("ReturnWife", ToggleCampOn);
+        CallbackHandler.instance.SpawnCollectableIsland();
+        EventManager.StopListening("ReturnWife2", ToggleCampOn);
     }
 
     public void ToggleObjects(bool _toggle)

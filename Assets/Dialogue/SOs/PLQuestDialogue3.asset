@@ -58,4 +58,4 @@ MonoBehaviour:
   rightCharacter: {fileID: 21300000, guid: de9501d791d9dfc42afec714e213ff5d, type: 3}
   dialogueIndex: 0
   inUse: 0
-  triggerEvent: ReturnWife
+  triggerEvent: ReturnWife2
