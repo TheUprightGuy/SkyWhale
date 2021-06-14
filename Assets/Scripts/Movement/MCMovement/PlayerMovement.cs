@@ -237,6 +237,11 @@ public class PlayerMovement : MonoBehaviour
     /// </summary>
     void SetCurrentPlayerState()
     {
+        //Play collision sound on transition from falling check to climbing, movement or idle
+        if (playerState == PlayerStates.FALLING && (CLIMBINGCheck() || MOVINGCheck() || IDLECheck()))
+        {
+            AudioManager.instance.PlaySound("WallHit");
+        }
         if (CLIMBINGCheck())
         {
             if (playerState == PlayerStates.MOVING || playerState == PlayerStates.IDLE || playerState == PlayerStates.FALLING || playerState == PlayerStates.JUMPING)
