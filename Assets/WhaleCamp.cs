@@ -13,6 +13,14 @@ public class WhaleCamp : MonoBehaviour
         EventManager.StartListening("ReturnWife2", ToggleCampOn);
     }
 
+    /*private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            ToggleCampOn();
+        }
+    }*/
+
     public void ToggleCampOn()
     {
         ToggleObjects(true);
