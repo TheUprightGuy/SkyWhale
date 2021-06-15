@@ -22,6 +22,9 @@ public class RainSystem : MonoBehaviour
 
     void ToggleRain(bool _toggle)
     {
+        if (!ps)
+            return;
+
         if (_toggle)
         {
             ps.Play();

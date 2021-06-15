@@ -60,7 +60,8 @@ public class SkyboxBlender : MonoBehaviour
 
     void RainOff()
     {
-        CallbackHandler.instance.ToggleRain(false);
+        if (!mainMenu)
+            CallbackHandler.instance.ToggleRain(false);
     }
 
     void ToggleRain(bool _toggle)

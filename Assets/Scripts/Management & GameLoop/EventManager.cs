@@ -72,7 +72,7 @@ public class EventManager : MonoBehaviour
         UnityEvent thisEvent = null;
         if (instance.eventDictionary.TryGetValue(eventName, out thisEvent))
         {
-            //thisEvent.AddListener(listener);
+            thisEvent.AddListener(listener);
         }
         else
         {
