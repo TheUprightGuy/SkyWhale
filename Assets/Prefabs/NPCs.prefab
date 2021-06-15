@@ -10571,7 +10571,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57848629368a6764a9d2a7f1a386e943, type: 2}
+  - {fileID: 2100000, guid: efd4da2c82c28104f88ddd0b33358e3e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10596,7 +10596,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 2959467708922500008, guid: 59ddadc71fe0f1c47920e7fe8a451ab8, type: 3}
+  m_Mesh: {fileID: 2959467708922500008, guid: 3ad593235fbc0354497784e3d728fab0, type: 3}
   m_Bones:
   - {fileID: 6915160151989405380}
   - {fileID: 5196750965199832303}
@@ -10702,7 +10702,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57848629368a6764a9d2a7f1a386e943, type: 2}
+  - {fileID: 2100000, guid: bc55899919f2aa44185dc15c19f7729c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10727,7 +10727,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 2959467708922500008, guid: 59ddadc71fe0f1c47920e7fe8a451ab8, type: 3}
+  m_Mesh: {fileID: 2959467708922500008, guid: aa8fcbe1efdaf0f43a195c081fa7bfda, type: 3}
   m_Bones:
   - {fileID: 6915160152220952422}
   - {fileID: 5196750965632705869}
@@ -10964,7 +10964,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 57848629368a6764a9d2a7f1a386e943, type: 2}
+  - {fileID: 2100000, guid: ebece1266e662a44da81c45e68ed8dca, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10989,7 +10989,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 2959467708922500008, guid: 59ddadc71fe0f1c47920e7fe8a451ab8, type: 3}
+  m_Mesh: {fileID: 2959467708922500008, guid: da20b844ebe679e4faa5cbb0d7b0dc03, type: 3}
   m_Bones:
   - {fileID: 6915160153318564005}
   - {fileID: 5196750966725632654}
@@ -17421,7 +17421,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4647059550625843296}
   m_Layer: 0
-  m_Name: NPC
+  m_Name: NPCs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20049,7 +20049,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5312862728194918105}
   m_LocalRotation: {x: -0, y: 0.78323436, z: -0, w: -0.62172663}
-  m_LocalPosition: {x: -25.601, y: 10.585377, z: -47.352}
+  m_LocalPosition: {x: -25.601, y: 11.14, z: -47.352}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 4760206361925659035}
@@ -20113,7 +20113,7 @@ CapsuleCollider:
   m_Radius: 0.1714081
   m_Height: 0.73461276
   m_Direction: 1
-  m_Center: {x: 0, y: 0.35, z: 0}
+  m_Center: {x: 0, y: -0.05, z: 0}
 --- !u!114 &5006451722731784166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20428,7 +20428,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5312862729278931226}
   m_LocalRotation: {x: -0, y: 0.16916865, z: -0, w: -0.9855871}
-  m_LocalPosition: {x: -17.94, y: 12.97, z: -32.09}
+  m_LocalPosition: {x: -17.94, y: 13.481, z: -32.09}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 4760206363019177560}
@@ -20492,7 +20492,7 @@ CapsuleCollider:
   m_Radius: 0.1714081
   m_Height: 0.73461276
   m_Direction: 1
-  m_Center: {x: 0, y: 0.35, z: 0}
+  m_Center: {x: 0, y: -0.05, z: 0}
 --- !u!114 &5006451723829493797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20542,7 +20542,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5312862729584140472}
   m_LocalRotation: {x: -0, y: -0.36020643, z: -0, w: -0.9328727}
-  m_LocalPosition: {x: -19.672, y: 10.72, z: -53.265}
+  m_LocalPosition: {x: -19.672, y: 11.222, z: -53.265}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_Children:
   - {fileID: 4760206363116490746}
@@ -20606,7 +20606,7 @@ CapsuleCollider:
   m_Radius: 0.1714081
   m_Height: 0.73461276
   m_Direction: 1
-  m_Center: {x: 0, y: 0.35, z: 0}
+  m_Center: {x: 0, y: -0.05, z: 0}
 --- !u!114 &5006451724126052743
 MonoBehaviour:
   m_ObjectHideFlags: 0
