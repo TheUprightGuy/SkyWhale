@@ -95,7 +95,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _Vec1TimeOfDay: 0.15333112
+    - _Vec1TimeOfDay: 0.103269584
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:

@@ -67,7 +67,7 @@ public class ObjectiveTrackingUI : MonoBehaviour
             return;
         }
 
-        distanceText.SetText(Mathf.RoundToInt(Vector3.Distance(objLoc, EntityManager.instance.player.transform.position)).ToString() + "m");
+        distanceText.SetText(Mathf.Min(Mathf.RoundToInt(Vector3.Distance(objLoc, EntityManager.instance.player.transform.position)), Mathf.RoundToInt(Vector3.Distance(objLoc, EntityManager.instance.playerOnWhale.transform.position))).ToString() + "m");
 
         Vector3 screenPos = Camera.main.WorldToScreenPoint(objLoc);
 
