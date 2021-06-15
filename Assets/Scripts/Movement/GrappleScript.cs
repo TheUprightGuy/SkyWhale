@@ -36,7 +36,7 @@ public class GrappleScript : MonoBehaviour
     public GunMeshSwitch shootPoint;
     new public bool enabled;
     bool pause;
-
+    
     #region Setup
     // Local Variables
     public Transform camToShootFrom;
@@ -90,6 +90,7 @@ public class GrappleScript : MonoBehaviour
         // Callback to swap between Whale and Player
         EntityManager.instance.toggleControl += ToggleGrapple;
         CallbackHandler.instance.pause += Pause;
+        CallbackHandler.instance.fadeOut += Retract;
     }
 
     private void OnDestroy()
@@ -97,6 +98,7 @@ public class GrappleScript : MonoBehaviour
         // End Callback
         EntityManager.instance.toggleControl -= ToggleGrapple;
         CallbackHandler.instance.pause -= Pause;
+        CallbackHandler.instance.fadeOut -= Retract;
     }
 
     Vector3 storedVel;
@@ -429,6 +431,13 @@ public class GrappleScript : MonoBehaviour
                 return;
             }
         }
+    }
+
+    public void Retract()
+    {
+        hook.retracting = true;
+        hook.connected = false;
+        hook.manualRetract = true;
     }
 
     public void YeetPlayer()

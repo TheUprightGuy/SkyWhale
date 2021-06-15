@@ -20077,7 +20077,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5312862728194918105}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 9796e570a2f8fc245a1a33fbbcc02733, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 617847c387844e0488feab46549eddff, type: 3}
   m_Controller: {fileID: 9100000, guid: a85b72aab98a9124086657a90083b35b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -20130,7 +20130,7 @@ MonoBehaviour:
   pause: 0
   anim: {fileID: 0}
   cam: {fileID: 0}
-  type: 0
+  type: 2
   dialogue: {fileID: 11400000, guid: 5f70a92eca3c19c4c9258e1b55b07edf, type: 2}
   currentDialogue: {fileID: 0}
   dialoguesToSwitchTo: []
@@ -20456,7 +20456,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5312862729278931226}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 9796e570a2f8fc245a1a33fbbcc02733, type: 3}
+  m_Avatar: {fileID: 9000000, guid: ca3bbdcfbd56bc1479442db31a923733, type: 3}
   m_Controller: {fileID: 9100000, guid: a85b72aab98a9124086657a90083b35b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -20509,7 +20509,7 @@ MonoBehaviour:
   pause: 0
   anim: {fileID: 0}
   cam: {fileID: 0}
-  type: 0
+  type: 1
   dialogue: {fileID: 11400000, guid: f52566f30df39db43a88c8de20fe51d4, type: 2}
   currentDialogue: {fileID: 0}
   dialoguesToSwitchTo: []
@@ -20570,7 +20570,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5312862729584140472}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 9796e570a2f8fc245a1a33fbbcc02733, type: 3}
+  m_Avatar: {fileID: 9000000, guid: 617847c387844e0488feab46549eddff, type: 3}
   m_Controller: {fileID: 9100000, guid: a85b72aab98a9124086657a90083b35b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
@@ -20623,7 +20623,7 @@ MonoBehaviour:
   pause: 0
   anim: {fileID: 0}
   cam: {fileID: 0}
-  type: 0
+  type: 2
   dialogue: {fileID: 11400000, guid: f224e81eda9ee0b4ea15a370c7bf3b0c, type: 2}
   currentDialogue: {fileID: 0}
   dialoguesToSwitchTo: []
