@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [System.Serializable]
 public class CollectableInfo
@@ -23,7 +24,7 @@ public class CollectableInfo
     [HideInInspector]
     public GameObject UIObject = null;
     [HideInInspector]
-    public Text UIText = null;
+    public TextMeshProUGUI UIText = null;
     [HideInInspector]
     public Image UIImage = null;
 
@@ -41,9 +42,9 @@ public class CollectableHandler : MonoBehaviour
     public GameObject ShowcasePanel;
     public GameObject CollectableTut;
 
-    Text lpTitle;
+    TextMeshProUGUI lpTitle;
     Image lpImage;
-    Text lpDesc;
+    TextMeshProUGUI lpDesc;
 
     CollectablesTrigger[] collectablesTriggers;
     // Start is called before the first frame update
@@ -55,7 +56,7 @@ public class CollectableHandler : MonoBehaviour
 
         if (ShowcasePanel != null)
         {
-            Text[] texts = ShowcasePanel.GetComponentsInChildren<Text>();
+            TextMeshProUGUI[] texts = ShowcasePanel.GetComponentsInChildren<TextMeshProUGUI>();
             lpTitle = texts[0];
             lpDesc = texts[1];
 
@@ -95,7 +96,7 @@ public class CollectableHandler : MonoBehaviour
             GameObject NewPanel = Instantiate(UIPrefab, UIParent.transform);
             collectablesTriggers[i].Collectable.UIObject = NewPanel;
             collectablesTriggers[i].Collectable.UIImage = NewPanel.GetComponentsInChildren<Image>()[1];
-            collectablesTriggers[i].Collectable.UIText = NewPanel.GetComponentInChildren<Text>();
+            collectablesTriggers[i].Collectable.UIText = NewPanel.GetComponentInChildren<TextMeshProUGUI>();
 
         }
     }
