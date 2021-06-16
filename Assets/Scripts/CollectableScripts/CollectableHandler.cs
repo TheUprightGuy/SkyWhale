@@ -103,7 +103,7 @@ public class CollectableHandler : MonoBehaviour
 
     public void AssignListeners()
     {
-        for (int i = 0; i < collectablesTriggers.Length - 1; i++)
+        for (int i = 0; i < collectablesTriggers.Length; i++)
         {
             int test = i;
             Button butt = collectablesTriggers[i].Collectable.UIObject.GetComponentInChildren<Button>();
@@ -144,6 +144,27 @@ public class CollectableHandler : MonoBehaviour
     public void AllCollected()
     {
         //Good job
+    }
+
+    string codeinput = "";
+    const string coderequired = "7567";
+    public void shhh(int input)
+    {
+        codeinput += input.ToString();
+
+        if (codeinput == coderequired)
+        {
+            codeinput = "";
+            numCollected = -1; //Force turn off the tut
+            for (int i = 0; i < collectablesTriggers.Length; i++)
+            {
+                ItemCollected(i);
+            }
+        }
+        else if (codeinput.Length >= coderequired.Length)
+        {
+            codeinput = "";
+        }
     }
     public void TriggerLargePanel(int _index)
     {
