@@ -322,9 +322,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cddfa3b25188c1742836f801bdebd872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 0de268d74fd552844bb3c5732a9a516c, type: 2}
+  material: {fileID: 2100000, guid: a09941b9be664de44a4be52fd4eca349, type: 2}
   blendSpeed: 0.01
-  raining: 0
   outputColor: {r: 0, g: 0, b: 0, a: 0}
   color1: {r: 0.99607843, g: 0.62352943, b: 0.5803922, a: 1}
   color2: {r: 0, g: 0.90551186, b: 1, a: 1}
@@ -332,4 +331,6 @@ MonoBehaviour:
   fogBlend: {r: 0.27450982, g: 0.58431375, b: 0.7921569, a: 1}
   lightBlend: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   lights: []
+  raining: 0
   waterMat: {fileID: 2100000, guid: 5252ad2add739ed49a438f4229ba3bc5, type: 2}
+  mainMenu: 0
