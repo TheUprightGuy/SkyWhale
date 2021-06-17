@@ -61,8 +61,8 @@ public class DebugTool : MonoBehaviour
         {
             EntityManager.instance.whale.GetComponent<WhaleMovement>().boost = boostAmount;
         }*/
-        if (!Input.GetKeyDown(KeyCode.BackQuote)) return;
-        ToggleDebugToolMenu();
+        //if (!Input.GetKeyDown(KeyCode.BackQuote)) return;
+        //ToggleDebugToolMenu();
     }
 
     public void ToggleDebugToolMenu()
