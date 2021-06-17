@@ -33,8 +33,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - RainBlend: 0.66
-    - Raining: 1
-    - _Vec1TimeOfDay: 1.0457975
+    - RainBlend: 0
+    - Raining: 0
+    - _Vec1TimeOfDay: 0.012190404
     m_Colors:
     - RainColor: {r: 0.6, g: 0.6, b: 0.6, a: 1}
