@@ -307,10 +307,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3869537114849655757}
-  - component: {fileID: 864104927865612783}
   - component: {fileID: 2726934515190710491}
+  - component: {fileID: 7082735215613781365}
   m_Layer: 0
-  m_Name: RainThunderAmbientLayer
+  m_Name: RainThunder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -330,22 +330,6 @@ Transform:
   m_Father: {fileID: 178910286826226477}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &864104927865612783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1986359638338291436}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c089b864a995a14f833f4935368fc32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ambientSounds:
-  - {fileID: 8300000, guid: a512d650213100f4f83cce07c1504e9f, type: 3}
-  - {fileID: 8300000, guid: a512d650213100f4f83cce07c1504e9f, type: 3}
-  exposedParamName: RainThunderAmbientVolume
 --- !u!82 &2726934515190710491
 AudioSource:
   m_ObjectHideFlags: 0
@@ -355,13 +339,13 @@ AudioSource:
   m_GameObject: {fileID: 1986359638338291436}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: -191996131409469405, guid: dbf9485d6ef14a342bb868c49599feec,
+  OutputAudioMixerGroup: {fileID: 2527437076722597410, guid: dbf9485d6ef14a342bb868c49599feec,
     type: 2}
-  m_audioClip: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: a512d650213100f4f83cce07c1504e9f, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 0.2
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -443,6 +427,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7082735215613781365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986359638338291436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f77bfcdc44500d4e8b1adf5f2922ebc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useInstanceIdForSoundName: 0
 --- !u!1 &4014376754064703141
 GameObject:
   m_ObjectHideFlags: 0

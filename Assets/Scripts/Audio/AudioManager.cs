@@ -179,7 +179,8 @@ namespace Audio
                 ambientLayers[0].GetComponent<AudioSource>(), 0));
         }
 
-        private bool rainLayerStarted = false;
+        //Rain thunder didn't sound right fading in/out as a layer so it was reimplemented as a regular sfx
+        /*private bool rainLayerStarted = false;
         /// <summary>
         /// Starts the fade coroutine which plays the whale ambient layer
         /// </summary>
@@ -207,7 +208,7 @@ namespace Audio
         {
             //Most likely very abrupt
             ambientLayers[2].GetComponent<AudioSource>().Stop();
-        }
+        }*/
 
         /// <summary>
         /// This function allows you to switch the currently playing music track if the music tracks aren't being randomised.
@@ -266,7 +267,8 @@ namespace Audio
 
         private void Start()
         {
-            CallbackHandler.instance.toggleRain += PlayRainThunderAmbientLayer;
+            //Rain no longer an ambient layer
+            //CallbackHandler.instance.toggleRain += PlayRainThunderAmbientLayer;
         }
 
         /// <summary>
