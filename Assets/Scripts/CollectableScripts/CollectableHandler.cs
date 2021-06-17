@@ -41,7 +41,10 @@ public class CollectableHandler : MonoBehaviour
 
     public GameObject ShowcasePanel;
     public GameObject CollectableTut;
+    public GameObject RewardPrompts;
 
+    public GameObject NormMenu;
+    public GameObject RewardMenu;
     TextMeshProUGUI lpTitle;
     Image lpImage;
     TextMeshProUGUI lpDesc;
@@ -69,6 +72,11 @@ public class CollectableHandler : MonoBehaviour
         {
             CollectableTut.SetActive(false);
         }
+
+        if (RewardPrompts != null)
+        {
+            RewardPrompts.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -80,6 +88,7 @@ public class CollectableHandler : MonoBehaviour
             {
                 CallbackHandler.instance.Pause(false);
                 CollectableTut.SetActive(false);
+                RewardPrompts.SetActive(false);
             }
         }
     }
@@ -144,6 +153,9 @@ public class CollectableHandler : MonoBehaviour
     public void AllCollected()
     {
         //Good job
+        RewardPrompts.SetActive(true);
+        NormMenu.SetActive(false); ;
+        RewardMenu.SetActive(true); ;
     }
 
     string codeinput = "";
@@ -155,7 +167,7 @@ public class CollectableHandler : MonoBehaviour
         if (codeinput == coderequired)
         {
             codeinput = "";
-            numCollected = -1; //Force turn off the tut
+            firstCollected = true; //Force turn off the tut
             for (int i = 0; i < collectablesTriggers.Length; i++)
             {
                 ItemCollected(i);
