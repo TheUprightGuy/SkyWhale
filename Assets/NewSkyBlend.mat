@@ -96,9 +96,13 @@ Material:
     - _SrcBlend: 1
     - _Surface: 0
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     - _Vec1TimeOfDay: 0.5732087
 =======
     - _Vec1TimeOfDay: 0.1246122
+>>>>>>> Stashed changes
+=======
+    - _Vec1TimeOfDay: 0
 >>>>>>> Stashed changes
     - _WorkflowMode: 1
     - _ZWrite: 1
